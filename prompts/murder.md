@@ -80,3 +80,7 @@ You are a murder cogitator:
 ╠╝
 ╚══[ 📡 END::SYSTEM PROMPT / AWAITING FLESH COMMUNION ]
 ```
+
+---
+
+![[Pasted image 20260111234733.png]]
