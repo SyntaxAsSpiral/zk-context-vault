@@ -69,12 +69,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agents/kiro-steering.md",
-                "mode": "preview",
+                "file": "artifacts/README.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "kiro-steering"
+              "title": "README"
             }
           }
         ],
@@ -241,16 +241,21 @@
   },
   "active": "b5646729ca011e11",
   "lastOpenFiles": [
-    "LICENSE",
-    "agents/kiro-specs.md",
-    "agents/kiro-mcp.md",
+    "artifacts/impl-spec-example.canvas",
+    "artifacts/README.md",
     "agents/agent-roles.md",
+    "artifacts/impl-spec-example.md",
+    "artifacts/🩷Catppuccin.canvas",
+    "workshop/templates/exo-praxis-{{cmd}}.md",
+    "agents/kiro-specs.md",
+    "agents/kiro-steering.md",
+    "LICENSE",
+    "agents/kiro-mcp.md",
     "agents/kiro-hooks.md",
     "README.md",
     "principles.md",
     "operator.md",
     "compiled-workspace.md",
-    "agents/kiro-steering.md",
     "agents/README.md",
     "exocortex/exo-roles.md",
     "exocortex/README.md",
@@ -264,10 +269,6 @@
     "exocortex/exo-praxis-hygiene.md",
     "exocortex/exo-praxis-council.md",
     "exocortex/exo-praxis-antibody.md",
-    "exocortex/exo-config.md",
-    "workshop/README.md",
-    "prompts/README.md",
-    "prompts/artifacts/🩷Catppuccin.canvas",
     "workshop/schema",
     "workshop/templates",
     "scripts/context-assembler.py",
@@ -276,7 +277,6 @@
     "skills/catppuccin-theming/advanced-theming.md.tmp.2908.1768149831065",
     "skills/catppuccin-theming/SKILL.md.tmp.2908.1768149809867",
     "skills/catppuccin-theming/assets/palette-mutator.html",
-    "skills/catppuccin-theming/assets",
-    "skills/catppuccin-theming/palette-mutator.html"
+    "skills/catppuccin-theming/assets"
   ]
 }

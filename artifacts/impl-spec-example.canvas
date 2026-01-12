@@ -1,0 +1,429 @@
+{
+  "nodes": [
+    {
+      "id": "kiro-spec-template-group",
+      "type": "group",
+      "x": -3080,
+      "y": -1800,
+      "width": 4600,
+      "height": 3880,
+      "color": "#120236",
+      "label": "kiro-spec-template"
+    },
+    {
+      "id": "legend-and-overview",
+      "type": "text",
+      "text": "# START HERE:\n---\n## Legend (edge labels)\n\nmodel: SPEC → DIAGRAM refinement\nsequence: DIAGRAM → TASKS derivation\ncompile: SPEC → TASKS shortcut\nblocks: hard dependency/order\nrelates: soft association (no order)\n\n## Kiro 3-Phase Process\n\n1. **Design**: Architecture and approach\n2. **Requirements**: Concrete specifications  \n3. **Tasks**: Implementation breakdown",
+      "x": -2560,
+      "y": -1720,
+      "width": 250,
+      "height": 360,
+      "color": "#120236"
+    },
+    {
+      "id": "phase-1-design-guide",
+      "type": "text",
+      "text": "## Phase 1 — DESIGN (architecture)\n\nFill the DESIGN template following Kiro patterns.\n\nRules:\n- Keep valid YAML in frontmatter\n- Use templater syntax {{variable}}\n- Include mermaid diagrams for system model\n- Reference lanes by phase (DESIGN/REQUIREMENTS/TASKS)\n- JSON integrity: node IDs must be unique within `nodes[]`",
+      "x": -2205,
+      "y": -1720,
+      "width": 250,
+      "height": 360,
+      "color": "#120236"
+    },
+    {
+      "id": "phase-2-requirements-guide",
+      "type": "text",
+      "text": "## Phase 2 — REQUIREMENTS (specifications)\n\nCreate concrete requirements with mermaid diagrams:\n- Functional requirements (FR1, FR2, etc.)\n- Non-functional requirements (NFR1, NFR2, etc.)\n- System boundaries and constraints\n- Integration points and dependencies\n\nRules:\n- Use mermaid syntax for all diagrams\n- Define acceptance criteria\n- Specify validation rules\n- Document edge semantics",
+      "x": -1840,
+      "y": -1760,
+      "width": 250,
+      "height": 400,
+      "color": "#120236"
+    },
+    {
+      "id": "phase-3-tasks-guide",
+      "type": "text",
+      "text": "## Phase 3 — TASKS (implementation)\n\nCompile into ≤12 TASK nodes following Kiro patterns.\n\nEach task MUST include:\n- title, order, status, type\n- pointers (real repo paths)\n- acceptance_checks (verifiable end states)\n- depends_on (task IDs; keep consistent)\n- slice_markers for workshop integration\n\nScheduling rules:\n- Use `blocks` edges for hard order\n- Use `relates` edges for soft association",
+      "x": -1520,
+      "y": -1780,
+      "width": 250,
+      "height": 420,
+      "color": "#120236"
+    },
+    {
+      "id": "design-phase-group",
+      "type": "group",
+      "x": -2720,
+      "y": -1290,
+      "width": 1280,
+      "height": 3130,
+      "color": "6",
+      "label": "1-design"
+    },
+    {
+      "id": "design-template-content",
+      "type": "text",
+      "text": "---\nid: impl-{{name}}\ntitle: \"{{title}}\"\ntype:\n  - \"implementation\"\n  - \"spec\"\ncategory: \"design\"\ntags:\n  - \"kiro\"\n  - \"3-phase\"\n  - \"{{domain}}\"\ncreated: {{date}}\nmodified: {{date}}\nstatus: \"draft\"\nglyph: \"📋\"\nlens: \"structured-development\"\n---\n\n# {{title}}\n\n## Overview\n\n{{description}}\n\n## Architecture\n\n```mermaid\ngraph TB\n    subgraph \"{{system_name}}\"\n        A[{{component_a}}] --> B[{{component_b}}]\n        B --> C[{{component_c}}]\n    end\n    \n    subgraph \"External Systems\"\n        D[{{external_system}}]\n    end\n    \n    A --> D\n```\n\n## Goals\n\n- {{goal_1}}\n- {{goal_2}}\n- {{goal_3}}\n\n## Constraints\n\n### Architectural\n- {{constraint_1}}\n- {{constraint_2}}\n\n### Non-Goals\n- {{non_goal_1}}\n- {{non_goal_2}}\n\n## Context\n\n**Background**: {{background}}\n\n**Terminology**:\n- **{{term_1}}**: {{definition_1}}\n- **{{term_2}}**: {{definition_2}}\n\n**Related Components**:\n- {{component_path_1}}\n- {{component_path_2}}\n\n## Invariants\n\n- {{invariant_1}}\n- {{invariant_2}}\n\n## Acceptance Criteria\n\n- {{acceptance_1}}\n- {{acceptance_2}}\n\n## Pointers\n\n- {{file_path_1}}\n- {{file_path_2}}",
+      "x": -2640,
+      "y": -1222,
+      "width": 1120,
+      "height": 2942,
+      "color": "6"
+    },
+    {
+      "id": "requirements-phase-group",
+      "type": "group",
+      "x": -1400,
+      "y": -1290,
+      "width": 2560,
+      "height": 1565,
+      "color": "5",
+      "label": "2-requirements"
+    },
+    {
+      "id": "edge-semantics-table",
+      "type": "text",
+      "text": "## Edge Semantics\n\n| Type | Purpose | Ordering |\n|------|---------|----------|\n| model | SPEC → REQ | Sequential |\n| sequence | REQ → TASKS | Sequential |\n| compile | SPEC → TASKS | Direct |\n| blocks | Hard dependency | Strict |\n| relates | Soft association | None |",
+      "x": 191,
+      "y": -1200,
+      "width": 225,
+      "height": 360,
+      "color": "2"
+    },
+    {
+      "id": "functional-requirements",
+      "type": "text",
+      "text": "## Functional Requirements\n\n### FR1: {{requirement_name}}\n- **Input**: {{input_spec}}\n- **Processing**: {{processing_spec}}\n- **Output**: {{output_spec}}\n- **Validation**: {{validation_rules}}\n\n### FR2: {{requirement_name_2}}\n- **Input**: {{input_spec_2}}\n- **Processing**: {{processing_spec_2}}\n- **Output**: {{output_spec_2}}\n- **Validation**: {{validation_rules_2}}",
+      "x": -1282,
+      "y": -1200,
+      "width": 435,
+      "height": 360,
+      "color": "2"
+    },
+    {
+      "id": "integration-points",
+      "type": "text",
+      "text": "## Integration Points\n\n### Workshop System\n- Recipe-based assembly\n- Slice marker support\n- Target deployment\n\n### Templater\n- Dynamic content generation\n- Variable substitution\n- Prompt integration\n\n### Semantic JSON\n- Canvas conversion\n- Structured data export\n- IDE integration",
+      "x": -322,
+      "y": -1200,
+      "width": 295,
+      "height": 360,
+      "color": "2"
+    },
+    {
+      "id": "non-functional-requirements",
+      "type": "text",
+      "text": "## Non-Functional Requirements\n\n### NFR1: Kiro Integration\n- Follow 3-phase spec process\n- Use templater syntax {{variable}}\n- Support slice architecture\n- Enable workshop compilation\n\n### NFR2: Edge Preservation\n- Maintain edge semantics\n- Support dependency relationships\n- Enable mermaid visualization",
+      "x": -1217,
+      "y": -800,
+      "width": 280,
+      "height": 300,
+      "color": "2"
+    },
+    {
+      "id": "system-model-mermaid",
+      "type": "text",
+      "text": "## System Model\n\n```mermaid\ngraph TB\n    subgraph \"Phase Flow\"\n        SPEC[Design Phase] --> |model| REQ[Requirements Phase]\n        REQ --> |sequence| TASKS[Tasks Phase]\n        SPEC --> |compile| TASKS\n    end\n    \n    subgraph \"Implementation\"\n        COMP[{{component}}] --> PROC[{{process}}]\n        PROC --> DATA[{{data_store}}]\n    end\n```",
+      "x": -807,
+      "y": -1200,
+      "width": 435,
+      "height": 360,
+      "color": "2"
+    },
+    {
+      "id": "validation-rules",
+      "type": "text",
+      "text": "## Validation Rules\n\n### YAML Structure\n- Valid frontmatter syntax\n- Required fields present\n- Consistent templater variables\n\n### Mermaid Diagrams\n- Valid mermaid syntax\n- All referenced nodes exist\n- Edge semantics preserved\n\n### Task Dependencies\n- No circular dependencies\n- Valid task references\n- Acceptance criteria defined",
+      "x": 866,
+      "y": -1200,
+      "width": 240,
+      "height": 360,
+      "color": "2"
+    },
+    {
+      "id": "tasks-phase-group",
+      "type": "group",
+      "x": -1400,
+      "y": 320,
+      "width": 2560,
+      "height": 1520,
+      "color": "4",
+      "label": "3-tasks"
+    },
+    {
+      "id": "task-1-template",
+      "type": "text",
+      "text": "# TASK: {{slug_1}}\n\n```yaml\ntitle: {{task_title_1}}\norder: 10\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_1}}\"\npointers:\n  - {{repo_path_1}}\nacceptance_checks:\n  - {{check_1}}\ndepends_on: []\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_1}}\n```",
+      "x": -1235,
+      "y": 520,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-2-template",
+      "type": "text",
+      "text": "# TASK: {{slug_2}}\n\n```yaml\ntitle: {{task_title_2}}\norder: 20\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_2}}\"\npointers:\n  - {{repo_path_2}}\nacceptance_checks:\n  - {{check_2}}\ndepends_on: []\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_2}}\n```",
+      "x": -675,
+      "y": 520,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-3-template",
+      "type": "text",
+      "text": "# TASK: {{slug_3}}\n\n```yaml\ntitle: {{task_title_3}}\norder: 30\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_3}}\"\npointers:\n  - {{repo_path_3}}\nacceptance_checks:\n  - {{check_3}}\ndepends_on: [{{slug_1}}]\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_3}}\n```",
+      "x": -1235,
+      "y": 940,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-4-template",
+      "type": "text",
+      "text": "# TASK: {{slug_4}}\n\n```yaml\ntitle: {{task_title_4}}\norder: 40\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_4}}\"\npointers:\n  - {{repo_path_4}}\nacceptance_checks:\n  - {{check_4}}\ndepends_on: [{{slug_2}}]\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_4}}\n```",
+      "x": -675,
+      "y": 940,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-5-template",
+      "type": "text",
+      "text": "# TASK: {{slug_5}}\n\n```yaml\ntitle: {{task_title_5}}\norder: 50\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_5}}\"\npointers:\n  - {{repo_path_5}}\nacceptance_checks:\n  - {{check_5}}\ndepends_on: [{{slug_3}}]\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_5}}\n```",
+      "x": -1235,
+      "y": 1360,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-6-template",
+      "type": "text",
+      "text": "# TASK: {{slug_6}}\n\n```yaml\ntitle: {{task_title_6}}\norder: 60\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_6}}\"\npointers:\n  - {{repo_path_6}}\nacceptance_checks:\n  - {{check_6}}\ndepends_on: [{{slug_4}}]\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_6}}\n```",
+      "x": -675,
+      "y": 1360,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-7-template",
+      "type": "text",
+      "text": "# TASK: {{slug_7}}\n\n```yaml\ntitle: {{task_title_7}}\norder: 70\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_7}}\"\npointers:\n  - {{repo_path_7}}\nacceptance_checks:\n  - {{check_7}}\ndepends_on: []\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_7}}\n```",
+      "x": -105,
+      "y": 520,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-8-template",
+      "type": "text",
+      "text": "# TASK: {{slug_8}}\n\n```yaml\ntitle: {{task_title_8}}\norder: 80\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_8}}\"\npointers:\n  - {{repo_path_8}}\nacceptance_checks:\n  - {{check_8}}\ndepends_on: []\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_8}}\n```",
+      "x": 445,
+      "y": 520,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-9-template",
+      "type": "text",
+      "text": "# TASK: {{slug_9}}\n\n```yaml\ntitle: {{task_title_9}}\norder: 90\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_9}}\"\npointers:\n  - {{repo_path_9}}\nacceptance_checks:\n  - {{check_9}}\ndepends_on: [{{slug_7}}]\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_9}}\n```",
+      "x": -105,
+      "y": 940,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-10-template",
+      "type": "text",
+      "text": "# TASK: {{slug_10}}\n\n```yaml\ntitle: {{task_title_10}}\norder: 100\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_10}}\"\npointers:\n  - {{repo_path_10}}\nacceptance_checks:\n  - {{check_10}}\ndepends_on: [{{slug_8}}]\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_10}}\n```",
+      "x": 445,
+      "y": 940,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-11-template",
+      "type": "text",
+      "text": "# TASK: {{slug_11}}\n\n```yaml\ntitle: {{task_title_11}}\norder: 110\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_11}}\"\npointers:\n  - {{repo_path_11}}\nacceptance_checks:\n  - {{check_11}}\ndepends_on: [{{slug_9}}]\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_11}}\n```",
+      "x": -115,
+      "y": 1360,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "task-12-template",
+      "type": "text",
+      "text": "# TASK: {{slug_12}}\n\n```yaml\ntitle: {{task_title_12}}\norder: 120\nstatus: draft\ntype:\n  - \"implementation\"\n  - \"{{category_12}}\"\npointers:\n  - {{repo_path_12}}\nacceptance_checks:\n  - {{check_12}}\ndepends_on: [{{slug_10}}]\nslice_markers: true\nworkshop_integration: true\ndescription: |\n  {{detail_12}}\n```",
+      "x": 445,
+      "y": 1360,
+      "width": 520,
+      "height": 360
+    }
+  ],
+  "edges": [
+    {
+      "id": "legend-to-phase-1",
+      "fromNode": "legend-and-overview",
+      "fromSide": "right",
+      "toNode": "phase-1-design-guide",
+      "toSide": "left"
+    },
+    {
+      "id": "task-1-to-task-2-relates",
+      "fromNode": "task-1-template",
+      "fromSide": "right",
+      "toNode": "task-2-template",
+      "toSide": "left",
+      "label": "relates"
+    },
+    {
+      "id": "task-1-to-task-3-blocks",
+      "fromNode": "task-1-template",
+      "fromSide": "bottom",
+      "toNode": "task-3-template",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "task-7-to-task-8-relates",
+      "fromNode": "task-7-template",
+      "fromSide": "right",
+      "toNode": "task-8-template",
+      "toSide": "left",
+      "label": "relates"
+    },
+    {
+      "id": "task-7-to-task-9-blocks",
+      "fromNode": "task-7-template",
+      "fromSide": "bottom",
+      "toNode": "task-9-template",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "phase-1-to-phase-2",
+      "fromNode": "phase-1-design-guide",
+      "fromSide": "right",
+      "toNode": "phase-2-requirements-guide",
+      "toSide": "left"
+    },
+    {
+      "id": "phase-1-guide-to-design-group",
+      "fromNode": "phase-1-design-guide",
+      "fromSide": "bottom",
+      "toNode": "design-phase-group",
+      "toSide": "top",
+      "label": "draft"
+    },
+    {
+      "id": "task-2-to-task-4-blocks",
+      "fromNode": "task-2-template",
+      "fromSide": "bottom",
+      "toNode": "task-4-template",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "task-8-to-task-10-blocks",
+      "fromNode": "task-8-template",
+      "fromSide": "bottom",
+      "toNode": "task-10-template",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "task-3-to-task-5-blocks",
+      "fromNode": "task-3-template",
+      "fromSide": "bottom",
+      "toNode": "task-5-template",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "task-9-to-task-11-blocks",
+      "fromNode": "task-9-template",
+      "fromSide": "bottom",
+      "toNode": "task-11-template",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "phase-2-to-phase-3",
+      "fromNode": "phase-2-requirements-guide",
+      "fromSide": "right",
+      "toNode": "phase-3-tasks-guide",
+      "toSide": "left"
+    },
+    {
+      "id": "phase-2-guide-to-requirements-group",
+      "fromNode": "phase-2-requirements-guide",
+      "fromSide": "bottom",
+      "toNode": "requirements-phase-group",
+      "toSide": "top",
+      "label": "specify"
+    },
+    {
+      "id": "design-to-requirements-model",
+      "fromNode": "design-phase-group",
+      "fromSide": "right",
+      "toNode": "requirements-phase-group",
+      "toSide": "left",
+      "label": "model"
+    },
+    {
+      "id": "task-4-to-task-6-blocks",
+      "fromNode": "task-4-template",
+      "fromSide": "bottom",
+      "toNode": "task-6-template",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "task-10-to-task-12-blocks",
+      "fromNode": "task-10-template",
+      "fromSide": "bottom",
+      "toNode": "task-12-template",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "task-5-to-task-6-relates",
+      "fromNode": "task-5-template",
+      "fromSide": "right",
+      "toNode": "task-6-template",
+      "toSide": "left",
+      "label": "relates"
+    },
+    {
+      "id": "task-11-to-task-12-relates",
+      "fromNode": "task-11-template",
+      "fromSide": "right",
+      "toNode": "task-12-template",
+      "toSide": "left",
+      "label": "relates"
+    },
+    {
+      "id": "design-to-tasks-compile",
+      "fromNode": "design-phase-group",
+      "fromSide": "right",
+      "toNode": "tasks-phase-group",
+      "toSide": "left",
+      "label": "compile"
+    },
+    {
+      "id": "phase-3-guide-to-tasks-group",
+      "fromNode": "phase-3-tasks-guide",
+      "fromSide": "bottom",
+      "toNode": "tasks-phase-group",
+      "toSide": "right",
+      "label": "implement"
+    },
+    {
+      "id": "requirements-to-tasks-sequence",
+      "fromNode": "requirements-phase-group",
+      "fromSide": "bottom",
+      "toNode": "tasks-phase-group",
+      "toSide": "top",
+      "label": "sequence"
+    }
+  ]
+}
