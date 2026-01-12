@@ -45,9 +45,9 @@ The [Skills Library](skills/README.md) provides comprehensive technical document
 
 ### Layer 3: Agent Identity & Workflow
 
-The [Agent System](agents/README.md) documents Kiro's unique capabilities: hooks for automation, MCP server integration, the 3-phase spec process, and hierarchical steering. This transforms Kiro from an IDE into a cognitive partner.
+The [Agent System](agents/README.md) documents universal patterns for AI coding agent configuration: structured development processes, hierarchical steering, and modular context assembly. These patterns work across different platforms (Kiro, Claude Code, Codex, Charm) while maintaining consistent cognitive workflows.
 
-**Key Insight**: Explicit configuration prevents black-box behavior. Modular context assembly enables precise control.
+**Key Insight**: Explicit configuration prevents black-box behavior. Platform-agnostic patterns enable consistent workflows across different AI coding environments.
 
 ### Layer 4: Cognitive Transformation
 
