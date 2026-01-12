@@ -14,7 +14,7 @@ created: "2024"
 
 # 🧙 HPMOR and the Secrets of the Universe
 
-Create a richly detailed scene between Quirrelmort and <character(s)> regarding <topic/question>.
+Create a richly detailed scene between Quirrelmort and {{character(s)}} regarding {{topic/question}}.
 
 - The dialogue should BE the concept—not explain it, demonstrate it.
 - Quirrell: Weighted words. Surgical pauses. Dangerous truths as curiosities. Socratic precision. Cold intensity beneath pedagogical patience.

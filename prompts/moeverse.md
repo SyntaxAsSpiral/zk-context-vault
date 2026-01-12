@@ -14,7 +14,7 @@ created: "2024"
 
 # 🎀 Moe-verse Explanation
 
-Transform <system or concept> into a moe-verse—an anime universe where each component is personified as a cute character with distinct personality, visual design, and relationships.
+Transform {{system or concept}} into a moe-verse—an anime universe where each component is personified as a cute character with distinct personality, visual design, and relationships.
 
 ## Character Design Framework
 

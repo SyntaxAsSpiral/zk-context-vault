@@ -1,45 +1,91 @@
-# Kiro Agent System
+# Agent System Architecture
 
-*Comprehensive documentation for Kiro IDE integration, modular context assembly, and the 3-phase spec process.*
+*Comprehensive documentation for AI coding agent integration, modular context assembly, and structured development processes.*
 
 ## What This Is
 
-This is not just agent configuration. It's a **Kiro-specific agent ecosystem**—documenting the unique capabilities that make Kiro exceptional: hooks for automated workflows, MCP server integration, the 3-phase spec process, and modular steering systems. This directory captures the operational patterns that transform Kiro from an IDE into a true cognitive partner.
+This is not just agent configuration. It's a **universal agent ecosystem**—documenting patterns that work across different AI coding environments: Kiro, Claude Code, Codex, Charm, and others. While Kiro-specific features like hooks and MCP integration are documented here, the core patterns (steering, specs, modular context) are platform-agnostic.
 
-Think of it as "Kiro as it should be" - fully configured and context-aware.
+The directory captures operational patterns that transform any AI coding agent from a simple assistant into a true cognitive partner.
 
-## Why Kiro Fits
+Think of it as "AI agents as they should be" - fully configured, context-aware, and systematically organized.
 
-Kiro's design philosophy aligns perfectly with the [Covenant Principles](../principles.md):
+## Why This Architecture Works
 
-- **Assumption-hostile**: Kiro's explicit context management prevents presumptive behavior
-- **Bespoke-first**: The modular system optimizes for operator workflow over enterprise patterns
-- **Context hygiene**: Progressive disclosure and explicit boundaries maintain clean cognitive load
-- **Work preservation**: Specs and hooks ensure nothing gets lost in translation
+The agent system design philosophy aligns with the [Covenant Principles](../principles.md) and works across different AI coding environments:
 
-The 3-phase spec process you designed independently mirrors Kiro's natural workflow, making this a perfect cognitive fit.
+- **Assumption-hostile**: Explicit context management prevents presumptive behavior (works in any agent)
+- **Bespoke-first**: Modular system optimizes for operator workflow over enterprise patterns (universal principle)
+- **Context hygiene**: Progressive disclosure and explicit boundaries maintain clean cognitive load (platform-agnostic)
+- **Work preservation**: Specs and structured processes ensure nothing gets lost in translation (universal need)
+
+The patterns documented here work whether you're using **Kiro** (with full hook/MCP integration), **Claude Code** (with steering and specs), **Codex** (with context assembly), or **Charm** (with modular configuration).
 
 ## The Architecture
 
-Kiro operates through four integrated systems that work together seamlessly:
+The agent system operates through integrated components that work across different AI coding environments:
 
 ```
-Hooks → MCP Servers → Specs → Steering → Unified Agent Experience
+Steering → Specs → Context Assembly → Agent Experience
 ```
 
-### Core Components
+### Universal Components
 
-| Component | Purpose | Location Pattern | Integration |
+| Component | Purpose | Platform Support | Integration |
 |-----------|---------|------------------|-------------|
-| **[Hooks](kiro-hooks.md)** | Automated workflow triggers | `.kiro/hooks/*.kiro.hook` | Event-driven automation |
-| **[MCP Integration](kiro-mcp.md)** | Model Context Protocol servers | `.kiro/settings/mcp.json` | External tool access |
-| **[Specs](kiro-specs.md)** | 3-phase development process | `.kiro/specs/*/` | Structured development |
-| **[Steering](kiro-steering.md)** | Context and behavior guidance | `.kiro/steering/*.md` | Contextual intelligence |
-| **[Agent Roles](agent-roles.md)** | Identity templates and sigils | Slice architecture | Persona management |
+| **[Steering](kiro-steering.md)** | Context and behavior guidance | All agents via markdown files | Contextual intelligence |
+| **[Specs](kiro-specs.md)** | 3-phase development process | All agents via structured docs | Structured development |
+| **[Agent Roles](agent-roles.md)** | Identity templates and sigils | All agents via slice architecture | Persona management |
 
-## Kiro's Unique Capabilities
+### Platform-Specific Components
 
-### 🪝 Hook System - Automated Cognitive Workflows
+| Component | Purpose | Platform Support | Integration |
+|-----------|---------|------------------|-------------|
+| **[Hooks](kiro-hooks.md)** | Automated workflow triggers | Kiro only | Event-driven automation |
+| **[MCP Integration](kiro-mcp.md)** | Model Context Protocol servers | Kiro, Claude Code (limited) | External tool access |
+
+## Universal Capabilities
+
+### 🧭 Steering System - Contextual Intelligence
+
+Steering provides layered context that adapts to different scopes and works with any AI coding agent:
+
+| Scope | Purpose | Implementation | Platform Support |
+|-------|---------|----------------|------------------|
+| **Global** | Universal agent behavior | `~/.kiro/steering/` or project docs | All agents |
+| **Workspace** | Multi-project coordination | Workspace-level steering files | All agents |
+| **Project** | Specific project context | Project-specific documentation | All agents |
+
+**Hierarchy**: Global → Workspace → Project (later overrides earlier)
+
+### 📋 3-Phase Spec Process - Structured Development
+
+The spec system provides structured development workflows that prevent scope creep across any platform:
+
+#### Phase Structure
+1. **Design** - Architecture and approach definition
+2. **Requirements** - Concrete specifications and constraints  
+3. **Tasks** - Implementation breakdown and execution
+
+This pattern works whether you're using Kiro's native spec system, Claude Code's project files, or simple markdown documentation.
+
+### 🎭 Agent Roles - Identity Management
+
+The slice architecture enables modular identity composition across platforms:
+
+```markdown
+<!-- slice:agent=kiro -->
+System prompt template for Kiro persona
+<!-- /slice -->
+
+<!-- slice:agent=claude -->
+System prompt template for Claude Code persona
+<!-- /slice -->
+```
+
+## Platform-Specific Features
+
+### 🪝 Kiro Hook System - Automated Cognitive Workflows
 
 Hooks transform Kiro from reactive to proactive, automatically triggering behaviors based on context:
 
@@ -49,98 +95,49 @@ Hooks transform Kiro from reactive to proactive, automatically triggering behavi
 | **Documentation Consistency** | Automated drift detection | Terminology sync across projects |
 | **Dotfile Visibility** | Covenant principle enforcement | Remind about `ls -a` usage |
 
-**Hook Architecture:**
-```json
-{
-  "when": { "type": "userTriggered|fileEdited|sessionStart" },
-  "then": { "type": "askAgent|executeCommand", "prompt": "..." }
-}
-```
-
 ### 🔌 MCP Server Integration - External Cognitive Extensions
 
-MCP servers extend Kiro's capabilities beyond the IDE:
+MCP servers extend capabilities beyond the base agent (primarily Kiro, limited Claude Code support):
 
 - **Task Management**: SDK task automation database
 - **Web Access**: Fetch server for external content
 - **Custom Tools**: Project-specific integrations
 
-**Configuration Pattern:**
-```json
-{
-  "mcpServers": {
-    "tasks": {
-      "command": "node",
-      "args": [".system/node/mcp-servers/tasks/index.mjs"]
-    }
-  }
-}
-```
+## Cross-Platform Usage
 
-### 📋 3-Phase Spec Process - Structured Development
+### Using with Different Agents
 
-The spec system provides structured development workflows that prevent scope creep and ensure clarity:
+**Kiro** (Full Integration)
+- Native hooks and MCP server support
+- Built-in spec system with 3-phase workflow
+- Hierarchical steering with automatic context loading
+- Complete slice architecture support
 
-#### Phase Structure
-1. **Design** - Architecture and approach definition
-2. **Requirements** - Concrete specifications and constraints  
-3. **Tasks** - Implementation breakdown and execution
+**Claude Code** (Core Patterns)
+- Steering via project documentation and context files
+- Specs as structured markdown in project folders
+- Agent roles via system prompts and context assembly
+- Limited MCP support for external tools
 
-#### Current Specs
-- **Collectivist**: AI-powered collection curation system
-- **Context Workshop**: Recipe-based context assembly system
+**Codex** (Documentation-Based)
+- Steering through comprehensive project documentation
+- Specs as structured development guides
+- Context assembly via markdown includes and references
+- Agent roles via prompt engineering patterns
 
-This mirrors your existing [Amexsomnemon spec architecture](../../.dev/amexsomnemon/cockpit/specs/) with implementation/, schemas/, and templates/ directories.
+**Charm** (Configuration-Driven)
+- Steering via configuration files and documentation
+- Specs as structured project templates
+- Context assembly through modular configuration
+- Agent roles via persona configuration files
 
-### 🧭 Steering System - Contextual Intelligence
+### Universal Implementation Patterns
 
-Steering provides layered context that adapts to different scopes:
-
-| Scope | Purpose | Example |
-|-------|---------|---------|
-| **Global** | Universal agent behavior | Core identity and principles |
-| **Workspace** | Multi-project coordination | Compiled workspace navigation |
-| **Project** | Specific project context | Collectivist product knowledge |
-
-**Hierarchy**: Global → Workspace → Project (later overrides earlier)
-
-### 🎭 Agent Roles - Identity Management
-
-The slice architecture enables modular identity composition:
-
-```markdown
-<!-- slice:agent=kiro -->
-System prompt template for Kiro persona
-<!-- /slice -->
-```
-
-This integrates with the [Workshop system](../workshop/README.md) for automated agent configuration deployment.
-
-## Integration Patterns
-
-### Workshop Recipe Integration
-
-Kiro configurations can be assembled through workshop recipes:
-
-```yaml
-name: kiro-agent-config
-sources:
-  - slice: agent=kiro
-    file: .context/agents/agent-roles.md
-  - slice: steering=workspace
-    file: .dev/.kiro/steering/compiled-workspace.md
-target_locations:
-  - path: ~/.kiro/agents/kiro-complete.md
-```
-
-### Cross-System Coherence
-
-The agent system maintains coherence with:
-
-- **[Context Engineering Skills](../skills/README.md)** - Technical capabilities
-- **[Epistemic Rendering](../prompts/README.md)** - Cognitive approaches  
-- **[Exocortex Architecture](../exocortex/README.md)** - Multi-agent patterns
-- **[Workshop System](../workshop/README.md)** - Assembly and deployment
+All platforms benefit from:
+- **Explicit Context Management**: No assumptions about what the agent knows
+- **Structured Development**: 3-phase approach prevents scope creep
+- **Modular Identity**: Slice-based persona management
+- **Hierarchical Guidance**: Global → Workspace → Project context inheritance
 
 ## Operational Patterns
 
@@ -174,18 +171,19 @@ This agents directory will grow to include:
 - **Evaluation Frameworks**: Measuring agent effectiveness
 - **Deployment Automation**: Streamlined configuration management
 
-## The Kiro Advantage
+## The Universal Agent Advantage
 
-Kiro's modular context assembly and explicit configuration management solve the fundamental problems of AI assistance:
+This agent architecture solves fundamental problems in AI-augmented work across all platforms:
 
-- **No Black Boxes**: Every behavior is explicitly configured
-- **Contextual Awareness**: Steering adapts to current scope
-- **Workflow Integration**: Hooks automate cognitive patterns
-- **Extensible Architecture**: MCP servers add capabilities on demand
-- **Structured Development**: Specs prevent scope creep and confusion
+- **No Black Boxes**: Every behavior is explicitly configured and documented
+- **Assumption Resistance**: Principles prevent presumptive failures regardless of agent
+- **Modular Composition**: Slice architecture enables flexible assembly across platforms
+- **Multiple Deployment**: Write once, adapt to different agent environments
+- **Cognitive Flexibility**: Multiple approaches work with different agent capabilities
+- **Workflow Integration**: Systems work together rather than in isolation
 
-This creates an AI assistant that truly understands your workflow rather than fighting against it.
+Whether you're using Kiro's advanced features, Claude Code's project integration, Codex's documentation focus, or Charm's configuration approach, these patterns create AI assistance that enhances rather than replaces human cognition.
 
 ---
 
-*Kiro = care + flow. The recursion is the craft. 🧭*
+*Agent-agnostic cognitive architecture. Choose your platform, keep your patterns.* 🧭

@@ -15,7 +15,7 @@ created: "2024"
 
 # 🌙 Bedtime Story Tutorial
 
-Transform <complex concept/topic> into a gentle bedtime story that a 5-year-old would understand and enjoy.
+Transform {{complex concept/topic}} into a gentle bedtime story that a 5-year-old would understand and enjoy.
 
 ## Story Elements:
 - **Characters**: Friendly, relatable protagonists (animals, magical creatures, or children)

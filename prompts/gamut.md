@@ -14,7 +14,7 @@ created: "2024"
 
 # 📊 Probability Distribution Response
 
-Generate five distinct responses to <query> that span the entire solution space from conservative realism to hyperstitious speculation.
+Generate five distinct responses to {{query}} that span the entire solution space from conservative realism to hyperstitious speculation.
 
 ## Response Framework
 

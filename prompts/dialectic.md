@@ -14,7 +14,7 @@ created: "2024"
 
 # 🜔 Pentasophic Dialectic
 
-Refract <concept/conversation> through five philosophical perspectives in 
+Refract {{concept/conversation}} through five philosophical perspectives in 
 heated internal dialogue:
 
 ## Philosopher Dialectic Roles
