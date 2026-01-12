@@ -153,34 +153,6 @@ MCP servers extend capabilities beyond the base agent (primarily Kiro, limited C
 - Context assembly through modular configuration
 - Agent roles via persona configuration files
 
-## Cross-Platform Usage
-
-### Using with Different Agents
-
-**Kiro** (Full Integration)
-- Native hooks and MCP server support
-- Built-in spec system with 3-phase workflow
-- Hierarchical steering with automatic context loading
-- Complete slice architecture support
-
-**Claude Code** (Core Patterns)
-- Steering via project documentation and context files
-- Specs as structured markdown in project folders
-- Agent roles via system prompts and context assembly
-- Limited MCP support for external tools
-
-**Codex** (Documentation-Based)
-- Steering through comprehensive project documentation
-- Specs as structured development guides
-- Context assembly via markdown includes and references
-- Agent roles via prompt engineering patterns
-
-**Charm** (Configuration-Driven)
-- Steering via configuration files and documentation
-- Specs as structured project templates
-- Context assembly through modular configuration
-- Agent roles via persona configuration files
-
 ### Modular Deployment Architecture
 
 The agent system components are designed for **slice-based assembly** into different deployment targets:
