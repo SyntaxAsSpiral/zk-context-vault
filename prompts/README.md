@@ -50,8 +50,8 @@ Choose your lens based on what kind of cognitive work needs to happen, not just 
 
 This epistemic rendering stack connects to broader context engineering patterns:
 
-- **[Context Fundamentals](../skills/context-fundamentals/SKILL.md)** - Understanding how different lenses affect context usage
-- **[Multi-Agent Patterns](../skills/multi-agent-patterns/SKILL.md)** - Using different lenses across specialized agents
-- **[Memory Systems](../skills/memory-systems/SKILL.md)** - How different rendering modes interact with memory architectures
+- **[Covenant Patterns](../skills/covenant-patterns/SKILL.md)** - Foundational principles that guide epistemic rendering design
+- **[Multi-Agent Coordination](../skills/multi-agent-coordination/SKILL.md)** - Using different lenses across specialized agents in pentadyadic evaluation
+- **[Agent Steering](../skills/agent-steering/SKILL.md)** - How rendering modes affect agent context compilation and steering
 
 The lenses also relate to core [principles](../principles.md) of epistemic hygiene and assumption-hostile design.

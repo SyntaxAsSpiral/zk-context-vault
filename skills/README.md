@@ -1,16 +1,16 @@
 # Context Engineering Skills
 
-*A comprehensive library of agent system capabilities with dual-format documentation for multiple deployment targets.*
+*A ZK-specific library of agent system capabilities with dual-format documentation for multiple deployment targets.*
 
 ## What This Is
 
-This is not just a skill collection. It's a **dual-format documentation system**—each skill provides complete technical documentation that can be compiled into different schemas for various deployment targets: Claude Code skills, Codex skills, and Kiro Powers. The workshop system assembles these into target-specific packages with appropriate formatting and frontmatter.
+This is not a generic skill collection. It's a **bespoke capability library** for the ZK context vault—each skill maps to a core system (Principles, Agents, Prompts, Artifacts, Workshop, Exocortex) and provides practical patterns rather than theoretical frameworks.
 
-Think of it as "write once, deploy everywhere" for agent capabilities.
+Think of it as "the skills ZK actually uses" with dual-format deployment.
 
 ## The Architecture
 
-Skills follow a standardized structure that supports multiple compilation targets:
+Skills follow a standardized structure supporting multiple compilation targets:
 
 ```
 Skill Source → Workshop Recipes → Target-Specific Packages
@@ -25,113 +25,105 @@ Each skill directory contains:
 | **SKILL.md** | Core technical documentation | Claude Code, Codex skills |
 | **POWER.md** | User-friendly power documentation | Kiro Powers |
 | **power.json** | Power metadata and configuration | Kiro Powers |
-| **examples/** | Self-documenting conformance tests | All targets |
-| **scripts/** | Implementation code and examples | All targets |
 | **references/** | Supporting documentation | All targets |
 | **assets/** | Resources and data files | Kiro Powers |
 
-### Dual-Format Requirements
+### Core System Mapping
 
-Different deployment targets require different schemas:
+Skills map to the 7 core systems:
 
-| Target | Format | Frontmatter | Focus |
-|--------|--------|-------------|-------|
-| **Claude Code** | Technical SKILL.md | `name`, `description` | Implementation details |
-| **Codex Skills** | Technical SKILL.md | Extended metadata | Integration patterns |
-| **Kiro Powers** | User-friendly POWER.md + power.json | Rich metadata, dependencies | User experience |
+| Core System | Primary Skill | Coverage |
+|-------------|--------------|----------|
+| **Principles** | covenant-patterns | ✅ Full |
+| **Agents** | agent-steering | ✅ Full |
+| **Prompts** | epistemic-rendering | ✅ Full |
+| **Artifacts** | semantic-json-workflows | ✅ Full |
+| **Workshop** | recipe-assembly | ✅ Full |
+| **Exocortex** | multi-agent-coordination | ✅ Full |
+| **Skills** | (this library) | META |
 
 ## Skills Catalog
 
-### Context Engineering Core
+### Foundations
 
-| Skill | Purpose | Complexity | Power Available |
-|-------|---------|------------|-----------------|
-| **[context-fundamentals](context-fundamentals/SKILL.md)** | Understanding context mechanics and constraints | Foundational | ❌ |
-| **[context-optimization](context-optimization/SKILL.md)** | Extending effective context capacity | Intermediate | ❌ |
-| **[context-compression](context-compression/SKILL.md)** | Intelligent context summarization | Advanced | ❌ |
-| **[context-degradation](context-degradation/SKILL.md)** | Detecting and preventing context failures | Advanced | ❌ |
+| Skill | Purpose | Core System | Power |
+|-------|---------|-------------|-------|
+| **[covenant-patterns](covenant-patterns/SKILL.md)** | Thirteen principles as design constraints | Principles | ✅ |
 
-### Agent Architecture
+### Agent Configuration
 
-| Skill | Purpose | Complexity | Power Available |
-|-------|---------|------------|-----------------|
-| **[multi-agent-patterns](multi-agent-patterns/SKILL.md)** | Designing multi-agent architectures | Advanced | ❌ |
-| **[memory-systems](memory-systems/SKILL.md)** | Persistent memory for agent systems | Advanced | ❌ |
-| **[tool-design](tool-design/SKILL.md)** | Creating effective agent tools | Intermediate | ❌ |
+| Skill | Purpose | Core System | Power |
+|-------|---------|-------------|-------|
+| **[agent-steering](agent-steering/SKILL.md)** | Universal agent configuration (Kiro, Claude, Codex) | Agents | ✅ |
+| **[multi-agent-coordination](multi-agent-coordination/SKILL.md)** | Pentadyadic and multi-agent patterns | Exocortex | ✅ |
 
-### Evaluation & Quality
+### Cognitive Tools
 
-| Skill | Purpose | Complexity | Power Available |
-|-------|---------|------------|-----------------|
-| **[evaluation](evaluation/SKILL.md)** | Building evaluation frameworks | Intermediate | ❌ |
-| **[advanced-evaluation](advanced-evaluation/SKILL.md)** | Sophisticated evaluation techniques | Advanced | ❌ |
+| Skill | Purpose | Core System | Power |
+|-------|---------|-------------|-------|
+| **[epistemic-rendering](epistemic-rendering/SKILL.md)** | Eight cognitive lenses for different understanding | Prompts | ✅ |
 
-### Development & Integration
+### Context Management
 
-| Skill | Purpose | Complexity | Power Available |
-|-------|---------|------------|-----------------|
-| **[project-development](project-development/SKILL.md)** | Agent-powered development workflows | Intermediate | ❌ |
-| **[mcp-builder](mcp-builder/SKILL.md)** | Model Context Protocol integration | Advanced | ❌ |
-| **[catppuccin-theming](catppuccin-theming/SKILL.md)** | Consistent color palette application | Beginner | ✅ |
+| Skill | Purpose | Core System | Power |
+|-------|---------|-------------|-------|
+| **[recipe-assembly](recipe-assembly/SKILL.md)** | Slice architecture and deployment | Workshop | ✅ |
+| **[context-degradation](context-degradation/SKILL.md)** | Detecting and preventing context failures | Reference | ❌ |
+
+### Visual & Integration
+
+| Skill | Purpose | Core System | Power |
+|-------|---------|-------------|-------|
+| **[semantic-json-workflows](semantic-json-workflows/SKILL.md)** | Canvas-to-structured-data anticompiler | Artifacts | ✅ |
+| **[catppuccin-theming](catppuccin-theming/SKILL.md)** | Consistent color palette application | Aesthetic | ✅ |
+| **[mcp-builder](mcp-builder/SKILL.md)** | Model Context Protocol server creation | Integration | ❌ |
+
+## Skill Dependencies
+
+```
+covenant-patterns (foundation)
+    ↓
+├── agent-steering (depends on covenant)
+│       ↓
+│   └── multi-agent-coordination (depends on agent-steering)
+├── epistemic-rendering (depends on covenant)
+├── recipe-assembly (depends on covenant)
+└── semantic-json-workflows (standalone)
+```
 
 ## Workshop Integration
 
-The skills integrate with the [Context Workshop](../workshop/README.md) through recipe-based compilation:
+Skills integrate with the [Context Workshop](../workshop/README.md) through recipe-based compilation:
 
-### Recipe Types
-
-- **skill-bundle**: Combine multiple skills for Claude Code
-- **power-package**: Generate Kiro Power from POWER.md + power.json
-- **codex-skill**: Format for Codex integration
-
-### Compilation Process
-
-1. **Source Analysis**: Workshop analyzes skill structure and metadata
-2. **Target Selection**: Recipe specifies compilation target (Claude/Codex/Kiro)
-3. **Schema Transformation**: Content reformatted for target requirements
-4. **Asset Bundling**: Scripts, references, and assets packaged appropriately
-5. **Deployment**: Assembled packages deployed to target locations
-
-### Example Recipe Structure
+### Example Recipe
 
 ```yaml
-name: claude-context-skills
+name: skill-bundle
 target_locations:
-  - path: ~/.config/claude/skills/context-bundle.md
+  - path: ~/.claude/skills/covenant-bundle.md
 sources:
-  - slice: skill=context-fundamentals
-    file: .context/skills/context-fundamentals/SKILL.md
-  - slice: skill=context-optimization
-    file: .context/skills/context-optimization/SKILL.md
+  - slice: skill=covenant-patterns
+    file: skills/covenant-patterns/SKILL.md
+  - slice: skill=agent-steering
+    file: skills/agent-steering/SKILL.md
 template: |
-  # Context Engineering Skills Bundle
+  # Skills Bundle
   {content}
 ```
 
-## Implementation Patterns
+### Slice Architecture
 
-### Self-Documenting Examples Pattern
+Skills use HTML comment markers for extraction:
 
-Inspired by the [self-documenting methodology](https://github.com/SyntaxAsSpiral/Collectivist) and demonstrated in the [Semantic JSON Examples](https://github.com/SyntaxAsSpiral/semantic-json/tree/main/examples), skills should include examples that literally describe their expected behavior—files that document themselves.
-
-#### Example Structure
-- **Primary test file**: Core demonstration that describes its own expected state
-- **Exported artifacts**: Clean versions showing transformation results  
-- **Visual references**: Screenshots or diagrams showing expected outcomes
-- **Real-world samples**: Practical applications using actual data
-
-#### Conformance Testing Pattern
+```markdown
+<!-- slice:skill=covenant-patterns -->
+Content to extract
+<!-- /slice -->
 ```
-skill-example.canvas  →  skill-example.json
-         ↓                        ↓
-   Full skill format         Pure data artifact
-   (implementation details)  (semantic content only)
-   (context metadata)        (core capabilities)
-```
+
+## Documentation Standards
 
 ### SKILL.md Structure
-
-All skills follow a consistent documentation pattern:
 
 ```markdown
 ---
@@ -141,30 +133,23 @@ description: Brief description for activation context
 
 # Skill Title
 
-## When to Activate
-- Specific trigger conditions
-- Use case scenarios
+## Overview
+What is this, why it exists
 
 ## Core Concepts
-- Fundamental principles
-- Key insights
+Fundamental principles
 
 ## Detailed Topics
-- Implementation details
-- Advanced patterns
+Implementation patterns
 
 ## Practical Guidance
-- Concrete examples
-- Best practices
+Concrete examples
 
 ## Integration
-- Related skills
-- External dependencies
+Related skills, system connections
 ```
 
 ### POWER.md Structure
-
-Powers provide user-friendly documentation:
 
 ```markdown
 # Power Title 🎯
@@ -175,15 +160,11 @@ Powers provide user-friendly documentation:
 User-focused description
 
 ## Features
-### 🎯 Feature Categories
+### Feature Categories
 - Specific capabilities
-- User benefits
 
 ## Quick Start
 Immediate value examples
-
-## Advanced Usage
-Power user features
 ```
 
 ### power.json Schema
@@ -193,48 +174,65 @@ Power user features
   "name": "identifier",
   "displayName": "Human Name",
   "description": "User-facing description",
-  "version": "semver",
-  "author": "creator",
+  "version": "1.0.0",
+  "author": "ZK",
   "keywords": ["searchable", "terms"],
   "category": "classification",
   "mcpServers": {},
-  "steeringFiles": ["guides.md"],
+  "steeringFiles": ["POWER.md", "SKILL.md"],
   "dependencies": {},
-  "assets": ["resources"]
+  "assets": []
 }
 ```
 
 ## Quality Standards
 
+### Covenant Alignment
+
+All skills embody covenant principles:
+- **Bespokedness**: ZK-specific patterns, not generic frameworks
+- **Data Fidelity**: No invented examples or presumed outputs
+- **Determinism**: Reproducible patterns with stable identifiers
+- **Context Hygiene**: Skills compile per-recipient, not dump everything
+
 ### Documentation Requirements
 
-- **Activation Context**: Clear triggers for when to use the skill
+- **Activation Context**: Clear triggers for when to use
 - **Implementation Depth**: Sufficient detail for practical application
-- **Self-Documenting Examples**: Following the [self-documenting methodology](https://github.com/SyntaxAsSpiral/Collectivist) with [conformance test patterns](https://github.com/SyntaxAsSpiral/semantic-json/blob/main/examples/conformance-test-card.canvas) where examples describe their expected behavior
-- **Transformation Artifacts**: Before/after examples showing skill application results
-- **Integration Guidance**: How skills connect to broader systems
-- **Code Examples**: Working implementations in scripts/
-- **Cross-References**: Links to related skills and external resources
+- **System Integration**: How skill connects to core systems
+- **Cross-References**: Links to related skills
 
 ### Dual-Format Consistency
 
 - **Content Alignment**: SKILL.md and POWER.md cover same capabilities
 - **Appropriate Depth**: Technical vs. user-friendly presentation
-- **Metadata Sync**: Consistent naming and descriptions across formats
-- **Asset Management**: Proper resource organization for different targets
+- **Metadata Sync**: Consistent naming across formats
+
+## Archive
+
+Generic context-engineering skills have been archived to `archive/`. These contain valuable theoretical content that may be referenced when building new skills:
+
+- context-fundamentals (foundational theory)
+- context-optimization (token allocation findings)
+- context-compression (compression metrics)
+- memory-systems (DMR benchmarks)
+- multi-agent-patterns (telephone game research)
+- tool-design (reduction case studies)
+- evaluation (basic frameworks)
+- advanced-evaluation (LLM-as-judge patterns)
+- project-development (case studies)
 
 ## Integration
 
 This skills library connects to the broader context ecosystem:
 
-- **[ZK Context Vault](https://github.com/SyntaxAsSpiral/zk-context-vault)** - Parent repository: Complete agent system documentation and implementation patterns
-- **[Context Workshop](../workshop/README.md)** - Recipe-based compilation system
-- **[Epistemic Rendering](../prompts/README.md)** - Different cognitive approaches to skill application
-- **[Exocortex Architecture](../exocortex/README.md)** - Agent system implementation patterns
-- **[Covenant Principles](../principles.md)** - Bespoke design philosophy
-
-The skills serve as the technical foundation for implementing sophisticated agent systems while maintaining the flexibility to deploy across different platforms and use cases.
+- **[Principles](../principles.md)** — Foundation that skills operationalize
+- **[Agents](../agents/README.md)** — Agent configuration using skills
+- **[Prompts](../prompts/README.md)** — Epistemic lenses documented as skill
+- **[Artifacts](../artifacts/README.md)** — Visual workflows documented as skill
+- **[Workshop](../workshop/README.md)** — Recipe-based skill compilation
+- **[Exocortex](../exocortex/README.md)** — Multi-agent patterns as skill
 
 ---
 
-*Skills are capabilities. Powers are experiences. The workshop bridges the gap.*
+*Skills are capabilities mapped to core systems. Bespoke, not generic.*

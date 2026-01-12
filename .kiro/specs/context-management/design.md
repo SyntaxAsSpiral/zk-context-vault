@@ -50,8 +50,8 @@ target_locations:
 sources:
   - slice: agent=claudi-claude-code
     file: .context/agents/assistant.md
-  - slice: skill=context-fundamentals  
-    file: .context/skills/context-fundamentals/SKILL.md
+  - slice: skill=agent-steering
+    file: .context/skills/agent-steering/SKILL.md
 template: |
   # Claude System Prompt
   {content}

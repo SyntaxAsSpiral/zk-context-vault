@@ -118,9 +118,9 @@ The [Work Preservation Principle](principles.md#⛔-work-preservation) ensures n
 ## Getting Started
 
 ### For Context Engineering
-1. Start with [Context Fundamentals](skills/context-fundamentals/SKILL.md)
-2. Explore [Context Optimization](skills/context-optimization/SKILL.md) techniques
-3. Implement [Progressive Disclosure](skills/context-fundamentals/SKILL.md#progressive-disclosure) patterns
+1. Start with [Covenant Patterns](skills/covenant-patterns/SKILL.md) for foundational principles
+2. Study [Agent Steering](skills/agent-steering/SKILL.md) for context compilation techniques
+3. Implement progressive disclosure patterns through agent context assembly
 
 ### For Agent Development
 1. Review [Agent Roles](agents/agent-roles.md) for identity patterns
@@ -130,7 +130,7 @@ The [Work Preservation Principle](principles.md#⛔-work-preservation) ensures n
 ### For Cognitive Work
 1. Explore [Epistemic Rendering](prompts/README.md) approaches
 2. Use [Workshop Recipes](workshop/README.md) for context assembly
-3. Consider [Multi-Agent Patterns](skills/multi-agent-patterns/SKILL.md) for complex tasks
+3. Consider [Multi-Agent Coordination](skills/multi-agent-coordination/SKILL.md) for complex tasks
 
 ### For Visual Modeling
 1. Explore [Canvas-to-Semantic-JSON](artifacts/README.md) workflows
@@ -139,8 +139,8 @@ The [Work Preservation Principle](principles.md#⛔-work-preservation) ensures n
 
 ### For Advanced Coordination
 1. Study [Exocortex Architecture](exocortex/README.md) patterns
-2. Implement [Memory Systems](skills/memory-systems/SKILL.md) for persistence
-3. Design [Evaluation Frameworks](skills/evaluation/SKILL.md) for quality assurance
+2. Review [Multi-Agent Coordination](skills/multi-agent-coordination/SKILL.md) for specialized agent patterns
+3. Implement [Triquetra Evaluation](skills/multi-agent-coordination/SKILL.md#triquetra-evaluation-pattern) for quality assessment
 
 ## The Vault Advantage
 

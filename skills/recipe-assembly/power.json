@@ -1,0 +1,27 @@
+{
+  "name": "recipe-assembly",
+  "displayName": "Recipe Assembly",
+  "description": "Recipe-based context assembly and deployment using slice architecture. Write once, deploy everywhere.",
+  "version": "1.0.0",
+  "author": "ZK",
+  "keywords": [
+    "recipes",
+    "assembly",
+    "workshop",
+    "slices",
+    "deployment",
+    "compilation",
+    "templates",
+    "sync"
+  ],
+  "category": "context-management",
+  "mcpServers": {},
+  "steeringFiles": [
+    "POWER.md",
+    "SKILL.md"
+  ],
+  "dependencies": {
+    "covenant-patterns": "1.0.0"
+  },
+  "assets": []
+}
