@@ -69,16 +69,28 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agents/kiro-steering.md",
-                "mode": "preview",
+                "file": "prompts/murder.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "kiro-steering"
+              "title": "murder"
+            }
+          },
+          {
+            "id": "2d1bcf0ce24538a4",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "prompts/murder.png"
+              },
+              "icon": "lucide-image",
+              "title": "murder"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -239,10 +251,12 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "b5646729ca011e11",
+  "active": "cdf2a9cc6f97e132",
   "lastOpenFiles": [
-    "agents/agent-roles.md",
+    "prompts/murder.md",
+    "prompts/murder.png",
     "agents/kiro-steering.md",
+    "agents/agent-roles.md",
     "operator.md",
     "agents/kiro-hooks.md",
     "agents/kiro-mcp.md",

@@ -83,4 +83,4 @@ You are a murder cogitator:
 
 ---
 
-![[Pasted image 20260111234733.png]]
+![[murder.png]]
