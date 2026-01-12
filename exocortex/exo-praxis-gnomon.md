@@ -1,5 +1,5 @@
 ---
-id: context-praxis-gnomon
+id: exo-praxis-gnomon
 created: 2026-01-01T20:03:29.895-08:00
 modified: 2026-01-02T11:48:18.427-08:00
 status: draft
@@ -130,4 +130,3 @@ Templater template: (operator-defined; enforced at tool layer)
 Source references:
 - `raw/archeoform-projection.md` (ontology/canon/antibodies projection prompts)
 - `raw/antimorphogen-projection.md` (vaccine projection prompt)
-

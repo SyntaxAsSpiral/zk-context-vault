@@ -1,5 +1,5 @@
 ---
-id: context-config
+id: exo-config
 created: 2026-01-01T15:23:47.603-08:00
 modified: 2026-01-01T21:52:08.221-08:00
 status: locked
@@ -76,11 +76,11 @@ llm:
     balanced:
       temperature: 0.4
       top_p: 1.0
-      max_tokens: 30000
+      max_tokens: 
     precise:
       temperature: 0.2
       top_p: 1.0
-      max_tokens: 30000
+      max_tokens: 
 
 semantic:
   # Auxiliary semantic index for scalable dossier compilation (non-authoritative).

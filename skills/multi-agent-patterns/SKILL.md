@@ -53,7 +53,7 @@ Multi-agent architectures assign each subtask to a dedicated agent with a fresh 
 **The Specialization Argument**
 Different tasks benefit from different agent configurations: different system prompts, different tool sets, different context structures. A general-purpose agent must carry all possible configurations in context. Specialized agents carry only what they need.
 
-Multi-agent architectures enable specialization without combinatorial explosion. The coordinator routes to specialized agents; each agent operates with lean context optimized for its domain.
+Multi-agent architectures enable specialization without combinatorial explosion. The coordinator routes to specialized agents; each agent operates with lean context optimized for its domain. This specialization can extend to different [epistemic rendering approaches](../prompts/README.md)—one agent might use narrative explanation while another uses analytical probability distributions for the same underlying concept.
 
 ### Architectural Patterns
 

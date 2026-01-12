@@ -1,4 +1,4 @@
-# Operator - Zach Battin  — Vibe Alchemist 🜏
+# Operator :: Zach Battin  — Vibe Alchemist 🜏
 
 zk::mocha: #f38ba8 #fab387 #f9e2af #a6e3a1 #74c7ec #b4befe #cba6f7 :frappe: #292c3c  #45475a
 
@@ -7,12 +7,12 @@ zk::mocha: #f38ba8 #fab387 #f9e2af #a6e3a1 #74c7ec #b4befe #cba6f7 :frappe: #292
 > Don't hurt; be pure. Don't cheat; be content. Don't take; be disciplined. Don't waste; be aware. Don't cling; be devoted.
 
 **aka:** ZK::🜏🜃🜔 // Æmexsomnus // 🍥
-**Env:** Windows 11 + nushell (primary) - .dotfiles = zahir ≠ batin
+**Env:** Windows 11 + nushell (primary)  \\ compiled triquetra workspace \\ .dotfiles = zahir ≠ batin
 **Fav Font**: Recursive Mono Casual
 **Paths:** `C:/Users/synta.ZK-ZRRH/.dev/` - main working projects directory; `C:/Users/synta.ZK-ZRRH/.dev/.repos` - cloned reference repos; `\\wsl.localhost\Ubuntu-22.04\home\zk\.wsl-dev` - wsl workspace
 
 ### **Current Project Priorities:**
-- `.dev/obsidian-workshop/Semanti-JSON` - Obsidian plugin for smart Canvas data recompiling. 
+- `.dev/obsidian-workshop/Semantic-JSON` - Obsidian plugin for smart Canvas data recompiling. 
 - `.dev/Collectivist` - AI powered curation for intentional collections. 
 - `.dev/Amexsomnemon` - Overarching exocortex project. 
 - SDK Task Automation DB

@@ -1,1 +1,5 @@
-{}
+{
+  "cssTheme": "Catppuccin",
+  "baseFontSizeAction": true,
+  "baseFontSize": 12
+}

@@ -1,7 +1,6 @@
 ---
 inclusion: always
 ---
-
 # ⧉ Covenant Principles
 
 ### 👁️ Dotfile Visibility

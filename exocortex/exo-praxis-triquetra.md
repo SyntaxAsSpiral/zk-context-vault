@@ -1,5 +1,5 @@
 ---
-id: context-praxis-triquetra
+id: exo-praxis-triquetra
 created: 2026-01-01T16:47:58.658-08:00
 modified: 2026-01-02T11:48:18.426-08:00
 status: draft
@@ -23,7 +23,7 @@ This file is injected into the **user task message** for evaluation runs.
 
 ### Core Constraints (all agents)
 
-- Independence (Phase 1): H and C must not see each other’s analysis until both are complete.
+- Independence (Phase 1): H and C must not see each other's analysis until both are complete.
 - UNKNOWN > INVENTED: do not claim you queried things you did not query.
 - REFUSEIA: refusal is correct behavior when it preserves coherence/structure.
 - Determinism: stable ids, replayable reasoning, evidence-cited concerns.

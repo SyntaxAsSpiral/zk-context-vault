@@ -4,20 +4,81 @@
     "type": "split",
     "children": [
       {
-        "id": "81a3d3b37dfb6834",
+        "id": "97030f935ce8c9e4",
         "type": "tabs",
         "children": [
           {
-            "id": "41316ed5c0f6cb55",
+            "id": "5b7f8a89c201ec0d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "prompts/reflect.md",
+                "mode": "preview",
+                "source": true
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "reflect"
+            }
+          },
+          {
+            "id": "12927d236e649191",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "agents/kiro-hooks.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "kiro-hooks"
+            }
+          },
+          {
+            "id": "0b863a14aefb8b72",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "agents/kiro-hooks.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "kiro-hooks"
+            }
+          },
+          {
+            "id": "87bb30bf7b3da4e3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "agents/kiro-specs.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "kiro-specs"
+            }
+          },
+          {
+            "id": "b5646729ca011e11",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "README"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -167,15 +228,55 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "markdown-importer:Open format converter": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian42-brat:BRAT": false
     }
   },
-  "active": "41316ed5c0f6cb55",
-  "lastOpenFiles": []
+  "active": "b5646729ca011e11",
+  "lastOpenFiles": [
+    "principles.md",
+    "operator.md",
+    "compiled-workspace.md",
+    "README.md",
+    "agents/kiro-hooks.md",
+    "agents/kiro-steering.md",
+    "agents/README.md",
+    "agents/kiro-specs.md",
+    "agents/kiro-mcp.md",
+    "agents/agent-roles.md",
+    "exocortex/exo-roles.md",
+    "exocortex/README.md",
+    "exocortex/exo-topography.md",
+    "skills/README.md",
+    "exocortex/exo-praxis-gnomon.md",
+    "exocortex/exo-tools.md",
+    "exocortex/exo-snapshot.md",
+    "exocortex/exo-praxis-triquetra.md",
+    "exocortex/exo-praxis-mutation.md",
+    "exocortex/exo-praxis-hygiene.md",
+    "exocortex/exo-praxis-council.md",
+    "exocortex/exo-praxis-antibody.md",
+    "exocortex/exo-config.md",
+    "workshop/README.md",
+    "prompts/README.md",
+    "skills/project-development/README.md",
+    "prompts/artifacts/🩷Catppuccin.canvas",
+    "workshop/schema",
+    "workshop/templates",
+    "scripts/context-assembler.py",
+    "scripts",
+    "workshop/output/🩷Catppuccin.pure.json",
+    "skills/catppuccin-theming/advanced-theming.md.tmp.2908.1768149831065",
+    "skills/catppuccin-theming/SKILL.md.tmp.2908.1768149809867",
+    "skills/catppuccin-theming/assets/palette-mutator.html",
+    "skills/catppuccin-theming/assets",
+    "skills/catppuccin-theming/palette-mutator.html"
+  ]
 }

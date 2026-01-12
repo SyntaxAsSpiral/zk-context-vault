@@ -44,6 +44,8 @@ Conversational turns: Preserve key decisions, commitments, and context shifts. R
 
 Retrieved documents: Preserve key facts and claims. Remove supporting evidence and elaboration.
 
+For complex concepts requiring different cognitive approaches, consider using [epistemic rendering techniques](../prompts/README.md) to transform the same information through different lenses before summarization.
+
 ### Observation Masking
 
 **The Observation Problem**

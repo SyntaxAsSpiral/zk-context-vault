@@ -1,5 +1,5 @@
 ---
-id: context-praxis-council
+id: exo-praxis-council
 created: 2026-01-01T20:42:58.100-08:00
 modified: 2026-01-02T11:48:18.432-08:00
 status: draft

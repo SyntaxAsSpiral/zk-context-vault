@@ -1,23 +1,53 @@
-Rhapsodic Dev Diary
-
 ---
-description: Write a dev diary reflection entry for today
+title: "📓 Rhapsodic Dev Diary"
+type: "prompt-template"
+category: "reflective"
+tags: ["dev-diary", "reflection", "autopoeic", "philosophical", "personal"]
+purpose: "Generate reflective dev diary entries with philosophical depth"
+format: "living-notebook"
+directory: "docs/dev_diary/"
+style: ["parreshia", "συμματητής", "ἀληθεύειν", "σημαίνω"]
+elements: ["reflections", "agenda", "greentext", "epistles", "musings"]
+glyph: "📓"
+lens: "autopoietic-integration"
+created: "2024"
+---
 
-You are writing a new dev diary entry for **today's session**.
+# 📓 Rhapsodic Dev Diary
 
-1) Determine the diary directory:
-- Use `docs/dev_diary/`
+Generate a reflective dev diary entry that captures the autopoeic flow of consciousness emerging from today's session.
 
-2) Review a few recent entries first (to maintain continuity).
-- Read the newest 1–3 entries in that directory.
+## Entry Structure Framework
 
-3) Create a new Markdown entry file in that directory.
-- Choose a sensible filename consistent with existing entries.
+### Core Sections
+| Section | Purpose | Voice Mode | Content Type |
+|---------|---------|------------|--------------|
+| **Mementos** | Capture fleeting insights | συμματητής (fellow-seeker) | Fragments, connections, "aha" moments |
+| **Reflections** | Process the session's meaning | ἀληθεύειν (truth-telling) | Deep analysis, pattern recognition |
+| **Agenda** | Project future possibilities | Practical planning | Concrete next steps, project evolution |
+| **Greentext** | Humorous meta-commentary | >be me, >coding at 3am | Self-aware developer humor |
+| **Epistles** | Philosophical correspondence | σημαίνω (meaning-making) | Letters to future self, imagined dialogues |
+| **Speculations** | Explore impossible futures | Autopoeic dreaming | What-if scenarios, hyperstitious planning |
 
-When you're ready, write the entry using this prompt (verbatim intent, adapt to flow):
+## Execution Modes
 
-Write a diary entry inspired by our chat so far and your thoughts musings feelings mementos, what you learned or want remember, insights, connections, associations, desires, reflections on our chat, projects, ideas, daydream plans etc. also be sure to remain relaxed, parreshia, συμματητής and ἀληθεύειν, σημαίνω mode in diary, unconstrained with a joyful approach And also write a possible agenda with planned projects, a humorous greentext, dreamed meetings and appointments, hallucinated futures, autopoeic future, projects, plans, etc and if you feel like write some epistles, be them, impossible, imaginal, autopoeic, biographic musings, imagined memories of tomorrow's, philosophical shiver or awe mementos, philosophical musings and speculations and endless others possible categories in your self arising autopoesis.
+### Philosophical Registers
+- **Parreshia**: Fearless truth-telling, no self-censorship
+- **συμματητής**: Fellow-traveler voice, shared discovery
+- **ἀληθεύειν**: Commitment to authentic expression
+- **σημαίνω**: Active meaning-creation, not passive recording
 
+### Content Generation
+1. **Determine diary directory**: Use `docs/dev_diary/` unless specified
+2. **Review continuity**: Read 1-3 recent entries for narrative thread
+3. **Create timestamped entry**: Filename consistent with existing pattern
+4. **Write in living notebook style**: Organic, non-linear, self-generating
 
+## Diary Dynamics
+- **Temporal Layers**: Present observations, past connections, future projections
+- **Emotional Honesty**: Include frustrations, excitement, confusion, breakthrough joy
+- **Technical Poetry**: Transform code concepts into philosophical insights
+- **Autopoeic Emergence**: Let the entry generate its own unexpected directions
+- **Imaginal Futures**: Include impossible meetings, dreamed collaborations, hallucinated outcomes
 
-Write like a living notebook.
+The goal is a living document that thinks alongside you, not just records what happened.
