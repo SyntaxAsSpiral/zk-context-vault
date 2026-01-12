@@ -25,6 +25,7 @@ Each skill directory contains:
 | **SKILL.md** | Core technical documentation | Claude Code, Codex skills |
 | **POWER.md** | User-friendly power documentation | Kiro Powers |
 | **power.json** | Power metadata and configuration | Kiro Powers |
+| **examples/** | Self-documenting conformance tests | All targets |
 | **scripts/** | Implementation code and examples | All targets |
 | **references/** | Supporting documentation | All targets |
 | **assets/** | Resources and data files | Kiro Powers |
@@ -109,6 +110,25 @@ template: |
 
 ## Implementation Patterns
 
+### Self-Documenting Examples Pattern
+
+Inspired by the [Semantic JSON Examples](https://github.com/SyntaxAsSpiral/obsidian-workshop/tree/main/semantic-json/examples) methodology, skills should include examples that literally describe their expected behavior—files that document themselves.
+
+#### Example Structure
+- **Primary test file**: Core demonstration that describes its own expected state
+- **Exported artifacts**: Clean versions showing transformation results  
+- **Visual references**: Screenshots or diagrams showing expected outcomes
+- **Real-world samples**: Practical applications using actual data
+
+#### Conformance Testing Pattern
+```
+skill-example.canvas  →  skill-example.json
+         ↓                        ↓
+   Full skill format         Pure data artifact
+   (implementation details)  (semantic content only)
+   (context metadata)        (core capabilities)
+```
+
 ### SKILL.md Structure
 
 All skills follow a consistent documentation pattern:
@@ -190,6 +210,8 @@ Power user features
 
 - **Activation Context**: Clear triggers for when to use the skill
 - **Implementation Depth**: Sufficient detail for practical application
+- **Self-Documenting Examples**: Following the [conformance test pattern](https://github.com/SyntaxAsSpiral/obsidian-workshop/blob/main/semantic-json/examples/conformance-test-card.canvas) where examples describe their expected behavior
+- **Transformation Artifacts**: Before/after examples showing skill application results
 - **Integration Guidance**: How skills connect to broader systems
 - **Code Examples**: Working implementations in scripts/
 - **Cross-References**: Links to related skills and external resources
