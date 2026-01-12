@@ -10,12 +10,12 @@ Think of it as "the missing manual for working with AI systems at scale."
 
 ## The Architecture
 
-The vault operates through six integrated systems that form a complete cognitive stack:
+The vault operates through seven integrated systems that form a complete cognitive stack:
 
 ```
-Principles → Skills → Agents → Prompts → Workshop → Exocortex
-     ↓         ↓        ↓        ↓         ↓         ↓
-Foundation → Capabilities → Identity → Cognition → Assembly → Memory
+Principles → Skills → Agents → Prompts → Artifacts → Workshop → Exocortex
+     ↓         ↓        ↓        ↓         ↓          ↓         ↓
+Foundation → Capabilities → Identity → Cognition → Modeling → Assembly → Memory
 ```
 
 ### Core Systems
@@ -26,6 +26,7 @@ Foundation → Capabilities → Identity → Cognition → Assembly → Memory
 | **[Skills](skills/README.md)** | Technical capabilities library | Dual-format documentation enables multiple deployment targets | Workshop compilation sources |
 | **[Agents](agents/README.md)** | Kiro-specific configurations | Modular context assembly with explicit behavior control | Identity and workflow management |
 | **[Prompts](prompts/README.md)** | Epistemic rendering stack | Same content through different cognitive lenses | Cognitive transformation toolkit |
+| **[Artifacts](artifacts/README.md)** | Visual cognitive modeling | Canvas-to-semantic-JSON anticompiler workflow | Bridge visual design and structured data |
 | **[Workshop](workshop/README.md)** | Recipe-based assembly system | Write once, deploy everywhere via slice architecture | Context compilation and deployment |
 | **[Exocortex](exocortex/README.md)** | Pentadyadic agent architecture | Distributed cognition through specialized AI agents | Advanced multi-agent coordination |
 
@@ -49,19 +50,25 @@ The [Agent System](agents/README.md) documents universal patterns for AI coding 
 
 **Key Insight**: Explicit configuration prevents black-box behavior. Platform-agnostic patterns enable consistent workflows across different AI coding environments.
 
-### Layer 4: Cognitive Transformation
+### Layer 4: Visual Cognitive Modeling
+
+The [Artifacts System](artifacts/README.md) bridges visual design and structured data through canvas-to-semantic-JSON workflows. Using Obsidian Canvas for visual modeling and the Semantic-JSON anticompiler, complex systems can be designed visually and converted to structured formats for processing.
+
+**Key Insight**: Visual modeling preserves spatial semantics that linear text cannot capture. The anticompiler decompresses visual intent into stable, deterministic structure.
+
+### Layer 5: Cognitive Transformation
 
 The [Epistemic Rendering Stack](prompts/README.md) provides different cognitive lenses for exploring the same concepts—from gentle bedtime stories to heated philosophical dialectics. Each lens reveals different aspects of truth.
 
 **Key Insight**: No single cognitive approach captures complete truth. Multiple lenses preserve meaning through multiplicity.
 
-### Layer 5: Assembly & Deployment
+### Layer 6: Assembly & Deployment
 
 The [Workshop System](workshop/README.md) uses recipe-based compilation to assemble context from distributed sources. The slice architecture enables modular composition with target-specific formatting.
 
 **Key Insight**: Context assembly should be explicit and reproducible. Recipes enable version control for cognitive artifacts.
 
-### Layer 6: Advanced Coordination
+### Layer 7: Advanced Coordination
 
 The [Exocortex Architecture](exocortex/README.md) implements sophisticated multi-agent coordination through the pentadyadic pattern—five specialized agents working in coordinated evaluation and synthesis.
 
@@ -86,6 +93,7 @@ The vault supports multiple deployment scenarios:
 |--------|----------------|-----------------|----------|
 | **Claude Code** | Skills + Agents | Workshop recipes | Technical skill deployment |
 | **Kiro Powers** | Skills + Prompts | Power packaging | User-friendly capabilities |
+| **Canvas Workflows** | Artifacts + Workshop | Semantic-JSON compilation | Visual system modeling and structured data export |
 | **Exocortex Agents** | All systems | Slice extraction | Advanced multi-agent coordination |
 | **Documentation** | All systems | Cross-linking | Knowledge management and discovery |
 
@@ -123,6 +131,11 @@ The [Work Preservation Principle](principles.md#⛔-work-preservation) ensures n
 1. Explore [Epistemic Rendering](prompts/README.md) approaches
 2. Use [Workshop Recipes](workshop/README.md) for context assembly
 3. Consider [Multi-Agent Patterns](skills/multi-agent-patterns/SKILL.md) for complex tasks
+
+### For Visual Modeling
+1. Explore [Canvas-to-Semantic-JSON](artifacts/README.md) workflows
+2. Use [Implementation Spec Templates](artifacts/impl-spec-example.canvas) for structured development
+3. Apply [Anticompiler Principles](artifacts/README.md#the-anticompiler-philosophy) for visual-to-data transformation
 
 ### For Advanced Coordination
 1. Study [Exocortex Architecture](exocortex/README.md) patterns
