@@ -1,0 +1,31 @@
+{
+  "name": "exocortex-memory-substrate",
+  "displayName": "Exocortex Memory Substrate",
+  "description": "Graph-backed semantic memory for distributed cognition. Dual substrate architecture (semantic graph + mechanical git) with temporal knowledge graph patterns.",
+  "version": "1.0.0",
+  "author": "ZK",
+  "keywords": [
+    "memory",
+    "exocortex",
+    "graph",
+    "semantic-cards",
+    "temporal",
+    "knowledge-graph",
+    "neo4j",
+    "retrieval",
+    "persistence"
+  ],
+  "category": "memory-systems",
+  "mcpServers": {},
+  "steeringFiles": [
+    "POWER.md",
+    "SKILL.md"
+  ],
+  "dependencies": {
+    "covenant-enforcement-gates": "1.0.0",
+    "pentadyadic-daemon-coordination": "1.0.0"
+  },
+  "assets": [
+    "references/"
+  ]
+}

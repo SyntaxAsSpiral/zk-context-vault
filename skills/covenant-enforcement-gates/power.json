@@ -1,0 +1,28 @@
+{
+  "name": "covenant-enforcement-gates",
+  "displayName": "Covenant Enforcement Gates",
+  "description": "Design constraints as hard boundaries. Yamas and Niyamas operationalized as executable gates for agent systems, tool design, and context engineering.",
+  "version": "1.0.0",
+  "author": "ZK",
+  "keywords": [
+    "covenant",
+    "constraints",
+    "gates",
+    "yamas",
+    "niyamas",
+    "validation",
+    "fast-fail",
+    "determinism",
+    "context-hygiene"
+  ],
+  "category": "design-patterns",
+  "mcpServers": {},
+  "steeringFiles": [
+    "POWER.md",
+    "SKILL.md"
+  ],
+  "dependencies": {},
+  "assets": [
+    "references/"
+  ]
+}

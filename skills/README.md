@@ -112,7 +112,7 @@ template: |
 
 ### Self-Documenting Examples Pattern
 
-Inspired by the [Semantic JSON Examples](https://github.com/SyntaxAsSpiral/obsidian-workshop/tree/main/semantic-json/examples) methodology, skills should include examples that literally describe their expected behavior—files that document themselves.
+Inspired by the [Semantic JSON Examples](https://github.com/SyntaxAsSpiral/semantic-json/tree/main/examples) methodology, skills should include examples that literally describe their expected behavior—files that document themselves.
 
 #### Example Structure
 - **Primary test file**: Core demonstration that describes its own expected state
@@ -210,7 +210,7 @@ Power user features
 
 - **Activation Context**: Clear triggers for when to use the skill
 - **Implementation Depth**: Sufficient detail for practical application
-- **Self-Documenting Examples**: Following the [conformance test pattern](https://github.com/SyntaxAsSpiral/obsidian-workshop/blob/main/semantic-json/examples/conformance-test-card.canvas) where examples describe their expected behavior
+- **Self-Documenting Examples**: Following the [conformance test pattern](https://github.com/SyntaxAsSpiral/semantic-json/blob/main/examples/conformance-test-card.canvas) where examples describe their expected behavior
 - **Transformation Artifacts**: Before/after examples showing skill application results
 - **Integration Guidance**: How skills connect to broader systems
 - **Code Examples**: Working implementations in scripts/
