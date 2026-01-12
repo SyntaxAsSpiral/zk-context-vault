@@ -86,7 +86,7 @@ The exocortex serves as the operational substrate for implementing these theoret
 
 ## Collectivist Integration
 
-This directory structure provides a template for the [Collectivist](../../.dev/collectivist/README.md) system's automatic README generation:
+This directory structure provides a template for the [Collectivist](https://github.com/SyntaxAsSpiral/Collectivist) system's automatic README generation:
 
 - **Consistent metadata schemas** enable automated analysis
 - **Structured content patterns** support template-based rendering  

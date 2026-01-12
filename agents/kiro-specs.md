@@ -24,7 +24,7 @@ lens: "structured-development"
 
 ## Table of Contents
 
-- [Collectivist](#collectivist)
+- [Collectivist](https://github.com/SyntaxAsSpiral/Collectivist)
 - [Context Workshop](#context-workshop)
   - [Design](#design---zdocumentscontextkirospecs-context-managementdesignmd)
   - [Requirements](#requirements---zdocumentscontextkirospecs-context-managementrequirementsmd)
@@ -33,7 +33,9 @@ lens: "structured-development"
 ---
 
 ## Collectivist
--  `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist`
+
+**Project**: [Collectivist](https://github.com/SyntaxAsSpiral/Collectivist) - AI-powered collection curation system
+**Location**: `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist`
 
 ### Spec
 
@@ -43,7 +45,7 @@ lens: "structured-development"
 
 ## Overview
 
-Collectivist implements a distributed-to-centralized architecture for AI-powered collection curation. The system deploys portable `.collectivist` seeds across different collection locations that automatically centralize to a coordination trunk for unified processing and documentation generation.
+[Collectivist](https://github.com/SyntaxAsSpiral/Collectivist) implements a distributed-to-centralized architecture for AI-powered collection curation. The system deploys portable `.collectivist` seeds across different collection locations that automatically centralize to a coordination trunk for unified processing and documentation generation.
 
 ## Architecture
 
@@ -246,7 +248,7 @@ The system requires both unit tests and property-based tests for comprehensive c
 
 ## Introduction
 
-Collectivist is an AI-powered collection curator that transforms semantically coherent collections into living documentation substrates. The system uses a distributed-to-centralized architecture where portable `.collectivist` seeds are deployed across different collection locations and automatically centralize to a coordination trunk for unified curation and documentation generation.
+[Collectivist](https://github.com/SyntaxAsSpiral/Collectivist) is an AI-powered collection curator that transforms semantically coherent collections into living documentation substrates. The system uses a distributed-to-centralized architecture where portable `.collectivist` seeds are deployed across different collection locations and automatically centralize to a coordination trunk for unified curation and documentation generation.
 
 ## Glossary
 
@@ -399,7 +401,7 @@ Collectivist is an AI-powered collection curator that transforms semantically co
 
 #### Tasks - `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist\tasks.md`
 
-# Implementation Plan: Collectivist
+# Implementation Plan: [Collectivist](https://github.com/SyntaxAsSpiral/Collectivist)
 
 ## Overview
 

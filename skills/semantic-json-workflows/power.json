@@ -1,0 +1,31 @@
+{
+  "name": "semantic-json-workflows",
+  "displayName": "Semantic-JSON Workflows",
+  "description": "Canvas-to-structured-data anticompiler workflows for visual cognitive modeling and spatial semantic compilation",
+  "version": "1.0.0",
+  "author": "zk::anticompiler",
+  "keywords": ["semantic-json", "canvas", "anticompiler", "obsidian", "visual-modeling", "spatial-semantics", "workflow", "compilation"],
+  "category": "visual-modeling",
+  "mcpServers": {},
+  "steeringFiles": [
+    "getting-started.md",
+    "advanced-workflows.md"
+  ],
+  "dependencies": {
+    "obsidian": ">=1.0.0",
+    "plugins": {
+      "semantic-json": ">=0.2.0"
+    },
+    "node": ">=16.0.0",
+    "packages": {
+      "js-yaml": ">=4.0.0",
+      "mermaid": ">=10.0.0"
+    }
+  },
+  "assets": [
+    "tools/canvas-compiler.js",
+    "tools/semantic-validator.js",
+    "references/canvas-examples.json",
+    "templates/kiro-spec-canvas.json"
+  ]
+}

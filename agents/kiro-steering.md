@@ -46,7 +46,7 @@ zk::mocha: #f38ba8 #fab387 #f9e2af #a6e3a1 #74c7ec #b4befe #cba6f7 :frappe: #292
 
 ### **Current Project Priorities:**
 - `.dev/obsidian-workshop/Semantic-JSON` - Obsidian plugin for smart Canvas data recompiling. 
-- `.dev/Collectivist` - AI powered curation for intentional collections. 
+- `.dev/Collectivist` - [AI powered curation for intentional collections](https://github.com/SyntaxAsSpiral/Collectivist). 
 - `.dev/Amexsomnemon` - Overarching exocortex project. 
 - SDK Task Automation DB
 - ADK-Go Multi-Agent Architecture in various domains
@@ -93,7 +93,7 @@ script_path = Path("C:/Users/synta.ZK-ZRRH/.dev/.scripts")  # Scripts location
 
 #### Product Overview - `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\steering\product.md`
 
-**Collectivist** is an AI-powered collection curator that transforms semantically coherent collections into living documentation substrates. It uses a distributed seed-to-trunk architecture where portable collection seeds automatically centralize to a coordination trunk for unified curation and documentation.
+**[Collectivist](https://github.com/SyntaxAsSpiral/Collectivist)** is an AI-powered collection curator that transforms semantically coherent collections into living documentation substrates. It uses a distributed seed-to-trunk architecture where portable collection seeds automatically centralize to a coordination trunk for unified curation and documentation.
 
 ## Core Philosophy
 
