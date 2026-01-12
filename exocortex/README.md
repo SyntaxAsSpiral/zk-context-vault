@@ -78,7 +78,6 @@ The system implements five fundamental flows:
 
 This exocortical architecture connects to broader cognitive infrastructure:
 
-- **[Context Engineering Skills](../skills/README.md)** - Multi-agent patterns and memory systems
 - **[Epistemic Rendering](../prompts/README.md)** - Different cognitive lenses for concept exploration
 - **[Covenant Principles](../principles.md)** - Assumption-hostile design and epistemic hygiene
 
