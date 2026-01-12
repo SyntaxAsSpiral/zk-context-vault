@@ -172,14 +172,6 @@ Project-specific context and constraints
 
 This modular approach enables **write once, deploy everywhere** - the same cognitive patterns work across different AI coding environments while maintaining consistency and avoiding duplication.
 
-### Universal Implementation Patterns
-
-All platforms benefit from:
-- **Explicit Context Management**: No assumptions about what the agent knows
-- **Structured Development**: 3-phase approach prevents scope creep
-- **Modular Identity**: Slice-based persona management
-- **Hierarchical Guidance**: Global → Workspace → Project context inheritance
-
 ## Operational Patterns
 
 ### Hook Development Workflow
@@ -208,8 +200,8 @@ This agents directory will grow to include:
 
 - **Advanced Hook Patterns**: Complex workflow automation
 - **Custom MCP Servers**: Bespoke cognitive extensions
-- **Multi-Agent Coordination**: Kiro + external agent integration
-- **Evaluation Frameworks**: Measuring agent effectiveness
+- **Agent Template Library**: Reusable persona and behavior patterns
+- **Evaluation Frameworks**: Measuring single-agent effectiveness
 - **Deployment Automation**: Streamlined configuration management
 
 ## The Universal Agent Advantage

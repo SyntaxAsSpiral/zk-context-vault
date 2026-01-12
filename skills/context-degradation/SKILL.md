@@ -200,21 +200,21 @@ turn_30: 90000 tokens (significant degradation)
 
 ## Integration
 
-This skill builds on context-fundamentals and should be studied after understanding basic context concepts. It connects to:
+This skill builds on foundational context principles and connects to active skills:
 
-- context-optimization - Techniques for mitigating degradation
-- multi-agent-patterns - Using isolation to prevent degradation
-- evaluation - Measuring and detecting degradation in production
+- [agent-steering](../agent-steering/SKILL.md) - Context compilation techniques that prevent degradation
+- [multi-agent-coordination](../multi-agent-coordination/SKILL.md) - Using context isolation to prevent degradation
+- [covenant-patterns](../covenant-patterns/SKILL.md) - Context hygiene principles
 
 ## References
 
 Internal reference:
 - [Degradation Patterns Reference](./references/patterns.md) - Detailed technical reference
 
-Related skills in this collection:
-- context-fundamentals - Context basics
-- context-optimization - Mitigation techniques
-- evaluation - Detection and measurement
+Related archived skills (for historical reference):
+- archive/context-fundamentals - Context basics
+- archive/context-optimization - Mitigation techniques
+- archive/evaluation - Detection and measurement
 
 External resources:
 - Research on attention mechanisms and context window limitations

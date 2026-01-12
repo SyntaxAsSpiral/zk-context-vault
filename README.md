@@ -10,7 +10,7 @@ Think of it as "the missing manual for working with AI systems at scale."
 
 ## The Architecture
 
-The vault operates through seven integrated systems that form a complete cognitive stack:
+The vault operates through 7 core systems that form a complete cognitive stack:
 
 ```
 Principles → Skills → Agents → Prompts → Artifacts → Workshop → Exocortex

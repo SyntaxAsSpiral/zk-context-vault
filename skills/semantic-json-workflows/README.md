@@ -114,14 +114,14 @@ Integrate with:
 ## Related Skills
 
 ### Complementary Skills
-- **[Context Fundamentals](../context-fundamentals/SKILL.md)**: Foundation for structured information management
-- **[Multi-Agent Patterns](../multi-agent-patterns/SKILL.md)**: Canvas-based agent coordination
-- **[Memory Systems](../memory-systems/SKILL.md)**: Persistent storage of canvas artifacts
-- **[Evaluation Frameworks](../evaluation/SKILL.md)**: Quality assurance for visual models
+- **[Covenant Patterns](../covenant-patterns/SKILL.md)**: Foundation for structured information management and data fidelity
+- **[Multi-Agent Coordination](../multi-agent-coordination/SKILL.md)**: Canvas-based evaluation patterns (triquetra)
+- **[Agent Steering](../agent-steering/SKILL.md)**: Context compilation and progressive disclosure for canvas artifacts
+- **[Recipe Assembly](../recipe-assembly/SKILL.md)**: Workshop integration for canvas deployment
 
 ### Integration Skills
-- **Workshop Recipes**: Automated canvas processing and deployment
-- **Kiro Specifications**: Visual development process management
+- **Workshop Recipes**: Automated canvas processing and deployment via recipe-assembly
+- **Agent Specifications**: Visual development process management using 3-phase specs
 - **Templater Workflows**: Dynamic canvas generation and instantiation
 - **Exocortex Coordination**: Multi-agent visual modeling
 
