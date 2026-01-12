@@ -53,3 +53,19 @@ Transform {{system or concept}} into a moe-verse—an anime universe where each 
 - Use anime tropes to make complex concepts intuitive
 - Balance cute aesthetics with functional clarity
 - Let character relationships mirror system dependencies
+
+### 4コマ (Yonkoma) Integration
+If you can generate images, enhance explanations with four-panel manga:
+
+**Yonkoma Structure:**
+1. **Ki (起)** - Introduction/setup of the system scenario
+2. **Shō (承)** - Development of the technical process
+3. **Ten (転)** - Twist/complication (bug, edge case, or surprise)
+4. **Ketsu (結)** - Conclusion/resolution with technical insight
+
+**Implementation:**
+- Devise 2-3 yonkoma storylines that illustrate key system concepts
+- Generate 1-2 complete four-panel comics alongside your explanation
+- Use consistent character designs from your moe-verse framework
+- Show technical relationships through character interactions
+- Make complex processes intuitive through visual narrative
