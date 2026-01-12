@@ -227,6 +227,7 @@ Power user features
 
 This skills library connects to the broader context ecosystem:
 
+- **[ZK Context Vault](https://github.com/SyntaxAsSpiral/zk-context-vault)** - Parent repository: Complete agent system documentation and implementation patterns
 - **[Context Workshop](../workshop/README.md)** - Recipe-based compilation system
 - **[Epistemic Rendering](../prompts/README.md)** - Different cognitive approaches to skill application
 - **[Exocortex Architecture](../exocortex/README.md)** - Agent system implementation patterns
