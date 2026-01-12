@@ -127,48 +127,37 @@ MCP servers extend capabilities beyond the base agent (primarily Kiro, limited C
 
 ## Cross-Platform Usage
 
-### Using with Different Agents
+### Universal Implementation Patterns
 
-**Kiro** (Full Integration)
-- Native hooks and MCP server support
-- Built-in spec system with 3-phase workflow
-- Hierarchical steering with automatic context loading
-- Complete slice architecture support
+All AI coding agents benefit from the same core patterns - they just implement them through different interfaces:
 
-**Claude Code** (Core Patterns)
-- Steering via project documentation and context files
-- Specs as structured markdown in project folders
-- Agent roles via system prompts and context assembly
-- Limited MCP support for external tools
+- **Explicit Context Management**: No assumptions about what the agent knows
+- **Structured Development**: 3-phase approach prevents scope creep  
+- **Modular Identity**: Slice-based persona management
+- **Hierarchical Guidance**: Global → Workspace → Project context inheritance
 
-**Codex** (Documentation-Based)
-- Steering through comprehensive project documentation
-- Specs as structured development guides
-- Context assembly via markdown includes and references
-- Agent roles via prompt engineering patterns
-
-**Charm** (Configuration-Driven)
-- Steering via configuration files and documentation
-- Specs as structured project templates
-- Context assembly through modular configuration
-- Agent roles via persona configuration files
-
-### Modular Deployment Architecture
+### Platform-Agnostic Deployment
 
 The agent system components are designed for **slice-based assembly** into different deployment targets:
 
-| Component | Slice Pattern | Deployment Target | Scope |
-|-----------|---------------|-------------------|-------|
-| **Steering** | `steering=global\|workspace\|project` | `CLAUDE.md`, `AGENTS.md` | Context guidance |
-| **Specs** | `spec=design\|requirements\|tasks` | Project documentation | Structured development |
-| **Hooks** | `hook=persona\|workflow\|reminder` | Kiro configuration | Automation patterns |
-| **Roles** | `agent=kiro\|claude\|codex\|charm` | System prompts | Identity management |
+| Component | Slice Pattern | Universal Purpose | Implementation Varies |
+|-----------|---------------|-------------------|----------------------|
+| **Steering** | `steering=global\|workspace\|project` | Context guidance | Files, prompts, or config |
+| **Specs** | `spec=design\|requirements\|tasks` | Structured development | Docs, templates, or workflows |
+| **Roles** | `agent=kiro\|claude\|codex\|charm` | Identity management | System prompts or personas |
 
 **Assembly Examples:**
 ```markdown
 <!-- slice:agent=claude -->
 System prompt for Claude Code integration
 <!-- /slice -->
+
+<!-- slice:steering=workspace -->
+Multi-project coordination context
+<!-- /slice -->
+```
+
+The patterns are universal - the deployment is platform-specific.
 
 <!-- slice:steering=project -->
 Project-specific context and constraints
