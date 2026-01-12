@@ -245,6 +245,7 @@ The Semantic-JSON plugin enables sophisticated validation:
 ## Links
 
 - **[Semantic-JSON Plugin](https://github.com/SyntaxAsSpiral/Semantic-JSON)** - Advanced JSON IDE for Obsidian
+- **[Semantic-JSON Workflows Skill](../skills/semantic-json-workflows/README.md)** - Complete canvas-to-structured-data workflow mastery
 - **[Workshop System](../workshop/README.md)** - Recipe-based assembly and deployment
 - **[Kiro Specs](../agents/kiro-specs.md)** - 3-phase structured development process
 - **[Prompts](../prompts/README.md)** - Epistemic rendering stack integration
