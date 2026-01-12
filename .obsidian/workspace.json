@@ -69,12 +69,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "artifacts/README.md",
-                "mode": "source",
+                "file": "agents/kiro-steering.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "kiro-steering"
             }
           }
         ],
@@ -241,21 +241,21 @@
   },
   "active": "b5646729ca011e11",
   "lastOpenFiles": [
-    "artifacts/impl-spec-example.canvas",
-    "artifacts/README.md",
     "agents/agent-roles.md",
+    "agents/kiro-steering.md",
+    "operator.md",
+    "agents/kiro-hooks.md",
+    "agents/kiro-mcp.md",
+    "agents/kiro-specs.md",
+    "agents/compiled-workspace.md",
+    "README.md",
+    "artifacts/README.md",
+    "artifacts/impl-spec-example.canvas",
     "artifacts/impl-spec-example.md",
     "artifacts/🩷Catppuccin.canvas",
     "workshop/templates/exo-praxis-{{cmd}}.md",
-    "agents/kiro-specs.md",
-    "agents/kiro-steering.md",
     "LICENSE",
-    "agents/kiro-mcp.md",
-    "agents/kiro-hooks.md",
-    "README.md",
     "principles.md",
-    "operator.md",
-    "compiled-workspace.md",
     "agents/README.md",
     "exocortex/exo-roles.md",
     "exocortex/README.md",
