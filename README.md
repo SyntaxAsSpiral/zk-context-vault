@@ -142,6 +142,12 @@ This cognitive infrastructure solves fundamental problems in AI-augmented work:
 
 The result is AI assistance that enhances rather than replaces human cognition, maintaining transparency and control while providing sophisticated capabilities.
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+The cognitive infrastructure patterns, documentation approaches, and architectural frameworks are freely available for adaptation and use. Build upon them, modify them, make them your own.
+
 ---
 
 *The vault is not a destination but a foundation. Build upon it.* ⧉

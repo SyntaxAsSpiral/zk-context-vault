@@ -1,12 +1,23 @@
 
 ---
 id: agent-roles
-created: 2024-01-11
-modified: 2024-01-11
-status: active
+title: "Agent Roles & Identity Templates"
 type: 
   - "agent-definitions"
   - "system-prompts"
+  - "templates"
+category: "agents"
+tags:
+  - "roles"
+  - "identity"
+  - "personas"
+  - "sigils"
+  - "slice-architecture"
+created: 2026-01-11
+modified: 2026-01-11
+status: "active"
+glyph: "🎭"
+lens: "identity-management"
 purpose: "Agent identity templates and role sigils for system prompt generation"
 scope: "foundational"
 future-expansion: |

@@ -241,6 +241,7 @@
   },
   "active": "b5646729ca011e11",
   "lastOpenFiles": [
+    "LICENSE",
     "agents/kiro-specs.md",
     "agents/kiro-mcp.md",
     "agents/agent-roles.md",
@@ -266,7 +267,6 @@
     "exocortex/exo-config.md",
     "workshop/README.md",
     "prompts/README.md",
-    "skills/project-development/README.md",
     "prompts/artifacts/🩷Catppuccin.canvas",
     "workshop/schema",
     "workshop/templates",

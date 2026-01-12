@@ -1,3 +1,25 @@
+---
+id: agent-system-readme
+title: "Agent System Architecture"
+type: 
+  - "documentation"
+  - "readme"
+category: "agents"
+tags:
+  - "agents"
+  - "architecture"
+  - "universal"
+  - "kiro"
+  - "claude-code"
+  - "codex"
+  - "charm"
+created: 2026-01-11
+modified: 2026-01-11
+status: "active"
+glyph: "🧭"
+lens: "system-architecture"
+---
+
 # Agent System Architecture
 
 *Comprehensive documentation for AI coding agent integration, modular context assembly, and structured development processes.*

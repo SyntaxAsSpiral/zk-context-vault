@@ -1,3 +1,27 @@
+---
+id: kiro-hooks
+title: "Kiro Hooks System"
+type: 
+  - "documentation"
+  - "configuration"
+category: "agents"
+tags:
+  - "kiro"
+  - "hooks"
+  - "automation"
+  - "workflows"
+  - "event-driven"
+created: 2026-01-11
+modified: 2026-01-11
+status: "active"
+glyph: "🪝"
+lens: "automation-patterns"
+---
+
+# 🪝 Kiro Hooks System
+
+*Event-driven automation patterns for cognitive workflows.*
+
 ## kiro-murder
 
 location(s):

@@ -1,3 +1,37 @@
+---
+id: kiro-specs
+title: "Kiro Specs Documentation"
+type: 
+  - "documentation"
+  - "specs"
+category: "agents"
+tags:
+  - "kiro"
+  - "specs"
+  - "3-phase"
+  - "development"
+  - "structured"
+created: 2026-01-11
+modified: 2026-01-11
+status: "active"
+glyph: "📋"
+lens: "structured-development"
+---
+
+# 📋 Kiro Specs Documentation
+
+*Complete 3-phase specification examples demonstrating structured development processes.*
+
+## Table of Contents
+
+- [Collectivist](#collectivist)
+- [Context Workshop](#context-workshop)
+  - [Design](#design---zdocumentscontextkirospecs-context-managementdesignmd)
+  - [Requirements](#requirements---zdocumentscontextkirospecs-context-managementrequirementsmd)
+  - [Tasks](#tasks---zdocumentscontextkirospecs-context-managementtasksmd)
+
+---
+
 ## Collectivist
 -  `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist`
 
