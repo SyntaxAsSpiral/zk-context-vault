@@ -1,0 +1,305 @@
+{
+  "nodes": [
+    {
+      "id": "edf19b615f6aa22f",
+      "type": "text",
+      "text": "**_section**: \"Demon Lookup\"",
+      "x": -180,
+      "y": -700,
+      "width": 261,
+      "height": 60,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "052b7ce5881e6b32",
+      "type": "text",
+      "text": "**_index**: 3",
+      "x": 109,
+      "y": -700,
+      "width": 261,
+      "height": 50,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "bdcd0c71590d0935",
+      "type": "text",
+      "text": "**Mesh Number**: \"Mesh-03\"",
+      "x": -180,
+      "y": -640,
+      "width": 261,
+      "height": 60,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "822497dcc77e2531",
+      "type": "text",
+      "text": "**Net-Span**: \"X::X\"",
+      "x": 109,
+      "y": -640,
+      "width": 261,
+      "height": 50,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "04ca249dc16a05cd",
+      "type": "text",
+      "text": "**Reference Tag**: \"[M#XX (X::X)]\"",
+      "x": -180,
+      "y": -580,
+      "width": 261,
+      "height": 60,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "525705a791ba1c39",
+      "type": "text",
+      "text": "**Name**: \"Ixix (Yix)\"",
+      "x": 109,
+      "y": -580,
+      "width": 261,
+      "height": 50,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "10d4484a49d75a88",
+      "type": "text",
+      "text": "**Stillwell Classification**: \"Abductor\"",
+      "x": -180,
+      "y": -520,
+      "width": 261,
+      "height": 60,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "91754e3bfa1f50ca",
+      "type": "text",
+      "text": "**Pitch**: \"Ana-3\"",
+      "x": 109,
+      "y": -520,
+      "width": 261,
+      "height": 50,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "91d0e01ef4281fa3",
+      "type": "text",
+      "text": "**Clicks**: \"\"",
+      "x": -180,
+      "y": -430,
+      "width": 261,
+      "height": 50,
+      "color": "#f2dbd9"
+    },
+    {
+      "id": "6aa56b1e8baed376",
+      "type": "text",
+      "text": "**[0]**: \"Gt-XX\"",
+      "x": 109,
+      "y": -430,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "2fc8b1c8abf01a59",
+      "type": "text",
+      "text": "**Currents**: null",
+      "x": -180,
+      "y": -310,
+      "width": 261,
+      "height": 50,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "0c08f254f4f580cb",
+      "type": "text",
+      "text": "**Title**: \"Chaotic Xenodemon of Cosmic Indifference\"",
+      "x": 109,
+      "y": -310,
+      "width": 261,
+      "height": 75,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "17e08db814d46696",
+      "type": "text",
+      "text": "**Phase Position**: \"3rd Door (The Swirl) ~ [Earth] ~ Cranial\"",
+      "x": -180,
+      "y": -232,
+      "width": 261,
+      "height": 75,
+      "color": "#f2dbd9"
+    },
+    {
+      "id": "c335e47d5e2314a1",
+      "type": "text",
+      "text": "**Planetary Affiliation**: \"\"",
+      "x": 109,
+      "y": -195,
+      "width": 261,
+      "height": 60,
+      "color": "#f2dbd9"
+    },
+    {
+      "id": "c5da1b032270db89",
+      "type": "text",
+      "text": "**Spinal Association**: \"\"",
+      "x": -180,
+      "y": -125,
+      "width": 261,
+      "height": 60,
+      "color": "#f2dbd9"
+    },
+    {
+      "id": "32a7fcfd4b3fcf53",
+      "type": "text",
+      "text": "**Decadology Classification**: null",
+      "x": -180,
+      "y": -50,
+      "width": 261,
+      "height": 50,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "67672ff33c5dbb53",
+      "type": "text",
+      "text": "**Rite Number**: \"\"",
+      "x": -180,
+      "y": 10,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "33baeffcda4f691f",
+      "type": "text",
+      "text": "**Description**: \"\"",
+      "x": 109,
+      "y": 10,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "d85d348d0175b38e",
+      "type": "text",
+      "text": "**Rite Number**: \"\"",
+      "x": -180,
+      "y": 115,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "0970b5dd0d9880f3",
+      "type": "text",
+      "text": "**Description**: \"\"",
+      "x": 109,
+      "y": 115,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "3ccc3fba87e2c146",
+      "type": "text",
+      "text": "**Rite Number**: \"\"",
+      "x": -180,
+      "y": 220,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "81530cc3a4660f71",
+      "type": "text",
+      "text": "**Description**: \"\"",
+      "x": 109,
+      "y": 220,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "564d8551149227d6",
+      "type": "text",
+      "text": "**Sub-Rites (sub-Rt)**: \"+1 sub-Rt\"",
+      "x": -180,
+      "y": 310,
+      "width": 261,
+      "height": 60,
+      "color": "#f0c8d5"
+    },
+    {
+      "id": "4bfbfc79c6cf0b34",
+      "type": "text",
+      "text": "**[0]**: \"\"",
+      "x": -180,
+      "y": 380,
+      "width": 261,
+      "height": 50,
+      "color": "#f2dbd9"
+    },
+    {
+      "id": "07a930d619084324",
+      "type": "text",
+      "text": "**Associations**: \"\"",
+      "x": -180,
+      "y": 475,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "a2addd0bc5209943",
+      "type": "text",
+      "text": "**Name**: \"\"",
+      "x": 109,
+      "y": 475,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "5203a928f2090660",
+      "type": "text",
+      "text": "**Reference Tag**: \"\"",
+      "x": -180,
+      "y": 535,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "08bfef47e4a265e0",
+      "type": "text",
+      "text": "**Additional Note**: \"\"",
+      "x": 109,
+      "y": 535,
+      "width": 261,
+      "height": 50,
+      "color": "#f5efe8"
+    },
+    {
+      "id": "d71a03f10bd415e6",
+      "type": "text",
+      "text": "**[0]**: \"\"",
+      "x": -180,
+      "y": 655,
+      "width": 261,
+      "height": 50,
+      "color": "#f2dbd9"
+    },
+    {
+      "id": "0b7679f966100d1c",
+      "type": "text",
+      "text": "**[1]**: \"\"",
+      "x": 109,
+      "y": 655,
+      "width": 261,
+      "height": 50,
+      "color": "#f2dbd9"
+    }
+  ],
+  "edges": []
+}
