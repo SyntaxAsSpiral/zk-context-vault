@@ -153,6 +153,64 @@ MCP servers extend capabilities beyond the base agent (primarily Kiro, limited C
 - Context assembly through modular configuration
 - Agent roles via persona configuration files
 
+## Cross-Platform Usage
+
+### Using with Different Agents
+
+**Kiro** (Full Integration)
+- Native hooks and MCP server support
+- Built-in spec system with 3-phase workflow
+- Hierarchical steering with automatic context loading
+- Complete slice architecture support
+
+**Claude Code** (Core Patterns)
+- Steering via project documentation and context files
+- Specs as structured markdown in project folders
+- Agent roles via system prompts and context assembly
+- Limited MCP support for external tools
+
+**Codex** (Documentation-Based)
+- Steering through comprehensive project documentation
+- Specs as structured development guides
+- Context assembly via markdown includes and references
+- Agent roles via prompt engineering patterns
+
+**Charm** (Configuration-Driven)
+- Steering via configuration files and documentation
+- Specs as structured project templates
+- Context assembly through modular configuration
+- Agent roles via persona configuration files
+
+### Modular Deployment Architecture
+
+The agent system components are designed for **slice-based assembly** into different deployment targets:
+
+| Component | Slice Pattern | Deployment Target | Scope |
+|-----------|---------------|-------------------|-------|
+| **Steering** | `steering=global\|workspace\|project` | `CLAUDE.md`, `AGENTS.md` | Context guidance |
+| **Specs** | `spec=design\|requirements\|tasks` | Project documentation | Structured development |
+| **Hooks** | `hook=persona\|workflow\|reminder` | Kiro configuration | Automation patterns |
+| **Roles** | `agent=kiro\|claude\|codex\|charm` | System prompts | Identity management |
+
+**Assembly Examples:**
+```markdown
+<!-- slice:agent=claude -->
+System prompt for Claude Code integration
+<!-- /slice -->
+
+<!-- slice:steering=project -->
+Project-specific context and constraints
+<!-- /slice -->
+```
+
+**Deployment Targets:**
+- **Global CLAUDE.md**: Universal Claude Code configuration
+- **Project AGENTS.md**: Project-specific agent configurations  
+- **Kiro Integration**: Direct insertion via slice architecture
+- **Workshop Recipes**: Automated assembly for multiple targets
+
+This modular approach enables **write once, deploy everywhere** - the same cognitive patterns work across different AI coding environments while maintaining consistency and avoiding duplication.
+
 ### Universal Implementation Patterns
 
 All platforms benefit from:

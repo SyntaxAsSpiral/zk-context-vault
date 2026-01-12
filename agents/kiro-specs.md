@@ -37,9 +37,453 @@ lens: "structured-development"
 
 ### Spec
 
-- design - `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist\design.md`
-- reqs - `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist\requirements.md`
-- tasks -  `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist\tasks.md`
+#### Design - `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist\design.md`
+
+# Design Document
+
+## Overview
+
+Collectivist implements a distributed-to-centralized architecture for AI-powered collection curation. The system deploys portable `.collectivist` seeds across different collection locations that automatically centralize to a coordination trunk for unified processing and documentation generation.
+
+## Architecture
+
+The system follows a hub-and-spoke model:
+
+- **Distributed Seeds**: `.collectivist` folders deployed at collection locations
+- **Central Trunk**: Coordination point with SQLite storage and web interface
+- **Processing Pipeline**: Four-stage flow (Analyzer → Scanner → Describer → Renderer)
+
+```mermaid
+graph TB
+    subgraph "Collection Locations"
+        S1[".collectivist seed<br/>Repos"]
+        S2[".collectivist seed<br/>Documents"] 
+        S3[".collectivist seed<br/>Media"]
+        S4[".collectivist seed<br/>Research"]
+        S5[".collecticist seed<br>Obsidian"]
+    end
+    
+    subgraph "Central Trunk"
+        T[Trunk<br/>SQLite + Web UI]
+    end
+    
+    subgraph "Processing Pipeline"
+        A[Analyzer] --> SC[Scanner]
+        SC --> D[Describer]
+        D --> R[Renderer]
+    end
+    
+    S1 --> T
+    S2 --> T
+    S3 --> T
+    S4 --> T
+    
+    T --> A
+```
+
+## Components and Interfaces
+
+### Collection Seeds
+- **Location**: `.collectivist` folders at collection roots
+- **Function**: Local processing and data generation
+- **Output**: Collection-specific index files
+
+### Trunk
+- **Storage**: SQLite database for aggregated data
+- **Interface**: FastAPI backend with React frontend web interface
+- **Function**: Discovery, registration, and coordination
+
+### Processing Pipeline
+
+#### Analyzer
+- **Input**: Collection directory structure
+- **Output**: Collection type detection and structural analysis
+- **Function**: Determines processing strategy
+
+#### Scanner (Plugin Architecture)
+- **Interface**: Standard plugin interface for domain-specific scanning
+- **Plugins**: Repository, Document, Media, Research scanners
+- **Fallback**: Generic file metadata extraction
+
+#### Describer
+- **Input**: Scanned metadata
+- **Output**: AI-generated summaries and categorizations
+- **LLM Integration**: Multiple provider support with fallback
+
+#### Renderer
+- **Input**: Analyzed and described data
+- **Output**: README.md files and documentation
+- **Templates**: Collection-type-specific formatting
+
+## Data Models
+
+### Collection Index Schema
+```yaml
+collection:
+  type: [repository|document|media|research]
+  location: string
+  last_updated: timestamp
+  items: []
+```
+
+### Item Metadata Schema
+```yaml
+item:
+  path: string
+  type: string
+  metadata: {} # Domain-specific fields
+  description: string # AI-generated
+  categories: [] # AI-assigned
+```
+
+### Configuration Schema
+```yaml
+# Global config
+llm:
+  providers: []
+  fallback_chain: []
+
+processing:
+  cache_enabled: boolean
+  parallel_workers: integer
+
+# Collection-specific config (.collection/config.yaml)
+collection:
+  type_override: string
+  custom_templates: {}
+  scanner_options: {}
+```
+## Correctness Properties
+
+*A property is a characteristic or behavior that should hold true across all valid executions of a system-essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
+
+### Property 1: Collection Type Detection Consistency
+*For any* collection directory with identifiable content patterns, the system should consistently detect the same collection type across multiple runs.
+**Validates: Requirements 2.1, 2.5**
+
+### Property 2: Scanner Plugin Routing
+*For any* file type with a registered scanner plugin, the system should route that file to the correct scanner plugin.
+**Validates: Requirements 3.2, 3.5**
+
+### Property 3: Processing Pipeline Completeness
+*For any* collection that successfully completes processing, all four pipeline stages (Analyzer → Scanner → Describer → Renderer) should execute in sequence.
+**Validates: Requirements 4.1, 4.2, 4.3, 4.4**
+
+### Property 4: Metadata Extraction Completeness
+*For any* supported file type, the appropriate scanner should extract all required metadata fields for that type.
+**Validates: Requirements 1.1, 1.2, 1.3, 1.4**
+
+### Property 5: README Generation Consistency
+*For any* collection type, the system should generate a README.md file using the appropriate template for that collection type.
+**Validates: Requirements 6.1, 6.3**
+
+### Property 6: Cache Behavior Correctness
+*For any* unchanged file, subsequent processing runs should use cached results rather than re-processing.
+**Validates: Requirements 9.1, 9.3**
+
+### Property 7: Error Isolation
+*For any* collection with some failing items, the system should continue processing remaining items and complete successfully.
+**Validates: Requirements 10.1, 10.5**
+
+### Property 8: Configuration Override Hierarchy
+*For any* collection with both global and local configuration, local configuration should override global settings.
+**Validates: Requirements 8.1, 8.2**
+
+### Property 9: LLM Fallback Chain
+*For any* LLM provider failure, the system should attempt the next provider in the fallback chain.
+**Validates: Requirements 5.3, 5.4**
+
+### Property 10: Collection Registry Maintenance
+*For any* discovered `.collectivist` folder, the trunk should register it in the SQLite database with correct metadata.
+**Validates: Requirements 12.1, 12.2**
+
+### Property 11: Web Interface Functionality
+*For any* valid collection data, the web interface should display collection summaries and allow configuration management.
+**Validates: Requirements 7.1, 7.2, 7.3**
+
+### Property 12: Trunk Data Persistence
+*For any* processed collection, the trunk should maintain persistent SQLite storage with collection registry and metadata.
+**Validates: Requirements 11.1, 11.3, 11.5**
+
+## Error Handling
+
+### Error Categories
+- **Item-level errors**: Individual file processing failures
+- **Service errors**: LLM provider unavailability
+- **System errors**: File access permissions, disk space
+- **Configuration errors**: Invalid YAML, missing required fields
+
+### Error Recovery Strategies
+- **Graceful degradation**: Continue processing without failed components
+- **Retry with backoff**: For transient service failures
+- **Partial progress preservation**: Save completed work before termination
+- **Detailed logging**: Context-rich error messages for debugging
+
+## Testing Strategy
+
+### Dual Testing Approach
+The system requires both unit tests and property-based tests for comprehensive coverage:
+
+- **Unit tests**: Verify specific examples, edge cases, and error conditions
+- **Property tests**: Verify universal properties across all inputs
+- Together they provide comprehensive coverage (unit tests catch concrete bugs, property tests verify general correctness)
+
+### Property-Based Testing Configuration
+- Use appropriate property-based testing library for the implementation language
+- Configure each test to run minimum 100 iterations
+- Tag each test with format: **Feature: collectivist, Property {number}: {property_text}**
+- Each correctness property must be implemented by a single property-based test
+
+### Unit Testing Focus
+- Specific examples demonstrating correct behavior
+- Integration points between pipeline stages
+- Edge cases and error conditions
+- Configuration validation and error messages
+
+#### Requirements - `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist\requirements.md`
+
+# Requirements Document
+
+## Introduction
+
+Collectivist is an AI-powered collection curator that transforms semantically coherent collections into living documentation substrates. The system uses a distributed-to-centralized architecture where portable `.collectivist` seeds are deployed across different collection locations and automatically centralize to a coordination trunk for unified curation and documentation generation.
+
+## Glossary
+
+- **Collection**: A semantically coherent set of items (repositories, documents, media files, research papers, etc.)
+- **Trunk**: Central coordination point that aggregates and processes data from distributed collection seeds
+- **Seed**: A portable `.collectivist` folder deployed at a specific collection location
+- **Scanner**: Domain-specific component that extracts metadata from collection items
+- **Analyzer**: Component that processes raw collection data and determines structure
+- **Describer**: AI-powered component that generates contextual summaries and categorizations
+- **Renderer**: Component that transforms analyzed data into documentation using templates
+- **Collection_Config**: Configuration file (`.collection/config.yaml`) that defines collection behavior
+- **Centralization**: Process of aggregating data from distributed collection seeds to the trunk
+- **Pipeline**: Multi-stage processing flow: Analyzer → Scanner → Describer → Renderer
+
+## Requirements
+
+### Requirement 1: Multi-Format Collection Support
+
+**User Story:** As a curator, I want to organize different types of collections (repositories, documents, media, research papers), so that I can apply consistent curation across diverse content types.
+
+#### Acceptance Criteria
+
+1. WHEN a collection contains repositories, THE System SHALL extract git metadata, commit history, and README content
+2. WHEN a collection contains documents, THE System SHALL extract file metadata, content summaries, and modification timestamps
+3. WHEN a collection contains media files, THE System SHALL extract metadata, creation dates, and generate preview information
+4. WHEN a collection contains research papers, THE System SHALL extract citations, abstracts, and publication metadata
+5. WHERE multiple content types exist in one collection, THE System SHALL handle mixed-format scanning appropriately
+
+### Requirement 2: Distributed Collection Architecture with Type Detection
+
+**User Story:** As a curator, I want portable `.collectivist` seeds to automatically detect their collection type and produce custom indexes, so that each collection is processed with domain-appropriate logic.
+
+#### Acceptance Criteria
+
+1. WHEN a `.collectivist` folder is deployed, THE System SHALL automatically detect the collection type based on content analysis
+2. WHEN collection type is detected, THE System SHALL produce a custom index format appropriate for that collection type
+3. THE System SHALL support repository collections, document collections, media collections, and research paper collections
+4. WHEN collection type cannot be determined, THE System SHALL default to generic file collection processing
+5. THE System SHALL store collection type metadata for consistent processing across runs
+
+### Requirement 3: Plugin Architecture for Domain-Specific Scanning
+
+**User Story:** As a developer, I want to extend the system with domain-specific scanners, so that I can add support for new collection types without modifying core code.
+
+#### Acceptance Criteria
+
+1. THE System SHALL load scanner plugins from a defined plugin directory
+2. WHEN a new file type is encountered, THE System SHALL route it to the appropriate scanner plugin
+3. WHEN no specific scanner exists, THE System SHALL fall back to generic file metadata extraction
+4. THE System SHALL allow scanner plugins to define their own metadata schemas
+5. THE System SHALL provide a standard plugin interface for consistent integration
+
+### Requirement 4: Multi-Stage Processing Pipeline
+
+**User Story:** As a system architect, I want clear separation between analysis, scanning, description, and rendering stages, so that the system is maintainable and each stage can be optimized independently.
+
+#### Acceptance Criteria
+
+1. WHEN processing begins, THE Analyzer SHALL determine collection structure and item types
+2. WHEN analysis is complete, THE Scanner SHALL extract metadata using appropriate domain-specific logic
+3. WHEN scanning is complete, THE Describer SHALL generate AI-powered summaries and categorizations
+4. WHEN description is complete, THE Renderer SHALL generate documentation using configured templates
+5. THE System SHALL allow each stage to be run independently for debugging and incremental processing
+
+### Requirement 5: AI-Powered Contextual Description
+
+**User Story:** As a curator, I want AI-generated descriptions and categorizations for collection items, so that I can understand and organize large collections without manual review.
+
+#### Acceptance Criteria
+
+1. WHEN processing collection items, THE Describer SHALL generate one-sentence technical summaries
+2. WHEN generating descriptions, THE Describer SHALL assign categories from a configurable taxonomy
+3. WHEN multiple LLM providers are configured, THE System SHALL support fallback between providers
+4. WHEN LLM services are unavailable, THE System SHALL continue processing with metadata-only descriptions
+5. THE System SHALL preserve existing descriptions and only generate new ones for items with null descriptions
+
+### Requirement 6: Template-Based Documentation Rendering with README Generation
+
+**User Story:** As a documentation maintainer, I want each collection to generate its own README file with deterministic formatting, so that every collection has discoverable documentation at its root.
+
+#### Acceptance Criteria
+
+1. THE System SHALL generate a README.md file at the root of each collection directory
+2. WHEN generating READMEs, THE System SHALL perform deeper content scanning to extract meaningful summaries
+3. THE System SHALL use collection-type-specific README templates for appropriate formatting
+4. WHEN README generation requires content analysis, THE System SHALL scan file contents beyond just metadata
+5. THE System SHALL preserve manual edits in designated sections while regenerating automated content
+
+### Requirement 7: Web Interface for Non-Terminal Users
+
+**User Story:** As a non-technical user, I want a web interface to configure and monitor collection curation, so that I can use the system without command-line expertise.
+
+#### Acceptance Criteria
+
+1. THE Web_Interface SHALL provide collection discovery and status monitoring
+2. WHEN collections are found, THE Web_Interface SHALL display processing status and generated summaries
+3. THE Web_Interface SHALL allow configuration of LLM providers and processing options
+4. WHEN processing is running, THE Web_Interface SHALL show real-time progress updates
+5. THE Web_Interface SHALL provide manual trigger controls for re-processing collections
+
+### Requirement 8: Configuration Management
+
+**User Story:** As a system administrator, I want flexible configuration options at multiple levels, so that I can customize behavior for different collections and deployment scenarios.
+
+#### Acceptance Criteria
+
+1. THE System SHALL support global configuration for default behaviors and LLM settings
+2. WHEN a `.collection/config.yaml` exists, THE System SHALL override global settings with collection-specific configuration
+3. THE System SHALL validate configuration files and provide clear error messages for invalid settings
+4. WHEN configuration changes, THE System SHALL apply new settings without requiring restart
+5. THE System SHALL provide configuration templates and documentation for common use cases
+
+### Requirement 9: Incremental Processing and Caching
+
+**User Story:** As a performance-conscious user, I want the system to avoid re-processing unchanged items, so that large collections can be updated efficiently.
+
+#### Acceptance Criteria
+
+1. WHEN items haven't changed since last processing, THE System SHALL skip re-analysis and use cached results
+2. WHEN new items are added, THE System SHALL process only the new items and merge with existing data
+3. THE System SHALL detect file modifications using timestamps and checksums
+4. WHEN forced refresh is requested, THE System SHALL re-process all items regardless of cache status
+5. THE System SHALL store processing metadata to enable resumable operations after interruption
+
+### Requirement 10: Error Handling and Resilience
+
+**User Story:** As a system operator, I want robust error handling that doesn't stop processing when individual items fail, so that large collections can be processed reliably.
+
+#### Acceptance Criteria
+
+1. WHEN individual items fail processing, THE System SHALL log errors and continue with remaining items
+2. WHEN LLM services are temporarily unavailable, THE System SHALL retry with exponential backoff
+3. WHEN file access fails, THE System SHALL record the error and mark the item as inaccessible
+4. THE System SHALL provide detailed error logs with context for debugging failed operations
+5. WHEN critical errors occur, THE System SHALL save partial progress before terminating
+
+### Requirement 11: Trunk Data Management and Web Interface
+
+### Requirement 12: Collection Discovery and Registration
+
+**User Story:** As a system administrator, I want the trunk to automatically discover and register distributed collection seeds, so that new collections are integrated without manual configuration.
+
+#### Acceptance Criteria
+
+1. THE Trunk SHALL scan configured paths for `.collectivist` folders and register them automatically
+2. WHEN new collection seeds are found, THE Trunk SHALL add them to the SQLite registry with detected metadata
+3. THE Trunk SHALL coordinate processing across multiple collection seeds in parallel
+4. WHEN collection seeds are removed, THE Trunk SHALL mark them as inactive in the registry
+5. THE System SHALL maintain collection seed identity and provenance in all aggregated data
+
+#### Tasks - `C:\Users\synta.ZK-ZRRH\.dev\collectivist\.kiro\specs\collectivist\tasks.md`
+
+# Implementation Plan: Collectivist
+
+## Overview
+
+This implementation focuses on verifying and generalizing the existing repo indexer across distributed collection seeds, then creating collection-specific implementations.
+
+## Tasks
+
+### Foundation & Generalization
+
+- [ ] 1. Verify Path Agnosticism of Existing Scripts
+  - Test repo indexer scripts in all four collection seed locations
+  - Ensure scripts work without hardcoded paths
+  - _Requirements: 2.1, 2.5_
+
+  - [ ] 1.1 Test repo indexer in all collection seed locations
+    - Test in `Z:\Documents\.collectivist`
+    - Test in `C:\Users\synta.ZK-ZRRH\.dev\.drift\.collectivist`
+    - Test in `Z:\Images\.collectivist`
+    - Document any path-specific issues found
+    - _Requirements: 2.1_
+
+- [ ] 2. Extract Generalization Patterns from Repo Indexer
+  - Analyze existing repo indexer architecture
+  - Document the Analyzer → Scanner → Describer → Renderer flow
+  - Extract scanner interface pattern for plugin architecture
+  - Extract metadata schema patterns for extensibility
+  - Extract AI description patterns for reuse
+  - _Requirements: 3.1, 4.1, 4.2, 4.3, 4.4_
+
+- [ ] 3. Design Collection Type Detection System
+  - Define collection type detection rules for each type
+  - Implement collection type detector script
+  - _Requirements: 2.1, 2.2_
+
+### Repository Collections (Already Implemented)
+
+- [ ] 4. Verify Repository Collection Implementation
+  - Confirm existing repo indexer covers all repository requirements
+  - Test git metadata extraction, README parsing, AI descriptions
+  - Ensure README generation works properly
+  - _Requirements: 1.1, 2.2_
+
+### Document Collections
+
+- [ ] 5. Implement Document Collection Support
+  - Design document collection index format (file types, word counts, modification dates)
+  - Implement document scanner (metadata extraction, content summaries)
+  - Create document collection README template (file statistics, recent changes)
+  - _Requirements: 1.2, 2.2, 3.2, 6.1, 6.3_
+
+### Media Collections
+
+- [ ] 6. Implement Media Collection Support
+  - Design media collection index format (dimensions, duration, EXIF data)
+  - Implement media scanner (metadata extraction, preview generation)
+  - Create media collection README template (galleries, timelines, metadata summaries)
+  - _Requirements: 1.3, 2.2, 3.2, 6.1, 6.3_
+
+### Research Collections
+
+- [ ] 7. Implement Research Collection Support
+  - Design research collection index format (citations, abstracts, publication data, DOIs)
+  - Implement research scanner (PDF parsing, citation extraction, academic metadata)
+  - Create research collection README template (citation lists, topic clustering, publication timelines)
+  - _Requirements: 1.4, 2.2, 3.2, 6.1, 6.3_
+
+### Integration & Testing
+
+- [ ] 8. Checkpoint - Verify collection-specific implementations
+  - Test each collection type in its respective seed location
+  - Ensure all collection types generate appropriate indexes and READMEs
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 9. Final checkpoint - Complete system verification
+  - Verify path agnosticism across all collection types
+  - Test end-to-end functionality for each collection seed
+  - Ensure all tests pass, ask the user if questions arise.
+
+## Notes
+
+- Repository collections already implemented via existing repo indexer
+- Each collection type gets custom index format, scanner, and README template
+- Path agnosticism is critical for distributed seed deployment
+- Build incrementally: Foundation → Repos (verify) → Documents → Media → Research
 
 ---
 
