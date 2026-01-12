@@ -46,12 +46,4 @@ Same content → different truth surfaces → different kinds of understanding.
 
 Choose your lens based on what kind of cognitive work needs to happen, not just what kind of output you want.
 
-## Integration
-
-This epistemic rendering stack connects to broader context engineering patterns:
-
-- **[Context Fundamentals](../skills/context-fundamentals/SKILL.md)** - Understanding how different lenses affect context usage
-- **[Multi-Agent Patterns](../skills/multi-agent-patterns/SKILL.md)** - Using different lenses across specialized agents
-- **[Memory Systems](../skills/memory-systems/SKILL.md)** - How different rendering modes interact with memory architectures
-
 The lenses also relate to core [principles](../principles.md) of epistemic hygiene and assumption-hostile design.
