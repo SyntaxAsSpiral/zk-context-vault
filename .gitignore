@@ -1,0 +1,19 @@
+# Collectivist seed - contains personal data and repo indexes
+.collectivist/
+
+# Obsidian workspace files - personal preferences
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Personal configuration files that might contain sensitive paths
+.obsidian/app.json
+.obsidian/hotkeys.json
+
+# Any local development files
+*.local.*
+.env
+.env.local
+
+# OS generated files
+.DS_Store
+Thumbs.db
