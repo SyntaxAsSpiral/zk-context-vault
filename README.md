@@ -24,7 +24,7 @@ Foundation → Capabilities → Identity → Cognition → Modeling → Assembly
 |--------|---------|-------------|-------------|
 | **[Principles](principles.md)** | Anti-assumption framework | Every yama guards against a presumption | Foundation for all other systems |
 | **[Skills](skills/README.md)** | Technical capabilities library | Dual-format documentation enables multiple deployment targets | Workshop compilation sources |
-| **[Agents](agents/README.md)** | Kiro-specific configurations | Modular context assembly with explicit behavior control | Identity and workflow management |
+| **[Agents](agents/README.md)** | Single-agent specific configurations | Modular context assembly with explicit behavior control | Identity and workflow management |
 | **[Prompts](prompts/README.md)** | Epistemic rendering stack | Same content through different cognitive lenses | Cognitive transformation toolkit |
 | **[Artifacts](artifacts/README.md)** | Visual cognitive modeling | Canvas-to-semantic-JSON anticompiler workflow | Bridge visual design and structured data |
 | **[Workshop](workshop/README.md)** | Recipe-based assembly system | Write once, deploy everywhere via slice architecture | Context compilation and deployment |
