@@ -69,12 +69,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "agents/kiro-steering.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "kiro-steering"
             }
           }
         ],
@@ -241,16 +241,16 @@
   },
   "active": "b5646729ca011e11",
   "lastOpenFiles": [
-    "principles.md",
-    "operator.md",
-    "compiled-workspace.md",
-    "README.md",
-    "agents/kiro-hooks.md",
-    "agents/kiro-steering.md",
-    "agents/README.md",
     "agents/kiro-specs.md",
     "agents/kiro-mcp.md",
     "agents/agent-roles.md",
+    "agents/kiro-hooks.md",
+    "README.md",
+    "principles.md",
+    "operator.md",
+    "compiled-workspace.md",
+    "agents/kiro-steering.md",
+    "agents/README.md",
     "exocortex/exo-roles.md",
     "exocortex/README.md",
     "exocortex/exo-topography.md",
