@@ -1,0 +1,532 @@
+{
+  "nodes": [
+    {
+      "id": "d97c400e955cdbed",
+      "type": "group",
+      "x": -3080,
+      "y": -1800,
+      "width": 4600,
+      "height": 3880,
+      "color": "#120236",
+      "label": "template"
+    },
+    {
+      "id": "05bb9714b238da4e",
+      "type": "text",
+      "text": "## Step 2 — DIAGRAM (system model)\n\nCreate a semantic diagram in the diagram lane:\n- components + boundaries\n- main flows (happy path + 1 failure path)\n- key artifacts (DB rows, plans, logs, conflicts)\nRules:\n- illustrate boundaries with groups\n- use color for organization\n- Use labels add a Legend node if helpful\n- Every edge must reference existing node ids (fromNode/toNode).",
+      "x": -245,
+      "y": -1760,
+      "width": 250,
+      "height": 400,
+      "color": "#120236"
+    },
+    {
+      "id": "61ba5aebf6d9a38f",
+      "type": "text",
+      "text": "# START HERE:\n---\n## Legend (edge labels)\n\nmodel: SPEC → DIAGRAM refinement\nsequence: DIAGRAM → TASKS derivation\ncompile: SPEC → TASKS shortcut\nblocks: hard dependency/order\nrelates: soft association (no order)",
+      "x": -2560,
+      "y": -1720,
+      "width": 250,
+      "height": 360,
+      "color": "#120236"
+    },
+    {
+      "id": "fc2b7475f4da3d22",
+      "type": "text",
+      "text": "## Step 3 — TASKS (execution plan)\n\nCompile into ≤12 TASK nodes in the tasks lane.\n\nEach task MUST include:\n- pointers (real repo paths)\n- acceptance_checks (verifiable end states)\n- depends_on (ids or slugs; keep consistent)\n\nScheduling rules:\n- Use `blocks` edges for hard order.\n- Use `relates` edges for non-ordering association.",
+      "x": 1240,
+      "y": 780,
+      "width": 250,
+      "height": 420,
+      "color": "#120236"
+    },
+    {
+      "id": "0109dca5f8501bd0",
+      "type": "text",
+      "text": "## Step 1 — SPEC (policy)\n\nFill the SPEC template in the spec lane.\n\nRules:\n- Keep valid YAML in the SPEC block.\n- Refer to lanes (SPEC/DIAGRAM/TASKS) or node IDs.\n- JSON integrity: node IDs must be unique within `nodes[]`.\n- Any new node you add must get a new unique id.",
+      "x": -2205,
+      "y": -1720,
+      "width": 250,
+      "height": 360,
+      "color": "#120236"
+    },
+    {
+      "id": "bbffec9a4ed0c3ba",
+      "type": "group",
+      "x": -2720,
+      "y": -1290,
+      "width": 1280,
+      "height": 3130,
+      "color": "6",
+      "label": "1-spec"
+    },
+    {
+      "id": "5da26bf982825a4e",
+      "type": "text",
+      "text": "# SPEC\n\n```yaml\n# === IDENTITY ===\nimpl_id: impl-<% tp.system.prompt(\"impl-id (kebab-case, e.g. bundle-scheduler)\") %>\norigin: <% tp.system.suggester([\"operator\", \"agent\"], [\"operator\", \"agent\"]) %>\ntitle: <% tp.system.prompt(\"Title (short, descriptive)\") %>\nstatus: draft\n\n# === GOALS ===\ngoals:\n  - <% tp.system.prompt(\"Goal 1 (measurable end-state)\") %>\n  - <% tp.system.prompt(\"Goal 2 (optional, leave blank to skip)\") || \"# remove if unused\" %>\n  - <% tp.system.prompt(\"Goal 3 (optional)\") || \"# remove if unused\" %>\n\n# === CONSTRAINTS ===\nconstraints:\n  architectural:\n    - <% tp.system.prompt(\"Architectural constraint 1\") %>\n    - <% tp.system.prompt(\"Architectural constraint 2 (optional)\") || \"# remove if unused\" %>\n  non_goals:\n    - <% tp.system.prompt(\"Non-goal 1 (explicitly out of scope)\") %>\n    - <% tp.system.prompt(\"Non-goal 2 (optional)\") || \"# remove if unused\" %>\n\n# === DOMAIN CONTEXT ===\ncontext:\n  background: |\n    <% tp.system.prompt(\"Background (why this exists, problem being solved)\") %>\n  terminology:\n    - term: <% tp.system.prompt(\"Term 1 name (optional)\") || \"Bundle\" %>\n      definition: <% tp.system.prompt(\"Term 1 definition\") || \"A connected component of tasks\" %>\n  related_components:\n    - <% tp.system.prompt(\"Related component path 1\") %>\n    - <% tp.system.prompt(\"Related component path 2 (optional)\") || \"# remove if unused\" %>\n  references:\n    - <% tp.system.prompt(\"Reference URL (issue, doc, etc.)\") || \"# remove if unused\" %>\n\n# === INVARIANTS ===\ninvariants:\n  - <% tp.system.prompt(\"Invariant 1 (must NOT be violated)\") %>\n  - <% tp.system.prompt(\"Invariant 2 (optional)\") || \"# remove if unused\" %>\n\n# === ACCEPTANCE CRITERIA ===\nacceptance_criteria:\n  - <% tp.system.prompt(\"Acceptance criterion 1 (impl-level success)\") %>\n  - <% tp.system.prompt(\"Acceptance criterion 2 (optional)\") || \"# remove if unused\" %>\n\n# === POINTERS ===\npointers:\n  - <% tp.system.prompt(\"Key file/path 1 for this impl\") %>\n  - <% tp.system.prompt(\"Key file/path 2 (optional)\") || \"# remove if unused\" %>\n```\n\n---\n\n## Usage\n\n1. Run Templater on this node to fill in prompts\n2. Remove any `# remove if unused` lines\n3. Add/remove list items as needed\n4. Rename file to match `impl_id` value\n\n## Field Reference\n\n| Field | Required | Notes |\n|-------|----------|-------|\n| impl_id | Yes | kebab-case, match filename |\n| origin | Yes | operator (human) or agent |\n| goals | Yes | Measurable end-states |\n| constraints | Yes | Boundaries + non-goals |\n| context | Yes | Background + terminology |\n| invariants | Yes | Do-not-break rules |\n| acceptance_criteria | Yes | Impl-level success |\n| pointers | Yes | Key files for spec |",
+      "x": -2640,
+      "y": -1222,
+      "width": 1120,
+      "height": 2942,
+      "color": "6"
+    },
+    {
+      "id": "90bc63840816b27f",
+      "type": "group",
+      "x": -1400,
+      "y": -1290,
+      "width": 2560,
+      "height": 1565,
+      "color": "5",
+      "label": "2-diagram"
+    },
+    {
+      "id": "432665ee1bd6ceaf",
+      "type": "group",
+      "x": -1282,
+      "y": -960,
+      "width": 435,
+      "height": 360,
+      "label": "obsidian-layer"
+    },
+    {
+      "id": "4070a79274cf12f9",
+      "type": "text",
+      "text": "ARTIFACT: cockpit/dashboards/tasks-dash.md\n(sqliteDB plugin)",
+      "x": -1217,
+      "y": -940,
+      "width": 280,
+      "height": 140,
+      "color": "2"
+    },
+    {
+      "id": "f416b79daf2d0954",
+      "type": "text",
+      "text": "ARTIFACT: cockpit/specs/implementation/<impl_id>.canvas\n(authoring, Obsidian-owned)",
+      "x": -1217,
+      "y": -760,
+      "width": 280,
+      "height": 140,
+      "color": "2"
+    },
+    {
+      "id": "016add57b1c4e605",
+      "type": "group",
+      "x": -807,
+      "y": -560,
+      "width": 1967,
+      "height": 580,
+      "label": "node-layer"
+    },
+    {
+      "id": "5531d5eea5f22a82",
+      "type": "text",
+      "text": "PROCESS: compile impl-spec\n(canonicalize + transfer)",
+      "x": -787,
+      "y": -540,
+      "width": 240,
+      "height": 140
+    },
+    {
+      "id": "b1fc5c359ec62f81",
+      "type": "text",
+      "text": "PROCESS: global scheduler\n(edges + pointers \u001020 bundles)\n(tasks: pending \u001020 queued)\n\nreads all tasks to output braided bundle schedules optimized for concurrancy",
+      "x": 866,
+      "y": -530,
+      "width": 240,
+      "height": 160
+    },
+    {
+      "id": "5b6ea66758db3e9d",
+      "type": "text",
+      "text": "PROCESS: orchestrator\n(dispatch bundles; monitor DB)\n(halt only: thread init failure / no response)",
+      "x": 833,
+      "y": -180,
+      "width": 307,
+      "height": 180
+    },
+    {
+      "id": "0c9077b9141fb38f",
+      "type": "text",
+      "text": "ARTIFACT: .system/node/data/impl-specs/<impl_id>.json\n(node-owned runtime spec)",
+      "x": -322,
+      "y": -540,
+      "width": 295,
+      "height": 140,
+      "color": "2"
+    },
+    {
+      "id": "3774ab2242d48e5d",
+      "type": "text",
+      "text": "AGENT: implementor\n(status: queued \u001020 running \u001020 completed)\n(no batch-complete)",
+      "x": 416,
+      "y": -180,
+      "width": 240,
+      "height": 180,
+      "color": "4"
+    },
+    {
+      "id": "6b262433982c2024",
+      "type": "text",
+      "text": "PROCESS: ingest\n(parse TASK + edges \u001020 tasks.db)",
+      "x": -324,
+      "y": -240,
+      "width": 300,
+      "height": 140
+    },
+    {
+      "id": "694189f5229324ee",
+      "type": "text",
+      "text": "DATA: .system/db/tasks.db\n(todos, edges, bundle_status, spec_events)",
+      "x": 191,
+      "y": -530,
+      "width": 225,
+      "height": 160,
+      "color": "3"
+    },
+    {
+      "id": "569ed2df8eeeb889",
+      "type": "group",
+      "x": -1400,
+      "y": 320,
+      "width": 2560,
+      "height": 1520,
+      "color": "4",
+      "label": "3-tasks"
+    },
+    {
+      "id": "2fab99398cc20037",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -1235,
+      "y": 520,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "653f33247c6dcf74",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -675,
+      "y": 520,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "d8d8e7c3c0b67dd1",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -1235,
+      "y": 940,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "fb8c5ead9120ba8f",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -675,
+      "y": 940,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "ed301b9a567f3a51",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -1235,
+      "y": 1360,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "c478fb50f4a9f952",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -675,
+      "y": 1360,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "729d5e945104005b",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -105,
+      "y": 520,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "a251c9d89c98958b",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": 445,
+      "y": 520,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "eb42de078e374828",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -105,
+      "y": 940,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "a62bf2a1f2a2e548",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": 445,
+      "y": 940,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "7d1861bfa28aa441",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": -115,
+      "y": 1360,
+      "width": 520,
+      "height": 360
+    },
+    {
+      "id": "491429c63156f63c",
+      "type": "text",
+      "text": "# TASK: <slug>\n\n```yaml\ntitle: <task title>\norder: 10\ncodex_mini: false\nhygen: null\npointers:\n  - <repo/relative/path>\nacceptance_checks:\n  - <checkable end state>\ndepends_on: []\ndescription: |\n  <optional detail>\n```",
+      "x": 445,
+      "y": 1360,
+      "width": 520,
+      "height": 360
+    }
+  ],
+  "edges": [
+    {
+      "id": "41aeb1eb818538ea",
+      "fromNode": "61ba5aebf6d9a38f",
+      "fromSide": "right",
+      "toNode": "0109dca5f8501bd0",
+      "toSide": "left"
+    },
+    {
+      "id": "f01a5ffe80659649",
+      "fromNode": "f416b79daf2d0954",
+      "fromSide": "right",
+      "toNode": "5531d5eea5f22a82",
+      "toSide": "left",
+      "label": "convert"
+    },
+    {
+      "id": "b72fcbb6d32e77ae",
+      "fromNode": "5b6ea66758db3e9d",
+      "fromSide": "left",
+      "toNode": "3774ab2242d48e5d",
+      "toSide": "right",
+      "label": "assign work"
+    },
+    {
+      "id": "4d61d793774e9504",
+      "fromNode": "2fab99398cc20037",
+      "fromSide": "right",
+      "toNode": "653f33247c6dcf74",
+      "toSide": "left",
+      "label": "relates"
+    },
+    {
+      "id": "887576b566294ea6",
+      "fromNode": "2fab99398cc20037",
+      "fromSide": "bottom",
+      "toNode": "d8d8e7c3c0b67dd1",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "47a04d4352cbc8fd",
+      "fromNode": "729d5e945104005b",
+      "fromSide": "right",
+      "toNode": "a251c9d89c98958b",
+      "toSide": "left",
+      "label": "relates"
+    },
+    {
+      "id": "c0af22ad40584c0b",
+      "fromNode": "729d5e945104005b",
+      "fromSide": "bottom",
+      "toNode": "eb42de078e374828",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "0a7864bdbd2e1bb7",
+      "fromNode": "05bb9714b238da4e",
+      "fromSide": "bottom",
+      "toNode": "90bc63840816b27f",
+      "toSide": "top",
+      "label": "replace"
+    },
+    {
+      "id": "32ee1f32dd42c638",
+      "fromNode": "4070a79274cf12f9",
+      "fromSide": "right",
+      "toNode": "694189f5229324ee",
+      "toSide": "top",
+      "label": "query"
+    },
+    {
+      "id": "0a4e0437e47fa460",
+      "fromNode": "b1fc5c359ec62f81",
+      "fromSide": "left",
+      "toNode": "694189f5229324ee",
+      "toSide": "right",
+      "fromEnd": "arrow",
+      "label": "schedules"
+    },
+    {
+      "id": "eb9405bdc7e5a7f4",
+      "fromNode": "5b6ea66758db3e9d",
+      "fromSide": "left",
+      "toNode": "694189f5229324ee",
+      "toSide": "right",
+      "label": "query"
+    },
+    {
+      "id": "69d2b8b8bc63926b",
+      "fromNode": "fc2b7475f4da3d22",
+      "fromSide": "left",
+      "toNode": "569ed2df8eeeb889",
+      "toSide": "right",
+      "label": "replace"
+    },
+    {
+      "id": "0830649a91cd9661",
+      "fromNode": "0109dca5f8501bd0",
+      "fromSide": "bottom",
+      "toNode": "bbffec9a4ed0c3ba",
+      "toSide": "top",
+      "label": "draft"
+    },
+    {
+      "id": "7bf255e321cb41f6",
+      "fromNode": "5531d5eea5f22a82",
+      "fromSide": "right",
+      "toNode": "0c9077b9141fb38f",
+      "toSide": "left",
+      "label": "write"
+    },
+    {
+      "id": "05cab1057a665420",
+      "fromNode": "653f33247c6dcf74",
+      "fromSide": "bottom",
+      "toNode": "fb8c5ead9120ba8f",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "36bc07d507e5fc14",
+      "fromNode": "a251c9d89c98958b",
+      "fromSide": "bottom",
+      "toNode": "a62bf2a1f2a2e548",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "7a1dc4c900f427eb",
+      "fromNode": "d8d8e7c3c0b67dd1",
+      "fromSide": "bottom",
+      "toNode": "ed301b9a567f3a51",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "e70451d38cd813a6",
+      "fromNode": "eb42de078e374828",
+      "fromSide": "bottom",
+      "toNode": "7d1861bfa28aa441",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "565695f3978ec1be",
+      "fromNode": "3774ab2242d48e5d",
+      "fromSide": "left",
+      "toNode": "694189f5229324ee",
+      "toSide": "bottom",
+      "label": "update status"
+    },
+    {
+      "id": "88ae495c23b76bfd",
+      "fromNode": "bbffec9a4ed0c3ba",
+      "fromSide": "right",
+      "toNode": "90bc63840816b27f",
+      "toSide": "left",
+      "label": "model"
+    },
+    {
+      "id": "6912c80c0d85fd1e",
+      "fromNode": "0c9077b9141fb38f",
+      "fromSide": "bottom",
+      "toNode": "6b262433982c2024",
+      "toSide": "top",
+      "label": "input"
+    },
+    {
+      "id": "8ef07ac9fac5c2f8",
+      "fromNode": "fb8c5ead9120ba8f",
+      "fromSide": "bottom",
+      "toNode": "c478fb50f4a9f952",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "f0003df67ae64949",
+      "fromNode": "a62bf2a1f2a2e548",
+      "fromSide": "bottom",
+      "toNode": "491429c63156f63c",
+      "toSide": "top",
+      "label": "blocks"
+    },
+    {
+      "id": "d88c859faded3ca4",
+      "fromNode": "ed301b9a567f3a51",
+      "fromSide": "right",
+      "toNode": "c478fb50f4a9f952",
+      "toSide": "left",
+      "label": "relates"
+    },
+    {
+      "id": "8bc1d133c8bb5bac",
+      "fromNode": "7d1861bfa28aa441",
+      "fromSide": "right",
+      "toNode": "491429c63156f63c",
+      "toSide": "left",
+      "label": "relates"
+    },
+    {
+      "id": "be9c8629b7f87801",
+      "fromNode": "bbffec9a4ed0c3ba",
+      "fromSide": "right",
+      "toNode": "569ed2df8eeeb889",
+      "toSide": "left",
+      "label": "compile"
+    },
+    {
+      "id": "cba85d2e4ea5f85e",
+      "fromNode": "90bc63840816b27f",
+      "fromSide": "bottom",
+      "toNode": "569ed2df8eeeb889",
+      "toSide": "top",
+      "label": "sequence"
+    },
+    {
+      "id": "3440cd6fc583f6a2",
+      "fromNode": "6b262433982c2024",
+      "fromSide": "right",
+      "toNode": "694189f5229324ee",
+      "toSide": "left",
+      "label": "upsert"
+    }
+  ]
+}

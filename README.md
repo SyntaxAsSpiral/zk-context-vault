@@ -134,7 +134,7 @@ The [Work Preservation Principle](principles.md#⛔-work-preservation) ensures n
 
 ### For Visual Modeling
 1. Explore [Canvas-to-Semantic-JSON](artifacts/README.md) workflows
-2. Use [Implementation Spec Templates](artifacts/impl-spec-example.canvas) for structured development
+2. Use [Implementation Spec Templates](impl-spec-example.canvas) for structured development
 3. Apply [Anticompiler Principles](artifacts/README.md#the-anticompiler-philosophy) for visual-to-data transformation
 
 ### For Advanced Coordination
