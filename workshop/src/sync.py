@@ -27,6 +27,7 @@ from pathlib import Path
 from datetime import datetime
 import sys
 import json
+import os
 from typing import Any, Dict, List, Optional
 
 
@@ -113,11 +114,20 @@ def _extract_yaml_block(md_content: str) -> Optional[str]:
 
 
 def _expand_target_path(p: str) -> str:
-    # Preserve trailing separators (directory targets) by expanding via string ops.
-    if p.startswith("~/"):
-        return str(Path.home()) + "/" + p[2:]
-    if p.startswith("~\\"):
-        return str(Path.home()) + "\\" + p[2:]
+    # Expand "~/" while preserving trailing separators (directory targets).
+    trailing_sep = p.endswith("/") or p.endswith("\\")
+    if p.startswith("~/") or p.startswith("~\\"):
+        remainder = p[2:]
+        remainder = remainder.replace("/", os.sep).replace("\\", os.sep)
+        expanded = str(Path.home() / remainder)
+        if trailing_sep and not expanded.endswith(os.sep):
+            expanded += os.sep
+        return expanded
+
+    # Normalize accidental forward slashes in Windows-y paths.
+    if re.match(r"^[A-Za-z]:[\\/]", p) or p.startswith("\\\\") or p.startswith(".\\") or p.startswith("./"):
+        return p.replace("/", "\\")
+
     return p
 
 

@@ -23,6 +23,7 @@ from pathlib import Path
 from datetime import datetime
 import sys
 import json
+import os
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 
@@ -64,12 +65,26 @@ def _configure_stdio_utf8() -> None:
 
 
 def _expand_target_path(p: str) -> str:
-    # Preserve trailing separators (directory targets) by expanding via string ops.
-    if p.startswith("~/"):
-        return str(Path.home()) + "/" + p[2:]
-    if p.startswith("~\\"):
-        return str(Path.home()) + "\\" + p[2:]
+    # Expand "~/" while preserving trailing separators (directory targets).
+    trailing_sep = p.endswith("/") or p.endswith("\\")
+    if p.startswith("~/") or p.startswith("~\\"):
+        remainder = p[2:]
+        remainder = remainder.replace("/", os.sep).replace("\\", os.sep)
+        expanded = str(Path.home() / remainder)
+        if trailing_sep and not expanded.endswith(os.sep):
+            expanded += os.sep
+        return expanded
+
+    # Normalize accidental forward slashes in Windows-y paths for display/logging.
+    if re.match(r"^[A-Za-z]:[\\/]", p) or p.startswith("\\\\") or p.startswith(".\\") or p.startswith("./"):
+        return p.replace("/", "\\")
+
     return p
+
+
+def _display_path_windows(p: str) -> str:
+    # Manifest display preference: Windows-style separators.
+    return p.replace("/", "\\")
 
 
 def _norm_path_str(p: str) -> str:
@@ -725,10 +740,10 @@ def update_manifest(manifest_path: Path, entries: List[Dict[str, Any]]) -> None:
             status = str(e.get("status") or "")
             lines = [f"- **{entry_id}**: Last run {timestamp}"]
             if out:
-                lines.append(f"  - Output: `{out}`")
+                lines.append(f"  - Output: `{_display_path_windows(out)}`")
             if isinstance(targets, list):
                 for t in targets:
-                    lines.append(f"  - Target: `{t}`")
+                    lines.append(f"  - Target: `{_display_path_windows(str(t))}`")
             lines.append(f"  - Status: {status}")
             return lines
 
