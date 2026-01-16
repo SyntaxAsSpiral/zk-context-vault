@@ -8,6 +8,15 @@ type:
 ---
 
 ```yaml
+# NOTE:
+# This template is intentionally NOT wired up as a distinct `output_format`.
+# Use it as a scratchpad for future Kiro-specific modular recipes.
+# Today, `assemble.py` / `sync.py` only implement:
+# - output_format: agent | skill | power | command
+# If you need a working Kiro modular recipe now, prefer:
+# - output_format: agent (multi-section) for `~/.kiro/steering/*.md`
+# - output_format: power for `~/.kiro/powers/installed/<name>/`
+
 name: {{name}}
 target_locations:
   - path: # Target file path for Kiro output (e.g., ~/.kiro/config/{{name}}.md)
