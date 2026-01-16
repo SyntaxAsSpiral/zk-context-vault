@@ -22,7 +22,7 @@ Foundation → Capabilities → Identity → Cognition → Modeling → Assembly
 
 | System | Purpose | Key Insight | Integration |
 |--------|---------|-------------|-------------|
-| **[Principles](principles.md)** | Anti-assumption framework | Every yama guards against a presumption | Foundation for all other systems |
+| **[Principles](steering-global-principles.md)** | Anti-assumption framework | Every yama guards against a presumption | Foundation for all other systems |
 | **[Skills](skills/README.md)** | Technical capabilities library | Dual-format documentation enables multiple deployment targets | Workshop compilation sources |
 | **[Agents](agents/README.md)** | Single-agent specific configurations | Modular context assembly with explicit behavior control | Identity and workflow management |
 | **[Prompts](prompts/README.md)** | Epistemic rendering stack | Same content through different cognitive lenses | Cognitive transformation toolkit |
@@ -34,7 +34,7 @@ Foundation → Capabilities → Identity → Cognition → Modeling → Assembly
 
 ### Layer 1: Foundational Principles
 
-The [Covenant Principles](principles.md) provide the philosophical foundation—an anti-assumption framework that prevents the cardinal sin of presumption. Every principle guards against a specific assumption that leads to cognitive failure.
+The [Covenant Principles](steering-global-principles.md) provide the philosophical foundation—an anti-assumption framework that prevents the cardinal sin of presumption. Every principle guards against a specific assumption that leads to cognitive failure.
 
 **Key Insight**: Assumptions are the root cause of AI system failures. Explicit principles create assumption-hostile design.
 
@@ -101,19 +101,19 @@ The vault supports multiple deployment scenarios:
 
 ### Bespoke-First Design
 
-Following the [Bespoke Principle](principles.md#✨-bespokedness), the vault optimizes for operator workflow over enterprise patterns. When rewrite takes an hour, optimize for beauty and razor-sharp function over long-term maintainability.
+Following the [Bespoke Principle](steering-global-principles.md#✨-bespokedness), the vault optimizes for operator workflow over enterprise patterns. When rewrite takes an hour, optimize for beauty and razor-sharp function over long-term maintainability.
 
 ### Assumption-Hostile Architecture
 
-Every component explicitly guards against assumptions. The [Data Fidelity Principle](principles.md#🗣️-data-fidelity) ensures UNKNOWN > INVENTED. Missing information triggers queries rather than presumptive behavior.
+Every component explicitly guards against assumptions. The [Data Fidelity Principle](steering-global-principles.md#🗣️-data-fidelity) ensures UNKNOWN > INVENTED. Missing information triggers queries rather than presumptive behavior.
 
 ### Context Hygiene
 
-The [Context Hygiene Principle](principles.md#🧬-context-hygiene) prevents context-stuffing and wholesale transmission. Context is compiled per-recipient and per-turn, maintaining clean cognitive boundaries.
+The [Context Hygiene Principle](steering-global-principles.md#🧬-context-hygiene) prevents context-stuffing and wholesale transmission. Context is compiled per-recipient and per-turn, maintaining clean cognitive boundaries.
 
 ### Work Preservation
 
-The [Work Preservation Principle](principles.md#⛔-work-preservation) ensures nothing gets lost. Changes are explicit and reversible. "Out of scope" triggers questions, not automatic cleanup.
+The [Work Preservation Principle](steering-global-principles.md#⛔-work-preservation) ensures nothing gets lost. Changes are explicit and reversible. "Out of scope" triggers questions, not automatic cleanup.
 
 ## Getting Started
 

@@ -54,4 +54,4 @@ This epistemic rendering stack connects to broader context engineering patterns:
 - **[Multi-Agent Coordination](../skills/multi-agent-coordination/SKILL.md)** - Using different lenses across specialized agents in pentadyadic evaluation
 - **[Agent Steering](../skills/agent-steering/SKILL.md)** - How rendering modes affect agent context compilation and steering
 
-The lenses also relate to core [principles](../principles.md) of epistemic hygiene and assumption-hostile design.
+The lenses also relate to core [steering-global-principles](steering-global-principles.md) of epistemic hygiene and assumption-hostile design.

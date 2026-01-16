@@ -226,7 +226,7 @@ Generic context-engineering skills have been archived to `archive/`. These conta
 
 This skills library connects to the broader context ecosystem:
 
-- **[Principles](../principles.md)** — Foundation that skills operationalize
+- **[Principles](steering-global-principles.md)** — Foundation that skills operationalize
 - **[Agents](../agents/README.md)** — Agent configuration using skills
 - **[Prompts](../prompts/README.md)** — Epistemic lenses documented as skill
 - **[Artifacts](../artifacts/README.md)** — Visual workflows documented as skill

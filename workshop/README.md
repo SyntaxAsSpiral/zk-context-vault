@@ -113,7 +113,7 @@ This workshop system connects to the broader context ecosystem:
 - **[Context Engineering Skills](../skills/README.md)** - Source material for skill bundles
 - **[Epistemic Rendering](../prompts/README.md)** - Templates for different cognitive approaches
 - **[Exocortex Architecture](../exocortex/README.md)** - Agent configurations and slice sources
-- **[Covenant Principles](../principles.md)** - Bespoke design philosophy
+- **[Covenant Principles](steering-global-principles.md)** - Bespoke design philosophy
 
 The workshop serves as the deployment mechanism for translating vault knowledge into operational context.
 

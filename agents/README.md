@@ -34,7 +34,7 @@ Think of it as "AI agents as they should be" - fully configured, context-aware, 
 
 ## Why This Architecture Works
 
-The agent system design philosophy aligns with the [Covenant Principles](../principles.md) and works across different AI coding environments:
+The agent system design philosophy aligns with the [Covenant Principles](steering-global-principles.md) and works across different AI coding environments:
 
 - **Assumption-hostile**: Explicit context management prevents presumptive behavior (works in any agent)
 - **Bespoke-first**: Modular system optimizes for operator workflow over enterprise patterns (universal principle)
@@ -55,7 +55,7 @@ Steering → Specs → Context Assembly → Agent Experience
 
 | Component | Purpose | Platform Support | Integration |
 |-----------|---------|------------------|-------------|
-| **[Steering](kiro-steering.md)** | Context and behavior guidance | All agents via markdown files | Contextual intelligence |
+| **[Steering](agent-steering.md)** | Context and behavior guidance | All agents via markdown files | Contextual intelligence |
 | **[Specs](kiro-specs.md)** | 3-phase development process | All agents via structured docs | Structured development |
 | **[Agent Roles](agent-roles.md)** | Identity templates and sigils | All agents via slice architecture | Persona management |
 
