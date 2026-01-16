@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> **For AI Coding Agents**: This document explains the Amexsomnemon repository structure, purpose, and how to work effectively within this codebase.
+> **For AI Coding Agents**: This document explains the zk-context-vault repository structure, purpose, and how to work effectively within this codebase.
 
 ## Repository Overview
 

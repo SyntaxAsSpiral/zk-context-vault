@@ -175,7 +175,7 @@ Different AI platforms have different file naming conventions:
 
 | Platform | File Name | Format | Notes |
 |----------|-----------|--------|-------|
-| **Kiro** | `AGENTS.md` | Markdown | Standard agent configuration |
+| **Kiro** | `modular` | Markdown | Standard agent configuration |
 | **Claude** | `CLAUDE.md` | Markdown | Claude-specific naming |
 | **Codex** | `AGENTS.md` | Markdown | Standard agent configuration |
 | **Grok** | `AGENTS.md` | Markdown | Standard agent configuration |
