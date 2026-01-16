@@ -20,8 +20,8 @@ output_format: skill  # Creates Agent Skills standard structure
 #     └── palette-mutator.md
 
 target_locations:
-  - path: ~/.kiro/skills/catppuccin-theming/
   - path: ~/.claude/skills/catppuccin-theming/
+  - path: ~/.codex/skills/catppuccin-theming/
 
 # Source mapping to skill structure
 sources:
@@ -47,9 +47,6 @@ sources:
   assets:  # Optional - go to assets/ folder
     - file: skills/catppuccin-theming/palette-mutator.md
       output_name: palette-mutator.md
-
-# Optional: Also output as Kiro power format
-also_output_as_power: true  # Generate both skill and power formats
 
 # Validation
 validate_agentskills_spec: true  # Ensure compliance with agentskills.io standard

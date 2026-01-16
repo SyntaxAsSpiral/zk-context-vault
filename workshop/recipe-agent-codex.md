@@ -15,7 +15,7 @@ target_locations:
   - path: ~/.codex/AGENTS.md
 
 sources:
-  - slice: agent=codex
+  - slice: agent=gpt-codex
     slice-file: agents/agent-roles.md
   - file: agents/steering-global-operator.md
   - file: agents/steering-global-principles.md

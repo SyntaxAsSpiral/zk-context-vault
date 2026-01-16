@@ -2,6 +2,8 @@
 
 *A comprehensive cognitive infrastructure for AI-augmented development and knowledge work.*
 
+> **Note**: This is ZK's personal context vault with ZK-specific content. The **workshop system** (assembly scripts, templates, recipe patterns in `workshop/`) is designed to be reusable with any content library. See [AGENTS.md](AGENTS.md) for adaptation guidance.
+
 ## What This Is
 
 This is not just documentation. It's a **cognitive infrastructure**—a systematic approach to context engineering, agent systems, and knowledge management that transforms how you work with AI. The vault provides the foundational patterns, tools, and frameworks needed to build sophisticated AI-augmented workflows while maintaining epistemic hygiene and assumption-hostile design.
@@ -160,6 +162,18 @@ The result is AI assistance that enhances rather than replaces human cognition, 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 The cognitive infrastructure patterns, documentation approaches, and architectural frameworks are freely available for adaptation and use. Build upon them, modify them, make them your own.
+
+**Reusable Components:**
+- Workshop system (`workshop/src/`, templates, recipe patterns)
+- Specifications (`skills/spec-agent-skill.md`, `skills/spec-kiro-power.md`)
+- Assembly patterns and slice architecture
+- Covenant Principles framework
+
+**Personal Content:**
+- ZK's specific agent configurations, skills, prompts, and artifacts
+- These serve as examples but contain ZK-specific implementations
+
+A template repository (workshop system without personal content) may be created in the future for easier bootstrapping.
 
 ---
 

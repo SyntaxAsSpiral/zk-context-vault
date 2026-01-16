@@ -45,28 +45,133 @@ The system integrates with VSCode through [task configurations](../../.dev/.scri
 
 Recipes combine Obsidian frontmatter with embedded YAML configuration:
 
-### Recipe Schema
+### Simple Agent Recipe (no template)
 ```yaml
-name: recipe-identifier
+name: Claudi
+output_format: agent
 target_locations:
-  - path: /deployment/target/file.md
+  - path: ~/.claude/CLAUDE.md
 sources:
-  - slice: slice-identifier
-    file: source/file/path.md
-template: |
-  Template with {content} substitution
+  - slice: agent=claudi-claude-code
+    slice-file: agents/agent-roles.md
+  - file: agents/steering-global-operator.md
 ```
+
+### Agent Skills Standard Recipe
+```yaml
+name: catppuccin-theming
+output_format: skill  # Creates Agent Skills standard structure
+target_locations:
+  - path: ~/.kiro/skills/catppuccin-theming/
+sources:
+  skill_md:
+    frontmatter:
+      name: catppuccin-theming
+      description: Apply Catppuccin color palettes...
+    body:
+      - file: skills/catppuccin-theming/SKILL.md
+  references:
+    - file: skills/catppuccin-theming/🩷Catppuccin.md
+      output_name: 🩷Catppuccin.md
+```
+
+### Kiro Power Recipe
+```yaml
+name: semantic-json-workflows
+output_format: power  # Creates Kiro Power structure
+target_locations:
+  - path: ~/.kiro/powers/semantic-json-workflows/
+sources:
+  power_md:
+    - file: skills/semantic-json-workflows/POWER.md
+  steering_files:
+    - file: skills/semantic-json-workflows/getting-started.md
+      output_name: getting-started.md
+```
+
+### Source Types
+
+- **`slice` + `slice-file`**: Extract content between `<!-- slice:id -->` markers
+- **`file` only**: Include entire file content
+- **Source roles**: Group sources by purpose (skill_md, power_md, steering_files, references, assets)
 
 ### Recipe Types
 
 The workshop provides specialized templates for different context types:
 
-| Template | Purpose | Specialized Fields |
-|----------|---------|-------------------|
-| **[recipe-agent-{{name}}.md](templates/recipe-agent-{{name}}.md)** | Agent system prompts | `agent_format`, `persona_elements` |
+| Template | Purpose | Output Format |
+|----------|---------|---------------|
+| **[recipe-agent-{{name}}.md](templates/recipe-agent-{{name}}.md)** | Agent system prompts | Simple concatenation |
+| **[recipe-skill-{{name}}.md](templates/recipe-skill-{{name}}.md)** | Agent Skills standard | SKILL.md + scripts/ + references/ + assets/ |
+| **[recipe-power-{{name}}.md](templates/recipe-power-{{name}}.md)** | Kiro Power packages | POWER.md + mcp.json + steering/ |
 | **[recipe-kiro-{{name}}.md](templates/recipe-kiro-{{name}}.md)** | Kiro IDE configurations | IDE-specific settings |
-| **[recipe-power-{{name}}.md](templates/recipe-power-{{name}}.md)** | Power system bundles | Power-specific metadata |
-| **[recipe-skill-{{name}}.md](templates/recipe-skill-{{name}}.md)** | Skill documentation | `skill_type`, `bundle_options` |
+
+## Output Formats
+
+The workshop supports two standard output formats:
+
+### Agent Skills Standard (agentskills.io)
+```
+skill-name/
+├── SKILL.md          # Required: YAML frontmatter + markdown body
+├── scripts/          # Optional: Python, Bash, JS executables
+├── references/       # Optional: Additional docs (loaded on demand)
+└── assets/           # Optional: Static resources
+```
+
+**Frontmatter requirements:**
+- `name`: lowercase, numbers, hyphens only (max 64 chars)
+- `description`: what skill does and when to use it (max 1024 chars)
+- `license`, `compatibility`, `metadata`, `allowed-tools`: optional
+
+### Kiro Power Format
+```
+power-name/
+├── POWER.md          # Required: main documentation with frontmatter
+├── mcp.json          # Optional: only if MCP tools included
+└── steering/         # Required: all guides as .md (JSON/HTML embedded)
+    ├── getting-started.md
+    └── advanced-usage.md
+```
+
+**Frontmatter requirements:**
+- `name`, `displayName`, `description`, `version`, `keywords`: required
+- `author`, `category`, `mcpServers`, `steeringFiles`, `dependencies`: optional
+
+## Platform-Specific Conventions
+
+Different AI platforms have different file naming conventions:
+
+### Steering/Agent Configuration Files
+
+| Platform | File Name | Format | Notes |
+|----------|-----------|--------|-------|
+| **Kiro** | `AGENTS.md` | Markdown | Standard agent configuration |
+| **Claude** | `CLAUDE.md` | Markdown | Claude-specific naming |
+| **Codex** | `AGENTS.md` | Markdown | Standard agent configuration |
+| **Grok** | `AGENTS.md` | Markdown | Standard agent configuration |
+
+### Skills/Capabilities Files
+
+| Platform | File Name | Format | Notes |
+|----------|-----------|--------|-------|
+| **Kiro** | `POWER.md` | Kiro Power format | POWER.md + steering/ structure |
+| **Claude** | `SKILL.md` | Agent Skills standard | SKILL.md + scripts/ + references/ + assets/ |
+| **Codex** | `SKILL.md` | Agent Skills standard | SKILL.md + scripts/ + references/ + assets/ |
+| **Grok** | `SKILL.md` | Agent Skills standard | SKILL.md + scripts/ + references/ + assets/ |
+
+### Commands/Prompts Files
+
+| Platform | File Name | Format | Notes |
+|----------|-----------|--------|-------|
+| **All** | `*.md` | Markdown | Flexible frontmatter, no strict naming |
+
+**Key insight**: 
+- **Steering**: Everyone uses `AGENTS.md` except Claude uses `CLAUDE.md`
+- **Skills**: Everyone uses `SKILL.md` (Agent Skills standard) except Kiro uses `POWER.md` (Kiro Power format)
+- **Prompts**: All platforms flexible with `.md` files and frontmatter
+
+This is why the workshop system uses `output_format` and `target_locations` - it can generate the right format for each platform from the same source content.
 
 ## Slice Architecture
 
@@ -87,18 +192,24 @@ This enables:
 ## Processing Flow
 
 ### Assembly Phase (assemble.py)
-1. **Discovery**: Find recipe files in `.context/workshop/` (excluding templates)
+1. **Discovery**: Find recipe files in `.context/workshop/` (excluding templates and manifest)
 2. **Parsing**: Extract Obsidian frontmatter and YAML configuration blocks
-3. **Extraction**: Pull content from slice markers in source files
-4. **Templating**: Apply string substitution to templates
-5. **Output**: Write assembled artifacts to `output/`
-6. **Logging**: Update manifest with assembly results
+3. **Multi-section handling**: Split recipes on `---` separators for multiple outputs
+4. **Source processing**:
+   - `slice` + `slice-file`: Extract content between slice markers
+   - `file` only: Include entire file content
+   - Source roles: Group by purpose (skill_md, power_md, steering_files, etc.)
+5. **Structure generation**: Create folder structures based on `output_format` (skill/power/agent)
+6. **Frontmatter generation**: For skills, generate SKILL.md with required frontmatter
+7. **Output**: Write assembled artifacts to `output/` with proper folder structure
+8. **Logging**: Update manifest with assembly results
 
 ### Synchronization Phase (sync.py)
 1. **Tracking**: Read deployment history from manifest
-2. **Deployment**: Copy outputs to target locations with path expansion
-3. **Cleanup**: Remove orphaned files from previous deployments
-4. **Logging**: Update manifest with sync results
+2. **Recipe parsing**: Extract current target locations from all recipes
+3. **Deployment**: Copy outputs to target locations with path expansion (~/ → home directory)
+4. **Cleanup**: Remove orphaned files from previous deployments or changed targets
+5. **Logging**: Update manifest with sync results and cleaned file count
 
 ### Error Handling
 The Python implementation includes gothic-themed error messages and graceful degradation:
@@ -122,18 +233,33 @@ The workshop serves as the deployment mechanism for translating vault knowledge 
 Simple validation for disposable software:
 
 1. **Recipe Processing Completeness** - All valid recipes generate output
-2. **Slice Extraction Accuracy** - Content matches slice markers exactly  
-3. **Template Substitution** - Placeholders replaced correctly
-4. **Sync Completeness** - All outputs deployed to targets
-5. **Orphan Cleanup** - Removed files cleaned from targets
+2. **Source Processing Accuracy** - Slice extraction and whole file inclusion work correctly
+3. **Structure Generation** - Agent Skills and Kiro Power formats created properly
+4. **Frontmatter Validation** - SKILL.md and POWER.md have required fields
+5. **Sync Completeness** - All outputs deployed to targets
+6. **Orphan Cleanup** - Removed files cleaned from targets
+
+## Specifications
+
+The workshop follows two standard specifications:
+
+- **[Agent Skills Specification](../skills/spec-agent-skill.md)** - Format from agentskills.io
+- **[Kiro Power Specification](../skills/spec-kiro-power.md)** - Kiro's power package format
 
 ## Usage Patterns
 
 ### Creating New Recipes
-1. Use Obsidian template to create recipe from template
-2. Configure sources, targets, and template
-3. Run `assemble.nu` to generate output
-4. Run `sync.nu` to deploy to targets
+1. Use Obsidian template to create recipe from appropriate template
+2. Configure `output_format`, sources, targets, and optional fields
+3. Run `python assemble.py` to generate output in `workshop/output/`
+4. Inspect assembled content in output folder
+5. Run `python sync.py` to deploy to target locations
+
+### Dry Run Mode
+```bash
+python assemble.py --dry-run --verbose  # Preview assembly
+python sync.py --dry-run --verbose      # Preview deployment
+```
 
 ### Monitoring Deployments
 - Check [recipe-manifest.md](recipe-manifest.md) for assembly/sync status
