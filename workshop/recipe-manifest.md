@@ -1,7 +1,7 @@
 ---
 created: 2026-01-11 09:52:44.314556
 id: recipe-manifest
-modified: '2026-01-15T22:05:55.239786'
+modified: '2026-01-15T22:06:40.720526'
 status: log
 type:
 - log
@@ -10,65 +10,65 @@ type:
 # Recipe Assembly Log
 
 ## Active Recipes
-- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-15T22:05:51.528149
+- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-15T22:06:34.551307
   - Output: `command\doc-consistency-check\doc-consistency-check.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.claude\commands\doc-consistency-check.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.codex\prompts\doc-consistency-check.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-15T22:05:51.528149
+- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-15T22:06:34.551307
   - Output: `command\doc-consistency-check\doc-consistency-check.kiro.hook`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\hooks\doc-consistency-check.kiro.hook`
   - Status: ✓ synced
 
-- **command/murder/murder**: Last run 2026-01-15T22:05:51.535536
+- **command/murder/murder**: Last run 2026-01-15T22:06:34.558825
   - Output: `command\murder\murder.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.claude\commands\murder.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.codex\prompts\murder.md`
   - Status: ✓ synced
 
-- **command/murder/murder.kiro**: Last run 2026-01-15T22:05:51.535536
+- **command/murder/murder.kiro**: Last run 2026-01-15T22:06:34.558825
   - Output: `command\murder\murder.kiro.hook`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\hooks\murder.kiro.hook`
   - Status: ✓ synced
 
-- **agent/zk-context-vault/AGENTS**: Last run 2026-01-15T22:05:51.548704
+- **agent/zk-context-vault/AGENTS**: Last run 2026-01-15T22:06:34.572213
   - Output: `agent\zk-context-vault\AGENTS.md`
   - Target: `Z:\Documents\.context\AGENTS.md`
   - Status: ✓ synced
 
-- **skill/catppuccin-theming**: Last run 2026-01-15T22:05:51.557361
+- **skill/catppuccin-theming**: Last run 2026-01-15T22:06:34.580337
   - Output: `skill\catppuccin-theming\`
   - Target: `C:\Users\synta.ZK-ZRRH\.claude\skills\catppuccin-theming\`
   - Target: `C:\Users\synta.ZK-ZRRH\.codex\skills\catppuccin-theming\`
   - Status: ✓ synced
 
-- **power/catppuccin-theming**: Last run 2026-01-15T22:05:51.542954
+- **power/catppuccin-theming**: Last run 2026-01-15T22:06:34.566397
   - Output: `power\catppuccin-theming\`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\powers\installed\catppuccin-theming\`
   - Status: ✓ synced
 
-- **agent/Kiro/agent**: Last run 2026-01-15T22:05:51.520671
+- **agent/Kiro/agent**: Last run 2026-01-15T22:06:34.543383
   - Output: `agent\Kiro\agent.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\agent.md`
   - Status: ✓ synced
 
-- **agent/Kiro/operator**: Last run 2026-01-15T22:05:51.520671
+- **agent/Kiro/operator**: Last run 2026-01-15T22:06:34.543383
   - Output: `agent\Kiro\operator.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\operator.md`
   - Status: ✓ synced
 
-- **agent/Kiro/principles**: Last run 2026-01-15T22:05:51.520671
+- **agent/Kiro/principles**: Last run 2026-01-15T22:06:34.543383
   - Output: `agent\Kiro\principles.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\principles.md`
   - Status: ✓ synced
 
-- **agent/Codex/AGENTS**: Last run 2026-01-15T22:05:51.512785
+- **agent/Codex/AGENTS**: Last run 2026-01-15T22:06:34.535660
   - Output: `agent\Codex\AGENTS.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.codex\AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Claudi/CLAUDE**: Last run 2026-01-15T22:05:51.503191
+- **agent/Claudi/CLAUDE**: Last run 2026-01-15T22:06:34.526032
   - Output: `agent\Claudi\CLAUDE.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.claude\CLAUDE.md`
   - Status: ✓ synced
@@ -80,6 +80,10 @@ type:
   - Status: ✓ assembled
 
 ## Deployment Log
+
+
+### 2026-01-15T22:06:40.720526
+- Synced 12 deployments
 
 
 ### 2026-01-15T22:05:55.239786
