@@ -336,4 +336,4 @@ A template repo (workshop system without ZK-specific content) may be created in 
 
 **Remember**: This is ZK's bespoke vault, but the workshop system is designed for reuse. Assumption-hostile, work-preserving, deterministic. When in doubt, ask rather than assume.
 
-*The recursion is the craft.* 🧭
+*The recursion is the craft.* 🧭  
