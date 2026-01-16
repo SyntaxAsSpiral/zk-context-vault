@@ -228,6 +228,11 @@ def _assemble_source_list(sources: Iterable[Dict[str, Any]], base_path: Path) ->
             print(f"|001101|—|000000|—|111000|— skipping corrupted entry")
             continue
 
+        inline = source.get("inline")
+        if isinstance(inline, str):
+            assembled_parts.append(inline.strip())
+            continue
+
         slice_id = source.get("slice")
         slice_file = source.get("slice-file") or source.get("slice_file")
         file_only = source.get("file")
@@ -309,6 +314,10 @@ def _write_bytes(path: Path, data: bytes, dry_run: bool) -> None:
 
 
 def _read_source_bytes(source: Dict[str, Any], base_path: Path) -> Optional[bytes]:
+    inline = source.get("inline")
+    if isinstance(inline, str):
+        return (inline + "\n").encode("utf-8")
+
     slice_id = source.get("slice")
     slice_file = source.get("slice-file") or source.get("slice_file")
     file_only = source.get("file")

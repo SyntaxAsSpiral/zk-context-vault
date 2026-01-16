@@ -17,3 +17,8 @@
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Staging files (generated artifacts; keep stub docs tracked)
+workshop/staging/*
+!workshop/staging/.gitignore
+!workshop/staging/README.md

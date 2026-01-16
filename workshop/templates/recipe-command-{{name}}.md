@@ -37,13 +37,27 @@ target_locations:
 
 # Source mapping
 sources:
-  # Kiro hook: the prompt content embedded into the JSON wrapper.
+  # Kiro hook: prompt content embedded into the JSON wrapper.
   kiro_hook:
-    - file: prompts/{{name}}.md
+    # Option A: inline prompt content (recommended: self-contained recipe)
+    - inline: |
+        # {{name}}
+
+        {{prompt_md}}
+
+    # Option B: source from file/slice (if you keep prompts in the vault)
+    # - file: prompts/{{name}}.md
+    # - slice: prompt={{name}}
+    #   slice-file: prompts/prompts.md
   
   # Other platforms (direct markdown).
   command_md:
-    - file: prompts/{{name}}.md
+    - inline: |
+        # {{name}}
+
+        {{prompt_md}}
+    # Or:
+    # - file: prompts/{{name}}.md
 
 # Kiro hook configuration
 kiro_hook_config:

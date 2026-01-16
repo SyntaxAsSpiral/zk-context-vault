@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Documentation Consistency Check",
+  "description": "Scans all markdown files, AGENTS.md, README.md, and .kiro/* files for terminology drift and architectural inconsistencies. Automatically updates any inconsistencies found with focus on Collectivist terminology and seed-to-trunk architecture.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Execute documentation consistency check:\n\n1. Check recent git commits for context on terminology changes\n2. Search ALL markdown files recursively for drift in:\n   - Terminology (especially Collectivist project terms)\n   - Architecture descriptions (seed-to-trunk concepts)\n   - Feature descriptions\n   - Cross-references between files\n\n3. Focus on these critical files:\n   - .kiro/* (all files, use ls -a)\n   - ALL AGENTS.md files (recursive search)\n   - ALL README.md files (recursive search)\n   - Code files with docstrings/comments\n\n4. Report findings:\n   - Files with outdated terminology\n   - Specific lines needing updates\n   - Suggested replacements\n   - Overall consistency status\n\n5. Automatically fix ALL inconsistencies found. Final-state surgery: remove old terminology entirely, update all references. Leave no trace. 🚮\n\nUNKNOWN > INVENTED. If terminology is ambiguous, ask before changing."
+  }
+}

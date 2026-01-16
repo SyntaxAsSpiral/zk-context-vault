@@ -211,6 +211,47 @@ class TestWorkshopAssemble(unittest.TestCase):
             self.assertEqual(hook_obj["then"]["type"], "askAgent")
             self.assertIn("# Murder", hook_obj["then"]["prompt"])
 
+    def test_command_inline_sources(self) -> None:
+        import workshop.src.assemble as assemble
+        import json
+
+        with TemporaryDirectory() as td:
+            base = Path(td) / "base"
+            out = Path(td) / "out"
+            base.mkdir(parents=True, exist_ok=True)
+
+            section = assemble.RecipeSection(
+                recipe_file=Path(td) / "recipe.md",
+                index=0,
+                config={
+                    "name": "doc-consistency-check",
+                    "output_format": "command",
+                    "target_locations": [
+                        {"path": "~/.kiro/hooks/doc-consistency-check.kiro.hook"},
+                        {"path": "~/.claude/commands/doc-consistency-check.md"},
+                    ],
+                    "sources": {
+                        "kiro_hook": [{"inline": "INLINE HOOK PROMPT"}],
+                        "command_md": [{"inline": "# Title\n\nINLINE MD"}],
+                    },
+                    "kiro_hook_config": {
+                        "enabled": True,
+                        "name": "Documentation Consistency Checker",
+                        "description": "Test",
+                        "version": "1",
+                        "when": {"type": "userTriggered"},
+                        "then": {"type": "askAgent"},
+                        "shortName": "doc-consistency-check",
+                    },
+                },
+            )
+
+            artifacts = assemble.build_output_artifacts(section, base, out, dry_run=False)
+            self.assertEqual(len(artifacts), 2)
+            hook_art = [a for a in artifacts if a.relpath.endswith(".kiro.hook")][0]
+            hook_obj = json.loads(hook_art.abspath.read_text(encoding="utf-8"))
+            self.assertIn("INLINE HOOK PROMPT", hook_obj["then"]["prompt"])
+
 
 if __name__ == "__main__":
     unittest.main()
