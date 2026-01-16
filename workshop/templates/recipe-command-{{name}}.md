@@ -26,7 +26,7 @@ target_locations:
   # Global scope (available across all projects)
   - path: ~/.kiro/hooks/{{name}}.kiro.hook     # Kiro uses hooks
   - path: ~/.claude/commands/{{name}}.md       # Claude uses commands
-  - path: ~/.codex/commands/{{name}}.md        # Codex uses commands
+  - path: ~/.codex/prompts/{{name}}.md         # Codex uses prompts
   - path: ~/.cursor/commands/{{name}}.md       # Cursor uses commands
   
   # Project scope (only available in current project)
@@ -37,16 +37,13 @@ target_locations:
 
 # Source mapping
 sources:
-  # For Kiro hook (JSON format)
+  # Kiro hook: the prompt content embedded into the JSON wrapper.
   kiro_hook:
     - file: prompts/{{name}}.md
-      output_name: {{name}}.kiro.hook
-      format: kiro_hook  # Wraps prompt in hook JSON structure
   
-  # For other platforms (direct markdown)
+  # Other platforms (direct markdown).
   command_md:
     - file: prompts/{{name}}.md
-      output_name: {{name}}.md
 
 # Kiro hook configuration
 kiro_hook_config:
@@ -85,7 +82,7 @@ This recipe deploys the `{{name}}` prompt/command to multiple AI platforms.
 
 1. Update `target_locations` with desired deployment paths
 2. Verify source file exists in `prompts/{{name}}.md`
-3. Run `python workshop/src/assemble.py` to generate output
+3. Run `python workshop/src/assemble.py` to generate artifacts under `workshop/staging/command/{{name}}/`
 4. Run `python workshop/src/sync.py` to deploy to targets
 
 ## Notes

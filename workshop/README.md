@@ -1,6 +1,6 @@
 # Context Workshop
 
-*A minimal context management system using recipe-based assembly and deployment of documentation slices.*
+*A minimal context management system using recipe-based assembly and deployment of markdown slices/files.*
 
 ## What This Is
 
@@ -13,7 +13,7 @@ Think of it as "make for context" with Obsidian integration.
 The workshop operates through a simple two-script pipeline: assembly and synchronization:
 
 ```
-Obsidian Context Vault → Workshop Recipes → assemble.py → Workshop Output → sync.py → Target Locations
+Context Vault → Workshop Recipes → assemble.py → Workshop Staging → sync.py → Target Locations
 ```
 
 ### Core Components
@@ -21,20 +21,20 @@ Obsidian Context Vault → Workshop Recipes → assemble.py → Workshop Output 
 | Component | Purpose | Location | Authority |
 |-----------|---------|----------|-----------|
 | **[Templates](templates/)** | Recipe scaffolding | `.context/workshop/templates/` | Obsidian |
-| **[Recipes](.)** | Assembly instructions | `.context/workshop/*.md` | Operator |
-| **[Output](output/)** | Assembled artifacts | `.context/workshop/output/` | System |
+| **[Recipes](.)** | Assembly instructions | `.context/workshop/recipe-*.md` | Operator |
+| **[Staging](staging/)** | Assembled artifacts | `.context/workshop/staging/` | System |
 | **[Manifest](recipe-manifest.md)** | Deployment tracking | `.context/workshop/recipe-manifest.md` | System |
 
 ### Script Pipeline
 
 | Script | Function | Location | Responsibility |
 |--------|----------|----------|----------------|
-| **[assemble.py](../../.dev/.scripts/assemble.py)** | Extract slices, apply templates | `C:/Users/synta.ZK-ZRRH/.dev/.scripts/` | Assembly |
-| **[sync.py](../../.dev/.scripts/sync.py)** | Deploy outputs, clean orphans | `C:/Users/synta.ZK-ZRRH/.dev/.scripts/` | Synchronization |
+| `workshop/src/assemble.py` | Parse recipes, assemble artifacts | `.context/workshop/src/` | Assembly |
+| `workshop/src/sync.py` | Deploy artifacts, purge orphans | `.context/workshop/src/` | Synchronization |
 
-### VSCode Integration
+### IDE Integration
 
-The system integrates with VSCode through [task configurations](../../.dev/.scripts/README-vscode-tasks.md):
+The system can be wired into IDE tasks (paths in this repo may differ from older `.dev/.scripts` setups):
 
 - **Ctrl+Shift+B** - Run full workflow (assemble + sync)
 - **Ctrl+Shift+P** → "Tasks: Run Task" - Individual operations
@@ -57,12 +57,12 @@ sources:
   - file: agents/steering-global-operator.md
 ```
 
-### Agent Skills Standard Recipe
+### Agent Skills Standard Recipe (SKILL.md folder)
 ```yaml
 name: catppuccin-theming
 output_format: skill  # Creates Agent Skills standard structure
 target_locations:
-  - path: ~/.kiro/skills/catppuccin-theming/
+  - path: ~/.claude/skills/catppuccin-theming/
 sources:
   skill_md:
     frontmatter:
@@ -80,7 +80,7 @@ sources:
 name: semantic-json-workflows
 output_format: power  # Creates Kiro Power structure
 target_locations:
-  - path: ~/.kiro/powers/semantic-json-workflows/
+  - path: ~/.kiro/powers/installed/semantic-json-workflows/
 sources:
   power_md:
     - file: skills/semantic-json-workflows/POWER.md
@@ -89,11 +89,37 @@ sources:
       output_name: getting-started.md
 ```
 
+### Command / Prompt / Hook Recipe (MD + Kiro hook JSON)
+```yaml
+name: murder
+output_format: command
+target_locations:
+  - path: ~/.kiro/hooks/murder.kiro.hook
+  - path: ~/.claude/commands/murder.md
+  - path: ~/.codex/prompts/murder.md
+sources:
+  kiro_hook:
+    - file: prompts/murder.md
+  command_md:
+    - file: prompts/murder.md
+kiro_hook_config:
+  enabled: true
+  name: "Murder Cogitator"
+  description: "Adversarial review persona"
+  version: "1"
+  when: { type: "userTriggered" }
+  then: { type: "askAgent" }
+  shortName: "murder"
+```
+
 ### Source Types
 
 - **`slice` + `slice-file`**: Extract content between `<!-- slice:id -->` markers
 - **`file` only**: Include entire file content
 - **Source roles**: Group sources by purpose (skill_md, power_md, steering_files, references, assets)
+
+### Multi-Section Recipes (one recipe, multiple outputs)
+Inside the YAML code block, separate documents with `---` to emit multiple outputs from one recipe file.
 
 ### Recipe Types
 
@@ -104,7 +130,10 @@ The workshop provides specialized templates for different context types:
 | **[recipe-agent-{{name}}.md](templates/recipe-agent-{{name}}.md)** | Agent system prompts | Simple concatenation |
 | **[recipe-skill-{{name}}.md](templates/recipe-skill-{{name}}.md)** | Agent Skills standard | SKILL.md + scripts/ + references/ + assets/ |
 | **[recipe-power-{{name}}.md](templates/recipe-power-{{name}}.md)** | Kiro Power packages | POWER.md + mcp.json + steering/ |
-| **[recipe-kiro-{{name}}.md](templates/recipe-kiro-{{name}}.md)** | Kiro IDE configurations | IDE-specific settings |
+| **[recipe-command-{{name}}.md](templates/recipe-command-{{name}}.md)** | Prompts/commands/hooks | `.md` + optional `.kiro.hook` |
+| **[recipe-project-steering-{{name}}.md](templates/recipe-project-steering-{{name}}.md)** | Project AGENTS.md | `.md` (directory targets supported) |
+| `recipe-kiro-modular-{{name}}.md` | Future expansion (not wired up) | n/a |
+| `exo-praxis-{{cmd}}.md` | Exo/Praxis scratchpad | n/a |
 
 ## Output Formats
 
@@ -167,7 +196,7 @@ Different AI platforms have different file naming conventions:
 | **All** | `*.md` | Markdown | Flexible frontmatter, no strict naming |
 
 **Key insight**: 
-- **Steering**: Everyone uses `AGENTS.md` except Claude uses `CLAUDE.md`
+- **Steering**: Everyone uses `AGENTS.md` except Claude uses `CLAUDE.md` (auto-selected if `target_locations.path` is a directory)
 - **Skills**: Everyone uses `SKILL.md` (Agent Skills standard) except Kiro uses `POWER.md` (Kiro Power format)
 - **Prompts**: All platforms flexible with `.md` files and frontmatter
 
@@ -192,24 +221,22 @@ This enables:
 ## Processing Flow
 
 ### Assembly Phase (assemble.py)
-1. **Discovery**: Find recipe files in `.context/workshop/` (excluding templates and manifest)
-2. **Parsing**: Extract Obsidian frontmatter and YAML configuration blocks
-3. **Multi-section handling**: Split recipes on `---` separators for multiple outputs
+1. **Discovery**: Find recipe files in `.context/workshop/recipe-*.md`
+2. **Parsing**: Extract Obsidian frontmatter and 1+ YAML documents (split on `---` inside the YAML block)
 4. **Source processing**:
    - `slice` + `slice-file`: Extract content between slice markers
    - `file` only: Include entire file content
    - Source roles: Group by purpose (skill_md, power_md, steering_files, etc.)
-5. **Structure generation**: Create folder structures based on `output_format` (skill/power/agent)
-6. **Frontmatter generation**: For skills, generate SKILL.md with required frontmatter
-7. **Output**: Write assembled artifacts to `output/` with proper folder structure
-8. **Logging**: Update manifest with assembly results
+5. **Structure generation**: Create folder structures based on `output_format` (agent/skill/power/command)
+6. **Output**: Write assembled artifacts to `staging/` with proper folder structure
+7. **Logging**: Update manifest with assembly results
 
 ### Synchronization Phase (sync.py)
 1. **Tracking**: Read deployment history from manifest
-2. **Recipe parsing**: Extract current target locations from all recipes
-3. **Deployment**: Copy outputs to target locations with path expansion (~/ → home directory)
-4. **Cleanup**: Remove orphaned files from previous deployments or changed targets
-5. **Logging**: Update manifest with sync results and cleaned file count
+2. **Recipe parsing**: Compute expected artifacts + targets from recipes
+3. **Deployment**: Copy/mirror staged artifacts to target locations (supports `~/` expansion)
+4. **Cleanup**: Remove orphaned targets for removed deployments
+5. **Logging**: Update manifest with sync results and cleaned target count
 
 ### Error Handling
 The Python implementation includes gothic-themed error messages and graceful degradation:
@@ -241,24 +268,21 @@ Simple validation for disposable software:
 
 ## Specifications
 
-The workshop follows two standard specifications:
-
-- **[Agent Skills Specification](../skills/spec-agent-skill.md)** - Format from agentskills.io
-- **[Kiro Power Specification](../skills/spec-kiro-power.md)** - Kiro's power package format
+See `.kiro/specs/context-management/` for the current spec + requirements.
 
 ## Usage Patterns
 
 ### Creating New Recipes
 1. Use Obsidian template to create recipe from appropriate template
 2. Configure `output_format`, sources, targets, and optional fields
-3. Run `python assemble.py` to generate output in `workshop/output/`
-4. Inspect assembled content in output folder
-5. Run `python sync.py` to deploy to target locations
+3. Run `python workshop/src/assemble.py` to generate artifacts in `workshop/staging/`
+4. Inspect staged content
+5. Run `python workshop/src/sync.py` to deploy to target locations
 
 ### Dry Run Mode
 ```bash
-python assemble.py --dry-run --verbose  # Preview assembly
-python sync.py --dry-run --verbose      # Preview deployment
+python workshop/src/assemble.py --dry-run --verbose  # Preview assembly
+python workshop/src/sync.py --dry-run --verbose      # Preview deployment
 ```
 
 ### Monitoring Deployments

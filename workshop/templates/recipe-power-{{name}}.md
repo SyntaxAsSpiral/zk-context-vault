@@ -18,23 +18,24 @@ output_format: power  # Creates power folder structure
 # └── steering/ (all steering_files go here as .md)
 
 target_locations:
-  - path: ~/.kiro/powers/{{name}}/
+  - path: ~/.kiro/powers/installed/{{name}}/
 
 # Source mapping to power structure
 sources:
   power_md:
-    - slice: # Slice identifier for main POWER.md content
-      slice-file: # Source file path
+    - file: skills/{{name}}/POWER.md
+    # Or slice extraction:
+    # - slice: power={{name}}
+    #   slice-file: skills/{{name}}/POWER.md
   
   mcp_config:  # Optional - only if MCP tools included
-    - file: # Path to mcp.json or slice containing JSON
+    - file: # Path to mcp.json (whole file)
+      output_name: mcp.json
   
   steering_files:  # All go to steering/ folder as .md
-    - slice: # Slice identifier for guide 1
-      slice-file: # Source file
+    - file: skills/{{name}}/getting-started.md
       output_name: getting-started.md
-    - slice: # Slice identifier for guide 2
-      slice-file: # Source file
+    - file: skills/{{name}}/advanced-usage.md
       output_name: advanced-usage.md
     # Add more steering files as needed
 

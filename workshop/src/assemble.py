@@ -9,7 +9,7 @@ Supports:
 - multi-section recipes via YAML document separators (`---`) inside the YAML block
 - structured output formats: `agent`, `skill`, `power`
 
-Outputs assembled artifacts to `.context/workshop/output/` and updates
+Outputs assembled artifacts to `.context/workshop/staging/` and updates
 `.context/workshop/recipe-manifest.md` with run logs.
 
 Usage: python assemble.py [--dry-run] [--verbose]
@@ -44,7 +44,7 @@ class RecipeSection:
 
 @dataclass(frozen=True)
 class OutputArtifact:
-    # Relative to output_dir using posix separators (for stable IDs/logging)
+    # Relative to staging_dir using posix separators (for stable IDs/logging)
     relpath: str
     abspath: Path
     targets: List[str]
@@ -375,7 +375,7 @@ def _targets_from_section(section: RecipeSection) -> List[str]:
     return [p for p in resolved if p]
 
 
-def build_output_artifacts(section: RecipeSection, base_path: Path, output_dir: Path, dry_run: bool) -> List[OutputArtifact]:
+def build_output_artifacts(section: RecipeSection, base_path: Path, staging_dir: Path, dry_run: bool) -> List[OutputArtifact]:
     cfg = section.config
     recipe_name = str(cfg.get("name") or section.recipe_file.stem)
     output_format = str(cfg.get("output_format") or "agent").strip().lower()
@@ -403,7 +403,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, output_dir: 
             ext = Path(filename).suffix
             filename = f"{base}-{dis}{ext}"
 
-        out_path = output_dir / "agent" / recipe_name / filename
+        out_path = staging_dir / "agent" / recipe_name / filename
         _write_text(out_path, content + "\n", dry_run)
 
         targets = _targets_from_section(section)
@@ -433,7 +433,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, output_dir: 
             return []
 
         skill_name = recipe_name
-        out_root = output_dir / "skill" / skill_name
+        out_root = staging_dir / "skill" / skill_name
         targets = _targets_from_section(section)
 
         # SKILL.md generation
@@ -486,7 +486,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, output_dir: 
 
         # Optional: also emit as Kiro power.
         if cfg.get("also_output_as_power"):
-            power_root = output_dir / "power" / skill_name
+            power_root = staging_dir / "power" / skill_name
             steering_dir = power_root / "steering"
             # Minimal mapping: POWER.md carries frontmatter + body; steering mirrors markdown body.
             power_fm = dict(fm)
@@ -524,7 +524,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, output_dir: 
             return []
 
         power_name = recipe_name
-        power_root = output_dir / "power" / power_name
+        power_root = staging_dir / "power" / power_name
         steering_dir = power_root / "steering"
 
         metadata = cfg.get("metadata") or {}
@@ -604,7 +604,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, output_dir: 
         hook_targets = [t for t in targets if _is_kiro_hook_target(t)]
         md_targets = [t for t in targets if t not in hook_targets]
 
-        out_root = output_dir / "command" / recipe_name
+        out_root = staging_dir / "command" / recipe_name
         artifacts: List[OutputArtifact] = []
 
         # Markdown output for non-Kiro targets.
@@ -782,7 +782,7 @@ def main():
     # Set up absolute paths
     base_path = Path("Z:/Documents/.context")  # Context workspace root
     workshop_dir = base_path / "workshop"      # Workshop directory
-    output_dir = workshop_dir / "output"       # Output directory
+    staging_dir = workshop_dir / "staging"     # Staging directory
     manifest_path = workshop_dir / "recipe-manifest.md"  # Manifest file
     
     if not workshop_dir.exists():
@@ -791,9 +791,9 @@ def main():
         print(f"|001101|—|000000|—|111000|— path leads to void")
         return 1
     
-    # Ensure output directory exists
+    # Ensure staging directory exists
     if not args.dry_run:
-        output_dir.mkdir(exist_ok=True)
+        staging_dir.mkdir(exist_ok=True)
     
     # Find and process recipe files
     recipe_files = find_recipe_files(workshop_dir)
@@ -848,7 +848,7 @@ def main():
 
             section = RecipeSection(recipe_file=section.recipe_file, index=section.index, config=section_cfg)
 
-            built = build_output_artifacts(section, base_path, output_dir, args.dry_run)
+            built = build_output_artifacts(section, base_path, staging_dir, args.dry_run)
             artifacts.extend(built)
 
         if not artifacts:

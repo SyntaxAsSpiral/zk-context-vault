@@ -2,7 +2,7 @@
 """
 Context Sync Script
 
-Syncs assembled content from `.context/workshop/output/` to target locations
+Syncs assembled content from `.context/workshop/staging/` to target locations
 specified in workshop recipes.
 
 Key behavior:
@@ -87,7 +87,7 @@ class RecipeSection:
 @dataclass(frozen=True)
 class SyncItem:
     deployment_id: str
-    source_relpath: str  # relative to output_dir using posix separators
+    source_relpath: str  # relative to staging_dir using posix separators
     source_is_dir: bool
     targets: List[str]
 
@@ -592,7 +592,7 @@ def main():
 
     base_path = Path("Z:/Documents/.context")
     workshop_dir = base_path / "workshop"
-    output_dir = workshop_dir / "output"
+    staging_dir = workshop_dir / "staging"
     manifest_path = workshop_dir / "recipe-manifest.md"
 
     if not workshop_dir.exists():
@@ -601,9 +601,9 @@ def main():
         print(f"|001101|—|000000|—|111000|— path leads to void")
         return 1
 
-    if not output_dir.exists():
+    if not staging_dir.exists():
         print(f"☠☠☠ >>> OUTPUT·SANCTUM·ABSENT ☠☠☠")
-        print(f"Sacred output directory communion failed: {output_dir}")
+        print(f"Sacred staging directory communion failed: {staging_dir}")
         print(f"|001101|—|000000|—|111000|— path leads to void")
         return 1
 
@@ -626,7 +626,7 @@ def main():
     cleaned_count = cleanup_orphaned_deployments(previous_deployments, current_deployments, args.dry_run)
 
     for deployment_id, item in current_items.items():
-        source = output_dir / Path(item.source_relpath)
+        source = staging_dir / Path(item.source_relpath)
         if not source.exists():
             print(f"☠☠☠ >>> OUTPUT·RELIC·ABSENT ☠☠☠")
             print(f"Expected output missing for deployment: {deployment_id}")

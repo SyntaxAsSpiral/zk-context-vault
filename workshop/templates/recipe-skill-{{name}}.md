@@ -24,8 +24,8 @@ output_format: skill  # Creates Agent Skills standard structure
 #     └── data.json
 
 target_locations:
-  - path: ~/.kiro/skills/{{name}}/
-  - path: ~/.claude/skills/{{name}}/  # Multi-platform deployment
+  - path: ~/.claude/skills/{{name}}/
+  - path: ~/.codex/skills/{{name}}/   # Optional: if Codex supports skills folder
 
 # Source mapping to skill structure
 sources:
@@ -40,8 +40,10 @@ sources:
       allowed-tools: # Optional: space-delimited list of pre-approved tools
     
     body:  # Markdown instructions for agents
-      - slice: # Slice identifier for main skill instructions
-        slice-file: # Source file path
+      - file: skills/{{name}}/SKILL.md  # Whole file inclusion (common case)
+      # Or slice extraction:
+      # - slice: skill={{name}}
+      #   slice-file: skills/{{name}}/SKILL.md
   
   scripts:  # Optional - go to scripts/ folder
     - file: # Path to Python/Bash/JS script
@@ -61,8 +63,7 @@ sources:
     - file: # Path to static resource
       output_name: data.json
 
-# Optional: Also output as Kiro power format
-also_output_as_power: false  # Set to true to generate both skill and power formats
+# Kiro powers are handled via `output_format: power` recipes (separate template).
 
 # Validation
 validate_agentskills_spec: true  # Ensure compliance with agentskills.io standard

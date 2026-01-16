@@ -25,15 +25,14 @@ target_locations:
 
 sources:
   # Whole-file inclusion (simplest)
-  - file: prompts/project-steering/{{name}}.md
+  - file: agents/steering-project-{{name}}.md
 
   # Or slice extraction
   # - slice: project={{name}}
-  #   slice-file: prompts/project-steering.md
+  #   slice-file: agents/steering-projects.md
 
 # Optional wrapper template
 # template: |
 #   # Project Steering ({{name}})
 #   {content}
 ```
-
