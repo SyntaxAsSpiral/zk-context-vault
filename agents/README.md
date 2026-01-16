@@ -162,17 +162,10 @@ See [.kiro/README.md](../.kiro/README.md) for complete documentation.
 ### Claude Code
 - **CLAUDE.md**: Global steering file (`~/.claude/CLAUDE.md`)
 - **Project docs**: Markdown files in project root
-- **Limited MCP**: Some MCP server support
 
 ### Codex
 - **AGENTS.md**: Project-level steering
 - **Documentation**: Inline and separate markdown files
-- **No hooks**: Manual workflow management
-
-### Charm
-- **Configuration**: Platform-specific config files
-- **Documentation**: Project-level markdown
-- **Custom integration**: Platform-dependent
 
 ## Key Files in This Directory
 
@@ -185,16 +178,6 @@ See [.kiro/README.md](../.kiro/README.md) for complete documentation.
 - Role-specific guidance
 
 **Usage**: Extract slices via workshop recipes for platform-specific deployment
-
-### [agent-steering.md](agent-steering.md)
-**Purpose**: Platform-agnostic steering guidance
-
-**Contains**:
-- Steering hierarchy explanation
-- Universal patterns
-- Cross-platform implementation examples
-
-**Usage**: Reference for understanding steering across platforms
 
 ### [steering-global-operator.md](steering-global-operator.md)
 **Purpose**: Operator (ZK) profile and preferences
@@ -292,17 +275,14 @@ For multi-agent coordination, see [exocortex](../exocortex/README.md) - this dir
 
 ### For Other Platforms
 
-1. **Create explicit steering files**
-   - Use markdown for documentation
-   - Follow hierarchical pattern (global → workspace → project)
-   - Keep files modular and focused
+1. **Leverage AGENTS/CLAUDE.md in global + project scopes**
+   - Automatically loaded by Codex and Claude harnesses respectively.
+   - Cursor IDE auto-imports CLAUDE.md
+   - Most harness will auto load AGENTS.md 
+   - Provides project-specific guidance
+   - No duplication needed
 
-2. **Adopt Covenant Principles**
-   - Assumption-hostile design works everywhere
-   - Prevents common failure modes
-   - Explicit constraints over implicit behavior
-
-3. **Use slice architecture**
+2. **Use slice architecture**
    - Mark content with HTML comments
    - Enable platform-specific extraction
    - Maintain single source of truth
