@@ -2,6 +2,8 @@
 
 *A comprehensive cognitive infrastructure for AI-augmented development and knowledge work.*
 
+**Status**: ✓ Working baseline established with unified sync workflow
+
 > **Note**: This is ZK's personal context vault with ZK-specific content. The **workshop system** (assembly scripts, templates, recipe patterns in `workshop/`) is designed to be reusable with any content library. See [AGENTS.md](AGENTS.md) for adaptation guidance.
 
 ## What This Is
