@@ -1,82 +1,101 @@
 # Context Engineering Skills
 
-*A ZK-specific library of agent system capabilities with dual-format documentation for multiple deployment targets.*
+*A ZK-specific library of custom agent skills packaged following the Agent Skills standard with optional Kiro Power deployment.*
 
 ## What This Is
 
-This is not a generic skill collection. It's a **bespoke capability library** for the ZK context vault—each skill maps to a core system (Principles, Agents, Prompts, Artifacts, Workshop, Exocortex) and provides practical patterns rather than theoretical frameworks.
+This is not a generic skill collection. It's a **bespoke capability library** for the ZK context vault—custom skills developed for specific needs that map to core systems (Principles, Agents, Prompts, Artifacts, Workshop, Exocortex).
 
-Think of it as "the skills ZK actually uses" with dual-format deployment.
+These are **custom-developed skills** demonstrating skill creation patterns. For production-ready skills from the community, see:
+
+- **[Agent Skills for Context Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)** - Context management and engineering patterns
+- **[Vercel Agent Skills](https://github.com/vercel-labs/agent-skills)** - Production-ready skills from Vercel
+- **[Anthropic Skills](https://github.com/anthropics/skills)** - Official skills from Anthropic
+
+Think of this directory as "custom skill development examples" following the [agentskills.io](https://agentskills.io) standard.
 
 ## The Architecture
 
-Skills follow a standardized structure supporting multiple compilation targets:
+Skills follow the **Agent Skills standard** (agentskills.io) with optional Kiro Power packaging:
 
 ```
-Skill Source → Workshop Recipes → Target-Specific Packages
+Skill Source (SKILL.md) → Workshop Recipes → Deployment Targets
+                                    ↓
+                          Agent Skills | Kiro Powers
 ```
 
-### Skill Structure
+### Canonical Structure (Flat)
 
-Each skill directory contains:
+**Agent Skills standard** (all skills):
+```
+skill-name/
+├── SKILL.md              # Required: YAML frontmatter + markdown
+├── getting-started.md    # Optional: guides
+├── advanced-*.md         # Optional: additional docs
+└── *.md                  # Optional: reference materials
+```
 
-| Component | Purpose | Compilation Target |
-|-----------|---------|-------------------|
-| **SKILL.md** | Core technical documentation | Claude Code, Codex skills |
-| **POWER.md** | User-friendly power documentation | Kiro Powers |
-| **power.json** | Power metadata and configuration | Kiro Powers |
-| **references/** | Supporting documentation | All targets |
-| **assets/** | Resources and data files | Kiro Powers |
+**Kiro Power packaging** (optional, via workshop):
+```
+power-name/
+├── POWER.md              # Main documentation
+└── steering/             # All guides as .md
+    ├── getting-started.md
+    ├── advanced-*.md
+    └── SKILL.md
+```
+
+**Key insight**: Skills are **flat** (no subfolders). All `.md` files at root level. Workshop recipes can repackage into Kiro Power format with `steering/` subfolder.
 
 ### Core System Mapping
 
 Skills map to the 7 core systems:
 
-| Core System | Primary Skill | Coverage |
-|-------------|--------------|----------|
-| **Principles** | covenant-patterns | ✅ Full |
-| **Agents** | agent-steering | ✅ Full |
-| **Prompts** | epistemic-rendering | ✅ Full |
-| **Artifacts** | semantic-json-workflows | ✅ Full |
-| **Workshop** | recipe-assembly | ✅ Full |
-| **Exocortex** | multi-agent-coordination | ✅ Full |
-| **Skills** | (this library) | META |
+| Core System | Primary Skill | Status |
+|-------------|--------------|--------|
+| **Principles** | covenant-patterns | ✅ |
+| **Agents** | agent-steering | ✅ |
+| **Prompts** | epistemic-rendering | ✅ |
+| **Artifacts** | semantic-json-workflows | ✅ |
+| **Workshop** | recipe-assembly | ✅ |
+| **Exocortex** | multi-agent-coordination | ✅ |
+| **Aesthetic** | catppuccin-theming | ✅ |
 
 ## Skills Catalog
 
 ### Foundations
 
-| Skill | Purpose | Core System | Power |
-|-------|---------|-------------|-------|
-| **[covenant-patterns](covenant-patterns/SKILL.md)** | Thirteen principles as design constraints | Principles | ✅ |
+| Skill | Purpose | Core System |
+|-------|---------|-------------|
+| **[covenant-patterns](covenant-patterns/SKILL.md)** | Thirteen principles as design constraints | Principles |
 
 ### Agent Configuration
 
-| Skill | Purpose | Core System | Power |
-|-------|---------|-------------|-------|
-| **[agent-steering](agent-steering/SKILL.md)** | Universal agent configuration (Kiro, Claude, Codex) | Agents | ✅ |
-| **[multi-agent-coordination](multi-agent-coordination/SKILL.md)** | Pentadyadic and multi-agent patterns | Exocortex | ✅ |
+| Skill | Purpose | Core System |
+|-------|---------|-------------|
+| **[agent-steering](agent-steering/SKILL.md)** | Universal single-agent configuration | Agents |
+| **[multi-agent-coordination](multi-agent-coordination/SKILL.md)** | Pentadyadic and multi-agent patterns | Exocortex |
 
 ### Cognitive Tools
 
-| Skill | Purpose | Core System | Power |
-|-------|---------|-------------|-------|
-| **[epistemic-rendering](epistemic-rendering/SKILL.md)** | Eight cognitive lenses for different understanding | Prompts | ✅ |
+| Skill | Purpose | Core System |
+|-------|---------|-------------|
+| **[epistemic-rendering](epistemic-rendering/SKILL.md)** | Eight cognitive lenses for understanding | Prompts |
 
 ### Context Management
 
-| Skill | Purpose | Core System | Power |
-|-------|---------|-------------|-------|
-| **[recipe-assembly](recipe-assembly/SKILL.md)** | Slice architecture and deployment | Workshop | ✅ |
-| **[context-degradation](context-degradation/SKILL.md)** | Detecting and preventing context failures | Reference | ❌ |
+| Skill | Purpose | Core System |
+|-------|---------|-------------|
+| **[recipe-assembly](recipe-assembly/SKILL.md)** | Slice architecture and deployment | Workshop |
+| **[context-degradation](context-degradation/SKILL.md)** | Detecting context failures | Reference |
 
 ### Visual & Integration
 
-| Skill | Purpose | Core System | Power |
-|-------|---------|-------------|-------|
-| **[semantic-json-workflows](semantic-json-workflows/SKILL.md)** | Canvas-to-structured-data anticompiler | Artifacts | ✅ |
-| **[catppuccin-theming](catppuccin-theming/SKILL.md)** | Consistent color palette application | Aesthetic | ✅ |
-| **[mcp-builder](mcp-builder/SKILL.md)** | Model Context Protocol server creation | Integration | ❌ |
+| Skill | Purpose | Core System |
+|-------|---------|-------------|
+| **[semantic-json-workflows](semantic-json-workflows/SKILL.md)** | Canvas-to-structured-data anticompiler | Artifacts |
+| **[catppuccin-theming](catppuccin-theming/SKILL.md)** | Consistent color palette application | Aesthetic |
+| **[mcp-builder](mcp-builder/SKILL.md)** | Model Context Protocol server creation | Integration |
 
 ## Skill Dependencies
 
@@ -95,21 +114,33 @@ covenant-patterns (foundation)
 
 Skills integrate with the [Context Workshop](../workshop/README.md) through recipe-based compilation:
 
-### Example Recipe
+### Agent Skills Deployment
 
 ```yaml
-name: skill-bundle
+name: covenant-patterns
+output_format: skill
 target_locations:
-  - path: ~/.claude/skills/covenant-bundle.md
+  - path: ~/.claude/skills/covenant-patterns/
 sources:
-  - slice: skill=covenant-patterns
-    file: skills/covenant-patterns/SKILL.md
-  - slice: skill=agent-steering
-    file: skills/agent-steering/SKILL.md
-template: |
-  # Skills Bundle
-  {content}
+  - file: skills/covenant-patterns/SKILL.md
 ```
+
+### Kiro Power Deployment
+
+```yaml
+name: catppuccin-theming
+output_format: power
+target_locations:
+  - path: ~/.kiro/powers/catppuccin-theming/
+sources:
+  - file: skills/catppuccin-theming/POWER.md
+  - file: skills/catppuccin-theming/SKILL.md
+    output_name: steering/skill.md
+  - file: skills/catppuccin-theming/getting-started.md
+    output_name: steering/getting-started.md
+```
+
+**Pattern**: Skills are flat at source, workshop recipes create `steering/` subfolder for Kiro Powers.
 
 ### Slice Architecture
 
@@ -123,7 +154,7 @@ Content to extract
 
 ## Documentation Standards
 
-### SKILL.md Structure
+### SKILL.md Structure (Required)
 
 ```markdown
 ---
@@ -149,7 +180,11 @@ Concrete examples
 Related skills, system connections
 ```
 
-### POWER.md Structure
+**Frontmatter requirements** (agentskills.io):
+- `name`: lowercase, numbers, hyphens only, max 64 chars
+- `description`: max 1024 chars
+
+### POWER.md Structure (Optional)
 
 ```markdown
 # Power Title 🎯
@@ -167,23 +202,15 @@ User-focused description
 Immediate value examples
 ```
 
-### power.json Schema
+**Note**: POWER.md is optional. Only create if deploying as Kiro Power.
 
-```json
-{
-  "name": "identifier",
-  "displayName": "Human Name",
-  "description": "User-facing description",
-  "version": "1.0.0",
-  "author": "ZK",
-  "keywords": ["searchable", "terms"],
-  "category": "classification",
-  "mcpServers": {},
-  "steeringFiles": ["POWER.md", "SKILL.md"],
-  "dependencies": {},
-  "assets": []
-}
-```
+### Additional Guides (Optional)
+
+- `getting-started.md` - Initial setup and basic usage
+- `advanced-*.md` - Advanced patterns and techniques
+- `*.md` - Any additional reference materials
+
+**All files at root level** (flat structure).
 
 ## Quality Standards
 
@@ -202,11 +229,38 @@ All skills embody covenant principles:
 - **System Integration**: How skill connects to core systems
 - **Cross-References**: Links to related skills
 
-### Dual-Format Consistency
+### Format Consistency
 
-- **Content Alignment**: SKILL.md and POWER.md cover same capabilities
-- **Appropriate Depth**: Technical vs. user-friendly presentation
-- **Metadata Sync**: Consistent naming across formats
+- **Agent Skills standard**: All skills follow agentskills.io spec
+- **Flat structure**: No subfolders (except `archive/`)
+- **Optional Power**: POWER.md only if deploying to Kiro
+- **Workshop assembly**: Recipes create target-specific structure
+
+## Restructuring Notes
+
+### Canonical Example
+
+**[catppuccin-theming](catppuccin-theming/)** is the canonical skill structure:
+- Flat directory (all `.md` at root)
+- SKILL.md with proper frontmatter
+- POWER.md for Kiro deployment
+- Additional guides (getting-started.md, advanced-theming.md, etc.)
+- No `power.json` (not part of Agent Skills spec)
+
+### Migration Status
+
+**To be restructured** (remove `power.json`, flatten structure):
+- agent-steering
+- covenant-patterns
+- epistemic-rendering
+- multi-agent-coordination
+- recipe-assembly
+- semantic-json-workflows
+
+**Already flat** (no changes needed):
+- catppuccin-theming ✅
+- context-degradation ✅
+- mcp-builder ✅
 
 ## Archive
 
@@ -222,12 +276,36 @@ Generic context-engineering skills have been archived to `archive/`. These conta
 - advanced-evaluation (LLM-as-judge patterns)
 - project-development (case studies)
 
+## Community Skills
+
+For production-ready skills, explore these repositories:
+
+### [Agent Skills for Context Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
+Comprehensive context management patterns including:
+- Context optimization techniques
+- Memory management strategies
+- Multi-agent coordination patterns
+- Evaluation frameworks
+
+### [Vercel Agent Skills](https://github.com/vercel-labs/agent-skills)
+Production-ready skills from Vercel including:
+- Web development patterns
+- API integration
+- Deployment workflows
+- Testing strategies
+
+### [Anthropic Skills](https://github.com/anthropics/skills)
+Official skills from Anthropic including:
+- Claude-specific patterns
+- Best practices
+- Integration examples
+
 ## Integration
 
 This skills library connects to the broader context ecosystem:
 
-- **[Principles](steering-global-principles.md)** — Foundation that skills operationalize
-- **[Agents](../agents/README.md)** — Agent configuration using skills
+- **[Principles](../agents/steering-global-principles.md)** — Foundation that skills operationalize
+- **[Agents](../agents/README.md)** — Single-agent configuration using skills
 - **[Prompts](../prompts/README.md)** — Epistemic lenses documented as skill
 - **[Artifacts](../artifacts/README.md)** — Visual workflows documented as skill
 - **[Workshop](../workshop/README.md)** — Recipe-based skill compilation
@@ -235,4 +313,4 @@ This skills library connects to the broader context ecosystem:
 
 ---
 
-*Skills are capabilities mapped to core systems. Bespoke, not generic.*
+*Custom skills following Agent Skills standard. For production skills, see community repositories above.*

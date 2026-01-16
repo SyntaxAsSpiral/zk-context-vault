@@ -96,7 +96,7 @@ Semantic-JSON operates as an **anticompiler** - inverting the classical compilat
 - **Pure JSON export** strips Canvas metadata while preserving semantic structure
 
 ### Catppuccin Theme Canvas
-- **File**: [🩷Catppuccin.canvas](🩷Catppuccin.canvas)
+- **File**: [🩷Catppuccin.canvas](golden/🩷Catppuccin.canvas)
 - **Purpose**: Visual theme and color palette modeling
 - **Integration**: Referenced in [bedtime prompt](../prompts/bedtime.md) for character design
 

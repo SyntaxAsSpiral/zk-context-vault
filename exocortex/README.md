@@ -79,7 +79,7 @@ The system implements five fundamental flows:
 This exocortical architecture connects to broader cognitive infrastructure:
 
 - **[Epistemic Rendering](../prompts/README.md)** - Different cognitive lenses for concept exploration
-- **[Covenant Principles](steering-global-principles.md)** - Assumption-hostile design and epistemic hygiene
+- **[Covenant Principles](../agents/steering-global-principles.md)** - Assumption-hostile design and epistemic hygiene
 
 The exocortex serves as the operational substrate for implementing these theoretical frameworks in practice.
 

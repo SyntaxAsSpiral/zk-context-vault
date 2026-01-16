@@ -34,7 +34,7 @@ This vault contains:
 ### `/skills/` - Agent Skills Library
 **Purpose**: Reusable capabilities packaged in Agent Skills standard format
 
-**Structure**: Each skill follows [agentskills.io specification](skills/spec-agent-skill.md)
+**Structure**: Each skill follows [agentskills.io specification](../skills/spec-agent-skill.md)
 ```
 skill-name/
 ├── SKILL.md          # Required: frontmatter + instructions

@@ -9,12 +9,10 @@ tags:
   - "agents"
   - "architecture"
   - "universal"
-  - "kiro"
-  - "claude-code"
-  - "codex"
-  - "charm"
+  - "steering"
+  - "single-agent"
 created: 2026-01-11
-modified: 2026-01-11
+modified: 2026-01-15
 status: "active"
 glyph: "🧭"
 lens: "system-architecture"
@@ -22,200 +20,306 @@ lens: "system-architecture"
 
 # Agent System Architecture
 
-*Comprehensive documentation for AI coding agent integration, modular context assembly, and structured development processes.*
+*Universal patterns for single-agent steering across AI coding platforms.*
 
 ## What This Is
 
-This is not just agent configuration. It's a **universal agent ecosystem**—documenting patterns that work across different AI coding environments: Kiro, Claude Code, Codex, Charm, and others. While Kiro-specific features like hooks and MCP integration are documented here, the core patterns (steering, specs, modular context) are platform-agnostic.
+This is not multi-agent coordination. It's **single-agent steering**—universal patterns for configuring individual AI coding agents (Kiro, Claude Code, Codex, Charm) through explicit context management and modular documentation.
 
-The directory captures operational patterns that transform any AI coding agent from a simple assistant into a true cognitive partner.
+The directory documents platform-agnostic patterns that work across different AI coding environments. While each platform has unique features, the core steering principles remain consistent.
 
-Think of it as "AI agents as they should be" - fully configured, context-aware, and systematically organized.
+Think of it as "universal agent configuration" - explicit, modular, assumption-hostile.
 
-## Why This Architecture Works
+## The Shift: Single-Agent Focus
 
-The agent system design philosophy aligns with the [Covenant Principles](steering-global-principles.md) and works across different AI coding environments:
+This vault previously documented multi-agent coordination patterns. Those have moved to:
+- **[Exocortex](../exocortex/README.md)** - Pentadyadic multi-agent architecture
+- **[Multi-Agent Coordination Skill](../skills/multi-agent-coordination/SKILL.md)** - Coordination patterns and frameworks
 
-- **Assumption-hostile**: Explicit context management prevents presumptive behavior (works in any agent)
-- **Bespoke-first**: Modular system optimizes for operator workflow over enterprise patterns (universal principle)
-- **Context hygiene**: Progressive disclosure and explicit boundaries maintain clean cognitive load (platform-agnostic)
-- **Work preservation**: Specs and structured processes ensure nothing gets lost in translation (universal need)
+This directory now focuses exclusively on **single-agent steering** - how to configure one AI coding agent effectively, regardless of platform.
 
-The patterns documented here work whether you're using **Kiro** (with full hook/MCP integration), **Claude Code** (with steering and specs), **Codex** (with context assembly), or **Charm** (with modular configuration).
-
-## The Architecture
-
-The agent system operates through integrated components that work across different AI coding environments:
+## Core Architecture
 
 ```
-Steering → Specs → Context Assembly → Agent Experience
+Global Steering → Workspace Steering → Project Steering → Agent Behavior
+       ↓                  ↓                   ↓
+  Principles         AGENTS.md          .kiro/steering/
 ```
 
-### Universal Components
+### The Steering Hierarchy
 
-| Component | Purpose | Platform Support | Integration |
-|-----------|---------|------------------|-------------|
-| **[Steering](agent-steering.md)** | Context and behavior guidance | All agents via markdown files | Contextual intelligence |
-| **[Agent Roles](agent-roles.md)** | Identity templates and sigils | All agents via slice architecture | Persona management |
+**Three-tier context system** that works across all platforms:
 
-### Platform-Specific Features
+| Tier | Scope | Implementation | Example |
+|------|-------|----------------|---------|
+| **Global** | Universal principles | `~/.kiro/steering/` or platform config | Covenant Principles, Operator profile |
+| **Workspace** | Multi-project coordination | Workspace root `AGENTS.md` | Project-agnostic guidance |
+| **Project** | Specific codebase context | `.kiro/steering/*.md` | Tech stack, structure, product |
 
-Kiro-specific features (hooks, MCP integration, 3-phase specs) are documented in the main Kiro system prompt and steering files. These features enable:
-- **Automated workflow triggers** - Event-driven agent behaviors
-- **Model Context Protocol** - External tool integration
-- **Structured development** - 3-phase spec process (Requirements → Design → Tasks)
+**Key insight**: Later tiers override earlier ones. Project steering takes precedence over workspace, workspace over global.
 
-## Universal Capabilities
+## The .kiro/ Canonical Source
 
-### 🧭 Steering System - Contextual Intelligence
+**For Kiro users**: `.kiro/` is the **canonical modular context system**. It provides:
 
-Steering provides layered context that adapts to different scopes and works with any AI coding agent:
-
-| Scope | Purpose | Implementation | Platform Support |
-|-------|---------|----------------|------------------|
-| **Global** | Universal agent behavior | `~/.kiro/steering/` or project docs | All agents |
-| **Workspace** | Multi-project coordination | Workspace-level steering files | All agents |
-| **Project** | Specific project context | Project-specific documentation | All agents |
-
-**Hierarchy**: Global → Workspace → Project (later overrides earlier)
-
-### 📋 3-Phase Spec Process - Structured Development
-
-The spec system provides structured development workflows that prevent scope creep across any platform:
-
-#### Phase Structure
-1. **Design** - Architecture and approach definition
-2. **Requirements** - Concrete specifications and constraints  
-3. **Tasks** - Implementation breakdown and execution
-
-This pattern works whether you're using Kiro's native spec system, Claude Code's project files, or simple markdown documentation.
-
-### 🎭 Agent Roles - Identity Management
-
-The slice architecture enables modular identity composition across platforms:
-
-```markdown
-<!-- slice:agent=kiro -->
-System prompt template for Kiro persona
-<!-- /slice -->
-
-<!-- slice:agent=claude -->
-System prompt template for Claude Code persona
-<!-- /slice -->
+### Modular Steering Files
 ```
+.kiro/steering/
+├── product.md     # What this project is
+├── structure.md   # Directory organization
+├── tech.md        # Technology stack
+└── custom-*.md    # Additional context
+```
+
+**How it works:**
+- Kiro auto-loads all `.md` files in `.kiro/steering/`
+- Each file becomes a workspace-level steering rule
+- Modular design = add/remove context by adding/removing files
+- Appears in Kiro UI as "Included Rules"
+
+**Automatic inclusions:**
+- `AGENTS.md` at workspace root is automatically loaded
+- Provides project-specific agent guidance
+- No need to duplicate in `.kiro/steering/`
+
+### Structured Development (Specs)
+```
+.kiro/specs/{feature}/
+├── requirements.md  # User stories, acceptance criteria
+├── design.md        # Architecture, approach
+└── tasks.md         # Implementation breakdown
+```
+
+**3-phase workflow**: Design → Requirements → Tasks → Implementation
+
+### Automated Workflows (Hooks)
+```
+.kiro/hooks/
+└── *.kiro.hook      # JSON configurations for event triggers
+```
+
+**Hook types**: `fileEdited`, `fileCreated`, `userTriggered`, `promptSubmit`, `agentStop`
+
+See [.kiro/README.md](../.kiro/README.md) for complete documentation.
+
+## Universal Patterns (All Platforms)
+
+### Explicit Context Management
+
+**Principle**: No assumptions about what the agent knows.
+
+**Implementation**:
+- **Kiro**: `.kiro/steering/*.md` files
+- **Claude Code**: `CLAUDE.md` or project documentation
+- **Codex**: `AGENTS.md` or inline documentation
+- **Charm**: Configuration files or project docs
+
+**Pattern**: Provide explicit context through structured markdown files that the agent can reference.
+
+### Hierarchical Steering
+
+**Principle**: Context flows from general to specific.
+
+**Implementation**:
+- **Global**: Universal principles (Covenant, operator profile)
+- **Workspace**: Multi-project coordination (`AGENTS.md`)
+- **Project**: Codebase-specific context (`.kiro/steering/` or equivalent)
+
+**Pattern**: Later context overrides earlier. Project-specific guidance takes precedence.
+
+### Modular Composition
+
+**Principle**: Add/remove context without editing monolithic files.
+
+**Implementation**:
+- **Kiro**: Multiple `.md` files in `.kiro/steering/`
+- **Claude Code**: Separate documentation files
+- **Codex**: Modular markdown documents
+- **Charm**: Composable configuration
+
+**Pattern**: One concern per file. Easy to add, remove, or update specific context.
+
+### Assumption-Hostile Design
+
+**Principle**: Guard against presumptive behavior.
+
+**Implementation**: Follow [Covenant Principles](steering-global-principles.md):
+- 👁️ **Dotfile Visibility** - No bare `ls`, treat dotfolders as first-class
+- 🗣️ **Data Fidelity** - UNKNOWN > INVENTED, never invent data
+- ⛔ **Work Preservation** - Never discard work without explicit instruction
+- 🚮 **Final-State Surgery** - Remove old world entirely unless transition requested
+
+**Pattern**: Explicit constraints prevent common failure modes across all agents.
 
 ## Platform-Specific Features
 
-### 🪝 Kiro Hook System - Automated Cognitive Workflows
+### Kiro
+- **Modular steering**: `.kiro/steering/*.md` auto-loaded
+- **Hooks**: Event-driven automation (`.kiro/hooks/*.kiro.hook`)
+- **Specs**: 3-phase structured development (`.kiro/specs/*/`)
+- **MCP integration**: External tool servers
 
-Hooks transform Kiro from reactive to proactive, automatically triggering behaviors based on context:
+### Claude Code
+- **CLAUDE.md**: Global steering file (`~/.claude/CLAUDE.md`)
+- **Project docs**: Markdown files in project root
+- **Limited MCP**: Some MCP server support
 
-| Hook Type | Purpose | Example Use Case |
-|-----------|---------|------------------|
-| **Persona Switching** | Dynamic identity adoption | `murder` → Kharon-9 persona |
-| **Documentation Consistency** | Automated drift detection | Terminology sync across projects |
-| **Dotfile Visibility** | Covenant principle enforcement | Remind about `ls -a` usage |
+### Codex
+- **AGENTS.md**: Project-level steering
+- **Documentation**: Inline and separate markdown files
+- **No hooks**: Manual workflow management
 
-### 🔌 MCP Server Integration - External Cognitive Extensions
+### Charm
+- **Configuration**: Platform-specific config files
+- **Documentation**: Project-level markdown
+- **Custom integration**: Platform-dependent
 
-MCP servers extend capabilities beyond the base agent (primarily Kiro, limited Claude Code support):
+## Key Files in This Directory
 
-- **Task Management**: SDK task automation database
-- **Web Access**: Fetch server for external content
-- **Custom Tools**: Project-specific integrations
+### [agent-roles.md](agent-roles.md)
+**Purpose**: Identity templates and role sigils for different agents
 
-## Cross-Platform Usage
+**Contains**:
+- Slice-based agent personas (Kiro, Claude, Codex, Grok)
+- System prompt templates
+- Role-specific guidance
 
-### Universal Implementation Patterns
+**Usage**: Extract slices via workshop recipes for platform-specific deployment
 
-All AI coding agents benefit from the same core patterns - they just implement them through different interfaces:
+### [agent-steering.md](agent-steering.md)
+**Purpose**: Platform-agnostic steering guidance
 
-- **Explicit Context Management**: No assumptions about what the agent knows
-- **Structured Development**: 3-phase approach prevents scope creep  
-- **Modular Identity**: Slice-based persona management
-- **Hierarchical Guidance**: Global → Workspace → Project context inheritance
+**Contains**:
+- Steering hierarchy explanation
+- Universal patterns
+- Cross-platform implementation examples
 
-### Platform-Agnostic Deployment
+**Usage**: Reference for understanding steering across platforms
 
-The agent system components are designed for **slice-based assembly** into different deployment targets:
+### [steering-global-operator.md](steering-global-operator.md)
+**Purpose**: Operator (ZK) profile and preferences
 
-| Component | Slice Pattern | Universal Purpose | Implementation Varies |
-|-----------|---------------|-------------------|----------------------|
-| **Steering** | `steering=global\|workspace\|project` | Context guidance | Files, prompts, or config |
-| **Specs** | `spec=design\|requirements\|tasks` | Structured development | Docs, templates, or workflows |
-| **Roles** | `agent=kiro\|claude\|codex\|charm` | Identity management | System prompts or personas |
+**Contains**:
+- Identity and role sigils
+- Environment details (Windows, nushell, paths)
+- Current project priorities
+- Aesthetic preferences (Catppuccin colors, Recursive Mono font)
 
-**Assembly Examples:**
+**Usage**: Global-level context for all agents
+
+### [steering-global-principles.md](steering-global-principles.md)
+**Purpose**: Covenant Principles - anti-assumption framework
+
+**Contains**:
+- 13 principles (yamas) with niyamas (practices)
+- Each principle guards against a specific assumption
+- Operational guidance for assumption-hostile design
+
+**Usage**: Foundation for all agent behavior across platforms
+
+## Deployment Patterns
+
+### Workshop Assembly
+
+The [workshop system](../workshop/README.md) uses slice architecture to deploy agent configurations:
+
+```yaml
+# Example: Deploy to Claude Code
+name: Claudi
+target_locations:
+  - path: ~/.claude/CLAUDE.md
+sources:
+  - slice: agent=claudi-claude-code
+    slice-file: agents/agent-roles.md
+  - file: agents/steering-global-operator.md
+  - file: agents/steering-global-principles.md
+```
+
+**Pattern**: Extract slices from this directory, assemble into platform-specific files.
+
+### Slice Architecture
+
+Content marked with HTML comments for modular extraction:
+
 ```markdown
-<!-- slice:agent=claude -->
-System prompt for Claude Code integration
+<!-- slice:agent=kiro -->
+Kiro-specific system prompt content
 <!-- /slice -->
 
-<!-- slice:steering=workspace -->
-Multi-project coordination context
-<!-- /slice -->
-```
-
-The patterns are universal - the deployment is platform-specific.
-
-<!-- slice:steering=project -->
-Project-specific context and constraints
+<!-- slice:agent=claudi-claude-code -->
+Claude Code-specific system prompt content
 <!-- /slice -->
 ```
 
-**Deployment Targets:**
-- **Global CLAUDE.md**: Universal Claude Code configuration
-- **Project AGENTS.md**: Project-specific agent configurations  
-- **Kiro Integration**: Direct insertion via slice architecture
-- **Workshop Recipes**: Automated assembly for multiple targets
+**Benefit**: Write once, deploy to multiple platforms with platform-specific customization.
 
-This modular approach enables **write once, deploy everywhere** - the same cognitive patterns work across different AI coding environments while maintaining consistency and avoiding duplication.
+## Integration with Broader Ecosystem
 
-## Operational Patterns
+### Skills Library
+Agent configurations reference [skills](../skills/README.md) for technical capabilities:
+- **[agent-steering](../skills/agent-steering/SKILL.md)** - Steering system documentation
+- **[covenant-patterns](../skills/covenant-patterns/SKILL.md)** - Principles as design constraints
 
-### Hook Development Workflow
+### Workshop System
+[Workshop recipes](../workshop/README.md) assemble agent configurations from this directory.
 
-1. **Identify Trigger**: What event should activate the hook?
-2. **Define Action**: What should Kiro do when triggered?
-3. **Test Behavior**: Verify the hook works as expected
-4. **Deploy Globally**: Move successful hooks to appropriate scope
+### Exocortex
+For multi-agent coordination, see [exocortex](../exocortex/README.md) - this directory focuses on single-agent steering only.
 
-### Spec Development Process
+## Best Practices
 
-1. **Design Phase**: Architecture, approach, and high-level decisions
-2. **Requirements Phase**: Concrete specifications and constraints
-3. **Tasks Phase**: Implementation breakdown and execution plan
+### For Kiro Users
 
-### MCP Server Integration
+1. **Use .kiro/steering/ for project context**
+   - Create modular files (one concern per file)
+   - Let Kiro auto-load them
+   - Update as project evolves
 
-1. **Server Selection**: Choose appropriate MCP server for capability
-2. **Configuration**: Add to `.kiro/settings/mcp.json`
-3. **Testing**: Verify server connectivity and functionality
-4. **Documentation**: Update this system for future reference
+2. **Leverage AGENTS.md at workspace root**
+   - Automatically loaded by Kiro
+   - Provides project-specific guidance
+   - No duplication needed
 
-## Future Expansion
+3. **Create specs for features**
+   - Use 3-phase workflow (Design → Requirements → Tasks)
+   - Prevents scope creep
+   - Maintains clear acceptance criteria
 
-This agents directory will grow to include:
+4. **Use hooks for automation**
+   - Event-driven workflows
+   - Consistency checks
+   - Principle enforcement
 
-- **Advanced Hook Patterns**: Complex workflow automation
-- **Custom MCP Servers**: Bespoke cognitive extensions
-- **Agent Template Library**: Reusable persona and behavior patterns
-- **Evaluation Frameworks**: Measuring single-agent effectiveness
-- **Deployment Automation**: Streamlined configuration management
+### For Other Platforms
 
-## The Universal Agent Advantage
+1. **Create explicit steering files**
+   - Use markdown for documentation
+   - Follow hierarchical pattern (global → workspace → project)
+   - Keep files modular and focused
 
-This agent architecture solves fundamental problems in AI-augmented work across all platforms:
+2. **Adopt Covenant Principles**
+   - Assumption-hostile design works everywhere
+   - Prevents common failure modes
+   - Explicit constraints over implicit behavior
 
-- **No Black Boxes**: Every behavior is explicitly configured and documented
-- **Assumption Resistance**: Principles prevent presumptive failures regardless of agent
-- **Modular Composition**: Slice architecture enables flexible assembly across platforms
-- **Multiple Deployment**: Write once, adapt to different agent environments
-- **Cognitive Flexibility**: Multiple approaches work with different agent capabilities
-- **Workflow Integration**: Systems work together rather than in isolation
+3. **Use slice architecture**
+   - Mark content with HTML comments
+   - Enable platform-specific extraction
+   - Maintain single source of truth
 
-Whether you're using Kiro's advanced features, Claude Code's project integration, Codex's documentation focus, or Charm's configuration approach, these patterns create AI assistance that enhances rather than replaces human cognition.
+## The Single-Agent Advantage
+
+This architecture solves fundamental problems in AI-augmented work:
+
+- **No Black Boxes**: Every behavior explicitly configured
+- **Assumption Resistance**: Principles prevent presumptive failures
+- **Modular Composition**: Add/remove context without monolithic files
+- **Platform Agnostic**: Same patterns work across different agents
+- **Progressive Disclosure**: Context loads per-turn, not all at once
+- **Work Preservation**: Nothing gets lost, changes are explicit
+
+The result is AI assistance that enhances rather than replaces human cognition, maintaining transparency and control while providing sophisticated capabilities.
 
 ---
 
-*Agent-agnostic cognitive architecture. Choose your platform, keep your patterns.* 🧭
+*Single-agent steering. Universal patterns. Explicit behavior.* 🧭

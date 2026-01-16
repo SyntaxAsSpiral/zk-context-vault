@@ -9,7 +9,7 @@ description: Apply covenant principles as design constraints across all core sys
 
 ## Overview
 
-Covenant Patterns operationalizes the [Pragma Covenant](steering-global-principles.md) as enforceable design constraints. Unlike generic "best practices," these principles emerged from specific failures—each yama guards against a presumption that caused real damage.
+Covenant Patterns operationalizes the [Pragma Covenant](../../agents/steering-global-principles.md) as enforceable design constraints. Unlike generic "best practices," these principles emerged from specific failures—each yama guards against a presumption that caused real damage.
 
 This skill maps covenant principles to practical implementation across:
 - **Agents** — Steering, specs, context assembly

@@ -24,33 +24,33 @@ Foundation → Capabilities → Identity → Cognition → Modeling → Assembly
 
 | System | Purpose | Key Insight | Integration |
 |--------|---------|-------------|-------------|
-| **[Principles](steering-global-principles.md)** | Anti-assumption framework | Every yama guards against a presumption | Foundation for all other systems |
-| **[Skills](skills/README.md)** | Technical capabilities library | Dual-format documentation enables multiple deployment targets | Workshop compilation sources |
-| **[Agents](agents/README.md)** | Single-agent specific configurations | Modular context assembly with explicit behavior control | Identity and workflow management |
+| **[Principles](agents/steering-global-principles.md)** | Anti-assumption framework | Every yama guards against a presumption | Foundation for all other systems |
+| **[Skills](skills/README.md)** | Custom skill development examples | Agent Skills standard (flat structure, SKILL.md) | Workshop compilation sources |
+| **[Agents](agents/README.md)** | Single-agent steering patterns | `.kiro/` modular context system (Kiro canonical) | Hierarchical context management |
 | **[Prompts](prompts/README.md)** | Epistemic rendering stack | Same content through different cognitive lenses | Cognitive transformation toolkit |
 | **[Artifacts](artifacts/README.md)** | Visual cognitive modeling | Canvas-to-semantic-JSON anticompiler workflow | Bridge visual design and structured data |
 | **[Workshop](workshop/README.md)** | Recipe-based assembly system | Write once, deploy everywhere via slice architecture | Context compilation and deployment |
-| **[Exocortex](exocortex/README.md)** | Pentadyadic agent architecture | Distributed cognition through specialized AI agents | Advanced multi-agent coordination |
+| **[Exocortex](exocortex/README.md)** | Pentadyadic multi-agent architecture | Distributed cognition through specialized AI agents | Advanced multi-agent coordination |
 
 ## The Cognitive Stack
 
 ### Layer 1: Foundational Principles
 
-The [Covenant Principles](steering-global-principles.md) provide the philosophical foundation—an anti-assumption framework that prevents the cardinal sin of presumption. Every principle guards against a specific assumption that leads to cognitive failure.
+The [Covenant Principles](agents/steering-global-principles.md) provide the philosophical foundation—an anti-assumption framework that prevents the cardinal sin of presumption. Every principle guards against a specific assumption that leads to cognitive failure.
 
 **Key Insight**: Assumptions are the root cause of AI system failures. Explicit principles create assumption-hostile design.
 
 ### Layer 2: Technical Capabilities
 
-The [Skills Library](skills/README.md) provides comprehensive technical documentation with dual-format support for multiple deployment targets (Claude Code, Codex, Kiro Powers). Each skill follows consistent patterns while maintaining deployment flexibility.
+The [Skills Library](skills/README.md) provides custom skill development examples following the Agent Skills standard (agentskills.io). These demonstrate skill creation patterns while the vault also integrates production-ready skills from community repositories (Anthropic, Vercel, muratcankoylan).
 
-**Key Insight**: Write once, deploy everywhere. Consistent documentation patterns enable automated compilation.
+**Key Insight**: Skills follow flat structure with SKILL.md at root. Optional Kiro Power packaging via workshop recipes.
 
-### Layer 3: Agent Identity & Workflow
+### Layer 3: Single-Agent Steering
 
-The [Agent System](agents/README.md) documents universal patterns for AI coding agent configuration: structured development processes, hierarchical steering, and modular context assembly. These patterns work across different platforms (Kiro, Claude Code, Codex, Charm) while maintaining consistent cognitive workflows.
+The [Agent System](agents/README.md) documents universal patterns for single-agent configuration across AI coding platforms (Kiro, Claude Code, Codex, Charm). Focus is on explicit context management through hierarchical steering (Global → Workspace → Project) with `.kiro/` as the canonical modular context system for Kiro users.
 
-**Key Insight**: Explicit configuration prevents black-box behavior. Platform-agnostic patterns enable consistent workflows across different AI coding environments.
+**Key Insight**: Single-agent steering through explicit, modular context. Multi-agent coordination moved to Exocortex. Platform-agnostic patterns with platform-specific features.
 
 ### Layer 4: Visual Cognitive Modeling
 
@@ -103,19 +103,19 @@ The vault supports multiple deployment scenarios:
 
 ### Bespoke-First Design
 
-Following the [Bespoke Principle](steering-global-principles.md#✨-bespokedness), the vault optimizes for operator workflow over enterprise patterns. When rewrite takes an hour, optimize for beauty and razor-sharp function over long-term maintainability.
+Following the [Bespoke Principle](agents/steering-global-principles.md#✨-bespokedness), the vault optimizes for operator workflow over enterprise patterns. When rewrite takes an hour, optimize for beauty and razor-sharp function over long-term maintainability.
 
 ### Assumption-Hostile Architecture
 
-Every component explicitly guards against assumptions. The [Data Fidelity Principle](steering-global-principles.md#🗣️-data-fidelity) ensures UNKNOWN > INVENTED. Missing information triggers queries rather than presumptive behavior.
+Every component explicitly guards against assumptions. The [Data Fidelity Principle](agents/steering-global-principles.md#🗣️-data-fidelity) ensures UNKNOWN > INVENTED. Missing information triggers queries rather than presumptive behavior.
 
 ### Context Hygiene
 
-The [Context Hygiene Principle](steering-global-principles.md#🧬-context-hygiene) prevents context-stuffing and wholesale transmission. Context is compiled per-recipient and per-turn, maintaining clean cognitive boundaries.
+The [Context Hygiene Principle](agents/steering-global-principles.md#🧬-context-hygiene) prevents context-stuffing and wholesale transmission. Context is compiled per-recipient and per-turn, maintaining clean cognitive boundaries.
 
 ### Work Preservation
 
-The [Work Preservation Principle](steering-global-principles.md#⛔-work-preservation) ensures nothing gets lost. Changes are explicit and reversible. "Out of scope" triggers questions, not automatic cleanup.
+The [Work Preservation Principle](agents/steering-global-principles.md#⛔-work-preservation) ensures nothing gets lost. Changes are explicit and reversible. "Out of scope" triggers questions, not automatic cleanup.
 
 ## Getting Started
 
@@ -125,24 +125,25 @@ The [Work Preservation Principle](steering-global-principles.md#⛔-work-preserv
 3. Implement progressive disclosure patterns through agent context assembly
 
 ### For Agent Development
-1. Review [Agent Roles](agents/agent-roles.md) for identity patterns
-2. Review [Agent Steering](agents/agent-steering.md) for context guidance
-3. Explore [Agent System Architecture](agents/README.md) for structured development
+1. Review [Agent System Architecture](agents/README.md) for single-agent steering patterns
+2. Understand `.kiro/` modular context system (Kiro users) or equivalent platform patterns
+3. Explore hierarchical steering (Global → Workspace → Project)
+4. See [Exocortex](exocortex/README.md) for multi-agent coordination (separate concern)
 
 ### For Cognitive Work
 1. Explore [Epistemic Rendering](prompts/README.md) approaches
 2. Use [Workshop Recipes](workshop/README.md) for context assembly
-3. Consider [Multi-Agent Coordination](skills/multi-agent-coordination/SKILL.md) for complex tasks
+3. Consider [Exocortex Multi-Agent Coordination](exocortex/README.md) for complex tasks
 
 ### For Visual Modeling
 1. Explore [Canvas-to-Semantic-JSON](artifacts/README.md) workflows
-2. Use [Implementation Spec Templates](impl-spec-example.canvas) for structured development
-3. Apply [Anticompiler Principles](artifacts/README.md#the-anticompiler-philosophy) for visual-to-data transformation
+2. Use [Implementation Spec Templates](artifacts/golden/impl-spec-example.canvas) for structured development
+3. Apply [Anticompiler Principles](artifacts/README.md#anticompiler-philosophy) for visual-to-data transformation
 
 ### For Advanced Coordination
-1. Study [Exocortex Architecture](exocortex/README.md) patterns
-2. Review [Multi-Agent Coordination](skills/multi-agent-coordination/SKILL.md) for specialized agent patterns
-3. Implement [Triquetra Evaluation](skills/multi-agent-coordination/SKILL.md#triquetra-evaluation-pattern) for quality assessment
+1. Study [Exocortex Architecture](exocortex/README.md) for pentadyadic multi-agent patterns
+2. Review [Multi-Agent Coordination Skill](skills/multi-agent-coordination/SKILL.md) for coordination frameworks
+3. Implement [Triquetra Evaluation](skills/multi-agent-coordination/SKILL.md#the-triquetra-pattern) for quality assessment
 
 ## The Vault Advantage
 
@@ -168,10 +169,15 @@ The cognitive infrastructure patterns, documentation approaches, and architectur
 - Specifications (`skills/spec-agent-skill.md`, `skills/spec-kiro-power.md`)
 - Assembly patterns and slice architecture
 - Covenant Principles framework
+- `.kiro/` modular context system pattern
 
 **Personal Content:**
-- ZK's specific agent configurations, skills, prompts, and artifacts
+- ZK's specific agent configurations, custom skills, prompts, and artifacts
 - These serve as examples but contain ZK-specific implementations
+
+**Community Skills:**
+- Production-ready skills available from [Anthropic](https://github.com/anthropics/skills), [Vercel](https://github.com/vercel-labs/agent-skills), and [muratcankoylan](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
+- This vault's skills/ directory demonstrates custom skill development patterns
 
 A template repository (workshop system without personal content) may be created in the future for easier bootstrapping.
 
