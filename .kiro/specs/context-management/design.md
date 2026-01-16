@@ -26,10 +26,10 @@ graph TD
 
 **File locations:**
 - **Scripts**: `C:/Users/synta.ZK-ZRRH/.dev/.scripts/assemble.py` and `sync.py`
-- **Context vault**: `.context/` (Obsidian vault with templates and frontmatter)
-- **Recipes**: `.context/workshop/` (created from Obsidian templates)
-- **Output**: `.context/workshop/output/`
-- **Manifest**: `.context/workshop/recipe-manifest.md` (Obsidian document)
+- **Context vault**: Repository root (Obsidian vault with templates and frontmatter)
+- **Recipes**: `workshop/` (created from Obsidian templates)
+- **Staging**: `workshop/staging/`
+- **Manifest**: `workshop/recipe-manifest.md` (Obsidian document)
 
 **Output Formats:**
 
@@ -218,7 +218,7 @@ def include_file(file_path: Path) -> Optional[str]:
 **Location**: `C:/Users/synta.ZK-ZRRH/.dev/.scripts/assemble.py`
 
 **Core functionality:**
-1. Find all recipe `.md` files in `.context/workshop/` (excluding `recipe-manifest.md` and `template*`)
+1. Find all recipe `.md` files in `workshop/` (excluding `recipe-manifest.md` and `template*`)
 2. Parse Obsidian frontmatter and extract YAML code blocks
 3. Support multi-section recipes by splitting on `---` separators
 4. For each source:
@@ -226,8 +226,8 @@ def include_file(file_path: Path) -> Optional[str]:
    - If `file` only: Include entire file content
 5. Concatenate sources with `\n\n` separator
 6. Apply template substitution if template provided (default: `{content}`)
-7. Write assembled content to `.context/workshop/output/`
-8. Update `.context/workshop/recipe-manifest.md` with run logs
+7. Write assembled content to `workshop/staging/`
+8. Update `workshop/recipe-manifest.md` with run logs
 
 **Key operations:**
 - `frontmatter.load()` - Parse Obsidian frontmatter
@@ -252,9 +252,9 @@ These fields are parsed but not yet processed - they're reserved for future enha
 **Core functionality:**
 1. Read existing recipe-manifest.md for deployment tracking
 2. Parse all recipes to get target_locations
-3. Copy files from `.context/workshop/output/` to target locations
+3. Copy files from `workshop/staging/` to target locations
 4. Track deployments in manifest
-5. Remove files that were previously synced but no longer exist in output
+5. Remove files that were previously synced but no longer exist in staging
 6. Update recipe-manifest.md with sync results
 
 **Key operations:**
@@ -339,7 +339,7 @@ type:
 *Simple validation for a simple system - no enterprise theater.*
 
 **Property 1: Recipe Processing Completeness**
-*For any* valid recipe file in `.context/workshop/`, assemble.nu should process it and generate output
+*For any* valid recipe file in `workshop/`, assemble.py should process it and generate output
 **Validates: Requirements 3.1**
 
 **Property 2: Source Processing Accuracy**  
@@ -351,11 +351,11 @@ type:
 **Validates: Requirements 2.4, 2.5**
 
 **Property 4: Sync Completeness**
-*For any* file in output folder, sync.nu should copy it to all specified target locations
+*For any* file in staging folder, sync.py should copy it to all specified target locations
 **Validates: Requirements 3.2**
 
 **Property 5: Orphan Cleanup**
-*For any* file that was previously synced but no longer exists in output, sync.py should remove it from targets
+*For any* file that was previously synced but no longer exists in staging, sync.py should remove it from targets
 **Validates: Requirements 3.3**
 
 **Property 6: Multi-Section Processing**

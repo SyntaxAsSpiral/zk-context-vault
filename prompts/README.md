@@ -12,6 +12,8 @@ Think of it as "describer modes" before you ever named them that.
 
 Each prompt is a lens—a controlled transformation that reveals different aspects of the same truth:
 
+**Note:** Hook prompts (markdown sources for Kiro hook creation) are in `hook-prompts/` subdirectory.
+
 | Glyph | Lens | Purpose | When to Use |
 |-------|------|---------|-------------|
 | 🌙 | **[Gentle Compression](bedtime.md)** | Child-scale meaning through narrative warmth | Retention, emotional safety, intuition over precision |

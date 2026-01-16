@@ -21,47 +21,62 @@ sources:
     - inline: |
         The user has requested a documentation consistency check. Please:
 
-        1. Check recent commits, then search all markdown files in the project for drift in terminology, architecture, or other details
-        2. Check these specific files for consistency:
+        1. Check recent commits for context on terminology changes
+
+        2. Identify canonical sources for this project/workspace:
+           - .kiro/specs/* (requirements.md, design.md, tasks.md)
+           - AGENTS.md (project steering at repo root)
+           - README.md (project overview)
+
+        3. Search all markdown files in the project for drift in terminology, architecture, or other details (compare against canonical sources)
+
+        4. Check these specific files for consistency:
            - .kiro/* (all files in .kiro directory)
            - ALL AGENTS.md files (search recursively)
            - ALL README.md files (search recursively)
            - Any code files with relevant comments or docstrings
 
-        3. Report findings in a structured way:
+        5. Report findings in a structured way:
            - List files that contain outdated terminology
-           - Show the specific lines and suggested replacements
+           - Show the specific lines and suggested replacements based on canonical sources
            - Indicate if terminology is consistent across all docs
 
-        4. Automatically update any inconsistencies found. Leave no trace. 🚮
+        6. Automatically update any inconsistencies found. Leave no trace. 🚮
 
-        Focus on terminology consistency, architectural descriptions, feature descriptions, and any references that may have drifted between files. Pay special attention to the Collectivist project terminology and the seed-to-trunk architecture concepts.
+        Focus on terminology consistency, architectural descriptions (validate against .kiro/specs/*/design.md), feature descriptions (validate against .kiro/specs/*/requirements.md), and any references that may have drifted between files.
 
   command_md:
     - inline: |
         # Documentation Consistency Check
 
-        Check recent commits, then search all markdown files in the project for drift in terminology, architecture, or other details.
+        1. Check recent commits for context on terminology changes
 
-        Check these specific files for consistency:
-        - `.kiro/*` (all files in `.kiro` directory)
-        - ALL `AGENTS.md` files (search recursively)
-        - ALL `README.md` files (search recursively)
-        - Any code files with relevant comments or docstrings
+        2. Identify canonical sources for this project/workspace:
+           - `.kiro/specs/*` (requirements.md, design.md, tasks.md)
+           - `AGENTS.md` (project steering at repo root)
+           - `README.md` (project overview)
 
-        Report findings in a structured way:
-        - List files that contain outdated terminology
-        - Show the specific lines and suggested replacements
-        - Indicate if terminology is consistent across all docs
+        3. Search all markdown files in the project for drift in terminology, architecture, or other details (compare against canonical sources)
 
-        Automatically update any inconsistencies found. Leave no trace. 🚮
+        4. Check these specific files for consistency:
+           - `.kiro/*` (all files in `.kiro` directory)
+           - ALL `AGENTS.md` files (search recursively)
+           - ALL `README.md` files (search recursively)
+           - Any code files with relevant comments or docstrings
 
-        Focus on terminology consistency, architectural descriptions, feature descriptions, and any references that may have drifted between files. Pay special attention to the Collectivist project terminology and the seed-to-trunk architecture concepts.
+        5. Report findings in a structured way:
+           - List files that contain outdated terminology
+           - Show the specific lines and suggested replacements based on canonical sources
+           - Indicate if terminology is consistent across all docs
+
+        6. Automatically update any inconsistencies found. Leave no trace. 🚮
+
+        Focus on terminology consistency, architectural descriptions (validate against `.kiro/specs/*/design.md`), feature descriptions (validate against `.kiro/specs/*/requirements.md`), and any references that may have drifted between files.
 
 kiro_hook_config:
   enabled: true
   name: "Documentation Consistency Checker"
-  description: "Searches all markdown files and Python comments for terminology drift, checks consistency across .kiro/*, AGENTS.md, README.md files, and automatically updates any inconsistencies found"
+  description: "Searches all markdown files for terminology drift against canonical sources (.kiro/specs/*, AGENTS.md, README.md), checks consistency across all documentation, and automatically updates any inconsistencies found"
   version: "1"
   when:
     type: "userTriggered"

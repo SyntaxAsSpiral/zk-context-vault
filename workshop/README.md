@@ -20,17 +20,17 @@ Context Vault → Workshop Recipes → assemble.py → Workshop Staging → sync
 
 | Component | Purpose | Location | Authority |
 |-----------|---------|----------|-----------|
-| **[Templates](templates/)** | Recipe scaffolding | `.context/workshop/templates/` | Obsidian |
-| **[Recipes](.)** | Assembly instructions | `.context/workshop/recipe-*.md` | Operator |
-| **[Staging](staging/)** | Assembled artifacts | `.context/workshop/staging/` | System |
-| **[Manifest](recipe-manifest.md)** | Deployment tracking | `.context/workshop/recipe-manifest.md` | System |
+| **[Templates](templates/)** | Recipe scaffolding | `workshop/templates/` | Obsidian |
+| **[Recipes](.)** | Assembly instructions | `workshop/recipe-*.md` | Operator |
+| **[Staging](staging/)** | Assembled artifacts | `workshop/staging/` | System |
+| **[Manifest](recipe-manifest.md)** | Deployment tracking | `workshop/recipe-manifest.md` | System |
 
 ### Script Pipeline
 
 | Script | Function | Location | Responsibility |
 |--------|----------|----------|----------------|
-| `workshop/src/assemble.py` | Parse recipes, assemble artifacts | `.context/workshop/src/` | Assembly |
-| `workshop/src/sync.py` | Deploy artifacts, purge orphans | `.context/workshop/src/` | Synchronization |
+| `workshop/src/assemble.py` | Parse recipes, assemble artifacts | `workshop/src/` | Assembly |
+| `workshop/src/sync.py` | Deploy artifacts, purge orphans | `workshop/src/` | Synchronization |
 
 ### IDE Integration
 

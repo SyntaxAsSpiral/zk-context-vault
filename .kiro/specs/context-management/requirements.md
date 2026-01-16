@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A context management system for IDE integration that assembles sliced markdown content using YAML recipes and provides minimal tasks for execution. The system uses the existing organized context library structure and outputs assembled content to `.context/workshop/output/` with recipes in `.context/workshop/` for configuration.
+A context management system for IDE integration that assembles sliced markdown content using YAML recipes and provides minimal tasks for execution. The system uses the existing organized context library structure and outputs assembled content to `workshop/staging/` with recipes in `workshop/` for configuration.
 
 ## Glossary
 
@@ -12,8 +12,8 @@ A context management system for IDE integration that assembles sliced markdown c
 - **Whole_File_Source**: A source that includes an entire file without slice extraction
 - **Assembly_Task**: IDE task that processes a recipe to generate assembled output
 - **Export_Task**: IDE task that copies assembled content from output folder to target locations
-- **Workshop**: The `.context/workshop/` directory containing recipes and outputs
-- **Output_Folder**: The `.context/workshop/output/` directory for assembled content
+- **Workshop**: The `workshop/` directory containing recipes and staging
+- **Staging_Folder**: The `workshop/staging/` directory for assembled content
 - **Multi_Section_Recipe**: A recipe with multiple output sections separated by `---` markers
 - **Template**: Optional string with `{content}` placeholder for custom output formatting
 - **Output_Format**: Specifies folder structure (skill = Agent Skills standard, power = POWER.md + steering/)
@@ -36,7 +36,7 @@ A context management system for IDE integration that assembles sliced markdown c
 4. WHEN simple assembly is needed, THE Recipe MAY omit the template field and use direct concatenation
 5. WHEN complex assembly is needed, THE Recipe MAY include type-specific fields (agent_format, skill_type, power_structure, etc.)
 6. WHEN multiple outputs are needed from one recipe, THE Recipe MAY use `---` separators to define multiple output sections
-7. THE Recipe_System SHALL store all recipes in the `.context/workshop/` directory
+7. THE Recipe_System SHALL store all recipes in the `workshop/` directory
 
 ### Requirement 2: Flexible Source Assembly
 
@@ -49,7 +49,7 @@ A context management system for IDE integration that assembles sliced markdown c
 3. WHEN assembling content, THE Assembly_Engine SHALL combine multiple sources in the order specified by the recipe
 4. WHEN a template is provided, THE Assembly_Engine SHALL substitute `{content}` with the assembled content
 5. WHEN no template is provided, THE Assembly_Engine SHALL use the assembled content directly
-6. THE Assembly_Engine SHALL output all assembled content to `.context/workshop/output/`
+6. THE Assembly_Engine SHALL output all assembled content to `workshop/staging/`
 
 ### Requirement 3: Minimal IDE Task Integration
 
@@ -69,7 +69,7 @@ A context management system for IDE integration that assembles sliced markdown c
 
 #### Acceptance Criteria
 
-1. WHEN assembly completes, THE Output_Logger SHALL save assembled content to `.context/workshop/output/`
+1. WHEN assembly completes, THE Output_Logger SHALL save assembled content to `workshop/staging/`
 2. WHEN generating outputs, THE Output_Logger SHALL include version information and timestamps
 3. WHEN content changes, THE Output_Logger SHALL maintain previous versions for comparison
 4. WHEN validating outputs, THE Output_Logger SHALL provide copies for manual review
@@ -122,9 +122,9 @@ A context management system for IDE integration that assembles sliced markdown c
 
 #### Acceptance Criteria
 
-1. WHEN executing the sync task, THE Sync_System SHALL process all valid content in the workshop output folder
+1. WHEN executing the sync task, THE Sync_System SHALL process all valid content in the workshop staging folder
 2. WHEN syncing content, THE Sync_System SHALL copy content to all target locations specified in recipes
-3. WHEN files exist at target locations but are no longer in output, THE Sync_System SHALL delete them
+3. WHEN files exist at target locations but are no longer in staging, THE Sync_System SHALL delete them
 4. WHEN target locations don't exist, THE Sync_System SHALL create directory structures as needed
 5. THE Sync_System SHALL maintain a sync manifest to track what was previously deployed for cleanup
 
@@ -146,8 +146,8 @@ A context management system for IDE integration that assembles sliced markdown c
 
 #### Acceptance Criteria
 
-1. WHEN organizing recipes, THE Workshop_Manager SHALL store all recipes in `.context/workshop/`
-2. WHEN generating outputs, THE Workshop_Manager SHALL organize content in `.context/workshop/output/` by type
+1. WHEN organizing recipes, THE Workshop_Manager SHALL store all recipes in `workshop/`
+2. WHEN generating outputs, THE Workshop_Manager SHALL organize content in `workshop/staging/` by type
 3. WHEN managing versions, THE Workshop_Manager SHALL maintain clean separation between current and historical outputs
 4. WHEN cleaning up, THE Workshop_Manager SHALL provide tasks to remove stale outputs
 5. THE Workshop_Manager SHALL maintain consistent directory structure and naming conventions

@@ -174,4 +174,4 @@ Integrate with:
 - **[Semantic-JSON Plugin](https://github.com/SyntaxAsSpiral/Semantic-JSON)** - Core anticompiler functionality
 - **[Artifacts System](../../artifacts/README.md)** - Visual cognitive modeling infrastructure
 - **[Workshop System](../../workshop/README.md)** - Recipe-based assembly and deployment
-- **[Kiro Specs](../../agents/kiro-specs.md)** - Structured development processes
+- **[Agent System Architecture](../../agents/README.md)** - Structured development processes

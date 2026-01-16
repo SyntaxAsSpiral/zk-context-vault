@@ -56,15 +56,14 @@ Steering → Specs → Context Assembly → Agent Experience
 | Component | Purpose | Platform Support | Integration |
 |-----------|---------|------------------|-------------|
 | **[Steering](agent-steering.md)** | Context and behavior guidance | All agents via markdown files | Contextual intelligence |
-| **[Specs](kiro-specs.md)** | 3-phase development process | All agents via structured docs | Structured development |
 | **[Agent Roles](agent-roles.md)** | Identity templates and sigils | All agents via slice architecture | Persona management |
 
-### Platform-Specific Components
+### Platform-Specific Features
 
-| Component | Purpose | Platform Support | Integration |
-|-----------|---------|------------------|-------------|
-| **[Hooks](kiro-hooks.md)** | Automated workflow triggers | Kiro only | Event-driven automation |
-| **[MCP Integration](kiro-mcp.md)** | Model Context Protocol servers | Kiro, Claude Code (limited) | External tool access |
+Kiro-specific features (hooks, MCP integration, 3-phase specs) are documented in the main Kiro system prompt and steering files. These features enable:
+- **Automated workflow triggers** - Event-driven agent behaviors
+- **Model Context Protocol** - External tool integration
+- **Structured development** - 3-phase spec process (Requirements → Design → Tasks)
 
 ## Universal Capabilities
 

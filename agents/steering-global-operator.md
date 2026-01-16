@@ -17,7 +17,7 @@ zk::mocha: #f38ba8 #fab387 #f9e2af #a6e3a1 #74c7ec #b4befe #cba6f7 :frappe: #292
 
 ### **Current Project Priorities:**
 - `.dev/obsidian-workshop/Semanti-JSON` - Obsidian plugin for smart Canvas data recompiling. 
-- `.dev/Collectivist` - AI powered curation for intentional collections. 
+- `.dev/Collectivist` - AI-powered curation for intentional collections. 
 - `.dev/Amexsomnemon` - Overarching exocortex project. 
 - SDK Task Automation DB
 - ADK-Go Multi-Agent Architecture in various domains

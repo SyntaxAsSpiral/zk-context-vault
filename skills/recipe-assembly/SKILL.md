@@ -360,8 +360,8 @@ target_locations:
 sources:
   - slice: agent=kiro
     file: agents/agent-roles.md
-  - slice: steering=global
-    file: agents/kiro-steering.md
+  - file: agents/steering-global-operator.md
+  - file: agents/steering-global-principles.md
 template: |
   # Kiro Agent Configuration
 

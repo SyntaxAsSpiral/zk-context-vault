@@ -93,6 +93,9 @@ skill-name/
 - `reflect.md` - Metacognitive reflection
 - `murder.md` - Adversarial red-teaming
 
+**Hook prompts:**
+- `hook-prompts/` - Markdown sources for Kiro hook creation via UI
+
 **When to reference**: Need specific cognitive approach or prompt engineering examples
 
 ### `/artifacts/` - Visual Models and Examples
@@ -104,13 +107,19 @@ skill-name/
 
 **When to reference**: Visual system design or example implementations
 
-### `/.kiro/specs/` - Structured Development
-**Purpose**: 3-phase spec-driven development (Requirements → Design → Tasks)
+### `/.kiro/` - Kiro Canonical Sources
+**Purpose**: Canonical hooks and specs that deploy to project-specific `.kiro/` directories
+
+**Structure:**
+- `.kiro/hooks/*.kiro.hook` - Hook JSON configurations (canonical source)
+- `.kiro/specs/*/` - Spec templates (requirements.md, design.md, tasks.md)
 
 **Current specs:**
 - `context-management/` - Context workshop system specification
 
-**When to reference**: Understanding spec-driven development workflow
+**Deployment pattern:** This vault's `.kiro/` serves as the canonical source. Workshop recipes deploy hooks and specs from here to project-specific `.kiro/` directories.
+
+**When to reference**: Understanding spec-driven development workflow or hook configurations
 
 ## Covenant Principles (Anti-Assumption Framework)
 
@@ -194,9 +203,9 @@ When working on features with specs:
 ### Context Assembly Workflow
 When working with workshop recipes:
 1. **Recipes** define what to assemble (in `workshop/`)
-2. **assemble.py** processes recipes → `workshop/output/`
-3. **Inspect output** before deployment
-4. **sync.py** deploys output → target locations
+2. **assemble.py** processes recipes → `workshop/staging/`
+3. **Inspect staging** before deployment
+4. **sync.py** deploys staging → target locations
 5. **Manifest** tracks deployments in `recipe-manifest.md`
 
 ## Common Tasks
@@ -226,8 +235,8 @@ When working with workshop recipes:
 1. Use Obsidian template from `workshop/templates/`
 2. Configure sources, targets, output_format
 3. Run `python workshop/src/assemble.py --dry-run` to preview
-4. Run `python workshop/src/assemble.py` to generate output
-5. Inspect `workshop/output/`
+4. Run `python workshop/src/assemble.py` to generate staging
+5. Inspect `workshop/staging/`
 6. Run `python workshop/src/sync.py` to deploy
 
 ## Important Constraints
@@ -256,6 +265,7 @@ When working with workshop recipes:
 - **Skill questions**: See `skills/README.md`
 - **Exocortex questions**: See `exocortex/README.md`
 - **Spec questions**: See `.kiro/specs/*/requirements.md`
+- **Hook questions**: See `.kiro/hooks/` for canonical configs, `prompts/hook-prompts/` for markdown sources
 
 ## Adapting This Vault
 

@@ -337,8 +337,8 @@ name: kiro-steering
 sources:
   - slice: agent=kiro
     file: agents/agent-roles.md
-  - slice: steering=global
-    file: agents/kiro-steering.md
+  - file: agents/steering-global-operator.md
+  - file: agents/steering-global-principles.md
 target_locations:
   - path: ~/.kiro/steering/agent.md
 template: |

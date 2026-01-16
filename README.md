@@ -126,8 +126,8 @@ The [Work Preservation Principle](steering-global-principles.md#⛔-work-preserv
 
 ### For Agent Development
 1. Review [Agent Roles](agents/agent-roles.md) for identity patterns
-2. Configure [Kiro Hooks](agents/kiro-hooks.md) for workflow automation
-3. Implement [3-Phase Specs](agents/kiro-specs.md) for structured development
+2. Review [Agent Steering](agents/agent-steering.md) for context guidance
+3. Explore [Agent System Architecture](agents/README.md) for structured development
 
 ### For Cognitive Work
 1. Explore [Epistemic Rendering](prompts/README.md) approaches

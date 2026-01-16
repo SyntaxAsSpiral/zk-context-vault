@@ -158,8 +158,8 @@ Canvas artifacts integrate with the [workshop system](../workshop/README.md) thr
 - **Template generation** from canvas patterns
 - **Automated assembly** of visual designs into deployable formats
 
-### Kiro Specs
-Canvas files align with [Kiro's 3-phase spec process](../agents/kiro-specs.md):
+### Structured Development
+Canvas files align with Kiro's 3-phase spec process:
 - **Design phase** represented as visual canvas layout
 - **Requirements phase** structured as detailed node content
 - **Tasks phase** organized as dependency-linked task nodes
@@ -247,5 +247,5 @@ The Semantic-JSON plugin enables sophisticated validation:
 - **[Semantic-JSON Plugin](https://github.com/SyntaxAsSpiral/Semantic-JSON)** - Advanced JSON IDE for Obsidian
 - **[Semantic-JSON Workflows Skill](../skills/semantic-json-workflows/README.md)** - Complete canvas-to-structured-data workflow mastery
 - **[Workshop System](../workshop/README.md)** - Recipe-based assembly and deployment
-- **[Kiro Specs](../agents/kiro-specs.md)** - 3-phase structured development process
+- **[Agent System Architecture](../agents/README.md)** - Structured development processes
 - **[Prompts](../prompts/README.md)** - Epistemic rendering stack integration

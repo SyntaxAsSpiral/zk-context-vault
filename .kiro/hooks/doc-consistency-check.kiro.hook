@@ -1,13 +1,15 @@
 {
   "enabled": true,
   "name": "Documentation Consistency Check",
-  "description": "Scans all markdown files, AGENTS.md, README.md, and .kiro/* files for terminology drift and architectural inconsistencies. Automatically updates any inconsistencies found with focus on Collectivist terminology and seed-to-trunk architecture.",
+  "description": "Scans all markdown files, AGENTS.md, README.md, and .kiro/* files for terminology drift and architectural inconsistencies. Automatically updates any inconsistencies found.",
   "version": "1",
   "when": {
     "type": "userTriggered"
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Execute documentation consistency check:\n\n1. Check recent git commits for context on terminology changes\n2. Search ALL markdown files recursively for drift in:\n   - Terminology (especially Collectivist project terms)\n   - Architecture descriptions (seed-to-trunk concepts)\n   - Feature descriptions\n   - Cross-references between files\n\n3. Focus on these critical files:\n   - .kiro/* (all files, use ls -a)\n   - ALL AGENTS.md files (recursive search)\n   - ALL README.md files (recursive search)\n   - Code files with docstrings/comments\n\n4. Report findings:\n   - Files with outdated terminology\n   - Specific lines needing updates\n   - Suggested replacements\n   - Overall consistency status\n\n5. Automatically fix ALL inconsistencies found. Final-state surgery: remove old terminology entirely, update all references. Leave no trace. 🚮\n\nUNKNOWN > INVENTED. If terminology is ambiguous, ask before changing."
-  }
+    "prompt": "Execute documentation consistency check:\n\n1. Check recent git commits for context on terminology changes\n\n2. Identify canonical sources for this project/workspace:\n   - .kiro/specs/* (requirements.md, design.md, tasks.md)\n   - AGENTS.md (project steering at repo root)\n   - README.md (project overview)\n\n3. Search ALL markdown files recursively for drift in:\n   - Terminology (compare against canonical sources)\n   - Architecture descriptions (validate against .kiro/specs/*/design.md)\n   - Feature descriptions (validate against .kiro/specs/*/requirements.md)\n   - Cross-references between files\n\n4. Focus on these critical files:\n   - .kiro/* (all files, use ls -a)\n   - ALL AGENTS.md files (recursive search)\n   - ALL README.md files (recursive search)\n   - Code files with docstrings/comments\n\n5. Report findings:\n   - Files with outdated terminology\n   - Specific lines needing updates\n   - Suggested replacements based on canonical sources\n   - Overall consistency status\n\n6. Automatically fix ALL inconsistencies found. Final-state surgery: remove old terminology entirely, update all references to match canonical sources. Leave no trace. 🚮\n\nUNKNOWN > INVENTED. If terminology is ambiguous, ask before changing."
+  },
+  "workspaceFolderName": ".context",
+  "shortName": "doc-consistency-check"
 }
