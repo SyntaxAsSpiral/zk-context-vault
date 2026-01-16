@@ -1,105 +1,154 @@
-# Custom Project Steering
-
-*Add custom steering modules to `.kiro/steering/` for project-specific context.*
-
-## About Custom Steering
-
-Kiro provides three default steering modules (product.md, structure.md, tech.md), but you can add any `.md` file to provide additional context:
-
-- **api-patterns.md** - API design conventions and patterns
-- **security.md** - Security requirements and best practices
-- **deployment.md** - Deployment procedures and environments
-- **testing.md** - Testing strategies and requirements
-- **domain-model.md** - Business logic and domain relationships
-- **{anything}.md** - Whatever context your project needs
-
-**Naming matters**: The filename appears in Kiro's UI, so use descriptive names.
-
-## What to Include
-
-### Domain-Specific Patterns
-- Business logic conventions
-- Domain model relationships
-- Workflow and process definitions
-- Data validation rules
-
-### Technical Constraints
-- Performance requirements
-- Security considerations
-- Compliance requirements
-- Browser/platform support matrix
-
-### Team Conventions
-- Code review guidelines
-- Testing strategies
-- Documentation standards
-- Git workflow and branching
-
-### Integration Points
-- External service dependencies
-- Third-party API usage patterns
-- Database schema conventions
-- Message queue patterns
-
-## Example: api-patterns.md
-
-```markdown
-# API Patterns
-
-## Authentication
-- JWT tokens with refresh token rotation
-- Access tokens expire after 15 minutes
-- Refresh tokens expire after 7 days
-- All auth endpoints under `/api/auth/`
-
-## Response Format
-```json
-{
-  "data": { /* payload */ },
-  "meta": { "timestamp": "ISO-8601" },
-  "errors": [ /* if any */ ]
-}
-```
-
-## Error Handling
-- Use standard HTTP status codes
-- Include error codes in response body
-- Log all 5xx errors to monitoring
-```
-
-## Example: testing.md
-
-```markdown
-# Testing Strategy
-
-## Requirements
-- Unit tests for all business logic
-- Integration tests for API endpoints
-- E2E tests for critical user flows
-- Minimum 80% code coverage for new code
-
-## Conventions
-- Test files: `*.test.ts` (unit), `*.integration.ts` (integration)
-- Use `describe` blocks for grouping
-- Use `it` for individual test cases
-- Mock external dependencies in unit tests
-```
-
-## Tips
-
-**Do:**
-- Keep each file focused on one aspect
-- Use concrete examples over abstract principles
-- Update as project evolves
-- Remove outdated content promptly
-
-**Don't:**
-- Duplicate content across files
-- Include sensitive information (credentials, keys)
-- Create files for temporary experiments
-- Let steering drift from reality
-
+---
+inclusion: manual
 ---
 
-*Create new `.md` files in `.kiro/steering/` as needed. Kiro loads them automatically.*
+Steering
+What is steering?
 
+Steering gives Kiro persistent knowledge about your workspace through markdown files. Instead of explaining your conventions in every chat, steering files ensure Kiro consistently follows your established patterns, libraries, and standards.
+Key benefits
+
+Consistent Code Generation - Every component, API endpoint, or test follows your team's established patterns and conventions.
+
+Reduced Repetition - No need to explain workspace standards in each conversation. Kiro remembers your preferences.
+
+Team Alignment - All developers work with the same standards, whether they're new to the workspace or seasoned contributors.
+
+Scalable Project Knowledge - Documentation that grows with your codebase, capturing decisions and patterns as your project evolves.
+Steering file scope
+
+Steering files can be created with a workspace scope or a global scope.
+Workspace steering
+
+Workspace steering files reside in your workspace root folder under .kiro/steering/, and apply only to that specific workspace. Workspace steering files can be used to inform Kiro of patterns, libraries, and standards that apply to an individual workspace.
+Global steering
+
+Global steering files reside in your home directory under ~/.kiro/steering/, and apply to all workspaces. Global steering files can be used to inform Kiro of conventions that apply to all your workspaces.
+
+In case of conflicting instructions between global and workspace steering, Kiro will prioritize the workspace steering instructions. This allows you to specify global directives that generally apply to all your workspaces, while preserving the ability to override those directives for specific workspaces.
+Team steering
+
+The global steering feature can be used to define centralized steering files that apply to entire teams. Team steering files can be pushed to user's PCs via MDM solutions or Group Policies, or downloaded by users to their PCs from a central repository, and placed into the ~/.kiro/steering folder.
+Foundational steering files
+
+Kiro provides foundational steering files to establish core project context. You can generate these files as follows:
+
+    Navigate to the Steering section in the Kiro panel
+    Click the Generate Steering Docs button, or click the + button and select the Foundation steering files option
+    Kiro will create three foundational files:
+
+Product Overview (product.md) - Defines your product's purpose, target users, key features, and business objectives. This helps Kiro understand the "why" behind technical decisions and suggest solutions aligned with your product goals.
+
+Technology Stack (tech.md) - Documents your chosen frameworks, libraries, development tools, and technical constraints. When Kiro suggests implementations, it will prefer your established stack over alternatives.
+
+Project Structure (structure.md) - Outlines file organization, naming conventions, import patterns, and architectural decisions. This ensures generated code fits seamlessly into your existing codebase.
+
+These foundation files are included in every interaction by default, forming the baseline of Kiro's project understanding.
+Creating custom steering files
+
+    Navigate to the Steering section in the Kiro panel
+    Click the + button
+    Select the scope of the steering file: workspace or global
+    Choose a descriptive filename (e.g., api-standards.md)
+    Write your guidance using standard markdown syntax
+    Use natural language to describe your requirements
+    Optionally, for workspace steering files, you can use the Refine button to have Kiro refine your requirements
+
+Once created, steering files become immediately available across all Kiro interactions.
+Agents.md
+
+Kiro supports providing steering directives via the AGENTS.md standard. AGENTS.md files are in markdown format, similar to Kiro steering files; however, AGENTS.md files do not support inclusion modes and are always included.
+
+You can add AGENTS.md files to the global steering file location (~/.kiro/steering/), or to the root folder of your workspace, and they will get picked up by Kiro automatically.
+Inclusion modes
+
+Steering files can be configured to load at different times based on your needs. This flexibility helps optimize performance and ensures relevant context is available when needed.
+
+Configure inclusion modes by adding front matter to the top of your steering files. The front matter uses YAML syntax and must be placed at the very beginning of the file, enclosed by triple dashes (---).
+Always included (default)
+yaml
+
+---
+inclusion: always
+---
+
+These files are loaded into every Kiro interaction automatically. Use this mode for core standards that should influence all code generation and suggestions. Examples include your technology stack, coding conventions, and fundamental architectural principles.
+
+Best for: Workspace-wide standards, technology preferences, security policies, and coding conventions that apply universally.
+Conditional inclusion
+yaml
+
+---
+inclusion: fileMatch
+fileMatchPattern: "components/**/*.tsx"
+---
+
+Files are automatically included only when working with files that match the specified pattern. This keeps context relevant and reduces noise by loading specialized guidance only when needed.
+
+Common patterns:
+
+    "*.tsx" - React components and JSX files
+    "app/api/**/*" - API routes and backend logic
+    "**/*.test.*" - Test files and testing utilities
+    "src/components/**/*" - Component-specific guidelines
+    "*.md" - Documentation files
+
+Best for: Domain-specific standards like component patterns, API design rules, testing approaches, or deployment procedures that only apply to certain file types.
+Manual inclusion
+yaml
+
+---
+inclusion: manual
+---
+
+Files are available on-demand by referencing them with #steering-file-name in your chat messages. This gives you precise control over when specialized context is needed without cluttering every interaction.
+
+Usage: Type #troubleshooting-guide or #performance-optimization in chat to include that steering file for the current conversation.
+
+Best for: Specialized workflows, troubleshooting guides, migration procedures, or context-heavy documentation that's only needed occasionally.
+File references
+
+Link to live workspace files to keep steering current:
+markdown
+
+#[[file:<relative_file_name>]]
+
+Examples:
+
+    API specs: #[[file:api/openapi.yaml]]
+    Component patterns: #[[file:components/ui/button.tsx]]
+    Config templates: #[[file:.env.example]]
+
+Best practices
+
+Keep Files Focused One domain per file - API design, testing, or deployment procedures.
+
+Use Clear Names
+
+    api-rest-conventions.md - REST API standards
+    testing-unit-patterns.md - Unit testing approaches
+    components-form-validation.md - Form component standards
+
+Include Context Explain why decisions were made, not just what the standards are.
+
+Provide Examples Use code snippets and before/after comparisons to demonstrate standards.
+
+Security First Never include API keys, passwords, or sensitive data. Steering files are part of your codebase.
+
+Maintain Regularly
+
+    Review during sprint planning and architecture changes
+    Test file references after restructuring
+    Treat steering changes like code changes - require reviews
+
+Common steering file strategies
+
+API Standards (api-standards.md) - Define REST conventions, error response formats, authentication flows, and versioning strategies. Include endpoint naming patterns, HTTP status code usage, and request/response examples.
+
+Testing Approach (testing-standards.md) - Establish unit test patterns, integration test strategies, mocking approaches, and coverage expectations. Document preferred testing libraries, assertion styles, and test file organization.
+
+Code Style (code-conventions.md) - Specify naming patterns, file organization, import ordering, and architectural decisions. Include examples of preferred code structures, component patterns, and anti-patterns to avoid.
+
+Security Guidelines (security-policies.md) - Document authentication requirements, data validation rules, input sanitization standards, and vulnerability prevention measures. Include secure coding practices specific to your application.
+
+Deployment Process (deployment-workflow.md) - Outline build procedures, environment configurations, deployment steps, and rollback strategies. Include CI/CD pipeline details and environment-specific requirements.

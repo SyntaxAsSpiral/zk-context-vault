@@ -1,3 +1,8 @@
+---
+inclusion: manual
+---
+
+
 # Technology Stack
 
 ## Core Technologies

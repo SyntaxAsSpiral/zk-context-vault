@@ -1,3 +1,8 @@
+---
+inclusion: manual
+---
+
+
 # Product Overview
 
 **zk-context-vault** is ZK's personal context library and agent configuration vault—an Obsidian-based cognitive infrastructure for AI agent configuration, context management, and knowledge work.
