@@ -1,6 +1,6 @@
 # Link Check Summary
 
-## Status: ✅ Mostly Fixed
+## Status: ✅ Mostly Fixed  
 
 Fixed **32 → 23** dead links. Remaining issues are mostly false positives or non-critical.
 

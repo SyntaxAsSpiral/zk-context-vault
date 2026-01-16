@@ -27,3 +27,4 @@ Thumbs.db
 workshop/staging/*
 !workshop/staging/.gitignore
 !workshop/staging/README.md
+  
