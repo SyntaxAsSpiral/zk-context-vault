@@ -287,6 +287,8 @@ For multi-agent coordination, see [exocortex](../exocortex/README.md) - this dir
    - Enable platform-specific extraction
    - Maintain single source of truth
 
+3.  Plugins and extensions can offer hook functionality. 
+
 ## The Single-Agent Advantage
 
 This architecture solves fundamental problems in AI-augmented work:
