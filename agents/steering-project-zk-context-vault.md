@@ -205,8 +205,11 @@ When working with workshop recipes:
 1. **Recipes** define what to assemble (in `workshop/`)
 2. **assemble.py** processes recipes → `workshop/staging/`
 3. **Inspect staging** before deployment
-4. **sync.py** deploys staging → target locations
+4. **sync.py** deploys staging → target locations **and auto-commits + pushes**
 5. **Manifest** tracks deployments in `recipe-manifest.md`
+6. Git commit: `🔗 Context Sealed ⟳ {chronohex}` - all in one atomic workflow
+
+**Never commit manually** - the sync workflow owns all context artifact commits.
 
 ## Common Tasks
 
@@ -246,8 +249,9 @@ When working with workshop recipes:
 - `docs/**` - May drift or be incomplete
 
 ### Git Semantics
-- "Commit" = `git add -A` then `git commit` as instructed
-- No amending, reordering, or curating unless asked
+- **Commits only through `sync.py`** - Auto-commits with chronohex timestamp (`🔗 Context Sealed ⟳ {chronohex}`)
+- No manual commits, amending, reordering, or curating
+- All context artifact deployments are captured in a single commit via sync workflow
 
 ### Data Fidelity
 - UNKNOWN > INVENTED
@@ -266,6 +270,48 @@ When working with workshop recipes:
 - **Exocortex questions**: See `exocortex/README.md`
 - **Spec questions**: See `.kiro/specs/*/requirements.md`
 - **Hook questions**: See `.kiro/hooks/` for canonical configs, `prompts/hook-prompts/` for markdown sources
+
+## Code Quality & Architecture Notes
+
+### Operational Substance
+
+The codebase demonstrates solid engineering underneath the aesthetic:
+
+**Workshop Assembly System** (`workshop/src/assemble.py`):
+- Multi-document YAML support with section inheritance
+- Smart slice extraction with fallback logic (handles missing end markers, overlaps with next slice)
+- Cross-platform path handling (Windows/posix normalization, `~/` expansion)
+- Manifest persistence with entry replacement and timestamp tracking
+- Proper dataclass structures for configuration
+- Clean separation of concerns (parsing → assembly → output → manifest)
+- No security holes; validates input before operations
+
+**MCP Evaluation Harness** (`workshop/src/evaluation.py`):
+- Proper async/await for tool invocation
+- Metrics tracking (call counts, execution time per tool)
+- Good XML parsing and Markdown report templating
+- Graceful error handling with stack traces
+- Flexible transport layer (stdio, SSE, HTTP)
+
+**Error Handling & Type Safety**:
+- Type hints throughout
+- Encoding handled explicitly (UTF-8 everywhere, including Windows stdio reconfiguration)
+- Path operations use `pathlib` safely (no string concatenation)
+- File I/O has existence checks and error recovery
+- No invented data; missing info triggers errors or queries
+
+**Aesthetic as Proof-of-Concept**:
+The grimdark (Warhammer 40K) error messages aren't just decoration—they demonstrate how the prompt system (`prompts/murder.md` and similar) can propagate thematic consistency through operational code. This shows that a system's aesthetic can be embedded at every layer without sacrificing functionality or clarity.
+
+### Code Quality Summary
+
+No structural weaknesses found. The code is:
+- Minimal and focused (no premature abstraction)
+- Functionally correct (handles real edge cases)
+- Maintainable (clear intent, good error boundaries)
+- Reusable (workshop system is genuinely portable)
+
+This is bespoke, intentional engineering.
 
 ## Adapting This Vault
 

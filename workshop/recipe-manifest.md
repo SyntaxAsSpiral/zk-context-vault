@@ -1,7 +1,7 @@
 ---
 created: 2026-01-11 09:52:44.314556
 id: recipe-manifest
-modified: '2026-01-15T20:56:46.633261'
+modified: '2026-01-15T21:46:29.523930'
 status: log
 type:
 - log
@@ -10,65 +10,65 @@ type:
 # Recipe Assembly Log
 
 ## Active Recipes
-- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-15T20:55:33.846714
+- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-15T21:46:22.624192
   - Output: `command\doc-consistency-check\doc-consistency-check.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.claude\commands\doc-consistency-check.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.codex\prompts\doc-consistency-check.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-15T20:55:33.846714
+- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-15T21:46:22.624192
   - Output: `command\doc-consistency-check\doc-consistency-check.kiro.hook`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\hooks\doc-consistency-check.kiro.hook`
   - Status: ✓ synced
 
-- **command/murder/murder**: Last run 2026-01-15T20:55:33.854533
+- **command/murder/murder**: Last run 2026-01-15T21:46:22.631375
   - Output: `command\murder\murder.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.claude\commands\murder.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.codex\prompts\murder.md`
   - Status: ✓ synced
 
-- **command/murder/murder.kiro**: Last run 2026-01-15T20:55:33.854533
+- **command/murder/murder.kiro**: Last run 2026-01-15T21:46:22.631375
   - Output: `command\murder\murder.kiro.hook`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\hooks\murder.kiro.hook`
   - Status: ✓ synced
 
-- **agent/zk-context-vault/AGENTS**: Last run 2026-01-15T20:55:33.868998
+- **agent/zk-context-vault/AGENTS**: Last run 2026-01-15T21:46:22.644454
   - Output: `agent\zk-context-vault\AGENTS.md`
   - Target: `Z:\Documents\.context\AGENTS.md`
   - Status: ✓ synced
 
-- **skill/catppuccin-theming**: Last run 2026-01-15T20:55:33.878831
+- **skill/catppuccin-theming**: Last run 2026-01-15T21:46:22.652569
   - Output: `skill\catppuccin-theming\`
   - Target: `C:\Users\synta.ZK-ZRRH\.claude\skills\catppuccin-theming\`
   - Target: `C:\Users\synta.ZK-ZRRH\.codex\skills\catppuccin-theming\`
   - Status: ✓ synced
 
-- **power/catppuccin-theming**: Last run 2026-01-15T20:55:33.862770
+- **power/catppuccin-theming**: Last run 2026-01-15T21:46:22.638647
   - Output: `power\catppuccin-theming\`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\powers\installed\catppuccin-theming\`
   - Status: ✓ synced
 
-- **agent/Kiro/agent**: Last run 2026-01-15T20:55:33.838510
+- **agent/Kiro/agent**: Last run 2026-01-15T21:46:22.617042
   - Output: `agent\Kiro\agent.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\agent.md`
   - Status: ✓ synced
 
-- **agent/Kiro/operator**: Last run 2026-01-15T20:55:33.838510
+- **agent/Kiro/operator**: Last run 2026-01-15T21:46:22.617042
   - Output: `agent\Kiro\operator.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\operator.md`
   - Status: ✓ synced
 
-- **agent/Kiro/principles**: Last run 2026-01-15T20:55:33.838510
+- **agent/Kiro/principles**: Last run 2026-01-15T21:46:22.617042
   - Output: `agent\Kiro\principles.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\principles.md`
   - Status: ✓ synced
 
-- **agent/Codex/AGENTS**: Last run 2026-01-15T20:55:33.828329
+- **agent/Codex/AGENTS**: Last run 2026-01-15T21:46:22.609275
   - Output: `agent\Codex\AGENTS.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.codex\AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Claudi/CLAUDE**: Last run 2026-01-15T20:55:33.826557
+- **agent/Claudi/CLAUDE**: Last run 2026-01-15T21:46:22.600289
   - Output: `agent\Claudi\CLAUDE.md`
   - Target: `C:\Users\synta.ZK-ZRRH\.claude\CLAUDE.md`
   - Status: ✓ synced
@@ -80,6 +80,18 @@ type:
   - Status: ✓ assembled
 
 ## Deployment Log
+
+
+### 2026-01-15T21:46:29.523930
+- Synced 12 deployments
+
+
+### 2026-01-15T21:44:12.622419
+- Synced 12 deployments
+
+
+### 2026-01-15T21:37:08.207854
+- Synced 12 deployments
 
 
 ### 2026-01-15T20:56:46.633261

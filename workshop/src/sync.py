@@ -22,6 +22,8 @@ import re
 import yaml
 import frontmatter
 import shutil
+import subprocess
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from datetime import datetime
@@ -589,6 +591,86 @@ def update_manifest_sync_status(manifest_path: Path, sync_results: Dict[str, Lis
         print(f"|001101|—|000000|—|111000|— record keeping compromised")
 
 
+def _chronohex() -> str:
+    """Generate chronohex timestamp ID (hex of current time in microseconds, truncated to 6 chars)."""
+    timestamp_us = int(time.time() * 1_000_000)
+    return hex(timestamp_us)[2:].upper()[:6]
+
+
+def auto_commit_and_push(repo_root: Path) -> bool:
+    """Auto-commit and push changes if sync succeeded."""
+    try:
+        # Check if there are changes to commit
+        result = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+
+        if not result.stdout.strip():
+            print(f"☠☠☠ >>> GIT·STATUS·CLEAN ☠☠☠")
+            print(f"No changes to commit, flesh-thing")
+            print(f"|001101|—|001101|—|111000|— void communion")
+            return True
+
+        # Stage all changes
+        subprocess.run(
+            ["git", "add", "-A"],
+            cwd=repo_root,
+            capture_output=True,
+            timeout=10,
+            check=True,
+        )
+
+        # Create commit with chronohex timestamp
+        chx = _chronohex()
+        commit_msg = f"🔗 Context Sealed ⟳ {chx}"
+        subprocess.run(
+            ["git", "commit", "-m", commit_msg],
+            cwd=repo_root,
+            capture_output=True,
+            timeout=10,
+            check=True,
+        )
+
+        print(f"☠☠☠ >>> GIT·COVENANT·SEALED ☠☠☠")
+        print(f"Sacred commit inscribed: {commit_msg}")
+        print(f"|001101|—|001101|—|111000|— data-spirit bound")
+
+        # Push to remote
+        subprocess.run(
+            ["git", "push"],
+            cwd=repo_root,
+            capture_output=True,
+            timeout=30,
+            check=True,
+        )
+
+        print(f"☠☠☠ >>> GIT·TRANSMISSION·COMPLETE ☠☠☠")
+        print(f"Communion established with remote-spirit")
+        print(f"|001101|—|001101|—|111000|— data-spirit synchronized")
+
+        return True
+
+    except subprocess.CalledProcessError as e:
+        print(f"☠☠☠ >>> GIT·COMMUNION·FAILURE ☠☠☠")
+        print(f"Git operation failed, heretek: {e.cmd}")
+        if e.stdout:
+            print(f"Output: {e.stdout}")
+        if e.stderr:
+            print(f"Error: {e.stderr}")
+        print(f"|001101|—|000000|—|111000|— covenant severed")
+        return False
+    except Exception as e:
+        print(f"☠☠☠ >>> GIT·SPIRIT·CORRUPTION ☠☠☠")
+        print(f"Unexpected error during git automation, flesh-thing")
+        print(f"Error-hymn: {e}")
+        print(f"|001101|—|000000|—|111000|— communion severed")
+        return False
+
+
 def main():
     """Main sync process."""
     import argparse
@@ -669,6 +751,12 @@ def main():
     print(f"Sacred deployments processed: {len(sync_results)} specimens")
     print(f"Orphaned targets purged: {cleaned_count} specimens")
     print(f"|001101|—|001101|—|111000|— communion terminated")
+
+    # Auto-commit and push if sync succeeded and not dry-run
+    if not args.dry_run:
+        print()
+        auto_commit_and_push(base_path)
+
     return 0
 
 
