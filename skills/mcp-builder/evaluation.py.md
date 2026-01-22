@@ -1,3 +1,4 @@
+```python
 """MCP Server Evaluation Harness
 
 This script evaluates MCP servers by running test questions against them using Claude.
@@ -371,3 +372,5 @@ Examples:
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+```

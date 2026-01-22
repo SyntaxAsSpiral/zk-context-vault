@@ -1,0 +1,70 @@
+{
+  "nodes": [
+    {
+      "id": "group-1",
+      "type": "group",
+      "label": "🩷💚🩵🩶💜"
+    },
+    {
+      "id": "legend-1",
+      "type": "text",
+      "text": "## Catppuccin Rainbow\n\nrosewater -  #f2d5cf #f4dbd6 #f5e0dc\nflamingo -   #eebebe #f0c6c6 #f2cdcd\npink -       #f4b8e4 #f5bde6 #f5c2e7\nmauve -      #ca9ee6 #c6a0f6 #cba6f7\nred -        #e78284 #ed8796 #f38ba8\nmaroon-      #ea999c #ee99a0 #eba0ac\npeach -      #ef9f76 #f5a97f #fab387\nyellow -     #e5c890 #eed49f #f9e2af\ngreen -      #a6d189 #a6da95 #a6e3a1\nteal -       #81c8be #8bd5ca #94e2d5\nsky -        #99d1db #91d7e3 #89dceb\nsapphire -   #85c1dc #7dc4e4 #74c7ec\nblue -       #8caaee #8aadf4 #89b4fa\nlavender -   #babbf1 #b7bdf8 #b4befe"
+    },
+    {
+      "id": "palette-0",
+      "type": "text",
+      "text": "## mocha-frappe\n```\n{\n  \"name\": \"catppuccin-mochafrappe\",\n  \"author\": \"zk::chromasorix\",\n  \"color\": [\n    \"#303446\",\n    \"#f38ba8\",\n    \"#a6e3a1\",\n    \"#f9e2af\",\n    \"#89b4fa\",\n    \"#cba6f7\",\n    \"#94e2d5\",\n    \"#cdd6f4\",\n    \"#414559\",\n    \"#fab387\",\n    \"#a6e3a1\",\n    \"#f9e2af\",\n    \"#74c7ec\",\n    \"#f5c2e7\",\n    \"#94e2d5\",\n    \"#b4befe\"\n  ],\n  \"foreground\": \"#cdd6f4\",\n  \"background\": \"#303446\"\n}\n```"
+    },
+    {
+      "id": "example-1",
+      "type": "text",
+      "text": "## Catppuccin Mocha themed Starship config\nformat = \"\"\"$directory$git_branch$git_status$character\"\"\"\n\n[directory]\nformat = \"[$path]($style) \"\nstyle = \"bold #89b4fa\"\ntruncation_length = 3\nfish_style_pwd_dir_length = 1\n\n[git_branch]\nformat = \"[$symbol$branch]($style) \"\nsymbol = \" \"\nstyle = \"bold #a6e3a1\"\n\n[git_status]\nformat = \"[$all_status$ahead_behind]($style) \"\nstyle = \"bold #f38ba8\"\nconflicted = \"󰞇\"\nahead = \"⇡\"\nbehind = \"⇣\"\ndiverged = \"⇕\"\nup_to_date = \"\"\nuntracked = \"?\"\nstashed = \"$\"\nmodified = \"!\"\nstaged = \"+\"\nrenamed = \"»\"\ndeleted = \"✘\"\n\n[character]\nsuccess_symbol = \"[╲)](#cba6f7)\"\nerror_symbol = \"[╲)](#f38ba8)\"\nvimcmd_symbol = \"[╲)](#89b4fa)\""
+    },
+    {
+      "id": "example-2",
+      "type": "text",
+      "text": "## CSS Sample\n\n```css\n/* Catppuccin ZK Theme */\n\n/* Import Recursive Mono Casual font */\n@import url('https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,MONO@-15..0,300..1000,0..1,0..1&display=swap');\n\n/* Catppuccin Frappé Color Variables */\n.theme-frappe {\n    --ctp-rosewater: #f5e0dc;\n    --ctp-flamingo: #f2cdcd;\n    --ctp-pink: #f5c2e7;\n    --ctp-mauve: #cba6f7;\n    --ctp-red: #f38ba8;\n    --ctp-maroon: #eba0ac;\n    --ctp-peach: #fab387;\n    --ctp-yellow: #f9e2af;\n    --ctp-green: #a6e3a1;\n    --ctp-teal: #94e2d5;\n    --ctp-sky: #89dceb;\n    --ctp-sapphire: #74c7ec;\n    --ctp-blue: #89b4fa;\n    --ctp-lavender: #b4befe;\n    --ctp-text: #c6d0f5;\n    --ctp-subtext1: #b5bfe2;\n    --ctp-subtext0: #a5adce;\n    --ctp-overlay2: #949cbb;\n    --ctp-overlay1: #838ba7;\n    --ctp-overlay0: #737994;\n    --ctp-surface2: #626880;\n    --ctp-surface1: #51576d;\n    --ctp-surface0: #414559;\n    --ctp-base: #303446;\n    --ctp-mantle: #292c3c;\n    --ctp-crust: #232634;\n}\n\n/* Base Styling */\nbody {\n    font-family: 'Recursive', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Mono', 'Roboto Mono', Consolas, 'Courier New', monospace;\n    font-variation-settings: 'MONO' 1, 'CASL' 0.5, 'slnt' -5;\n    background-color: var(--ctp-base);\n    color: var(--ctp-text);\n    line-height: 1.6;\n    transition: all 0.3s ease;\n}\n\n/* Header Styling */\n.header {\n    background: var(--ctp-surface0);\n    box-shadow: 0 2px 10px rgba(0,0,0,0.3);\n}\n\n.header h1 {\n    color: #b4befe; /* mocha lavender */\n}\n\n.header .overview {\n    color: var(--ctp-subtext1);\n}\n\n/* Statistics - ZK Mocha Accents */\n.stat-item {\n    background: var(--ctp-surface1);\n}\n\n.stat-item:nth-child(1) .stat-number {\n    color: #f38ba8; /* mocha red */\n}\n\n.stat-item:nth-child(2) .stat-number {\n    color: #fab387; /* mocha peach */\n}\n\n.stat-item:nth-child(3) .stat-number {\n    color: #f9e2af; /* mocha yellow */\n}\n\n.stat-item:nth-child(4) .stat-number {\n    color: #a6e3a1; /* mocha green */\n}\n\n.stat-item:nth-child(5) .stat-number {\n    color: #74c7ec; /* mocha sapphire */\n}\n\n.stat-label {\n    color: var(--ctp-subtext0);\n}\n\n/* Controls */\n.controls {\n    background: var(--ctp-surface0);\n    box-shadow: 0 2px 10px rgba(0,0,0,0.3);\n}\n\n.search-box, .filter-select {\n    border: 2px solid var(--ctp-surface2);\n    background: var(--ctp-surface1);\n    color: var(--ctp-text);\n}\n\n.search-box:focus, .filter-select:focus {\n    border-color: #74c7ec; /* mocha sapphire */\n}\n\n/* Sort Buttons */\n.sort-btn {\n    background: var(--ctp-surface1);\n    border: 2px solid var(--ctp-surface2);\n    color: var(--ctp-text);\n}\n\n.sort-btn:hover {\n    background: var(--ctp-surface2);\n}\n\n.sort-btn.active {\n    background: #74c7ec; /* mocha sapphire */\n    color: var(--ctp-base);\n    border-color: #74c7ec; /* mocha sapphire */\n}\n\n/* Repository Cards */\n.repo-card {\n    background: var(--ctp-surface0);\n    box-shadow: 0 2px 10px rgba(0,0,0,0.3);\n}\n\n.repo-card:hover {\n    box-shadow: 0 4px 20px rgba(0,0,0,0.4);\n}\n\n.repo-name {\n    color: #cba6f7; /* mocha mauve */\n}\n\n/* Status Badges - ZK Mocha Accents */\n.status-up_to_date {\n    background: #a6e3a1; /* mocha green */\n    color: var(--ctp-base);\n}\n\n.status-updates_available {\n    background: #f9e2af; /* mocha yellow */\n    color: var(--ctp-base);\n}\n\n.status-error {\n    background: #f38ba8; /* mocha red */\n    color: var(--ctp-base);\n}\n\n.status-no_remote {\n    background: var(--ctp-overlay0);\n    color: var(--ctp-text);\n}\n\n.status-not_a_repo {\n    background: var(--ctp-surface2);\n    color: var(--ctp-subtext0);\n}\n\n/* Repository Content */\n.repo-description {\n    color: var(--ctp-subtext1);\n}\n\n.repo-meta {\n    color: var(--ctp-subtext0);\n}\n\n.category-tag {\n    background: var(--ctp-surface2);\n    color: var(--ctp-text);\n}\n\n/* No Results */\n.no-results {\n    color: var(--ctp-subtext0);\n}\n\n.no-results h3 {\n    color: var(--ctp-subtext1);\n}\n```"
+    },
+    {
+      "id": "group-2",
+      "type": "group",
+      "label": "rainbow"
+    },
+    {
+      "id": "legend-2-😉",
+      "type": "text",
+      "text": "# 🌙 The Tale of the Magical Color Palette Generator\n\n  \n\n*Once upon a time, in the land of `.dev`, there lived a developer named ZK who discovered they had installed a magical Python package called Catppuccin...*\n\n  \n\n## Chapter 1: The Simple Spell 🪄\n\n  \n\nZK opened their trusty terminal (the magical command window) and whispered the first incantation:\n\n  \n\n```bash\n\npython -c \"from catppuccin import PALETTE; print('Hello, colors!')\"\n\n```\n\n  \n\n*\"What's this `-c` flag?\"* ZK wondered. The wise terminal explained: *\"The `-c` means 'run this code directly' - no need to create a file, just execute this one line of Python magic!\"*\n\n  \n\n## Chapter 2: Summoning the Mocha Colors ☕\n\n  \n\nZK wanted to see their beloved Mocha palette, so they cast:\n\n  \n\n```bash\n\npython -c \"\n\nfrom catppuccin import PALETTE\n\nmocha = PALETTE.mocha\n\nfor color in mocha.colors:\n\n    print(f'{color.name}: {color.hex}')\n\n\"\n\n```\n\n  \n\n*The terminal sparkled and revealed all 26 beautiful colors, each with their hex codes!*\n\n  \n\n## Chapter 3: Creating CSS Magic ✨\n\n  \n\n*\"But I want CSS variables for my websites!\"* ZK exclaimed. So they learned the CSS spell:\n\n  \n\n```bash\n\npython -c \"\n\nfrom catppuccin import PALETTE\n\nmocha = PALETTE.mocha\n\nprint(':root {')\n\nfor color in mocha.colors:\n\n    css_name = color.name.lower().replace(' ', '-')\n\n    print(f'  --ctp-{css_name}: {color.hex};')\n\nprint('}')\n\n\"\n\n```\n\n  \n\n*And lo! Perfect CSS variables appeared, ready to copy into any stylesheet!*\n\n  \n\n## Chapter 4: The JSON Treasure Chest 📦\n\n  \n\nFor their JavaScript projects, ZK needed JSON format:\n\n  \n\n```bash\n\npython -c \"\n\nimport json\n\nfrom catppuccin import PALETTE\n\nmocha = PALETTE.mocha\n\ncolors = {color.name.lower().replace(' ', '_'): color.hex for color in mocha.colors}\n\nprint(json.dumps({'mocha': colors}, indent=2))\n\n\"\n\n```\n\n  \n\n*Beautiful, formatted JSON appeared - perfect for config files!*\n\n  \n\n## Chapter 5: The Task Automation Kingdom 🏰\n\n  \n\n*\"But typing these spells every time is tedious!\"* ZK realized. That's when they discovered the Tasks system in their IDE - pre-written spells they could run with just a few clicks:\n\n  \n\n1. **Ctrl+Shift+P** (the magic portal)\n\n2. Type \"Tasks: Run Task\"\n\n3. Choose your spell from the list\n\n4. Watch the magic happen in the terminal panel!\n\n  \n\n## The End 🌟\n\n  \n\n*And ZK lived happily ever after, generating beautiful color palettes with just a few keystrokes, never having to remember complex Python incantations again.*\n\n  \n\n**The Moral:** Tasks are just saved terminal commands that you can run easily. The `-c` flag lets you run Python code directly without creating files. Your colors are now always just a task away! 🎨\n\n  \n\n*Sweet dreams, and may your terminals always be colorful!* 💤"
+    },
+    {
+      "id": "palette-1",
+      "type": "text",
+      "text": "## rose\n```\n{\n  \"name\": \"catppuccin-rose\",\n  \"author\": \"zk::chromasorix\",\n  \"color\": [\n    \"#1b1323\",\n    \"#f38ba8\",\n    \"#a6e3a1\",\n    \"#f9e2af\",\n    \"#b4befe\",\n    \"#cba6f7\",\n    \"#94e2d5\",\n    \"#e7def1\",\n    \"#2b2034\",\n    \"#eba0ac\",\n    \"#c9f3ce\",\n    \"#ffd1b5\",\n    \"#c8d2ff\",\n    \"#f5c2e7\",\n    \"#a6ede0\",\n    \"#f6ecff\"\n  ],\n  \"foreground\": \"#eadff2\",\n  \"background\": \"#1a1320\"\n}\n```"
+    },
+    {
+      "id": "palette-2",
+      "type": "text",
+      "text": "## au café\n```\n{   \"name\": \"\",   \"author\": \"\",   \"color\": [     \"#303030\",     \"#d370a3\",     \"#6d9e3f\",     \"#b58858\",     \"#6095c5\",     \"#ac7bde\",     \"#3ba275\",     \"#cfcfcf\",     \"#686868\",     \"#ffa7da\",     \"#a3d572\",     \"#efbd8b\",     \"#98cbfe\",     \"#e5b0ff\",     \"#75daa9\",     \"#ffffff\"   ],   \"foreground\": \"#a0a0a0\",   \"background\": \"#232323\" }\n```"
+    },
+    {
+      "id": "palette-3",
+      "type": "text",
+      "text": "## honey\n```\n{\n  \"name\": \"\",\n  \"author\": \"\",\n  \"color\": [\n    \"#16130e\",\n    \"#d37b62\",\n    \"#b7d79f\",\n    \"#f6d28f\",\n    \"#8caade\",\n    \"#d3abf6\",\n    \"#c7e6d1\",\n    \"#eadfce\",\n    \"#2a241c\",\n    \"#e5987f\",\n    \"#cfe8b8\",\n    \"#ffe1ad\",\n    \"#a9bff0\",\n    \"#f5c2e7\",\n    \"#def3e7\",\n    \"#fff4e3\"\n  ],\n  \"foreground\": \"#f3eadb\",\n  \"background\": \"#695c42\"\n}\n```"
+    },
+    {
+      "id": "palette-4",
+      "type": "text",
+      "text": "## sage\n```\n{\n  \"name\": \"catppuccin-sage\",\n  \"author\": \"zk::chromasorix\",\n  \"color\": [\n    \"#2a3330\",\n    \"#4fae8a\",\n    \"#8fd2b4\",\n    \"#fab387\",\n    \"#79c8a9\",\n    \"#a5e6cf\",\n    \"#5dbb9a\",\n    \"#cfe0d6\",\n    \"#3a4541\",\n    \"#67b894\",\n    \"#9bd9b2\",\n    \"#ffd1b5\",\n    \"#8fd2b4\",\n    \"#d6f1e3\",\n    \"#74c6a4\",\n    \"#dfe8e2\"\n  ],\n  \"foreground\": \"#dfe8e2\",\n  \"background\": \"#1f2824\"\n}\n```"
+    },
+    {
+      "id": "palette-5",
+      "type": "text",
+      "text": "## blueberry\n```\n{\n  \"name\": \"\",\n  \"author\": \"\",\n  \"color\": [\n    \"#222a3b\",\n    \"#6f80ff\",\n    \"#90b4ff\",\n    \"#f9e2af\",\n    \"#7aa2ff\",\n    \"#b39cff\",\n    \"#7dc3ff\",\n    \"#cfd8ff\",\n    \"#3c4a71\",\n    \"#8190ff\",\n    \"#9fc0ff\",\n    \"#ffe5b9\",\n    \"#98a8ff\",\n    \"#d0bdff\",\n    \"#95d4ff\",\n    \"#e6ecff\"\n  ],\n  \"foreground\": \"#dee4ff\",\n  \"background\": \"#182138\"\n\n```"
+    },
+    {
+      "id": "palette-6",
+      "type": "text",
+      "text": "## grape\n```\n{\n  \"name\": \"catppuccin-grape\",\n  \"author\": \"zk::chromasorix\",\n  \"color\": [\n    \"#1a1522\",\n    \"#f38ba8\",\n    \"#a8d8ce\",\n    \"#e6d1ff\",\n    \"#b4befe\",\n    \"#cba6f7\",\n    \"#94e2d5\",\n    \"#bac2de\",\n    \"#2b2434\",\n    \"#f0a3b6\",\n    \"#c7efe3\",\n    \"#f0dcff\",\n    \"#c8d2ff\",\n    \"#f5c2e7\",\n    \"#a6ede0\",\n    \"#f0ecff\"\n  ],\n  \"foreground\": \"#cdd6f4\",\n  \"background\": \"#1b1824\"\n}\n```"
+    }
+  ],
+  "edges": []
+}

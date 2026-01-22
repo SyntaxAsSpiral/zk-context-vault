@@ -10,9 +10,9 @@ type:
 
 ```yaml
 name: zk-context-vault
-output_format: agent
+output_format: project
 
-# Project-scoped steering → repo-root AGENTS.md.
+# Project-scoped guidance → repo-root AGENTS.md.
 target_locations:
   - path: Z:/Documents/.context/
 

@@ -1,3 +1,4 @@
+```python
 """Lightweight connection handling for MCP servers."""
 
 from abc import ABC, abstractmethod
@@ -149,3 +150,5 @@ def create_connection(
 
     else:
         raise ValueError(f"Unsupported transport type: {transport}. Use 'stdio', 'sse', or 'http'")
+
+```

@@ -1,7 +1,7 @@
 ---
 created: 2026-01-11 09:52:44.314556
 id: recipe-manifest
-modified: '2026-01-16T13:17:47.896429'
+modified: '2026-01-22T07:59:33.154007'
 status: log
 type:
 - log
@@ -10,76 +10,96 @@ type:
 # Recipe Assembly Log
 
 ## Active Recipes
-- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-15T22:06:34.551307
-  - Output: `command\doc-consistency-check\doc-consistency-check.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.claude\commands\doc-consistency-check.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.codex\prompts\doc-consistency-check.md`
-  - Status: ✓ synced
-
-- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-15T22:06:34.551307
-  - Output: `command\doc-consistency-check\doc-consistency-check.kiro.hook`
-  - Target: `C:\Users\synta.ZK-ZRRH\.kiro\hooks\doc-consistency-check.kiro.hook`
-  - Status: ✓ synced
-
-- **command/murder/murder**: Last run 2026-01-15T22:06:34.558825
-  - Output: `command\murder\murder.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.claude\commands\murder.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.codex\prompts\murder.md`
-  - Status: ✓ synced
-
-- **command/murder/murder.kiro**: Last run 2026-01-15T22:06:34.558825
-  - Output: `command\murder\murder.kiro.hook`
-  - Target: `C:\Users\synta.ZK-ZRRH\.kiro\hooks\murder.kiro.hook`
-  - Status: ✓ synced
-
-- **agent/zk-context-vault/AGENTS**: Last run 2026-01-15T22:06:34.572213
-  - Output: `agent\zk-context-vault\AGENTS.md`
-  - Target: `Z:\Documents\.context\AGENTS.md`
-  - Status: ✓ synced
-
-- **skill/catppuccin-theming**: Last run 2026-01-15T22:06:34.580337
-  - Output: `skill\catppuccin-theming\`
-  - Target: `C:\Users\synta.ZK-ZRRH\.claude\skills\catppuccin-theming\`
-  - Target: `C:\Users\synta.ZK-ZRRH\.codex\skills\catppuccin-theming\`
-  - Status: ✓ synced
-
-- **power/catppuccin-theming**: Last run 2026-01-15T22:06:34.566397
-  - Output: `power\catppuccin-theming\`
-  - Target: `C:\Users\synta.ZK-ZRRH\.kiro\powers\installed\catppuccin-theming\`
-  - Status: ✓ synced
-
-- **agent/Kiro/agent**: Last run 2026-01-15T22:06:34.543383
-  - Output: `agent\Kiro\agent.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\agent.md`
-  - Status: ✓ synced
-
-- **agent/Kiro/operator**: Last run 2026-01-15T22:06:34.543383
-  - Output: `agent\Kiro\operator.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\operator.md`
-  - Status: ✓ synced
-
-- **agent/Kiro/principles**: Last run 2026-01-15T22:06:34.543383
-  - Output: `agent\Kiro\principles.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.kiro\steering\principles.md`
-  - Status: ✓ synced
-
-- **agent/Codex/AGENTS**: Last run 2026-01-15T22:06:34.535660
-  - Output: `agent\Codex\AGENTS.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.codex\AGENTS.md`
-  - Status: ✓ synced
-
-- **agent/Claudi/CLAUDE**: Last run 2026-01-15T22:06:34.526032
+- **agent/Claudi/CLAUDE**: Last run 2026-01-22T07:58:35.964483
   - Output: `agent\Claudi\CLAUDE.md`
-  - Target: `C:\Users\synta.ZK-ZRRH\.claude\CLAUDE.md`
+  - Target: `~\.claude\CLAUDE.md`
   - Status: ✓ synced
 
+- **agent/Codex/AGENTS**: Last run 2026-01-22T07:58:35.964483
+  - Output: `agent\Codex\AGENTS.md`
+  - Target: `~\.codex\AGENTS.md`
+  - Status: ✓ synced
 
-- **test-claudi**: Last run 2026-01-11T09:53:01.382453
-  - Output: `test-claudi.md`
-  - Target: `~/.config/claude/system.md`
+- **agent/Kiro/agent**: Last run 2026-01-22T07:58:35.964483
+  - Output: `agent\Kiro\agent.md`
+  - Target: `~\.kiro\steering\agent.md`
+  - Status: ✓ synced
+
+- **agent/Kiro/operator**: Last run 2026-01-22T07:58:35.964483
+  - Output: `agent\Kiro\operator.md`
+  - Target: `~\.kiro\steering\operator.md`
+  - Status: ✓ synced
+
+- **agent/Kiro/principles**: Last run 2026-01-22T07:58:35.964483
+  - Output: `agent\Kiro\principles.md`
+  - Target: `~\.kiro\steering\principles.md`
+  - Status: ✓ synced
+
+- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-22T07:58:35.964483
+  - Output: `command\doc-consistency-check\doc-consistency-check.md`
+  - Target: `~\.claude\commands\doc-consistency-check.md`
+  - Target: `~\.codex\prompts\doc-consistency-check.md`
+  - Status: ✓ synced
+
+- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-22T07:58:35.964483
+  - Output: `command\doc-consistency-check\doc-consistency-check.kiro.hook`
+  - Target: `~\.kiro\hooks\doc-consistency-check.kiro.hook`
+  - Status: ✓ synced
+
+- **command/murder/murder**: Last run 2026-01-22T07:58:35.964483
+  - Output: `command\murder\murder.md`
+  - Target: `~\.claude\commands\murder.md`
+  - Target: `~\.codex\prompts\murder.md`
+  - Status: ✓ synced
+
+- **command/murder/murder.kiro**: Last run 2026-01-22T07:58:35.964483
+  - Output: `command\murder\murder.kiro.hook`
+  - Target: `~\.kiro\hooks\murder.kiro.hook`
+  - Status: ✓ synced
+
+- **power/catppuccin-theming**: Last run 2026-01-22T07:58:35.964483
+  - Output: `power\catppuccin-theming\`
+  - Target: `~\.kiro\powers\installed\catppuccin-theming\`
+  - Status: ✓ synced
+
+- **power/mcp-builder**: Last run 2026-01-22T07:58:35.964483
+  - Output: `power\mcp-builder\`
+  - Target: `~\.kiro\powers\installed\mcp-builder\`
+  - Status: ✓ synced
+
+- **power/memory-systems**: Last run 2026-01-22T07:58:35.964483
+  - Output: `power\memory-systems\`
+  - Target: `~\.kiro\powers\installed\memory-systems\`
+  - Status: ✓ synced
+
+- **project/zk-context-vault/AGENTS**: Last run 2026-01-22T07:58:35.964483
+  - Output: `project\zk-context-vault\AGENTS.md`
+  - Target: `Z:\Documents\.context\AGENTS.md`
   - Status: ✓ assembled
 
+- **skill/catppuccin-theming**: Last run 2026-01-22T07:58:35.964483
+  - Output: `skill\catppuccin-theming\`
+  - Target: `~\.claude\skills\catppuccin-theming\`
+  - Target: `~\.codex\skills\catppuccin-theming\`
+  - Status: ✓ synced
+
+- **skill/mcp-builder**: Last run 2026-01-22T07:58:35.964483
+  - Output: `skill\mcp-builder\`
+  - Target: `~\.claude\skills\mcp-builder\`
+  - Target: `~\.codex\skills\mcp-builder\`
+  - Status: ✓ synced
+
+- **skill/memory-systems**: Last run 2026-01-22T07:58:35.964483
+  - Output: `skill\memory-systems\`
+  - Target: `~\.claude\skills\memory-systems\`
+  - Target: `~\.codex\skills\memory-systems\`
+  - Status: ✓ synced
+
 ## Deployment Log
+
+
+### 2026-01-22T07:59:33.154007
+- Synced 15 deployments
 
 
 ### 2026-01-16T13:17:47.896429

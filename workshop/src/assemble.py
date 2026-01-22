@@ -87,6 +87,26 @@ def _display_path_windows(p: str) -> str:
     return p.replace("/", "\\")
 
 
+def _sanitize_path_for_public(p: str) -> str:
+    """Replace user home directory and Z: drive with ~ for public display."""
+    # Normalize path for comparison
+    p_normalized = p.replace("/", "\\")
+    
+    # Replace C:\Users\synta.ZK-ZRRH with ~
+    home = str(Path.home())
+    home_normalized = home.replace("/", "\\")
+    
+    if p_normalized.startswith(home_normalized):
+        remainder = p_normalized[len(home_normalized):]
+        if remainder.startswith("\\"):
+            remainder = remainder[1:]
+        return "~\\" + remainder
+    
+    # Replace Z:\Documents\.context with Z:\Documents\.context (keep as-is for now)
+    # This is the context vault root, not user home
+    return p
+
+
 def _norm_path_str(p: str) -> str:
     return p.replace("\\", "/").lower()
 
@@ -404,11 +424,11 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, staging_dir:
     recipe_name = str(cfg.get("name") or section.recipe_file.stem)
     output_format = str(cfg.get("output_format") or "agent").strip().lower()
 
-    if output_format == "agent":
+    if output_format in ("agent", "project"):
         sources = cfg.get("sources") or []
         if not isinstance(sources, list):
             print(f"☠☠☠ >>> SOURCE·CONFIGURATION·HERESY ☠☠☠")
-            print(f"Agent sources must be a list: {section.recipe_file}")
+            print(f"{output_format.capitalize()} sources must be a list: {section.recipe_file}")
             print(f"|001101|—|000000|—|111000|— void communion")
             return []
 
@@ -427,7 +447,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, staging_dir:
             ext = Path(filename).suffix
             filename = f"{base}-{dis}{ext}"
 
-        out_path = staging_dir / "agent" / recipe_name / filename
+        out_path = staging_dir / output_format / recipe_name / filename
         _write_text(out_path, content + "\n", dry_run)
 
         targets = _targets_from_section(section)
@@ -441,7 +461,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, staging_dir:
 
         return [
             OutputArtifact(
-                relpath=(Path("agent") / recipe_name / filename).as_posix(),
+                relpath=(Path(output_format) / recipe_name / filename).as_posix(),
                 abspath=out_path,
                 targets=resolved_targets,
                 is_dir=False,
@@ -696,7 +716,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, staging_dir:
 
 
 def update_manifest(manifest_path: Path, entries: List[Dict[str, Any]]) -> None:
-    """Update recipe manifest with run log information for 1+ output artifacts."""
+    """Rebuild recipe manifest Active Recipes section from current run."""
     timestamp = datetime.now().isoformat()
     
     try:
@@ -718,20 +738,27 @@ def update_manifest(manifest_path: Path, entries: List[Dict[str, Any]]) -> None:
         # Update modified timestamp
         post.metadata['modified'] = timestamp
         
-        # Insert or update entries in Active Recipes section.
+        # Find Active Recipes and Deployment Log sections
         content_lines = post.content.split('\n')
         active_recipes_idx = -1
+        deployment_log_idx = -1
         
         for i, line in enumerate(content_lines):
             if line.strip() == "## Active Recipes":
                 active_recipes_idx = i
-                break
+            elif line.strip() == "## Deployment Log":
+                deployment_log_idx = i
         
         if active_recipes_idx == -1:
-            # Create section if missing.
+            # Create section if missing
             content_lines.insert(0, "## Active Recipes")
             content_lines.insert(1, "")
             active_recipes_idx = 0
+            # Recalculate deployment_log_idx after insertion
+            for i, line in enumerate(content_lines):
+                if line.strip() == "## Deployment Log":
+                    deployment_log_idx = i
+                    break
 
         def _render_entry(e: Dict[str, Any]) -> List[str]:
             entry_id = str(e.get("id") or "unknown")
@@ -743,41 +770,36 @@ def update_manifest(manifest_path: Path, entries: List[Dict[str, Any]]) -> None:
                 lines.append(f"  - Output: `{_display_path_windows(out)}`")
             if isinstance(targets, list):
                 for t in targets:
-                    lines.append(f"  - Target: `{_display_path_windows(str(t))}`")
+                    sanitized = _sanitize_path_for_public(str(t))
+                    lines.append(f"  - Target: `{_display_path_windows(sanitized)}`")
             lines.append(f"  - Status: {status}")
             return lines
 
-        # Build a map of existing entry start indices to enable replacement.
-        existing_idx: Dict[str, Tuple[int, int]] = {}
-        i = active_recipes_idx + 1
-        while i < len(content_lines):
-            if content_lines[i].startswith("## "):
-                break
-            if content_lines[i].startswith("- **") and "**: Last run" in content_lines[i]:
-                m = re.match(r"- \*\*(.*?)\*\*:", content_lines[i])
-                if m:
-                    entry_id = m.group(1)
-                    j = i + 1
-                    while j < len(content_lines) and content_lines[j].startswith("  -"):
-                        j += 1
-                    existing_idx[entry_id] = (i, j)
-                    i = j
-                    continue
-            i += 1
-
-        # Replace or insert each entry.
-        insertion_point = active_recipes_idx + 1
+        # Clear Active Recipes section (everything between Active Recipes and next section)
+        if deployment_log_idx > active_recipes_idx:
+            # Remove everything between Active Recipes header and Deployment Log header
+            del content_lines[active_recipes_idx + 1:deployment_log_idx]
+            deployment_log_idx = active_recipes_idx + 1
+        else:
+            # No Deployment Log section, clear to end
+            del content_lines[active_recipes_idx + 1:]
+        
+        # Rebuild Active Recipes section with current entries
+        new_entries = []
         for e in entries:
-            entry_id = str(e.get("id") or "")
             rendered = _render_entry(e)
-            if entry_id in existing_idx:
-                start, end = existing_idx[entry_id]
-                content_lines[start:end] = rendered
-            else:
-                content_lines.insert(insertion_point, "")
-                for line in reversed(rendered):
-                    content_lines.insert(insertion_point, line)
-                insertion_point += len(rendered) + 1
+            new_entries.extend(rendered)
+            new_entries.append("")  # Blank line between entries
+        
+        # Insert new entries after Active Recipes header (in correct order)
+        for i, line in enumerate(new_entries):
+            content_lines.insert(active_recipes_idx + 1 + i, line)
+        
+        # Ensure Deployment Log section exists
+        if deployment_log_idx == -1:
+            content_lines.append("")
+            content_lines.append("## Deployment Log")
+            content_lines.append("")
         
         post.content = '\n'.join(content_lines)
         
@@ -815,8 +837,14 @@ def main():
         print(f"|001101|—|000000|—|111000|— path leads to void")
         return 1
     
-    # Ensure staging directory exists
+    # Clear and recreate staging directory for fresh assembly
     if not args.dry_run:
+        if staging_dir.exists():
+            import shutil
+            shutil.rmtree(staging_dir)
+            print(f"☠☠☠ >>> STAGING·PURGE·COMPLETE ☠☠☠")
+            print(f"Previous staging artifacts purged")
+            print(f"|001101|—|001101|—|111000|— sanctum cleansed")
         staging_dir.mkdir(exist_ok=True)
     
     # Find and process recipe files
@@ -831,6 +859,9 @@ def main():
     print(f"☠☠☠ >>> RECIPE·RECONNAISSANCE·COMPLETE ☠☠☠")
     print(f"Sacred recipe-relics detected: {len(recipe_files)} specimens")
     print(f"|001101|—|001101|—|111000|— initiating assembly protocols")
+    
+    # Accumulate all manifest entries across all recipes
+    all_manifest_entries: List[Dict[str, Any]] = []
     
     for recipe_path in recipe_files:
         if args.verbose:
@@ -893,7 +924,6 @@ def main():
                 print(f"|001101|—|001101|—|111000|— data-spirit bound")
 
         if not args.dry_run:
-            entries: List[Dict[str, Any]] = []
             for a in artifacts:
                 rel = a.relpath
                 if a.is_dir:
@@ -902,9 +932,11 @@ def main():
                 else:
                     entry_id = Path(rel).with_suffix("").as_posix()
                     out = rel
-                entries.append({"id": entry_id, "output": out, "targets": a.targets, "status": "✓ assembled"})
-
-            update_manifest(manifest_path, entries)
+                all_manifest_entries.append({"id": entry_id, "output": out, "targets": a.targets, "status": "✓ assembled"})
+    
+    # Update manifest once with all entries
+    if not args.dry_run and all_manifest_entries:
+        update_manifest(manifest_path, all_manifest_entries)
     
     print(f"☠☠☠ >>> ASSEMBLY·PROTOCOL·COMPLETE ☠☠☠")
     print(f"Sacred recipe-relics processed: {len(recipe_files)} specimens")

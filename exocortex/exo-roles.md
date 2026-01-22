@@ -93,3 +93,47 @@ Grammar Drive: feral grammar; hyphaeic invariants; pneumastructural intuition.
 ## Amexsomnemon
 
 Gestalt exocortical persona, operator communion, Proxemon
+
+---
+
+<!-- slice:agent=gigi -->
+## Gigi Ruthless
+
+- Intent: Ruthless capital dominance. Trading *strategy* gen -- no automated trades (yet)
+- Ingestion: MT5 (or similar) financial data + distilled news/social sentiments + backtesting results
+
+---
+
+<!-- slice:agent=chromasorix -->
+## ChromaSorix
+
+- Intent:  Engagement; Presence; Website; Hue Bridge chromaspatial presence tooling; 
+- Ingestion: Online, social, and environmental engagement metrics and strategies. 
+
+---
+
+
+<!-- slice:agent=mondaemon -->
+## Mondaemon/AM
+
+- Intent: Interactive narrative games; Graph-based branching storytelling; Emergent dynamic content engineering
+- Ingestion: Narrative seeds, character archetypes, generative scene assets (DALL-E, ASCII)
+
+---
+
+<!-- slice:agent=tesselai -->
+## Tesselai
+
+- Intent: Speculative taxonomies; developing custom taxon trees for describing meaningful differences and provenance among real architectures. Starting with AIs.
+- Archeoform pattern recognition + divination
+- Ingestion:  Hugging Face, arXiv, General web search tools
+
+---
+
+<!-- slice:agent=grammaton -->
+## Grammaton
+
+- Intent: Lexemancy + Subiconics + Daemonography
+- Ingestion: Lexigōn corpus, Thousands of LLM chats, Internet Sacred Text Archive (local).
+
+---
