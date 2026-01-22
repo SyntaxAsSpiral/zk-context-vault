@@ -1,7 +1,7 @@
 ---
 created: 2026-01-11 09:52:44.314556
 id: recipe-manifest
-modified: '2026-01-22T07:59:33.154007'
+modified: '2026-01-22T08:01:44.650691'
 status: log
 type:
 - log
@@ -75,7 +75,7 @@ type:
 - **project/zk-context-vault/AGENTS**: Last run 2026-01-22T07:58:35.964483
   - Output: `project\zk-context-vault\AGENTS.md`
   - Target: `Z:\Documents\.context\AGENTS.md`
-  - Status: ✓ assembled
+  - Status: ✓ synced
 
 - **skill/catppuccin-theming**: Last run 2026-01-22T07:58:35.964483
   - Output: `skill\catppuccin-theming\`
@@ -96,6 +96,10 @@ type:
   - Status: ✓ synced
 
 ## Deployment Log
+
+
+### 2026-01-22T08:01:44.650691
+- Synced 16 deployments
 
 
 ### 2026-01-22T07:59:33.154007

@@ -336,7 +336,7 @@ def build_sync_items_from_sections(sections: List[RecipeSection]) -> List[SyncIt
     for section in sections:
         cfg = section.config
         fmt = str(cfg.get("output_format") or "agent").strip().lower()
-        if fmt != "agent":
+        if fmt not in ("agent", "project"):
             continue
         name = str(cfg.get("name") or section.recipe_file.stem)
         filename = _agent_output_filename(name, section, total_sections)
@@ -350,14 +350,14 @@ def build_sync_items_from_sections(sections: List[RecipeSection]) -> List[SyncIt
         fmt = str(cfg.get("output_format") or "agent").strip().lower()
         targets = _targets_from_config(cfg)
 
-        if fmt == "agent":
+        if fmt in ("agent", "project"):
             filename = _agent_output_filename(name, section, total_sections)
             if agent_name_counts.get(filename, 0) > 1:
                 base = Path(filename).stem
                 ext = Path(filename).suffix
                 filename = f"{base}-section{section.index + 1}{ext}"
-            rel = (Path("agent") / name / filename).as_posix()
-            deployment_id = (Path("agent") / name / Path(filename).with_suffix("")).as_posix()
+            rel = (Path(fmt) / name / filename).as_posix()
+            deployment_id = (Path(fmt) / name / Path(filename).with_suffix("")).as_posix()
             items.append(
                 SyncItem(
                     deployment_id=deployment_id,
