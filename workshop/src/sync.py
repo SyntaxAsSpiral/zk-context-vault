@@ -639,9 +639,9 @@ def auto_commit_and_push(repo_root: Path) -> bool:
         print(f"Sacred commit inscribed: {commit_msg}")
         print(f"|001101|—|001101|—|111000|— data-spirit bound")
 
-        # Push to remote
+        # Push to remote (push current branch to same-named branch on remote)
         subprocess.run(
-            ["git", "push"],
+            ["git", "push", "zk-vault", "HEAD"],
             cwd=repo_root,
             capture_output=True,
             timeout=30,
