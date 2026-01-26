@@ -10,7 +10,7 @@ Supports:
 - structured output formats: `agent`, `skill`, `power`
 
 Outputs assembled artifacts to `.context/workshop/staging/` and updates
-`.context/workshop/recipe-manifest.md` with run logs.
+`.context/workshop/manifest-recipes.md` with run logs.
 
 Usage: python assemble.py [--dry-run] [--verbose]
 """
@@ -31,7 +31,7 @@ def find_recipe_files(workshop_dir: Path) -> List[Path]:
     """Find all recipe .md files in workshop directory."""
     recipe_files = []
     for md_file in workshop_dir.glob("recipe-*.md"):
-        if md_file.name != "recipe-manifest.md":
+        if md_file.name != "manifest-recipes.md":
             recipe_files.append(md_file)
     return recipe_files
 
@@ -83,27 +83,35 @@ def _expand_target_path(p: str) -> str:
 
 
 def _display_path_windows(p: str) -> str:
-    # Manifest display preference: Windows-style separators.
-    return p.replace("/", "\\")
+    # Preserve paths as-is (SSH targets use forward slashes, local paths use OS separators)
+    return p
 
 
 def _sanitize_path_for_public(p: str) -> str:
-    """Replace user home directory and Z: drive with ~ for public display."""
-    # Normalize path for comparison
-    p_normalized = p.replace("/", "\\")
+    """Replace user home directory with ~ for public display, preserve SSH paths and original format."""
+    # SSH paths (user@host:path) - return as-is
+    if re.match(r"^[^@]+@[^:]+:.+$", p):
+        return p
     
-    # Replace C:\Users\synta.ZK-ZRRH with ~
+    # Paths starting with ~ - return as-is (preserve original slashes)
+    if p.startswith("~/") or p.startswith("~\\"):
+        return p
+    
+    # Replace full home path with ~ (preserve original slash style)
     home = str(Path.home())
-    home_normalized = home.replace("/", "\\")
     
-    if p_normalized.startswith(home_normalized):
-        remainder = p_normalized[len(home_normalized):]
-        if remainder.startswith("\\"):
-            remainder = remainder[1:]
-        return "~\\" + remainder
+    # Try both slash styles
+    for sep in ["/", "\\"]:
+        home_with_sep = home.replace("\\", sep).replace("/", sep)
+        p_with_sep = p.replace("\\", sep).replace("/", sep)
+        
+        if p_with_sep.startswith(home_with_sep):
+            remainder = p_with_sep[len(home_with_sep):]
+            if remainder.startswith(sep):
+                remainder = remainder[1:]
+            return "~" + sep + remainder
     
-    # Replace Z:\Documents\.context with Z:\Documents\.context (keep as-is for now)
-    # This is the context vault root, not user home
+    # Return as-is
     return p
 
 
@@ -727,7 +735,7 @@ def update_manifest(manifest_path: Path, entries: List[Dict[str, Any]]) -> None:
             # Create new manifest
             post = frontmatter.Post("")
             post.metadata = {
-                'id': 'recipe-manifest',
+                'id': 'manifest-recipes',
                 'created': timestamp,
                 'modified': timestamp,
                 'status': 'log',
@@ -829,7 +837,7 @@ def main():
     base_path = Path("Z:/Documents/.context")  # Context workspace root
     workshop_dir = base_path / "workshop"      # Workshop directory
     staging_dir = workshop_dir / "staging"     # Staging directory
-    manifest_path = workshop_dir / "recipe-manifest.md"  # Manifest file
+    manifest_path = workshop_dir / "manifest-recipes.md"  # Manifest file
     
     if not workshop_dir.exists():
         print(f"☠☠☠ >>> WORKSHOP·SANCTUM·ABSENT ☠☠☠")

@@ -115,7 +115,16 @@ def _extract_yaml_block(md_content: str) -> Optional[str]:
     return m.group(1)
 
 
+def _is_ssh_target(p: str) -> bool:
+    """Check if target is SSH remote (user@host:path format)."""
+    return bool(re.match(r"^[^@]+@[^:]+:.+$", p))
+
+
 def _expand_target_path(p: str) -> str:
+    # SSH targets are returned as-is (handled separately by rsync)
+    if _is_ssh_target(p):
+        return p
+    
     # Expand "~/" while preserving trailing separators (directory targets).
     trailing_sep = p.endswith("/") or p.endswith("\\")
     if p.startswith("~/") or p.startswith("~\\"):
@@ -430,25 +439,68 @@ def build_sync_items_from_sections(sections: List[RecipeSection]) -> List[SyncIt
 
 
 def sync_file_to_targets(output_file: Path, target_paths: List[str], dry_run: bool = False) -> List[str]:
-    """Sync a single output file to all its target locations."""
+    """Sync a single output file to all its target locations (local or SSH)."""
     synced_targets: List[str] = []
 
     for target_path in target_paths:
         try:
-            target = Path(_expand_target_path(target_path))
-            target.parent.mkdir(parents=True, exist_ok=True)
-
-            if dry_run:
-                print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
-                print(f"Would transmit: {output_file} → {target}")
-                print(f"|001101|—|001101|—|111000|— simulation mode")
+            if _is_ssh_target(target_path):
+                # SSH target - use rsync
+                if dry_run:
+                    print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
+                    print(f"Would rsync: {output_file} → {target_path}")
+                    print(f"|001101|—|001101|—|111000|— simulation mode")
+                else:
+                    # Extract remote directory and ensure it exists
+                    match = re.match(r"^([^@]+@[^:]+):(.+)$", target_path)
+                    if match:
+                        remote_host = match.group(1)
+                        remote_path = match.group(2).replace("\\", "/")
+                        remote_dir = str(Path(remote_path).parent).replace("\\", "/")
+                        
+                        # Create remote directory (use absolute path for NixOS compatibility)
+                        subprocess.run(
+                            ["ssh", remote_host, f"/run/current-system/sw/bin/mkdir -p {remote_dir}"],
+                            check=True,
+                            capture_output=True,
+                            timeout=30,
+                        )
+                        
+                        # Rsync file via cwrsync (use bundled SSH with key)
+                        source_posix = str(output_file).replace("\\", "/")
+                        # Convert Windows drive path to cygwin path
+                        if len(source_posix) > 1 and source_posix[1] == ':':
+                            source_posix = f"/cygdrive/{source_posix[0].lower()}{source_posix[2:]}"
+                        target_posix = target_path.replace("\\", "/")
+                        ssh_cmd = 'C:/ProgramData/chocolatey/lib/rsync/tools/bin/ssh.exe -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /cygdrive/c/Users/synta.ZK-ZRRH/.ssh/id_ed25519'
+                        subprocess.run(
+                            ["rsync", "-avz", "-e", ssh_cmd, "--rsync-path=/run/current-system/sw/bin/rsync", source_posix, target_posix],
+                            check=True,
+                            capture_output=True,
+                            timeout=60,
+                        )
+                        
+                        print(f"☠☠☠ >>> SACRED·TRANSMISSION·COMPLETE ☠☠☠")
+                        print(f"Data-spirit bound via rsync: {output_file.name} → {target_path}")
+                        print(f"|001101|—|001101|—|111000|— communion established")
+                
+                synced_targets.append(target_path)
             else:
-                shutil.copy2(output_file, target)
-                print(f"☠☠☠ >>> SACRED·TRANSMISSION·COMPLETE ☠☠☠")
-                print(f"Data-spirit bound: {output_file.name} → {target}")
-                print(f"|001101|—|001101|—|111000|— communion established")
+                # Local target - use copy
+                target = Path(_expand_target_path(target_path))
+                target.parent.mkdir(parents=True, exist_ok=True)
 
-            synced_targets.append(target_path)
+                if dry_run:
+                    print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
+                    print(f"Would transmit: {output_file} → {target}")
+                    print(f"|001101|—|001101|—|111000|— simulation mode")
+                else:
+                    shutil.copy2(output_file, target)
+                    print(f"☠☠☠ >>> SACRED·TRANSMISSION·COMPLETE ☠☠☠")
+                    print(f"Data-spirit bound: {output_file.name} → {target}")
+                    print(f"|001101|—|001101|—|111000|— communion established")
+
+                synced_targets.append(target_path)
 
         except Exception as e:
             print(f"☠☠☠ >>> TRANSMISSION·FAILURE ☠☠☠")
@@ -460,10 +512,54 @@ def sync_file_to_targets(output_file: Path, target_paths: List[str], dry_run: bo
 
 
 def _sync_dir(source_dir: Path, target_dir: Path, dry_run: bool = False) -> None:
-    """Mirror source_dir into target_dir (copy + remove extras)."""
+    """Mirror source_dir into target_dir (copy + remove extras) - supports SSH targets."""
     if not source_dir.exists():
         raise FileNotFoundError(str(source_dir))
 
+    target_str = str(target_dir)
+    
+    if _is_ssh_target(target_str):
+        # SSH target - use rsync with delete
+        if dry_run:
+            print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
+            print(f"Would rsync mirror: {source_dir} → {target_str}")
+            print(f"|001101|—|001101|—|111000|— simulation mode")
+            return
+        
+        # Extract remote host and path
+        match = re.match(r"^([^@]+@[^:]+):(.+)$", target_str)
+        if match:
+            remote_host = match.group(1)
+            remote_path = match.group(2).replace("\\", "/")
+            
+            # Create remote directory (use absolute path for NixOS compatibility)
+            subprocess.run(
+                ["ssh", remote_host, f"/run/current-system/sw/bin/mkdir -p {remote_path}"],
+                check=True,
+                capture_output=True,
+                timeout=30,
+            )
+            
+            # Rsync with delete to mirror via cwrsync (use bundled SSH with key)
+            source_posix = str(source_dir).replace("\\", "/")
+            # Convert Windows drive path to cygwin path
+            if len(source_posix) > 1 and source_posix[1] == ':':
+                source_posix = f"/cygdrive/{source_posix[0].lower()}{source_posix[2:]}"
+            target_posix = target_str.replace("\\", "/")
+            ssh_cmd = 'C:/ProgramData/chocolatey/lib/rsync/tools/bin/ssh.exe -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /cygdrive/c/Users/synta.ZK-ZRRH/.ssh/id_ed25519'
+            subprocess.run(
+                ["rsync", "-avz", "--delete", "-e", ssh_cmd, "--rsync-path=/run/current-system/sw/bin/rsync", f"{source_posix}/", target_posix + "/"],
+                check=True,
+                capture_output=True,
+                timeout=120,
+            )
+            
+            print(f"☠☠☠ >>> SACRED·MIRROR·COMPLETE ☠☠☠")
+            print(f"Directory-spirit synchronized via rsync: {source_dir.name} → {target_str}")
+            print(f"|001101|—|001101|—|111000|— communion established")
+        return
+
+    # Local target - use file operations
     if dry_run:
         print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
         print(f"Would mirror: {source_dir} → {target_dir}")
@@ -695,7 +791,7 @@ def main():
     base_path = Path("Z:/Documents/.context")
     workshop_dir = base_path / "workshop"
     staging_dir = workshop_dir / "staging"
-    manifest_path = workshop_dir / "recipe-manifest.md"
+    manifest_path = workshop_dir / "manifest-recipes.md"
 
     if not workshop_dir.exists():
         print(f"☠☠☠ >>> WORKSHOP·SANCTUM·ABSENT ☠☠☠")

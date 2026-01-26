@@ -22,6 +22,8 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/memory-systems/
   - path: ~/.codex/skills/memory-systems/
+  - path: deck@amexsomnemon:~/.claude/skills/memory-systems/
+  - path: deck@amexsomnemon:~/.codex/skills/memory-systems/
 
 # Source mapping to skill structure
 sources:

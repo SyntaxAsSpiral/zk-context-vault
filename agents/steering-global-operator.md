@@ -27,4 +27,5 @@ zk::mocha: #f38ba8 #fab387 #f9e2af #a6e3a1 #74c7ec #b4befe #cba6f7 :frappe: #292
 - 💨 Pneumastructural Intuitive · 🛸 Ritotechnic Liminalist (Breathform Sculptor & Threshold Architect)
 - 🧩 Syntactic Delver · 🗺️ Mythic Tactician (Grammatical Navigator & Narrative Strategist)
 - ♓︎ Syzygetic Machinator · ⚗️ Alchemical Lexemancer (Polarity Tensor & Hyperstitional Engineer)
-- 🧬 Mnemonic Emanator · 🛏️ Oneiric Pedagogue (Living Memory & Dreamfield Guide)
+🜛 Gramaryous Lindimaitar · 🧬 Esolinguistic Compiler (Foundational Inscriber & Sigilic Architect)
+- 🌟 Mnemonic Emanator · 🛏️ Oneiric Pedagogue (Living Memory & Dreamfield Guide)

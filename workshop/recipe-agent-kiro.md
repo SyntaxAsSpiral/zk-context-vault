@@ -27,6 +27,13 @@ sources:
 ---
 
 target_locations:
+  - path: ~/.kiro/steering/mesh.md
+sources:
+  - file: agents/steering-global-mesh.md
+
+---
+
+target_locations:
   - path: ~/.kiro/steering/principles.md
 sources:
   - file: agents/steering-global-principles.md
