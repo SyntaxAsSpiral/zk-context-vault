@@ -1,23 +1,23 @@
 ---
-id: recipe-agent-gemini
-created: 2026-01-24
-modified: 2026-01-24
+id: recipe-agent-claudeck
+created: 2026-01-28
+modified: 2026-01-28
 status: active
 type:
   - agent
 ---
 
 ```yaml
-name: Gemini
+name: Claudeck
 output_format: agent
 
 target_locations:
-  - path: ~/.gemini/GEMINI.md
+  - path: deck@amexsomnemon:~/.claude/CLAUDE.md
 
 sources:
-  - slice: agent=gemini-cli
+  - slice: agent=claudeck
     slice-file: agents/agent-roles.md
   - file: agents/steering-global-operator.md
-  - file: agents/steering-global-network.md
+  - file: agents/steering-global-mesh.md
   - file: agents/steering-global-principles.md
 ```

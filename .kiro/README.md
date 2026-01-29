@@ -152,7 +152,7 @@ Design → Requirements → Tasks → Implementation
 - Want clear acceptance criteria before coding
 
 **Canonical source pattern:**
-This vault contains **spec templates** that can be deployed to other projects. The `context-management` spec serves as a reference implementation.
+This vault contains **spec templates** that can be deployed to other projects. The archived `context-management` spec serves as a reference implementation.
 
 ## How Kiro Uses .kiro/
 

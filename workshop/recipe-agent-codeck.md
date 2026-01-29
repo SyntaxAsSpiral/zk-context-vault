@@ -1,23 +1,23 @@
 ---
-id: recipe-agent-gemini
-created: 2026-01-24
-modified: 2026-01-24
+id: recipe-agent-codeck
+created: 2026-01-29
+modified: 2026-01-29
 status: active
 type:
   - agent
 ---
 
 ```yaml
-name: Gemini
+name: Codeck
 output_format: agent
 
 target_locations:
-  - path: ~/.gemini/GEMINI.md
+  - path: deck@amexsomnemon:~/.codex/AGENTS.md
 
 sources:
-  - slice: agent=gemini-cli
+  - slice: agent=codeck
     slice-file: agents/agent-roles.md
   - file: agents/steering-global-operator.md
-  - file: agents/steering-global-network.md
+  - file: agents/steering-global-mesh.md
   - file: agents/steering-global-principles.md
 ```

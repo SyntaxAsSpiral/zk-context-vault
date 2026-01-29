@@ -268,7 +268,7 @@ Simple validation for disposable software:
 
 ## Specifications
 
-See `.kiro/specs/context-management/` for the current spec + requirements.
+The `context-management` spec has been archived to `.kiro/specs/.archive/`. No active specs currently.
 
 ## Usage Patterns
 

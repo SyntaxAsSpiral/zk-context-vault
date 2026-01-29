@@ -36,7 +36,7 @@ Two Python scripts for assembling and syncing context documentation using Obsidi
   - Add task arguments for dry-run and verbose modes
   - _Requirements: 3.4_
 
-- [ ] 5. Test with existing recipes and validate against requirements
+- [x] 5. Test with existing recipes and validate against requirements
   - Test simple agent recipes (Claudi, Codex) with slice + whole file sources
   - Test multi-section recipe (Kiro) with multiple outputs
   - Test skill recipe with type-specific fields

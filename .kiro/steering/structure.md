@@ -12,9 +12,10 @@ Universal agent configuration patterns that work across platforms (Kiro, Claude 
 
 **Key files:**
 - `agent-roles.md` - Identity templates and role sigils (slice-based)
-- `agent-steering.md` - Platform-agnostic steering guidance
 - `steering-global-operator.md` - Operator (ZK) profile and preferences
 - `steering-global-principles.md` - Covenant Principles (anti-assumption framework)
+- `steering-global-mesh.md` - Tailnet device topology and SSH configuration
+- `steering-project-*.md` - Project-specific steering (e.g., zk-context-vault, deck)
 
 ### `/skills/` - Agent Skills Library
 Reusable capabilities packaged in Agent Skills standard format. Each skill follows agentskills.io specification.
@@ -99,8 +100,8 @@ Canonical hooks and specs that deploy to project-specific `.kiro/` directories.
 - `.kiro/specs/*/` - Spec templates (requirements.md, design.md, tasks.md)
 - `.kiro/steering/` - Project-specific steering rules
 
-**Current specs:**
-- `context-management/` - Context workshop system specification
+**Archived specs:**
+- `.archive/context-management/` - Context workshop system specification (archived)
 
 **Deployment pattern:** This vault's `.kiro/` serves as the canonical source. Workshop recipes deploy hooks and specs from here to project-specific `.kiro/` directories.
 

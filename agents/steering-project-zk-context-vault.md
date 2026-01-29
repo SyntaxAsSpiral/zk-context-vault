@@ -24,10 +24,10 @@ This vault contains:
 
 **Key files:**
 - `agent-roles.md` - Identity templates and role sigils for different agents
-- `agent-steering.md` - Platform-agnostic steering guidance
 - `steering-global-operator.md` - Operator (ZK) profile and preferences
 - `steering-global-principles.md` - Covenant Principles (anti-assumption framework)
-- `kiro-*.md` - Kiro-specific features (hooks, MCP, specs)
+- `steering-global-mesh.md` - Tailnet device topology and SSH configuration
+- `steering-project-*.md` - Project-specific steering (e.g., zk-context-vault, deck)
 
 **When to reference**: Understanding agent identity, behavior constraints, or platform-specific features
 
@@ -114,8 +114,8 @@ skill-name/
 - `.kiro/hooks/*.kiro.hook` - Hook JSON configurations (canonical source)
 - `.kiro/specs/*/` - Spec templates (requirements.md, design.md, tasks.md)
 
-**Current specs:**
-- `context-management/` - Context workshop system specification
+**Archived specs:**
+- `.archive/context-management/` - Context workshop system specification (archived)
 
 **Deployment pattern:** This vault's `.kiro/` serves as the canonical source. Workshop recipes deploy hooks and specs from here to project-specific `.kiro/` directories.
 
@@ -222,7 +222,7 @@ When working with workshop recipes:
 ### Understanding Steering Rules
 - **Global principles**: `agents/steering-global-principles.md`
 - **Operator profile**: `agents/steering-global-operator.md`
-- **Agent-specific**: `agents/agent-steering.md`
+- **Mesh topology**: `agents/steering-global-mesh.md`
 
 ### Working with Skills
 - **Spec**: `skills/spec-agent-skill.md` (agentskills.io standard)
@@ -285,13 +285,6 @@ The codebase demonstrates solid engineering underneath the aesthetic:
 - Proper dataclass structures for configuration
 - Clean separation of concerns (parsing → assembly → output → manifest)
 - No security holes; validates input before operations
-
-**MCP Evaluation Harness** (`workshop/src/evaluation.py`):
-- Proper async/await for tool invocation
-- Metrics tracking (call counts, execution time per tool)
-- Good XML parsing and Markdown report templating
-- Graceful error handling with stack traces
-- Flexible transport layer (stdio, SSE, HTTP)
 
 **Error Handling & Type Safety**:
 - Type hints throughout

@@ -88,6 +88,7 @@ Skills map to the 7 core systems:
 |-------|---------|-------------|
 | **[recipe-assembly](recipe-assembly/SKILL.md)** | Slice architecture and deployment | Workshop |
 | **[context-degradation](context-degradation/SKILL.md)** | Detecting context failures | Reference |
+| **[memory-systems](memory-systems/SKILL.md)** | Persistent agent memory and knowledge graphs | Memory |
 
 ### Visual & Integration
 
@@ -269,12 +270,13 @@ Generic context-engineering skills have been archived to `archive/`. These conta
 - context-fundamentals (foundational theory)
 - context-optimization (token allocation findings)
 - context-compression (compression metrics)
-- memory-systems (DMR benchmarks)
 - multi-agent-patterns (telephone game research)
 - tool-design (reduction case studies)
 - evaluation (basic frameworks)
 - advanced-evaluation (LLM-as-judge patterns)
 - project-development (case studies)
+
+**Note:** `archive/memory-systems/` contains older theoretical content; the active `memory-systems/` skill at root level is the canonical version.
 
 ## Community Skills
 

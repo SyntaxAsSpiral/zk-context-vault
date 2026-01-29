@@ -27,9 +27,9 @@ sources:
 ---
 
 target_locations:
-  - path: ~/.kiro/steering/mesh.md
+  - path: ~/.kiro/steering/network.md
 sources:
-  - file: agents/steering-global-mesh.md
+  - file: agents/steering-global-network.md
 
 ---
 
