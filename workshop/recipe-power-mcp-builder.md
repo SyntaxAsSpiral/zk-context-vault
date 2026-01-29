@@ -58,7 +58,7 @@ sources:
 # Optional metadata
 metadata:
   version: "1.0.0"
-  author: "ZK"
+  author: "muratcankoylan"
   license: MIT
   displayName: "MCP Server Builder"
   description: "Build high-quality MCP servers with comprehensive API coverage, clear tool design, and evaluation frameworks"

@@ -35,7 +35,7 @@ sources:
 # Optional metadata
 metadata:
   version: "1.0.0"
-  author: "Agent Skills for Context Engineering Contributors"
+  author: "muratcankoylan"
   license: MIT
   displayName: "Memory Systems Architecture"
   description: "Implement persistent agent memory with layered architectures from vector stores to temporal knowledge graphs"

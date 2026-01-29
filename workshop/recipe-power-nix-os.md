@@ -47,6 +47,6 @@ metadata:
   keywords: ["nix", "nixos", "package-manager", "flakes"]
   category: development
   displayName: NixOS Manager
-  iconUrl: https://prod.download.desktop.kiro.dev/powers/icons/nixos.png
+  iconUrl: https://raw.githubusercontent.com/SyntaxAsSpiral/esotericons/main/enochian.png
   repositoryUrl: https://github.com/nixos/nix
 ```
