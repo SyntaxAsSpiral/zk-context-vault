@@ -1,7 +1,7 @@
 ---
 created: 2026-01-11 09:52:44.314556
 id: recipe-manifest
-modified: '2026-01-28T19:28:06.296228'
+modified: '2026-01-29T09:52:14.017442'
 status: log
 type:
 - log
@@ -10,57 +10,57 @@ type:
 # Recipe Assembly Log
 
 ## Active Recipes
-- **agent/Claudeck/CLAUDE**: Last run 2026-01-28T19:25:11.867604
+- **agent/Claudeck/CLAUDE**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Claudeck/CLAUDE.md`
   - Target: `deck@amexsomnemon:~/.claude/CLAUDE.md`
   - Status: ✓ synced
 
-- **agent/Claudi/CLAUDE**: Last run 2026-01-28T19:25:11.867604
+- **agent/Claudi/CLAUDE**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Claudi/CLAUDE.md`
   - Target: `~/.claude/CLAUDE.md`
   - Status: ✓ synced
 
-- **agent/Codeck/AGENTS**: Last run 2026-01-28T19:25:11.867604
+- **agent/Codeck/AGENTS**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Codeck/AGENTS.md`
   - Target: `deck@amexsomnemon:~/.codex/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Codex/AGENTS**: Last run 2026-01-28T19:25:11.867604
+- **agent/Codex/AGENTS**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Codex/AGENTS.md`
   - Target: `~/.codex/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Deckini/GEMINI**: Last run 2026-01-28T19:25:11.867604
+- **agent/Deckini/GEMINI**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Deckini/GEMINI.md`
   - Target: `deck@amexsomnemon:~/.gemini/GEMINI.md`
   - Status: ✓ synced
 
-- **agent/Gemini/GEMINI**: Last run 2026-01-28T19:25:11.867604
+- **agent/Gemini/GEMINI**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Gemini/GEMINI.md`
   - Target: `~/.gemini/GEMINI.md`
   - Status: ✓ synced
 
-- **agent/Kiro/agent**: Last run 2026-01-28T19:25:11.867604
+- **agent/Kiro/agent**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Kiro/agent.md`
   - Target: `~/.kiro/steering/agent.md`
   - Status: ✓ synced
 
-- **agent/Kiro/operator**: Last run 2026-01-28T19:25:11.867604
+- **agent/Kiro/operator**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Kiro/operator.md`
   - Target: `~/.kiro/steering/operator.md`
   - Status: ✓ synced
 
-- **agent/Kiro/network**: Last run 2026-01-28T19:25:11.867604
+- **agent/Kiro/network**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Kiro/network.md`
   - Target: `~/.kiro/steering/network.md`
   - Status: ✓ synced
 
-- **agent/Kiro/principles**: Last run 2026-01-28T19:25:11.867604
+- **agent/Kiro/principles**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/Kiro/principles.md`
   - Target: `~/.kiro/steering/principles.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-28T19:25:11.867604
+- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-29T09:51:58.917683
   - Output: `command/doc-consistency-check/doc-consistency-check.md`
   - Target: `~/.claude/commands/doc-consistency-check.md`
   - Target: `~/.codex/prompts/doc-consistency-check.md`
@@ -68,12 +68,12 @@ type:
   - Target: `deck@amexsomnemon:~/.codex/prompts/doc-consistency-check.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-28T19:25:11.867604
+- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-29T09:51:58.917683
   - Output: `command/doc-consistency-check/doc-consistency-check.kiro.hook`
   - Target: `~/.kiro/hooks/doc-consistency-check.kiro.hook`
   - Status: ✓ synced
 
-- **command/murder/murder**: Last run 2026-01-28T19:25:11.867604
+- **command/murder/murder**: Last run 2026-01-29T09:51:58.917683
   - Output: `command/murder/murder.md`
   - Target: `~/.claude/commands/murder.md`
   - Target: `~/.codex/prompts/murder.md`
@@ -81,61 +81,86 @@ type:
   - Target: `deck@amexsomnemon:~/.codex/prompts/murder.md`
   - Status: ✓ synced
 
-- **command/murder/murder.kiro**: Last run 2026-01-28T19:25:11.867604
+- **command/murder/murder.kiro**: Last run 2026-01-29T09:51:58.917683
   - Output: `command/murder/murder.kiro.hook`
   - Target: `~/.kiro/hooks/murder.kiro.hook`
   - Status: ✓ synced
 
-- **power/catppuccin-theming**: Last run 2026-01-28T19:25:11.867604
+- **power/catppuccin-theming**: Last run 2026-01-29T09:51:58.917683
   - Output: `power/catppuccin-theming/`
   - Target: `~/.kiro/powers/installed/catppuccin-theming/`
   - Status: ✓ synced
 
-- **power/mcp-builder**: Last run 2026-01-28T19:25:11.867604
+- **power/mcp-builder**: Last run 2026-01-29T09:51:58.917683
   - Output: `power/mcp-builder/`
   - Target: `~/.kiro/powers/installed/mcp-builder/`
   - Status: ✓ synced
 
-- **power/memory-systems**: Last run 2026-01-28T19:25:11.867604
+- **power/memory-systems**: Last run 2026-01-29T09:51:58.917683
   - Output: `power/memory-systems/`
   - Target: `~/.kiro/powers/installed/memory-systems/`
   - Status: ✓ synced
 
-- **agent/deck (project steering)/AGENTS**: Last run 2026-01-28T19:25:11.867604
+- **power/nix-os**: Last run 2026-01-29T09:51:58.917683
+  - Output: `power/nix-os/`
+  - Target: `~/.kiro/powers/installed/nix-os/`
+  - Status: ✓ synced
+
+- **agent/deck (project steering)/AGENTS**: Last run 2026-01-29T09:51:58.917683
   - Output: `agent/deck (project steering)/AGENTS.md`
   - Target: `deck@amexsomnemon:~/AGENTS.md`
   - Status: ✓ synced
 
-- **project/zk-context-vault/AGENTS**: Last run 2026-01-28T19:25:11.867604
+- **project/zk-context-vault/AGENTS**: Last run 2026-01-29T09:51:58.917683
   - Output: `project/zk-context-vault/AGENTS.md`
   - Target: `Z:\Documents\.context\AGENTS.md`
   - Status: ✓ synced
 
-- **skill/catppuccin-theming**: Last run 2026-01-28T19:25:11.867604
+- **skill/catppuccin-theming**: Last run 2026-01-29T09:51:58.917683
   - Output: `skill/catppuccin-theming/`
   - Target: `~/.claude/skills/catppuccin-theming/`
   - Target: `~/.codex/skills/catppuccin-theming/`
   - Target: `deck@amexsomnemon:~/.claude/skills/catppuccin-theming/`
   - Target: `deck@amexsomnemon:~/.codex/skills/catppuccin-theming/`
+  - Target: `~/.gemini/antigravity/skills/catppuccin-theming/`
+  - Target: `~/.gemini/skills/catppuccin-theming/`
   - Status: ✓ synced
 
-- **skill/mcp-builder**: Last run 2026-01-28T19:25:11.867604
+- **skill/mcp-builder**: Last run 2026-01-29T09:51:58.917683
   - Output: `skill/mcp-builder/`
   - Target: `~/.claude/skills/mcp-builder/`
   - Target: `~/.codex/skills/mcp-builder/`
   - Target: `deck@amexsomnemon:~/.claude/skills/mcp-builder/`
   - Target: `deck@amexsomnemon:~/.codex/skills/mcp-builder/`
+  - Target: `~/.gemini/antigravity/skills/mcp-builder/`
+  - Target: `~/.gemini/skills/mcp-builder/`
   - Status: ✓ synced
 
-- **skill/memory-systems**: Last run 2026-01-28T19:25:11.867604
+- **skill/memory-systems**: Last run 2026-01-29T09:51:58.917683
   - Output: `skill/memory-systems/`
   - Target: `~/.claude/skills/memory-systems/`
   - Target: `~/.codex/skills/memory-systems/`
   - Target: `deck@amexsomnemon:~/.claude/skills/memory-systems/`
   - Target: `deck@amexsomnemon:~/.codex/skills/memory-systems/`
+  - Target: `~/.gemini/antigravity/skills/memory-systems/`
+  - Target: `~/.gemini/skills/memory-systems/`
+  - Status: ✓ synced
+
+- **skill/nix-os**: Last run 2026-01-29T09:51:58.917683
+  - Output: `skill/nix-os/`
+  - Target: `~/.claude/skills/nix-os/`
+  - Target: `~/.codex/skills/nix-os/`
+  - Target: `deck@amexsomnemon:~/.claude/skills/nix-os/`
+  - Target: `deck@amexsomnemon:~/.codex/skills/nix-os/`
+  - Target: `~/.gemini/antigravity/skills/nix-os/`
+  - Target: `~/.gemini/skills/nix-os/`
   - Status: ✓ synced
 
 ## Deployment Log
+
+
+### 2026-01-29T09:52:14.017442
+- Synced 24 deployments
 
 
 ### 2026-01-28T19:28:06.296228

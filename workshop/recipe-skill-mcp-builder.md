@@ -33,6 +33,8 @@ target_locations:
   - path: ~/.codex/skills/mcp-builder/
   - path: deck@amexsomnemon:~/.claude/skills/mcp-builder/
   - path: deck@amexsomnemon:~/.codex/skills/mcp-builder/
+  - path: ~/.gemini/antigravity/skills/mcp-builder/
+  - path: ~/.gemini/skills/mcp-builder/
 
 # Source mapping to skill structure
 sources:
@@ -72,8 +74,6 @@ sources:
   assets:
     - file: skills/mcp-builder/LICENSE.txt
       output_name: LICENSE.txt
-    - file: skills/mcp-builder/mcp.json
-      output_name: mcp.json
     - file: skills/mcp-builder/requirements.txt
       output_name: requirements.txt
 

@@ -24,6 +24,8 @@ target_locations:
   - path: ~/.codex/skills/memory-systems/
   - path: deck@amexsomnemon:~/.claude/skills/memory-systems/
   - path: deck@amexsomnemon:~/.codex/skills/memory-systems/
+  - path: ~/.gemini/antigravity/skills/memory-systems/
+  - path: ~/.gemini/skills/memory-systems/
 
 # Source mapping to skill structure
 sources:

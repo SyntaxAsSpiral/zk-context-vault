@@ -24,6 +24,8 @@ target_locations:
   - path: ~/.codex/skills/catppuccin-theming/
   - path: deck@amexsomnemon:~/.claude/skills/catppuccin-theming/
   - path: deck@amexsomnemon:~/.codex/skills/catppuccin-theming/
+  - path: ~/.gemini/antigravity/skills/catppuccin-theming/
+  - path: ~/.gemini/skills/catppuccin-theming/
 
 # Source mapping to skill structure
 sources:
@@ -45,6 +47,10 @@ sources:
   references:  # Optional - go to references/ folder (loaded on demand)
     - file: skills/catppuccin-theming/🩷Catppuccin.md
       output_name: 🩷Catppuccin.md
+    - file: skills/catppuccin-theming/getting-started.md
+      output_name: getting-started.md
+    - file: skills/catppuccin-theming/advanced-theming.md
+      output_name: advanced-theming.md
   
   assets:  # Optional - go to assets/ folder
     - file: skills/catppuccin-theming/palette-mutator.md
