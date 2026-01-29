@@ -47,6 +47,6 @@ metadata:
   keywords: ["nix", "nixos", "package-manager", "flakes"]
   category: development
   displayName: NixOS Manager
-  iconUrl: https://cdn.jsdelivr.net/gh/SyntaxAsSpiral/esotericons@main/enochian.png
+  iconUrl: https://cdn.jsdelivr.net/gh/SyntaxAsSpiral/esotericons@main/enochian.png?v=1
   repositoryUrl: https://github.com/nixos/nix
 ```

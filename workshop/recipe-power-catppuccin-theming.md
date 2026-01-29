@@ -42,7 +42,7 @@ metadata:
   displayName: 🩷Catppuccin Theming
   description: The Catppuccin Theming Power provides comprehensive color palette management for the beloved Catppuccin aesthetic. Generate CSS variables, terminal themes, configuration files, and custom color schemes.
   keywords: ["css", "ui", "color", "catppuccin", "theme", "style"]
-  iconUrl: https://cdn.jsdelivr.net/gh/SyntaxAsSpiral/esotericons@main/cottagecore.png
+  iconUrl: https://cdn.jsdelivr.net/gh/SyntaxAsSpiral/esotericons@main/cottagecore.png?v=1
   repositoryUrl: https://github.com/catppuccin/catppuccin
   category: theming
 ```
