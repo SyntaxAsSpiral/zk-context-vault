@@ -26,7 +26,7 @@ import subprocess
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 import sys
 import json
 import os
@@ -210,10 +210,28 @@ def _sync_kiro_registry(active_powers: Dict[str, Dict[str, Any]], dry_run: bool)
         print(f"|001101|—|000000|—|111000|— registry update severed")
         return
 
-    powers = data.get("powers")
-    if not isinstance(powers, dict):
-        powers = {}
-        data["powers"] = powers
+    powers_raw = data.get("powers")
+    powers_list: List[Dict[str, Any]] = []
+
+    if isinstance(powers_raw, list):
+        for entry in powers_raw:
+            if isinstance(entry, dict):
+                powers_list.append(entry)
+    elif isinstance(powers_raw, dict):
+        for name in sorted(powers_raw.keys()):
+            entry = powers_raw.get(name)
+            if isinstance(entry, dict):
+                entry.setdefault("name", name)
+                powers_list.append(entry)
+            else:
+                powers_list.append({"name": name})
+
+    data["powers"] = powers_list
+    powers_index: Dict[str, Dict[str, Any]] = {}
+    for entry in powers_list:
+        name = entry.get("name")
+        if isinstance(name, str) and name:
+            powers_index[name] = entry
 
     modified = False
 
@@ -221,14 +239,19 @@ def _sync_kiro_registry(active_powers: Dict[str, Dict[str, Any]], dry_run: bool)
     for power_name, info in active_powers.items():
         install_path = info["path"]
         metadata = info.get("metadata", {})
-        existing = powers.get(power_name)
+        existing = powers_index.get(power_name)
         desired_path = str(install_path)
 
         if dry_run:
             print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
             print(f"Would update power '{power_name}': installed=True, path={desired_path}")
         else:
-            entry = dict(existing) if isinstance(existing, dict) else {}
+            if not isinstance(existing, dict):
+                existing = {"name": power_name}
+                powers_list.append(existing)
+                powers_index[power_name] = existing
+
+            entry = existing
             entry["name"] = power_name
             entry["installed"] = True
             entry["installPath"] = desired_path
@@ -249,24 +272,32 @@ def _sync_kiro_registry(active_powers: Dict[str, Dict[str, Any]], dry_run: bool)
             if metadata.get("repositoryUrl"):
                 entry["repositoryUrl"] = metadata["repositoryUrl"]
 
-            entry.setdefault("installedAt", datetime.utcnow().isoformat(timespec="milliseconds") + "Z")
-            powers[power_name] = entry
+            ts = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+            entry.setdefault("installedAt", ts)
             modified = True
 
     # 2. Prune: disable stale local powers
-    for power_name, entry in powers.items():
-        if power_name in active_powers:
+    for entry in powers_list:
+        name = entry.get("name")
+        if name in active_powers:
             continue
         source = entry.get("source", {}) if isinstance(entry, dict) else {}
         if source.get("type") == "local" and entry.get("installed") is True:
             if dry_run:
                 print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
-                print(f"Would prune power '{power_name}': installed=False")
+                print(f"Would prune power '{name}': installed=False")
             else:
                 entry["installed"] = False
                 modified = True
                 print(f"☠☠☠ >>> POWER·PRUNED ☠☠☠")
-                print(f"Power pruned from registry: {power_name}")
+                print(f"Power pruned from registry: {name}")
+
+    if "schemaVersion" not in data:
+        if "version" in data:
+            data["schemaVersion"] = data.get("version")
+            del data["version"]
+        else:
+            data["schemaVersion"] = "1.0.0"
 
     if modified and not dry_run:
         try:
