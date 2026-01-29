@@ -34,4 +34,15 @@ sources:
       output_name: 🩷Catppuccin.md
     - file: skills/catppuccin-theming/palette-mutator.md
       output_name: palette-mutator.md
+# Optional metadata
+metadata:
+  version: "1.0.0"
+  author: Catppuccin
+  license: MIT
+  displayName: 🩷Catppuccin Theming
+  description: The Catppuccin Theming Power provides comprehensive color palette management for the beloved Catppuccin aesthetic. Generate CSS variables, terminal themes, configuration files, and custom color schemes.
+  keywords: ["css", "ui", "color", "catppuccin", "theme", "style"]
+  iconUrl: https://prod.download.desktop.kiro.dev/powers/icons/catppuccin.png
+  repositoryUrl: https://github.com/catppuccin/catppuccin
+  category: theming
 ```

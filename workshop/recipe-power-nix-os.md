@@ -42,7 +42,11 @@ sources:
 metadata:
   version: "1.0.0"
   author: zk::anticompiler
+  license: MIT
   description: Comprehensive Nix package and configuration management
   keywords: ["nix", "nixos", "package-manager", "flakes"]
   category: development
+  displayName: NixOS Manager
+  iconUrl: https://prod.download.desktop.kiro.dev/powers/icons/nixos.png
+  repositoryUrl: https://github.com/nixos/nix
 ```

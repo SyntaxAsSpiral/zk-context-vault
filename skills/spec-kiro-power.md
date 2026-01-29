@@ -43,8 +43,11 @@ displayName: Semantic-JSON Workflows
 description: Canvas-to-structured-data anticompiler workflows for visual cognitive modeling
 version: "1.0.0"
 author: zk::anticompiler
+license: MIT
 keywords: ["semantic-json", "canvas", "anticompiler", "obsidian", "visual-modeling"]
 category: visual-modeling
+iconUrl: https://.../icon.png
+repositoryUrl: https://github.com/...
 mcpServers: {}
 steeringFiles: ["getting-started.md", "advanced-workflows.md"]
 dependencies:
@@ -62,7 +65,10 @@ dependencies:
 | `version`        | Yes      | Semantic version string (e.g., "1.0.0").                                                                   |
 | `keywords`       | Yes      | Array of strings. Search terms for power discovery. Empty array allowed.                                   |
 | `author`         | No       | Author name or identifier.                                                                                 |
+| `license`        | No       | License identifier (e.g. MIT).                                                                             |
 | `category`       | No       | Power category (e.g., "development", "productivity", "visual-modeling").                                   |
+| `iconUrl`        | No       | URL to 128x128 png icon.                                                                                   |
+| `repositoryUrl`  | No       | URL to source repository.                                                                                  |
 | `mcpServers`     | No       | Object mapping MCP server names to configurations. Empty object if no MCP servers.                         |
 | `steeringFiles`  | No       | Array of steering file names (relative to steering/ directory).                                            |
 | `dependencies`   | No       | Object specifying required dependencies (applications, plugins, packages).                                 |

@@ -59,6 +59,8 @@ sources:
 metadata:
   version: "1.0.0"
   author: "ZK"
+  license: MIT
+  displayName: "MCP Server Builder"
   description: "Build high-quality MCP servers with comprehensive API coverage, clear tool design, and evaluation frameworks"
   keywords:
     - mcp
@@ -70,5 +72,7 @@ metadata:
     - typescript
     - python
     - evaluation
+  iconUrl: https://prod.download.desktop.kiro.dev/powers/icons/mcp.png
+  repositoryUrl: https://github.com/model-context-protocol/servers
   category: "development"
 ```

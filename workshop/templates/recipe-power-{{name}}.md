@@ -40,10 +40,15 @@ sources:
     # Add more steering files as needed
 
 # Optional metadata
+# Optional metadata
 metadata:
   version: "1.0.0"
   author: # Author name
+  license: ""
+  keywords: []
+  displayName: # Human readable name
   description: # Brief description
-  keywords: []           # Search keywords for power discovery
+  iconUrl: # Optional: URL to icon png
+  repositoryUrl: # Optional: library source url
   category: # Power category (e.g., "development", "productivity")
 ```

@@ -36,6 +36,8 @@ sources:
 metadata:
   version: "1.0.0"
   author: "Agent Skills for Context Engineering Contributors"
+  license: MIT
+  displayName: "Memory Systems Architecture"
   description: "Implement persistent agent memory with layered architectures from vector stores to temporal knowledge graphs"
   keywords:
     - memory
@@ -45,5 +47,7 @@ metadata:
     - entity-tracking
     - vector-store
     - rag
+  iconUrl: https://prod.download.desktop.kiro.dev/powers/icons/memory.png
+  repositoryUrl: https://github.com/langchain-ai/langchain
   category: "agent-architecture"
 ```
