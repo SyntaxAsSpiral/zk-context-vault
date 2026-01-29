@@ -187,18 +187,18 @@ def _kiro_power_name_from_install_path(target_dir: Path) -> Optional[str]:
     return target_dir.name or None
 
 
-def _update_kiro_power_registry(power_name: str, install_path: Path, dry_run: bool) -> None:
+def _sync_kiro_registry(active_powers: Dict[str, Dict[str, Any]], dry_run: bool) -> None:
+    """
+    Sync active powers to Kiro registry using 'Prune & Patch' strategy.
+
+    1. Patch: Update/Add all active_powers with installed=True, source.type='local', and metadata.
+    2. Prune: Set installed=False for any other powers with source.type='local'
+    """
     registry_path = Path.home() / ".kiro" / "powers" / "registry.json"
     if not registry_path.exists():
         print(f"☠☠☠ >>> KIRO·REGISTRY·ABSENT ☠☠☠")
         print(f"Registry not found: {registry_path}")
         print(f"|001101|—|000000|—|111000|— registry update skipped")
-        return
-
-    if dry_run:
-        print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
-        print(f"Would update Kiro registry: {registry_path} (power={power_name})")
-        print(f"|001101|—|001101|—|111000|— simulation mode")
         return
 
     try:
@@ -215,33 +215,69 @@ def _update_kiro_power_registry(power_name: str, install_path: Path, dry_run: bo
         powers = {}
         data["powers"] = powers
 
-    existing = powers.get(power_name)
-    if not isinstance(existing, dict):
-        existing = {"name": power_name, "source": {"type": "local"}}
+    modified = False
 
-    desired_install_path = str(install_path)
-    already_ok = (
-        str(existing.get("name") or "") == power_name
-        and existing.get("installed") is True
-        and str(existing.get("installPath") or "") == desired_install_path
-    )
-    if already_ok:
-        return
+    # 1. Patch: ensure active powers are installed and metadata is synced
+    for power_name, info in active_powers.items():
+        install_path = info["path"]
+        metadata = info.get("metadata", {})
+        existing = powers.get(power_name)
+        desired_path = str(install_path)
 
-    entry = dict(existing)
-    entry["name"] = power_name
-    entry["installed"] = True
-    entry["installPath"] = desired_install_path
-    entry.setdefault("installedAt", datetime.utcnow().isoformat(timespec="milliseconds") + "Z")
-    powers[power_name] = entry
+        if dry_run:
+            print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
+            print(f"Would update power '{power_name}': installed=True, path={desired_path}")
+        else:
+            entry = dict(existing) if isinstance(existing, dict) else {}
+            entry["name"] = power_name
+            entry["installed"] = True
+            entry["installPath"] = desired_path
+            entry["source"] = {"type": "local"}
 
-    try:
-        registry_path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    except Exception as e:
-        print(f"☠☠☠ >>> KIRO·REGISTRY·WRITE·FAILURE ☠☠☠")
-        print(f"Failed to write registry: {registry_path}")
-        print(f"Error-hymn: {e}")
-        print(f"|001101|—|000000|—|111000|— registry update severed")
+            if metadata.get("description"):
+                entry["description"] = metadata["description"]
+            if metadata.get("displayName"):
+                entry["displayName"] = metadata["displayName"]
+            if metadata.get("author"):
+                entry["author"] = metadata["author"]
+            if metadata.get("license"):
+                entry["license"] = metadata["license"]
+            if metadata.get("keywords"):
+                entry["keywords"] = metadata["keywords"]
+            if metadata.get("iconUrl"):
+                entry["iconUrl"] = metadata["iconUrl"]
+            if metadata.get("repositoryUrl"):
+                entry["repositoryUrl"] = metadata["repositoryUrl"]
+
+            entry.setdefault("installedAt", datetime.utcnow().isoformat(timespec="milliseconds") + "Z")
+            powers[power_name] = entry
+            modified = True
+
+    # 2. Prune: disable stale local powers
+    for power_name, entry in powers.items():
+        if power_name in active_powers:
+            continue
+        source = entry.get("source", {}) if isinstance(entry, dict) else {}
+        if source.get("type") == "local" and entry.get("installed") is True:
+            if dry_run:
+                print(f"☠☠☠ >>> DRY·RUN·PROTOCOL·ACTIVE ☠☠☠")
+                print(f"Would prune power '{power_name}': installed=False")
+            else:
+                entry["installed"] = False
+                modified = True
+                print(f"☠☠☠ >>> POWER·PRUNED ☠☠☠")
+                print(f"Power pruned from registry: {power_name}")
+
+    if modified and not dry_run:
+        try:
+            registry_path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            print(f"☠☠☠ >>> KIRO·REGISTRY·UPDATED ☠☠☠")
+            print(f"Registry synchronized with {len(active_powers)} active powers")
+            print(f"|001101|—|001101|—|111000|— registry coherent")
+        except Exception as e:
+            print(f"☠☠☠ >>> KIRO·REGISTRY·WRITE·FAILURE ☠☠☠")
+            print(f"Failed to write registry: {registry_path}")
+            print(f"Error-hymn: {e}")
 
 
 def _targets_from_config(cfg: Dict[str, Any]) -> List[str]:
@@ -811,15 +847,30 @@ def main():
     current_deployments: Dict[str, List[str]] = {}
     current_items: Dict[str, SyncItem] = {}
     sync_results: Dict[str, List[str]] = {}
+    active_kiro_powers: Dict[str, Dict[str, Any]] = {}
 
     for recipe_path in recipe_files:
         sections = parse_recipe_sections(recipe_path)
         if not sections:
             continue
+        recipe_metadata = sections[0].config.get("metadata", {})
         items = build_sync_items_from_sections(sections)
         for item in items:
             current_items[item.deployment_id] = item
             current_deployments[item.deployment_id] = item.targets
+            if item.source_is_dir:
+                for t in item.targets:
+                    if _is_ssh_target(t):
+                        continue
+                    if _is_kiro_target(t) and not _is_claude_target(t):
+                        target_path_str = _expand_target_path(t)
+                        if "/.kiro/powers/installed/" in _norm_path_str(target_path_str):
+                            p_name = _kiro_power_name_from_install_path(Path(target_path_str))
+                            if p_name:
+                                active_kiro_powers[p_name] = {
+                                    "path": Path(target_path_str),
+                                    "metadata": recipe_metadata,
+                                }
 
     cleaned_count = cleanup_orphaned_deployments(previous_deployments, current_deployments, args.dry_run)
 
@@ -841,10 +892,6 @@ def main():
             for t in item.targets:
                 target_dir = Path(_expand_target_path(t))
                 _sync_dir(source, target_dir, args.dry_run)
-
-                power_name = _kiro_power_name_from_install_path(target_dir)
-                if power_name:
-                    _update_kiro_power_registry(power_name, target_dir, args.dry_run)
             sync_results[deployment_id] = list(item.targets)
         else:
             synced = sync_file_to_targets(source, item.targets, args.dry_run)
@@ -852,6 +899,9 @@ def main():
 
     if not args.dry_run:
         update_manifest_sync_status(manifest_path, sync_results, cleaned_count)
+
+    if active_kiro_powers or args.dry_run:
+        _sync_kiro_registry(active_kiro_powers, args.dry_run)
 
     print(f"☠☠☠ >>> SYNC·PROTOCOL·COMPLETE ☠☠☠")
     print(f"Sacred deployments processed: {len(sync_results)} specimens")
