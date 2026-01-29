@@ -1,7 +1,7 @@
 ---
 created: 2026-01-11 09:52:44.314556
 id: recipe-manifest
-modified: '2026-01-28T19:05:26.891329'
+modified: '2026-01-28T19:27:30.771071'
 status: log
 type:
 - log
@@ -10,57 +10,57 @@ type:
 # Recipe Assembly Log
 
 ## Active Recipes
-- **agent/Claudeck/CLAUDE**: Last run 2026-01-28T19:03:27.190389
+- **agent/Claudeck/CLAUDE**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Claudeck/CLAUDE.md`
   - Target: `deck@amexsomnemon:~/.claude/CLAUDE.md`
   - Status: ✓ synced
 
-- **agent/Claudi/CLAUDE**: Last run 2026-01-28T19:03:27.190389
+- **agent/Claudi/CLAUDE**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Claudi/CLAUDE.md`
   - Target: `~/.claude/CLAUDE.md`
   - Status: ✓ synced
 
-- **agent/Codeck/AGENTS**: Last run 2026-01-28T19:03:27.190389
+- **agent/Codeck/AGENTS**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Codeck/AGENTS.md`
   - Target: `deck@amexsomnemon:~/.codex/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Codex/AGENTS**: Last run 2026-01-28T19:03:27.190389
+- **agent/Codex/AGENTS**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Codex/AGENTS.md`
   - Target: `~/.codex/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Deckini/GEMINI**: Last run 2026-01-28T19:03:27.190389
+- **agent/Deckini/GEMINI**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Deckini/GEMINI.md`
   - Target: `deck@amexsomnemon:~/.gemini/GEMINI.md`
   - Status: ✓ synced
 
-- **agent/Gemini/GEMINI**: Last run 2026-01-28T19:03:27.190389
+- **agent/Gemini/GEMINI**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Gemini/GEMINI.md`
   - Target: `~/.gemini/GEMINI.md`
   - Status: ✓ synced
 
-- **agent/Kiro/agent**: Last run 2026-01-28T19:03:27.190389
+- **agent/Kiro/agent**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Kiro/agent.md`
   - Target: `~/.kiro/steering/agent.md`
   - Status: ✓ synced
 
-- **agent/Kiro/operator**: Last run 2026-01-28T19:03:27.190389
+- **agent/Kiro/operator**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Kiro/operator.md`
   - Target: `~/.kiro/steering/operator.md`
   - Status: ✓ synced
 
-- **agent/Kiro/network**: Last run 2026-01-28T19:03:27.190389
+- **agent/Kiro/network**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Kiro/network.md`
   - Target: `~/.kiro/steering/network.md`
   - Status: ✓ synced
 
-- **agent/Kiro/principles**: Last run 2026-01-28T19:03:27.190389
+- **agent/Kiro/principles**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/Kiro/principles.md`
   - Target: `~/.kiro/steering/principles.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-28T19:03:27.190389
+- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-01-28T19:25:11.867604
   - Output: `command/doc-consistency-check/doc-consistency-check.md`
   - Target: `~/.claude/commands/doc-consistency-check.md`
   - Target: `~/.codex/prompts/doc-consistency-check.md`
@@ -68,12 +68,12 @@ type:
   - Target: `deck@amexsomnemon:~/.codex/prompts/doc-consistency-check.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-28T19:03:27.190389
+- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-01-28T19:25:11.867604
   - Output: `command/doc-consistency-check/doc-consistency-check.kiro.hook`
   - Target: `~/.kiro/hooks/doc-consistency-check.kiro.hook`
   - Status: ✓ synced
 
-- **command/murder/murder**: Last run 2026-01-28T19:03:27.190389
+- **command/murder/murder**: Last run 2026-01-28T19:25:11.867604
   - Output: `command/murder/murder.md`
   - Target: `~/.claude/commands/murder.md`
   - Target: `~/.codex/prompts/murder.md`
@@ -81,37 +81,37 @@ type:
   - Target: `deck@amexsomnemon:~/.codex/prompts/murder.md`
   - Status: ✓ synced
 
-- **command/murder/murder.kiro**: Last run 2026-01-28T19:03:27.190389
+- **command/murder/murder.kiro**: Last run 2026-01-28T19:25:11.867604
   - Output: `command/murder/murder.kiro.hook`
   - Target: `~/.kiro/hooks/murder.kiro.hook`
   - Status: ✓ synced
 
-- **power/catppuccin-theming**: Last run 2026-01-28T19:03:27.190389
+- **power/catppuccin-theming**: Last run 2026-01-28T19:25:11.867604
   - Output: `power/catppuccin-theming/`
   - Target: `~/.kiro/powers/installed/catppuccin-theming/`
   - Status: ✓ synced
 
-- **power/mcp-builder**: Last run 2026-01-28T19:03:27.190389
+- **power/mcp-builder**: Last run 2026-01-28T19:25:11.867604
   - Output: `power/mcp-builder/`
   - Target: `~/.kiro/powers/installed/mcp-builder/`
   - Status: ✓ synced
 
-- **power/memory-systems**: Last run 2026-01-28T19:03:27.190389
+- **power/memory-systems**: Last run 2026-01-28T19:25:11.867604
   - Output: `power/memory-systems/`
   - Target: `~/.kiro/powers/installed/memory-systems/`
   - Status: ✓ synced
 
-- **agent/deck (project steering)/AGENTS**: Last run 2026-01-28T19:03:27.190389
+- **agent/deck (project steering)/AGENTS**: Last run 2026-01-28T19:25:11.867604
   - Output: `agent/deck (project steering)/AGENTS.md`
   - Target: `deck@amexsomnemon:~/AGENTS.md`
   - Status: ✓ synced
 
-- **project/zk-context-vault/AGENTS**: Last run 2026-01-28T19:03:27.190389
+- **project/zk-context-vault/AGENTS**: Last run 2026-01-28T19:25:11.867604
   - Output: `project/zk-context-vault/AGENTS.md`
   - Target: `Z:\Documents\.context\AGENTS.md`
   - Status: ✓ synced
 
-- **skill/catppuccin-theming**: Last run 2026-01-28T19:03:27.190389
+- **skill/catppuccin-theming**: Last run 2026-01-28T19:25:11.867604
   - Output: `skill/catppuccin-theming/`
   - Target: `~/.claude/skills/catppuccin-theming/`
   - Target: `~/.codex/skills/catppuccin-theming/`
@@ -119,7 +119,7 @@ type:
   - Target: `deck@amexsomnemon:~/.codex/skills/catppuccin-theming/`
   - Status: ✓ synced
 
-- **skill/mcp-builder**: Last run 2026-01-28T19:03:27.190389
+- **skill/mcp-builder**: Last run 2026-01-28T19:25:11.867604
   - Output: `skill/mcp-builder/`
   - Target: `~/.claude/skills/mcp-builder/`
   - Target: `~/.codex/skills/mcp-builder/`
@@ -127,7 +127,7 @@ type:
   - Target: `deck@amexsomnemon:~/.codex/skills/mcp-builder/`
   - Status: ✓ synced
 
-- **skill/memory-systems**: Last run 2026-01-28T19:03:27.190389
+- **skill/memory-systems**: Last run 2026-01-28T19:25:11.867604
   - Output: `skill/memory-systems/`
   - Target: `~/.claude/skills/memory-systems/`
   - Target: `~/.codex/skills/memory-systems/`
@@ -136,6 +136,10 @@ type:
   - Status: ✓ synced
 
 ## Deployment Log
+
+
+### 2026-01-28T19:27:30.771071
+- Synced 22 deployments
 
 
 ### 2026-01-28T19:05:26.891329
