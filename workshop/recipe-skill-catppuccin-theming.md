@@ -22,8 +22,8 @@ output_format: skill  # Creates Agent Skills standard structure
 target_locations:
   - path: ~/.claude/skills/catppuccin-theming/
   - path: ~/.codex/skills/catppuccin-theming/
-  - path: deck@amexsomnemon:~/.claude/skills/catppuccin-theming/
-  - path: deck@amexsomnemon:~/.codex/skills/catppuccin-theming/
+  - path: zk@adeck:~/.claude/skills/catppuccin-theming/
+  - path: zk@adeck:~/.codex/skills/catppuccin-theming/
   - path: ~/.gemini/antigravity/skills/catppuccin-theming/
   - path: ~/.gemini/skills/catppuccin-theming/
 

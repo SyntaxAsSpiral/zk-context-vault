@@ -12,7 +12,7 @@ name: Claudeck
 output_format: agent
 
 target_locations:
-  - path: deck@amexsomnemon:~/.claude/CLAUDE.md
+  - path: zk@adeck:~/.claude/CLAUDE.md
 
 sources:
   - slice: agent=claudeck

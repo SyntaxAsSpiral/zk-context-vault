@@ -12,7 +12,7 @@ name: Codeck
 output_format: agent
 
 target_locations:
-  - path: deck@amexsomnemon:~/.codex/AGENTS.md
+  - path: zk@adeck:~/.codex/AGENTS.md
 
 sources:
   - slice: agent=codeck

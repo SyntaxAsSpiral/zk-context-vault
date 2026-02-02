@@ -31,8 +31,8 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/mcp-builder/
   - path: ~/.codex/skills/mcp-builder/
-  - path: deck@amexsomnemon:~/.claude/skills/mcp-builder/
-  - path: deck@amexsomnemon:~/.codex/skills/mcp-builder/
+  - path: zk@adeck:~/.claude/skills/mcp-builder/
+  - path: zk@adeck:~/.codex/skills/mcp-builder/
   - path: ~/.gemini/antigravity/skills/mcp-builder/
   - path: ~/.gemini/skills/mcp-builder/
 

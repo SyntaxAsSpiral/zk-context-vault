@@ -22,8 +22,8 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/memory-systems/
   - path: ~/.codex/skills/memory-systems/
-  - path: deck@amexsomnemon:~/.claude/skills/memory-systems/
-  - path: deck@amexsomnemon:~/.codex/skills/memory-systems/
+  - path: zk@adeck:~/.claude/skills/memory-systems/
+  - path: zk@adeck:~/.codex/skills/memory-systems/
   - path: ~/.gemini/antigravity/skills/memory-systems/
   - path: ~/.gemini/skills/memory-systems/
 

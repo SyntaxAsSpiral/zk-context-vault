@@ -12,7 +12,7 @@ name: Deckini
 output_format: agent
 
 target_locations:
-  - path: deck@amexsomnemon:~/.gemini/GEMINI.md
+  - path: zk@adeck:~/.gemini/GEMINI.md
 
 sources:
   - slice: agent=deckini

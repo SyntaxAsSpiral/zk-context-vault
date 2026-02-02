@@ -13,8 +13,8 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/nix-os/
   - path: ~/.codex/skills/nix-os/
-  - path: deck@amexsomnemon:~/.claude/skills/nix-os/
-  - path: deck@amexsomnemon:~/.codex/skills/nix-os/
+  - path: zk@adeck:~/.claude/skills/nix-os/
+  - path: zk@adeck:~/.codex/skills/nix-os/
   - path: ~/.gemini/antigravity/skills/nix-os/
   - path: ~/.gemini/skills/nix-os/
 

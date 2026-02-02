@@ -26,7 +26,7 @@ inclusion: always
 
 ## SSH Quick Reference
 **From amexsomnemon:** `ssh zk@zrrh` or `ssh zk@smnm`
-**From Windows hosts:** `ssh deck@amexsomnemon`
+**From Windows hosts:** `ssh zk@adeck`
 
 **Keys:**
 - ZRRH/SMNM inbound: `C:/ProgramData/ssh/administrators_authorized_keys`
@@ -43,8 +43,8 @@ inclusion: always
 
 **Screen control:**
 ```bash
-# Off: ssh deck@amexsomnemon "sudo sh -c 'echo 1 > /sys/class/graphics/fb0/blank'"
-# On:  ssh deck@amexsomnemon "sudo sh -c 'echo 0 > /sys/class/graphics/fb0/blank' && echo 100 | sudo tee /sys/class/backlight/amdgpu_bl1/brightness"
+# Off: ssh zk@adeck "sudo sh -c 'echo 1 > /sys/class/graphics/fb0/blank'"
+# On:  ssh zk@adeck "sudo sh -c 'echo 0 > /sys/class/graphics/fb0/blank' && echo 100 | sudo tee /sys/class/backlight/amdgpu_bl1/brightness"
 ```
 
 ## Topology

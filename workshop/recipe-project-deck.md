@@ -12,7 +12,7 @@ name: deck (project steering)
 output_format: agent
 
 target_locations:
-  - path: deck@amexsomnemon:~/AGENTS.md
+  - path: zk@adeck:~/AGENTS.md
 
 sources:
   - file: agents/steering-project-deck.md

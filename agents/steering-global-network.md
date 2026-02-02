@@ -19,4 +19,4 @@ ZK operates a Tailscale mesh:
 
 **amexsomnemon** runs AI CLIs (claude-code, gemini-cli, codex-cli). Agents on client machines (zrrh/smnm) focus on local project work; mesh orchestration happens on the deck.
 
-When paths reference `deck@amexsomnemon:`, that's an SSH target on the relay node.
+When paths reference `zk@adeck:`, that's an SSH target on the relay node.

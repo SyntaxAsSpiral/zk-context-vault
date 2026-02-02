@@ -15,8 +15,8 @@ target_locations:
   - path: ~/.kiro/hooks/doc-consistency-check.kiro.hook
   - path: ~/.claude/commands/doc-consistency-check.md
   - path: ~/.codex/prompts/doc-consistency-check.md
-  - path: deck@amexsomnemon:~/.claude/commands/doc-consistency-check.md
-  - path: deck@amexsomnemon:~/.codex/prompts/doc-consistency-check.md
+  - path: zk@adeck:~/.claude/commands/doc-consistency-check.md
+  - path: zk@adeck:~/.codex/prompts/doc-consistency-check.md
 
 sources:
   kiro_hook:
