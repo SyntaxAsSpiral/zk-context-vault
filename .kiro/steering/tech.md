@@ -57,9 +57,9 @@ python workshop/src/assemble.py && python workshop/src/sync.py
 
 ## Path Conventions
 
-- **Context library**: `Z:\Documents\.context` (absolute path in scripts)
-- **Workshop**: `.context/workshop/` (recipes, staging, manifest)
-- **Staging**: `.context/workshop/staging/` (generated artifacts)
+- **Context library**: `/mnt/repository/context-vault` (absolute path in scripts)
+- **Workshop**: `context-vault/workshop/` (recipes, staging, manifest)
+- **Staging**: `context-vault/workshop/staging/` (generated artifacts)
 - **Specs**: `.kiro/specs/{feature-name}/` (requirements, design, tasks)
 - **Hooks**: `.kiro/hooks/` (canonical hook configurations)
 - **Steering**: `.kiro/steering/` (project-specific context)
@@ -104,9 +104,8 @@ power-name/
 
 ## Development Environment
 
-- **Primary OS**: Windows 11
+- **Primary OS**: NixOS 26.05 (Yarara)
 - **Primary Shell**: nushell
-- **WSL**: Ubuntu 22.04 (available)
 - **Docker**: Available
 - **Favorite Font**: Recursive Mono Casual
 

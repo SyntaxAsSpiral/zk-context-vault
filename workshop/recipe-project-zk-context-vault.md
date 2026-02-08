@@ -14,7 +14,7 @@ output_format: project
 
 # Project-scoped guidance → repo-root AGENTS.md.
 target_locations:
-  - path: Z:/Documents/.context/
+  - path: /mnt/repository/context-vault/
 
 sources:
   - file: agents/steering-project-zk-context-vault.md

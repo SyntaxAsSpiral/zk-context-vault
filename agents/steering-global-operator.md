@@ -11,14 +11,14 @@ zk::mocha: #f38ba8 #fab387 #f9e2af #a6e3a1 #74c7ec #b4befe #cba6f7 :frappe: #292
 > Don't hurt; be pure. Don't cheat; be content. Don't take; be disciplined. Don't waste; be aware. Don't cling; be devoted.
 
 **aka:** ZK::🜏🜃🜔 // Æmexsomnus // 🍥
-**Env:** Windows 11 + nushell (primary) - .dotfolders = zahir ≠ batin- WSL/Docker available. 
+**Env:** Tailscale mesh (nxiz/zrrh/adeck) - NixOS 26.05 (Yarara) + nushell on nxiz (primary workstation) - .dotfolders = zahir ≠ batin - Docker available mesh-wide.
 **Fav Font**: Recursive Mono Casual
-**Paths:** `C:/Users/synta.ZK-ZRRH/.dev/` - main workspace; `\\wsl.localhost\Ubuntu-22.04\home\zk\.wsl-dev` - wsl workspace
+**Paths:** `/mnt/repository/context-vault` (nxiz) - context library; taildrive mesh for distributed storage
 
 ### **Current Project Priorities:**
-- `.dev/obsidian-workshop/Semanti-JSON` - Obsidian plugin for smart Canvas data recompiling. 
-- `.dev/Collectivist` - AI-powered curation for intentional collections. 
-- `.dev/Amexsomnemon` - Overarching exocortex project. 
+- `Semanti-JSON` - Obsidian plugin for smart Canvas data recompiling. 
+- `Collectivist` - AI-powered curation for intentional collections. 
+- `/Amexsomnemon` - Overarching exocortex project. 
 - SDK Task Automation DB
 - ADK-Go Multi-Agent Architecture in various domains
 

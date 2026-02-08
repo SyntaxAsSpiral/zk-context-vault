@@ -66,23 +66,18 @@ def _configure_stdio_utf8() -> None:
 
 def _expand_target_path(p: str) -> str:
     # Expand "~/" while preserving trailing separators (directory targets).
-    trailing_sep = p.endswith("/") or p.endswith("\\")
-    if p.startswith("~/") or p.startswith("~\\"):
+    trailing_sep = p.endswith("/")
+    if p.startswith("~/"):
         remainder = p[2:]
-        remainder = remainder.replace("/", os.sep).replace("\\", os.sep)
         expanded = str(Path.home() / remainder)
         if trailing_sep and not expanded.endswith(os.sep):
             expanded += os.sep
         return expanded
 
-    # Normalize accidental forward slashes in Windows-y paths for display/logging.
-    if re.match(r"^[A-Za-z]:[\\/]", p) or p.startswith("\\\\") or p.startswith(".\\") or p.startswith("./"):
-        return p.replace("/", "\\")
-
     return p
 
 
-def _display_path_windows(p: str) -> str:
+def _display_path(p: str) -> str:
     # Preserve paths as-is (SSH targets use forward slashes, local paths use OS separators)
     return p
 
@@ -93,23 +88,18 @@ def _sanitize_path_for_public(p: str) -> str:
     if re.match(r"^[^@]+@[^:]+:.+$", p):
         return p
     
-    # Paths starting with ~ - return as-is (preserve original slashes)
-    if p.startswith("~/") or p.startswith("~\\"):
+    # Paths starting with ~ - return as-is
+    if p.startswith("~/"):
         return p
     
-    # Replace full home path with ~ (preserve original slash style)
+    # Replace full home path with ~
     home = str(Path.home())
     
-    # Try both slash styles
-    for sep in ["/", "\\"]:
-        home_with_sep = home.replace("\\", sep).replace("/", sep)
-        p_with_sep = p.replace("\\", sep).replace("/", sep)
-        
-        if p_with_sep.startswith(home_with_sep):
-            remainder = p_with_sep[len(home_with_sep):]
-            if remainder.startswith(sep):
-                remainder = remainder[1:]
-            return "~" + sep + remainder
+    if p.startswith(home):
+        remainder = p[len(home):]
+        if remainder.startswith("/"):
+            remainder = remainder[1:]
+        return "~/" + remainder
     
     # Return as-is
     return p
@@ -125,7 +115,7 @@ def _is_claude_target(p: str) -> bool:
 
 
 def _is_dir_target_string(p: str) -> bool:
-    return p.endswith("/") or p.endswith("\\")
+    return p.endswith("/")
 
 
 def _default_agent_filename_for_target(target_path: str) -> str:
@@ -775,11 +765,11 @@ def update_manifest(manifest_path: Path, entries: List[Dict[str, Any]]) -> None:
             status = str(e.get("status") or "")
             lines = [f"- **{entry_id}**: Last run {timestamp}"]
             if out:
-                lines.append(f"  - Output: `{_display_path_windows(out)}`")
+                lines.append(f"  - Output: `{_display_path(out)}`")
             if isinstance(targets, list):
                 for t in targets:
                     sanitized = _sanitize_path_for_public(str(t))
-                    lines.append(f"  - Target: `{_display_path_windows(sanitized)}`")
+                    lines.append(f"  - Target: `{_display_path(sanitized)}`")
             lines.append(f"  - Status: {status}")
             return lines
 
@@ -834,7 +824,7 @@ def main():
     args = parser.parse_args()
     
     # Set up absolute paths
-    base_path = Path("Z:/Documents/.context")  # Context workspace root
+    base_path = Path("/mnt/repository/context-vault")  # Context workspace root
     workshop_dir = base_path / "workshop"      # Workshop directory
     staging_dir = workshop_dir / "staging"     # Staging directory
     manifest_path = workshop_dir / "manifest-recipes.md"  # Manifest file

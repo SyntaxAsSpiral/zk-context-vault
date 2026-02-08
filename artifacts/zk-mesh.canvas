@@ -1,0 +1,360 @@
+{
+  "nodes": [
+    {
+      "id": "804f6e9e0f037f09",
+      "type": "group",
+      "x": -1100,
+      "y": -1600,
+      "width": 2200,
+      "height": 2400,
+      "label": "Tailnet :: tail293e98.ts.net (SyntaxAsSpiral)"
+    },
+    {
+      "id": "mesh-legend",
+      "type": "text",
+      "text": "## Tailnet Mesh\n### Active Nodes\n- **nxiz** (100.115.135.104) - NixOS Primary Workstation\n- **zrrh** (100.126.60.24) - Garuda Couch PC / Local Inference\n- **adeck** (100.89.32.9) - NixOS Headless Server/Relay\n- **zk-pixel** (100.96.213.111) - Android Mobile\n- **zk-note** (100.105.239.55) - Android Control Surface\n\n### Offline\n- **zdeck** (100.64.136.57) - SteamOS Gaming\n\n### Taildrive Shares\n- nxiz → `repository` (/mnt/repository)\n- zrrh → `media` (/mnt/media)\n- adeck → `vault` (/mnt/vault)\n\n### Taildrive Consumers\n- adeck mounts: nxiz/repository, zrrh/media",
+      "x": -1080,
+      "y": -1580,
+      "width": 450,
+      "height": 520,
+      "color": "6"
+    },
+    {
+      "id": "mobile-pixel",
+      "type": "text",
+      "text": "## zk-pixel\n**Tailscale IP:** 100.96.213.111  \n**OS:** Android  \n**Role:** Mobile (Pixel, primary w/ SIM)  \n**Status:** online",
+      "x": -580,
+      "y": -1580,
+      "width": 410,
+      "height": 180,
+      "color": "4"
+    },
+    {
+      "id": "mobile-note",
+      "type": "text",
+      "text": "## zk-note\n**Tailscale IP:** 100.105.239.55  \n**OS:** Android  \n**Role:** Control surface  \n**Function:** Home/network via Termux  \n**Status:** online",
+      "x": -580,
+      "y": -1340,
+      "width": 410,
+      "height": 200,
+      "color": "4"
+    },
+    {
+      "id": "nxiz-group",
+      "type": "group",
+      "x": -1100,
+      "y": -980,
+      "width": 520,
+      "height": 1560,
+      "color": "2",
+      "label": "nxiz :: FC:34:97:3B:6E:99 :: 100.115.135.104"
+    },
+    {
+      "id": "nxiz-main",
+      "type": "text",
+      "text": "## nxiz\n**OS:** NixOS 26.05 (Yarara)  \n**Role:** Primary Workstation  \n**GPU:** NVIDIA RTX 3070  \n**Ethernet:** enp10s0 FC:34:97:3B:6E:99  \n**Tailscale IP:** 100.115.135.104  \n**Status:** online\n\n**Taildrive Share:** `repository` (/mnt/repository)",
+      "x": -1080,
+      "y": -960,
+      "width": 480,
+      "height": 280,
+      "color": "2"
+    },
+    {
+      "id": "nxiz-nvme",
+      "type": "group",
+      "x": -1080,
+      "y": -620,
+      "width": 480,
+      "height": 240,
+      "label": "nvme0n1 (476.9G)"
+    },
+    {
+      "id": "nxiz-nvme-detail",
+      "type": "text",
+      "text": "- nvme0n1p1 (vfat) → /boot\n- nvme0n1p2 (btrfs) → / (subvols: @, @home, @nix, @log, @snapshots)",
+      "x": -1060,
+      "y": -600,
+      "width": 440,
+      "height": 180,
+      "color": "2"
+    },
+    {
+      "id": "nxiz-repository",
+      "type": "group",
+      "x": -1080,
+      "y": -320,
+      "width": 480,
+      "height": 240,
+      "label": "sdb1 (838.2G btrfs) → /mnt/repository"
+    },
+    {
+      "id": "nxiz-repository-detail",
+      "type": "text",
+      "text": "**LABEL:** repository  \n**Mount:** /mnt/repository  \n**Taildrive:** Shared as `repository`\n\n**Contents:** context-vault at /mnt/repository/context-vault",
+      "x": -1060,
+      "y": -300,
+      "width": 440,
+      "height": 180,
+      "color": "2"
+    },
+    {
+      "id": "nxiz-archive",
+      "type": "group",
+      "x": -1080,
+      "y": -20,
+      "width": 480,
+      "height": 200,
+      "label": "sda1 (931.5G btrfs) → /mnt/archive"
+    },
+    {
+      "id": "nxiz-archive-detail",
+      "type": "text",
+      "text": "**LABEL:** archive  \n**Mount:** /mnt/archive",
+      "x": -1060,
+      "y": 0,
+      "width": 440,
+      "height": 140,
+      "color": "2"
+    },
+    {
+      "id": "zrrh-group",
+      "type": "group",
+      "x": -520,
+      "y": -980,
+      "width": 520,
+      "height": 1560,
+      "color": "1",
+      "label": "zrrh :: 60:CF:84:61:D8:00 / B0:DC:EF:2F:7B:0F :: 100.126.60.24"
+    },
+    {
+      "id": "zrrh-main",
+      "type": "text",
+      "text": "## zrrh\n**OS:** Garuda Linux  \n**Role:** Couch PC / Local Inference  \n**GPU:** NVIDIA RTX 4090 (primary inference GPU)  \n**Ethernet:** 60:CF:84:61:D8:00  \n**WiFi (active):** B0:DC:EF:2F:7B:0F  \n**Tailscale IP:** 100.126.60.24  \n**Status:** online\n\n**Services:**\n- Tailscale\n- llmster (LM Studio headless) at zrrh:1234\n  - OpenAI-compatible API\n  - Models: gpt-oss-20b, seed-oss-36b, qwen3-30b-a3b-thinking, granite-4-h-tiny, olmo-3-32b-think, ernie-4.5-21b-a3b, dolphin-mistral-24b, phi4-trader, lfm2-1.2b, financial-gpt-oss-20b\n  - Embeddings: nomic-embed-text-v1.5, qwen3-embedding-4b, mxbai-embed-large-v1\n\n**Taildrive Share:** `media` (/mnt/media)",
+      "x": -500,
+      "y": -960,
+      "width": 480,
+      "height": 520,
+      "color": "1"
+    },
+    {
+      "id": "zrrh-nvme0",
+      "type": "group",
+      "x": -500,
+      "y": -380,
+      "width": 480,
+      "height": 280,
+      "label": "nvme0n1 (1.8T)"
+    },
+    {
+      "id": "zrrh-nvme0-detail",
+      "type": "text",
+      "text": "- nvme0n1p1 (vfat) → /boot/efi\n  UUID=5996-AD7F\n- nvme0n1p2 (btrfs ZRRH) → /\n  UUID=a94ba4f7\n  subvols: @, @home, @root, @srv, @cache, @log, @tmp\n\n**Swap:** 61.9G zram",
+      "x": -480,
+      "y": -360,
+      "width": 440,
+      "height": 220,
+      "color": "1"
+    },
+    {
+      "id": "zrrh-nvme1-media",
+      "type": "group",
+      "x": -500,
+      "y": -40,
+      "width": 480,
+      "height": 240,
+      "label": "nvme1n1p1 (1.3T btrfs) → /mnt/media"
+    },
+    {
+      "id": "zrrh-media-detail",
+      "type": "text",
+      "text": "**LABEL:** Media  \n**UUID:** 112f1862  \n**Mount:** /mnt/media  \n**Taildrive:** Shared as `media`",
+      "x": -480,
+      "y": -20,
+      "width": 440,
+      "height": 180,
+      "color": "1"
+    },
+    {
+      "id": "zrrh-nvme1-games",
+      "type": "group",
+      "x": -500,
+      "y": 260,
+      "width": 480,
+      "height": 240,
+      "label": "nvme1n1p2 (2T btrfs) → /mnt/games"
+    },
+    {
+      "id": "zrrh-games-detail",
+      "type": "text",
+      "text": "**LABEL:** Games  \n**UUID:** 7b93a14d  \n**Mount:** /mnt/games",
+      "x": -480,
+      "y": 280,
+      "width": 440,
+      "height": 180,
+      "color": "1"
+    },
+    {
+      "id": "adeck-group",
+      "type": "group",
+      "x": 60,
+      "y": -980,
+      "width": 520,
+      "height": 1560,
+      "color": "5",
+      "label": "adeck :: 80:6D:97:AB:3A:FC / 50:5A:65:1F:84:9D :: 100.89.32.9"
+    },
+    {
+      "id": "adeck-main",
+      "type": "text",
+      "text": "## adeck\n**OS:** NixOS 26.05 (Yarara)  \n**Role:** Headless Agentic Server/Relay (always on)  \n**Dock Ethernet:** 80:6D:97:AB:3A:FC (DOWN)  \n**WiFi (active):** 50:5A:65:1F:84:9D  \n**Tailscale IP:** 100.89.32.9  \n**Status:** online (always)\n\n**Services:**\n- Docker, SSH, Tailscale\n- pulse-generator (systemd timer, daily 02:24 PST)\n  - Runs src/github_status_rotator.py from ~/pulse-log/ venv\n  - Domain: lexemancy.com (GitHub Pages)\n  - LLM backends: OpenRouter (kimi-k2), deepseek-v3.2, local llmster (gpt-oss-20b-heretic via localhost:1234), gemini-3-flash\n  - Local copy at zk@adeck:~/pulse-log/\n\n**Taildrive Share:** `vault` (/mnt/vault)  \n**Taildrive Mounts:**\n- nxiz/repository → /mnt/taildrive/repository\n- zrrh/media → /mnt/taildrive/media",
+      "x": 80,
+      "y": -960,
+      "width": 480,
+      "height": 560,
+      "color": "5"
+    },
+    {
+      "id": "adeck-mmc",
+      "type": "group",
+      "x": 80,
+      "y": -340,
+      "width": 480,
+      "height": 260,
+      "label": "mmcblk0 (238.4G)"
+    },
+    {
+      "id": "adeck-mmc-detail",
+      "type": "text",
+      "text": "- mmcblk0p1 (vfat) label=boot → /boot\n  UUID=0F7B-533B PARTUUID=a9844adc-50b4-4808-9033-762dbd69c4ff\n- mmcblk0p2 (ext4) label=root → /\n  UUID=43631aea-9ace-412d-b840-6f981578819d PARTUUID=9a4b8f59-322e-4230-babc-67ebae349ccb",
+      "x": 100,
+      "y": -320,
+      "width": 440,
+      "height": 200,
+      "color": "5"
+    },
+    {
+      "id": "adeck-vault",
+      "type": "group",
+      "x": 80,
+      "y": -20,
+      "width": 480,
+      "height": 240,
+      "label": "sda (1.8T btrfs) → /mnt/vault"
+    },
+    {
+      "id": "adeck-vault-detail",
+      "type": "text",
+      "text": "**LABEL:** vault  \n**UUID:** b802e750  \n**Mount:** /mnt/vault  \n**Taildrive:** Shared as `vault`",
+      "x": 100,
+      "y": 0,
+      "width": 440,
+      "height": 180,
+      "color": "5"
+    },
+    {
+      "id": "adeck-nvme",
+      "type": "group",
+      "x": 80,
+      "y": 280,
+      "width": 480,
+      "height": 220,
+      "label": "nvme0n1 (476.9G) - Legacy SteamOS"
+    },
+    {
+      "id": "adeck-nvme-detail",
+      "type": "text",
+      "text": "**Status:** Unmounted (legacy SteamOS partitions)",
+      "x": 100,
+      "y": 300,
+      "width": 440,
+      "height": 160,
+      "color": "5"
+    },
+    {
+      "id": "zdeck-group",
+      "type": "group",
+      "x": 640,
+      "y": -980,
+      "width": 420,
+      "height": 600,
+      "color": "3",
+      "label": "zdeck :: 100.64.136.57"
+    },
+    {
+      "id": "zdeck-main",
+      "type": "text",
+      "text": "## zdeck\n**OS:** SteamOS  \n**Role:** Gaming  \n**Tailscale IP:** 100.64.136.57  \n**Status:** offline\n\n**nvme0n1 (476.9G):**\n- nvme0n1p1 (vfat) label=esp\n- nvme0n1p2 (vfat) label=efi\n- nvme0n1p3 (vfat) label=efi\n- nvme0n1p4 (btrfs) label=rootfs\n- nvme0n1p5 (btrfs) label=rootfs\n- nvme0n1p6 (ext4) label=var\n- nvme0n1p7 (ext4) label=var\n- nvme0n1p8 (ext4) label=home",
+      "x": 660,
+      "y": -960,
+      "width": 380,
+      "height": 540,
+      "color": "3"
+    }
+  ],
+  "edges": [
+    {
+      "id": "pixel-to-nxiz",
+      "fromNode": "mobile-pixel",
+      "fromSide": "bottom",
+      "toNode": "nxiz-group",
+      "toSide": "top",
+      "label": "tailscale"
+    },
+    {
+      "id": "pixel-to-zrrh",
+      "fromNode": "mobile-pixel",
+      "fromSide": "bottom",
+      "toNode": "zrrh-group",
+      "toSide": "top",
+      "label": "tailscale"
+    },
+    {
+      "id": "pixel-to-adeck",
+      "fromNode": "mobile-pixel",
+      "fromSide": "bottom",
+      "toNode": "adeck-group",
+      "toSide": "top",
+      "label": "tailscale"
+    },
+    {
+      "id": "note-to-nxiz",
+      "fromNode": "mobile-note",
+      "fromSide": "bottom",
+      "toNode": "nxiz-group",
+      "toSide": "top",
+      "label": "tailscale"
+    },
+    {
+      "id": "note-to-zrrh",
+      "fromNode": "mobile-note",
+      "fromSide": "bottom",
+      "toNode": "zrrh-group",
+      "toSide": "top",
+      "label": "tailscale"
+    },
+    {
+      "id": "note-to-adeck",
+      "fromNode": "mobile-note",
+      "fromSide": "bottom",
+      "toNode": "adeck-group",
+      "toSide": "top",
+      "label": "tailscale"
+    },
+    {
+      "id": "nxiz-to-adeck-taildrive",
+      "fromNode": "nxiz-repository",
+      "fromSide": "right",
+      "toNode": "adeck-main",
+      "toSide": "left",
+      "label": "taildrive: repository"
+    },
+    {
+      "id": "zrrh-to-adeck-taildrive",
+      "fromNode": "zrrh-nvme1-media",
+      "fromSide": "right",
+      "toNode": "adeck-main",
+      "toSide": "left",
+      "label": "taildrive: media"
+    }
+  ]
+}

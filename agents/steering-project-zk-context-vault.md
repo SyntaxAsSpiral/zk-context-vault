@@ -55,7 +55,7 @@ skill-name/
 **Purpose**: Recipe-based system for assembling and deploying context documentation
 
 **Reusability**: The workshop system (scripts, templates, recipe patterns) is designed to be reusable with any content. Clone and adapt to your own context library by:
-- Updating absolute paths in scripts (`Z:\Documents\.context` → your path)
+- Updating absolute paths in scripts (`/mnt/repository/context-vault` → your path)
 - Creating your own content in `agents/`, `skills/`, etc.
 - Using the recipe templates to define your own assembly patterns
 
@@ -153,10 +153,8 @@ See `agents/steering-global-principles.md` for complete details.
 ## Operator Profile (ZK)
 
 **Identity**: Zach Battin (ZK::🜏🜃🜔 // Æmexsomnus // 🍥)
-**Environment**: Windows 11 + nushell (primary), WSL/Docker available
+**Environment**: NixOS 26.05 (Yarara) + nushell (primary), Docker available
 **Favorite Font**: Recursive Mono Casual
-**Main Workspace**: `C:/Users/synta.ZK-ZRRH/.dev/`
-**WSL Workspace**: `\\wsl.localhost\Ubuntu-22.04\home\zk\.wsl-dev`
 
 **Role Sigils:**
 - 🌸 Autognostic Infloresencer · 🪢 Logopolysemic Weaver
@@ -166,9 +164,9 @@ See `agents/steering-global-principles.md` for complete details.
 - 🧬 Mnemonic Emanator · 🛏️ Oneiric Pedagogue
 
 **Current Projects:**
-- `.dev/obsidian-workshop/Semanti-JSON` - Obsidian plugin for Canvas data recompiling
-- `.dev/Collectivist` - AI-powered curation for intentional collections
-- `.dev/Amexsomnemon` - Overarching exocortex project (this vault is part of it)
+- Semanti-JSON - Obsidian plugin for Canvas data recompiling
+- Collectivist - AI-powered curation for intentional collections
+- Amexsomnemon - Overarching exocortex project (this vault is part of it)
 
 See `agents/steering-global-operator.md` for complete profile.
 
@@ -181,8 +179,8 @@ See `agents/steering-global-operator.md` for complete profile.
 - **Obsidian integration**: This is an Obsidian vault with Canvas files and templates
 
 ### Path Conventions
-- **Context library**: `Z:\Documents\.context` (absolute path for workshop scripts)
-- **Scripts**: `C:\Users\synta.ZK-ZRRH\.dev\.scripts` (absolute path)
+- **Context library**: `/mnt/repository/context-vault` (absolute path for workshop scripts)
+- **Scripts**: `workshop/src/` (in-repo scripts)
 - **Workspace**: Relative paths from repo root
 - **Home directory**: `~/` expands to user home in recipes
 
@@ -314,8 +312,7 @@ The workshop system (assembly scripts, templates, recipe patterns) is designed t
 
 1. **Clone the repo** as a starting point
 2. **Update paths** in `workshop/src/assemble.py` and `sync.py`:
-   - Change `Z:\Documents\.context` to your vault path
-   - Change `C:\Users\synta.ZK-ZRRH\.dev\.scripts` to your scripts path
+   - Change `/mnt/repository/context-vault` to your vault path
 3. **Replace content** with your own:
    - Your agent configurations in `agents/`
    - Your skills in `skills/`

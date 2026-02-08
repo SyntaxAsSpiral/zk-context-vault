@@ -34,7 +34,7 @@ Context Vault → Workshop Recipes → assemble.py → Workshop Staging → sync
 
 ### IDE Integration
 
-The system can be wired into IDE tasks (paths in this repo may differ from older `.dev/.scripts` setups):
+The system can be wired into IDE tasks:
 
 - **Ctrl+Shift+B** - Run full workflow (assemble + sync)
 - **Ctrl+Shift+P** → "Tasks: Run Task" - Individual operations

@@ -126,18 +126,13 @@ def _expand_target_path(p: str) -> str:
         return p
     
     # Expand "~/" while preserving trailing separators (directory targets).
-    trailing_sep = p.endswith("/") or p.endswith("\\")
-    if p.startswith("~/") or p.startswith("~\\"):
+    trailing_sep = p.endswith("/")
+    if p.startswith("~/"):
         remainder = p[2:]
-        remainder = remainder.replace("/", os.sep).replace("\\", os.sep)
         expanded = str(Path.home() / remainder)
         if trailing_sep and not expanded.endswith(os.sep):
             expanded += os.sep
         return expanded
-
-    # Normalize accidental forward slashes in Windows-y paths.
-    if re.match(r"^[A-Za-z]:[\\/]", p) or p.startswith("\\\\") or p.startswith(".\\") or p.startswith("./"):
-        return p.replace("/", "\\")
 
     return p
 
@@ -156,7 +151,7 @@ def _is_claude_target(p: str) -> bool:
 
 
 def _is_dir_target_string(p: str) -> bool:
-    return p.endswith("/") or p.endswith("\\")
+    return p.endswith("/")
 
 
 def _default_agent_filename_for_target(target_path: str) -> str:
@@ -540,23 +535,17 @@ def sync_file_to_targets(output_file: Path, target_paths: List[str], dry_run: bo
                         remote_path = match.group(2).replace("\\", "/")
                         remote_dir = str(Path(remote_path).parent).replace("\\", "/")
                         
-                        # Create remote directory (use absolute path for NixOS compatibility)
+                        # Create remote directory
                         subprocess.run(
-                            ["ssh", remote_host, f"/run/current-system/sw/bin/mkdir -p {remote_dir}"],
+                            ["ssh", "-o", "StrictHostKeyChecking=no", remote_host, f"mkdir -p {remote_dir}"],
                             check=True,
                             capture_output=True,
                             timeout=30,
                         )
                         
-                        # Rsync file via cwrsync (use bundled SSH with key)
-                        source_posix = str(output_file).replace("\\", "/")
-                        # Convert Windows drive path to cygwin path
-                        if len(source_posix) > 1 and source_posix[1] == ':':
-                            source_posix = f"/cygdrive/{source_posix[0].lower()}{source_posix[2:]}"
-                        target_posix = target_path.replace("\\", "/")
-                        ssh_cmd = 'C:/ProgramData/chocolatey/lib/rsync/tools/bin/ssh.exe -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /cygdrive/c/Users/synta.ZK-ZRRH/.ssh/id_ed25519'
+                        # Rsync file using native rsync/ssh
                         subprocess.run(
-                            ["rsync", "-avz", "-e", ssh_cmd, "--rsync-path=/run/current-system/sw/bin/rsync", source_posix, target_posix],
+                            ["rsync", "-avz", "-e", "ssh -o StrictHostKeyChecking=no", str(output_file), target_path],
                             check=True,
                             capture_output=True,
                             timeout=60,
@@ -614,23 +603,17 @@ def _sync_dir(source_dir: Path, target_dir: Path, dry_run: bool = False) -> None
             remote_host = match.group(1)
             remote_path = match.group(2).replace("\\", "/")
             
-            # Create remote directory (use absolute path for NixOS compatibility)
+            # Create remote directory
             subprocess.run(
-                ["ssh", remote_host, f"/run/current-system/sw/bin/mkdir -p {remote_path}"],
+                ["ssh", "-o", "StrictHostKeyChecking=no", remote_host, f"mkdir -p {remote_path}"],
                 check=True,
                 capture_output=True,
                 timeout=30,
             )
             
-            # Rsync with delete to mirror via cwrsync (use bundled SSH with key)
-            source_posix = str(source_dir).replace("\\", "/")
-            # Convert Windows drive path to cygwin path
-            if len(source_posix) > 1 and source_posix[1] == ':':
-                source_posix = f"/cygdrive/{source_posix[0].lower()}{source_posix[2:]}"
-            target_posix = target_str.replace("\\", "/")
-            ssh_cmd = 'C:/ProgramData/chocolatey/lib/rsync/tools/bin/ssh.exe -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /cygdrive/c/Users/synta.ZK-ZRRH/.ssh/id_ed25519'
+            # Rsync with delete to mirror using native rsync/ssh
             subprocess.run(
-                ["rsync", "-avz", "--delete", "-e", ssh_cmd, "--rsync-path=/run/current-system/sw/bin/rsync", f"{source_posix}/", target_posix + "/"],
+                ["rsync", "-avz", "--delete", "-e", "ssh -o StrictHostKeyChecking=no", f"{source_dir}/", f"{target_str}/"],
                 check=True,
                 capture_output=True,
                 timeout=120,
@@ -870,7 +853,7 @@ def main():
     parser.add_argument("--verbose", action="store_true", help="Verbose output")
     args = parser.parse_args()
 
-    base_path = Path("Z:/Documents/.context")
+    base_path = Path("/mnt/repository/context-vault")
     workshop_dir = base_path / "workshop"
     staging_dir = workshop_dir / "staging"
     manifest_path = workshop_dir / "manifest-recipes.md"
