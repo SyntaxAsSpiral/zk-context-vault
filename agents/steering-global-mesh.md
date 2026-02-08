@@ -86,6 +86,14 @@ inclusion: always
 - LLM backends: OpenRouter (kimi-k2 primary), fallback chain → deepseek-v3.2, local llmster (gpt-oss-20b-heretic via localhost:1234), gemini-3-flash
 - Local copy: `zk@adeck:~/pulse-log/` (synced via git)
 
+**nanoclaw (WhatsApp AI assistant):**
+- Systemd service: `nanoclaw.service` (enabled, always running)
+- Runtime: Node.js (`dist/index.js`)
+- Path: `zk@adeck:~/nanoclaw/`
+- Interface: WhatsApp (via Anthropic Agents SDK / Claude)
+- Container isolation: Docker-based agent sandboxing
+- Data: `~/nanoclaw/data/`, `~/nanoclaw/store/`
+
 **Other services:**
 - Docker
 - SSH

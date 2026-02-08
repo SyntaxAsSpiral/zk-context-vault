@@ -42,3 +42,10 @@ Taildrive shares provide cross-device filesystem access over the Tailscale mesh:
 - **LLM backends:** OpenRouter (kimi-k2 primary), fallback chain → deepseek-v3.2, local llmster (gpt-oss-20b-heretic via localhost:1234), gemini-3-flash
 - **Local copy:** `zk@adeck:~/pulse-log/` (synced via git)
 
+### adeck — nanoclaw (WhatsApp AI assistant)
+- **Service:** `nanoclaw.service` (systemd, enabled, always running)
+- **Runtime:** Node.js (`dist/index.js`)
+- **Path:** `zk@adeck:~/nanoclaw/`
+- **Interface:** WhatsApp (via Anthropic Agents SDK / Claude)
+- **Isolation:** Docker-based container sandboxing
+
