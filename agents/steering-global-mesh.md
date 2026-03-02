@@ -51,11 +51,8 @@ inclusion: always
 ### Services
 
 **llmster (LM Studio headless daemon):**
-- Endpoint: `http://zrrh:1234` (accessible via Tailscale mesh)
-- API: OpenAI-compatible (`/v1/models`, `/v1/chat/completions`, `/v1/embeddings`)
-- Available models: gpt-oss-20b, seed-oss-36b, qwen3-30b-a3b-thinking distill, granite-4-h-tiny, olmo-3-32b-think, ernie-4.5-21b-a3b, dolphin-mistral-24b, phi4-trader, lfm2-1.2b, financial-gpt-oss-20b
-- Embedding models: nomic-embed-text-v1.5, qwen3-embedding-4b, mxbai-embed-large-v1
-
+- Endpoints: `http://zrrh:1234` & `http://nxiz:1234` (accessible via Tailscale mesh)
+- `lms ls` for available models
 ## adeck — 100.89.32.9
 
 **Role:** Headless Agentic Server / Relay (always on)  
