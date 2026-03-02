@@ -1,0 +1,343 @@
+{
+  "nodes": [
+    {
+      "id": "9ac592ebef5dae18",
+      "type": "text",
+      "text": "# This is a test.",
+      "x": -300,
+      "y": -640,
+      "width": 810,
+      "height": 60
+    },
+    {
+      "id": "ef5328c24dd1ef37",
+      "type": "text",
+      "text": "This node should be second if the `.canvas` has been ordered semantically.",
+      "x": -300,
+      "y": -520,
+      "width": 810,
+      "height": 60
+    },
+    {
+      "id": "ed8615396ff03411",
+      "type": "text",
+      "text": "Making any changes within a standard vault will scramble these entries.",
+      "x": -300,
+      "y": -400,
+      "width": 810,
+      "height": 60
+    },
+    {
+      "id": "92bf93c3d9aa7318",
+      "type": "group",
+      "x": -320,
+      "y": -260,
+      "width": 850,
+      "height": 300,
+      "label": "table"
+    },
+    {
+      "id": "dec70863de53b1ff",
+      "type": "text",
+      "text": "row 1, column 1",
+      "x": -300,
+      "y": -240,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "f4893c32e294e83b",
+      "type": "text",
+      "text": "row 1, column 2",
+      "x": -20,
+      "y": -240,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "81a15da3c492c8d3",
+      "type": "text",
+      "text": "row 1, column 3",
+      "x": 260,
+      "y": -240,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "58340fd7c10a8123",
+      "type": "text",
+      "text": "row 2, column 1",
+      "x": -300,
+      "y": -140,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "784bb70da6ddee64",
+      "type": "text",
+      "text": "row 2, column 2",
+      "x": -20,
+      "y": -140,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "908a0d3aecf12dd9",
+      "type": "text",
+      "text": "row 2, column 3",
+      "x": 260,
+      "y": -140,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "eddc7dd4c4a798f9",
+      "type": "text",
+      "text": "row 3, column 1",
+      "x": -300,
+      "y": -40,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "b4b71497222af8bf",
+      "type": "text",
+      "text": "row 3, column 2",
+      "x": -20,
+      "y": -40,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "4932cd26f4647c03",
+      "type": "text",
+      "text": "row 3, column 3",
+      "x": 260,
+      "y": -40,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "1eecf7ae0566b14c",
+      "type": "group",
+      "x": -320,
+      "y": 120,
+      "width": 850,
+      "height": 100,
+      "label": "parent-group"
+    },
+    {
+      "id": "0c0636a05cb75fbb",
+      "type": "text",
+      "text": "This should be first node in the parent group. ",
+      "x": -300,
+      "y": 140,
+      "width": 250,
+      "height": 60,
+      "color": "6"
+    },
+    {
+      "id": "1e80b3d0fddcc02f",
+      "type": "group",
+      "x": -40,
+      "y": 120,
+      "width": 570,
+      "height": 100,
+      "label": "child-group"
+    },
+    {
+      "id": "db16940b1a36e1fe",
+      "type": "text",
+      "text": "child node 1",
+      "x": -20,
+      "y": 140,
+      "width": 250,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "564ec2540b0ecbeb",
+      "type": "text",
+      "text": "child node 2",
+      "x": 260,
+      "y": 140,
+      "width": 250,
+      "height": 60,
+      "color": "6"
+    },
+    {
+      "id": "50c34165b4456059",
+      "type": "group",
+      "x": -320,
+      "y": 300,
+      "width": 860,
+      "height": 200,
+      "label": "This concludes the test"
+    },
+    {
+      "id": "d28a8a5fed846ae6",
+      "type": "text",
+      "text": "This has been a test of the semantic JSON compilation protocol. See specification doc for complete details. ",
+      "x": -300,
+      "y": 340,
+      "width": 250,
+      "height": 120
+    },
+    {
+      "id": "3f6fc8b44b0160a8",
+      "type": "link",
+      "url": "https://github.com/SyntaxAsSpiral/semantic-json/blob/main/semantic-json-spec.md",
+      "x": -20,
+      "y": 340,
+      "width": 250,
+      "height": 120
+    },
+    {
+      "id": "7039c9a8ce8430b7",
+      "type": "text",
+      "text": " If the test was successful, this should be the final node. ",
+      "x": 260,
+      "y": 340,
+      "width": 250,
+      "height": 120
+    }
+  ],
+  "edges": [
+    {
+      "id": "644c933e08091b1b",
+      "fromNode": "9ac592ebef5dae18",
+      "fromSide": "bottom",
+      "toNode": "ef5328c24dd1ef37",
+      "toSide": "top"
+    },
+    {
+      "id": "8d6de9a50aa544cb",
+      "fromNode": "ef5328c24dd1ef37",
+      "fromSide": "bottom",
+      "toNode": "ed8615396ff03411",
+      "toSide": "top"
+    },
+    {
+      "id": "14bdfdd3f94c1f4c",
+      "fromNode": "dec70863de53b1ff",
+      "fromSide": "right",
+      "toNode": "f4893c32e294e83b",
+      "toSide": "left",
+      "toEnd": "none",
+      "color": "4"
+    },
+    {
+      "id": "2612379941eb00e5",
+      "fromNode": "dec70863de53b1ff",
+      "fromSide": "bottom",
+      "toNode": "58340fd7c10a8123",
+      "toSide": "top",
+      "toEnd": "none",
+      "color": "5"
+    },
+    {
+      "id": "7b07f3413f647bdd",
+      "fromNode": "f4893c32e294e83b",
+      "fromSide": "right",
+      "toNode": "81a15da3c492c8d3",
+      "toSide": "left",
+      "toEnd": "none",
+      "color": "4"
+    },
+    {
+      "id": "63de22405a465a17",
+      "fromNode": "f4893c32e294e83b",
+      "fromSide": "bottom",
+      "toNode": "784bb70da6ddee64",
+      "toSide": "top",
+      "toEnd": "none",
+      "color": "5"
+    },
+    {
+      "id": "30a7aef3919f1df6",
+      "fromNode": "81a15da3c492c8d3",
+      "fromSide": "bottom",
+      "toNode": "908a0d3aecf12dd9",
+      "toSide": "top",
+      "toEnd": "none",
+      "color": "5"
+    },
+    {
+      "id": "c8b335b2188072c0",
+      "fromNode": "58340fd7c10a8123",
+      "fromSide": "bottom",
+      "toNode": "eddc7dd4c4a798f9",
+      "toSide": "top",
+      "toEnd": "none",
+      "color": "5"
+    },
+    {
+      "id": "9112f357c6c57bfc",
+      "fromNode": "784bb70da6ddee64",
+      "fromSide": "left",
+      "toNode": "58340fd7c10a8123",
+      "toSide": "right",
+      "toEnd": "none",
+      "color": "4"
+    },
+    {
+      "id": "94288fef0399efb9",
+      "fromNode": "784bb70da6ddee64",
+      "fromSide": "right",
+      "toNode": "908a0d3aecf12dd9",
+      "toSide": "left",
+      "toEnd": "none",
+      "color": "4"
+    },
+    {
+      "id": "838588eb1de62e6f",
+      "fromNode": "784bb70da6ddee64",
+      "fromSide": "bottom",
+      "toNode": "b4b71497222af8bf",
+      "toSide": "top",
+      "toEnd": "none",
+      "color": "5"
+    },
+    {
+      "id": "0722f8355756700f",
+      "fromNode": "908a0d3aecf12dd9",
+      "fromSide": "bottom",
+      "toNode": "4932cd26f4647c03",
+      "toSide": "top",
+      "toEnd": "none",
+      "color": "5"
+    },
+    {
+      "id": "61b396753ea003ff",
+      "fromNode": "eddc7dd4c4a798f9",
+      "fromSide": "right",
+      "toNode": "b4b71497222af8bf",
+      "toSide": "left",
+      "toEnd": "none",
+      "color": "4"
+    },
+    {
+      "id": "ba2799e860b25da5",
+      "fromNode": "b4b71497222af8bf",
+      "fromSide": "right",
+      "toNode": "4932cd26f4647c03",
+      "toSide": "left",
+      "toEnd": "none",
+      "color": "4"
+    },
+    {
+      "id": "3cb35ba32a1411ef",
+      "fromNode": "d28a8a5fed846ae6",
+      "fromSide": "right",
+      "toNode": "3f6fc8b44b0160a8",
+      "toSide": "left"
+    },
+    {
+      "id": "a277a875a83f21a7",
+      "fromNode": "3f6fc8b44b0160a8",
+      "fromSide": "right",
+      "toNode": "7039c9a8ce8430b7",
+      "toSide": "left"
+    }
+  ]
+}

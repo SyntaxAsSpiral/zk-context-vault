@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "nix.dev Docs": {
+      "url": "https://gitmcp.io/NixOS/nix.dev"
+    },
+    "nixos": {
+      "command": "uvx",
+      "args": [
+        "mcp-nixos"
+      ]
+    }
+  }
+}

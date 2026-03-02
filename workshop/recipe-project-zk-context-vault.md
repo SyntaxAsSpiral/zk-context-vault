@@ -1,0 +1,22 @@
+---
+id: recipe-project-steering-zk-context-vault
+created: 2026-01-16
+modified: 2026-01-16
+status: active
+type:
+  - agent
+  - project
+---
+
+```yaml
+name: zk-context-vault
+output_format: project
+
+# Project-scoped guidance → repo-root AGENTS.md.
+target_locations:
+  - path: /mnt/repository/context-vault/
+
+sources:
+  - file: agents/steering-project-zk-context-vault.md
+```
+
