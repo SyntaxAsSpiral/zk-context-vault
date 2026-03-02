@@ -44,9 +44,9 @@ NFS over Tailscale IPs provides cross-device filesystem access. Managed declarat
 - **Compositor:** Niri + Noctalia shell
 - **VPN:** PIA (via pia.nix flake module)
 
-### nxiz — LM Studio (local)
-- **Endpoint:** `http://localhost:1234` (local only, not shared)
-- **Usage:** Local workflows; zrrh remains the shared mesh endpoint of record
+### nxiz — LM Studio (local + mesh-accessible)
+- **Endpoint:** `http://localhost:1234` (local service; mesh-accessible for trusted peers)
+- **Usage:** Handles embeddings and small-model inference tasks; shared inference is split across nxiz + zrrh depending on workload
 
 ### adeck — pulse-generator
 - **Schedule:** Daily at 02:24 PST (systemd timer)
