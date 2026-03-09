@@ -13,6 +13,7 @@ output_format: agent  # Simple concatenation, no template
 
 target_locations:
   - path: ~/.claude/CLAUDE.md
+  - path: zk@zrrh:~/.claude/CLAUDE.md
 
 sources:
   - slice: agent=claudi-claude-code 

@@ -13,6 +13,7 @@ output_format: agent
 
 target_locations:
   - path: /mnt/repository/pi/.pi/agent/AGENTS.md
+  - path: zk@zrrh:~/.pi/agent/AGENTS.md
 sources:
   - slice: agent=pi
     slice-file: agents/agent-roles.md

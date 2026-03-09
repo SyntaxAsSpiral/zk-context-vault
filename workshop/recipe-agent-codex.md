@@ -13,6 +13,7 @@ output_format: agent  # Simple concatenation, no template
 
 target_locations:
   - path: ~/.codex/AGENTS.md
+  - path: zk@zrrh:~/.codex/AGENTS.md
 
 sources:
   - slice: agent=gpt-codex
