@@ -9,10 +9,11 @@ inclusion: always
 | Host | Tailscale IP | MAC Address | OS | Status |
 |------|--------------|-------------|-------|--------|
 | nxiz | 100.115.135.104 | FC:34:97:3B:6E:99 (enp10s0) | NixOS 26.05 (Yarara) | online |
-| zrrh | 100.126.60.24 | 60:CF:84:61:D8:00 (ethernet), B0:DC:EF:2F:7B:0F (wifi, active) | Garuda Linux | online |
-| adeck | 100.89.32.9 | 80:6D:97:AB:3A:FC (dock, DOWN), 50:5A:65:1F:84:9D (wifi, active) | NixOS 26.05 (Yarara) | online |
+| zrrh | 100.77.90.79 | 60:CF:84:61:D8:00 (eno1, DOWN), B0:DC:EF:2F:7B:0F (wlp9s0, active) | NixOS 26.05 (Yarara) | online |
+| adeck | 100.89.32.9 | 10:82:86:2A:E0:00 (enp4s0f3u1u4c2, DOWN), 50:5A:65:1F:84:9D (wlo1, active) | NixOS 26.05 (Yarara) | online |
 | zdeck | 100.64.136.57 | - | SteamOS | offline |
-| zk-pixel | 100.96.213.111 | - | Android | online |
+| quita | 100.82.51.63 | - | Linux Mint | offline |
+| zk-pixel | 100.96.213.111 | - | Android | offline |
 | zk-note | 100.105.239.55 | - | Android | online |
 
 ## nxiz — FC:34:97:3B:6E:99 — 100.115.135.104
@@ -25,47 +26,60 @@ inclusion: always
 
 | Device | Size | Type | UUID/Label | Mount | Taildrive Share |
 |--------|------|------|------------|-------|-----------------|
-| nvme0n1p1 | 512M | vfat | - | /boot | - |
-| nvme0n1p2 | 476.4G | btrfs | - | / (subvols) | - |
-| sdb1 | 838.2G | btrfs | - | /mnt/repository | `repository` |
-| sda1 | 931.5G | btrfs | - | /mnt/archive | - |
+| nvme0n1p1 | 1G | vfat | boot (90B6-5EC8) | /boot | - |
+| nvme0n1p2 | 325.9G | btrfs | NXIZ (b3821fe9) | / (subvols) | - |
+| sda1 | 838.2G | btrfs | Repository (0d00b77b) | /mnt/repository | `repository` |
+| sdb1 | 931.5G | btrfs | Archive (619e6bb2) | /mnt/archive | `archive` |
 
 **Context vault:** `/mnt/repository/context-vault`
 
-## zrrh — 100.126.60.24
+### Services
+
+**LM Studio (local + mesh-accessible):**
+- Endpoint: `http://localhost:1234` (mesh-accessible for trusted peers)
+- Usage: Handles embeddings and small-model inference tasks; shared inference split across nxiz + zrrh depending on workload
+
+## zrrh — 100.77.90.79
 
 **Role:** Couch PC / Local Inference  
-**OS:** Garuda Linux  
+**OS:** NixOS 26.05 (Yarara)  
 **GPU:** NVIDIA RTX 4090 (primary inference GPU)
 
 ### Storage
 
 | Device | Size | Type | UUID/Label | Mount | Taildrive Share |
 |--------|------|------|------------|-------|-----------------|
-| nvme0n1p1 | 512M | vfat | 5996-AD7F | /boot/efi | - |
-| nvme0n1p2 | 1.8T | btrfs | ZRRH (a94ba4f7) | / (subvols: @, @home, @root, @srv, @cache, @log, @tmp) | - |
+| nvme0n1p1 | 1G | vfat | boot (C5FA-F364) | /boot | - |
+| nvme0n1p2 | 1.5T | btrfs | ZRRH (43b13d4c) | / , /home, /nix/store | - |
 | nvme1n1p1 | 1.3T | btrfs | Media (112f1862) | /mnt/media | `media` |
-| nvme1n1p2 | 2T | btrfs | Games (7b93a14d) | /mnt/games | - |
-| zram | 61.9G | swap | - | - | - |
+| nvme1n1p2 | 2T | btrfs | Games (7b93a14d) | /mnt/games | `games` |
+| zram | 31G | swap | - | - | - |
 
 ### Services
 
-**llmster (LM Studio headless daemon):**
-- Endpoints: `http://zrrh:1234` & `http://nxiz:1234` (accessible via Tailscale mesh)
-- `lms ls` for available models
+**llmster (LM Studio daemon):**
+- Endpoint: `http://zrrh:1234` (accessible via Tailscale mesh)
+- API: OpenAI-compatible (`/v1/models`, `/v1/chat/completions`, `/v1/embeddings`)
+- LLM models: gpt-oss-20b, gpt-oss-20b-heretic, financial-gpt-oss-20b, seed-oss-36b, qwen3-30b-a3b-thinking distill, qwen3.5-35b-a3b, qwen2.5-coder-14b, olmo-3-32b-think, ernie-4.5-21b-a3b, dolphin-mistral-24b, mistral-small-24b-heretic, codestral-22b, phi4-trader, lfm2-1.2b, lfm2-24b-a2b, deepseek-coder-v2-lite, whisper-large-v3-turbo
+- Embedding models: nomic-embed-text-v1.5, qwen3-embedding-4b, mxbai-embed-large-v1
+- Offloaded to nxiz: granite-4-h-tiny, phi-4-mini-instruct, phi-4-mini-reasoning, lfm2-1.2b, qwen2.5-coder-14b, mxbai-embed-large-v1, nomic-embed-text-v1.5
+- Offloaded to adeck: lfm2-1.2b, lfm2-24b-a2b, phi-4-mini-instruct, phi-4-mini-reasoning, mxbai-embed-large-v1, nomic-embed-text-v1.5
+- Compositor: Niri
+- `lms ls` for current model list
 ## adeck — 100.89.32.9
 
-**Role:** Headless Agentic Server / Relay (always on)  
+**Role:** Agentic Server / Relay (always on)  
 **OS:** NixOS 26.05 (Yarara)
 
 ### Storage
 
 | Device | Size | Type | UUID/Label | Mount | Taildrive Share |
 |--------|------|------|------------|-------|-----------------|
-| mmcblk0p1 | 512M | vfat | 0F7B-533B | /boot | - |
-| mmcblk0p2 | 237.9G | ext4 | 43631aea | / | - |
+| mmcblk0p1 | 1G | vfat | boot (0F7B-533B) | /boot | - |
+| mmcblk0p2 | 150G | ext4 | ADECK (43631aea) | / , /nix/store | - |
+| sda1 | 931.5G | btrfs | Echo (ba0a8294) | /mnt/echo | `echo` |
+| sdb | 1.8T | btrfs | vault (b802e750) | /mnt/vault | `vault` |
 | nvme0n1 | 476.9G | - | - | unmounted (legacy SteamOS) | - |
-| sda | 1.8T | btrfs | vault (b802e750) | /mnt/vault | `vault` |
 
 ### Taildrive Mounts
 
@@ -83,16 +97,9 @@ inclusion: always
 - LLM backends: OpenRouter (kimi-k2 primary), fallback chain → deepseek-v3.2, local llmster (gpt-oss-20b-heretic via localhost:1234), gemini-3-flash
 - Local copy: `zk@adeck:~/pulse-log/` (synced via git)
 
-**nanoclaw (WhatsApp AI assistant):**
-- Systemd service: `nanoclaw.service` (enabled, always running)
-- Runtime: Node.js (`dist/index.js`)
-- Path: `zk@adeck:~/nanoclaw/`
-- Interface: WhatsApp (via Anthropic Agents SDK / Claude)
-- Container isolation: Docker-based agent sandboxing
-- Data: `~/nanoclaw/data/`, `~/nanoclaw/store/`
-
 **Other services:**
-- Docker
+- Docker (enabled for agent/service workloads)
+- qBittorrent
 - SSH
 - Tailscale
 
@@ -100,14 +107,23 @@ inclusion: always
 
 **Role:** Gaming  
 **OS:** SteamOS  
-**Status:** offline
+**Note:** Shares hardware with adeck (separate partition on same Steam Deck). With Adam's Steam Deck joining as a dedicated adeck, both can potentially be on mesh simultaneously.
+
+## quita — 100.82.51.63
+
+**Role:** Family laptop (remote support)  
+**OS:** Linux Mint  
+**Note:** Quita's old laptop, reimaged for family use. Tailscale mesh for remote access/support.
 
 ## Taildrive Mesh Summary
 
 **Shares:**
 - `nxiz/repository` → `/mnt/repository` (838.2G btrfs) - Context vault and development repositories
+- `nxiz/archive` → `/mnt/archive` (931.5G btrfs) - Archive storage
 - `zrrh/media` → `/mnt/media` (1.3T btrfs) - Media library
-- `adeck/vault` → `/mnt/vault` (1.8T btrfs) - Backup vault
+- `zrrh/games` → `/mnt/games` (2T btrfs) - Game storage
+- `adeck/vault` → `/mnt/vault` (1.8T btrfs) - Data lake staging + subvolume storage (@staging, @raw, @temp)
+- `adeck/echo` → `/mnt/echo` (931.5G btrfs) - Hot storage for processed knowledge
 
 **Consumers:**
 - `adeck` mounts: `nxiz/repository`, `zrrh/media`

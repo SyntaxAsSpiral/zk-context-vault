@@ -10,7 +10,7 @@
 
 This vault contains:
 
-- **Agent configurations** for multiple AI coding platforms (Kiro, Claude, Codex, Grok)
+- **Agent configurations** for multiple AI coding platforms (Kiro, Claude, Codex, Gemini, Grok, Pi)
 - **Steering rules** that guide agent behavior following Covenant Principles
 - **Skills and Powers** packaged for distribution across platforms
 - **Context workshop** for recipe-based assembly of documentation
@@ -64,7 +64,7 @@ skill-name/
 - `recipe-*.md` - Active recipes for content assembly (ZK-specific examples)
 - `src/assemble.py` - Assembly script (reusable, update paths)
 - `src/sync.py` - Deployment script (reusable, update paths)
-- `recipe-manifest.md` - Deployment tracking log
+- `manifest-recipes.md` - Deployment tracking log
 
 **Output formats:**
 - **Agent Skills** (agentskills.io standard)
@@ -204,7 +204,7 @@ When working with workshop recipes:
 2. **assemble.py** processes recipes → `workshop/staging/`
 3. **Inspect staging** before deployment
 4. **sync.py** deploys staging → target locations **and auto-commits + pushes**
-5. **Manifest** tracks deployments in `recipe-manifest.md`
+5. **Manifest** tracks deployments in `manifest-recipes.md`
 6. Git commit: `🔗 Context Sealed ⟳ {chronohex}` - all in one atomic workflow
 
 **Never commit manually** - the sync workflow owns all context artifact commits.
@@ -215,7 +215,10 @@ When working with workshop recipes:
 - **Kiro**: `agents/agent-roles.md` (slice:agent=kiro)
 - **Claude**: `agents/agent-roles.md` (slice:agent=claudi-claude-code)
 - **Codex**: `agents/agent-roles.md` (slice:agent=gpt-codex)
+- **Gemini**: `agents/agent-roles.md` (slice:agent=gemini-cli)
 - **Grok**: `agents/agent-roles.md` (slice:agent=grok-code)
+- **Pi**: `agents/agent-roles.md` (slice:agent=pi)
+- **Deck agents**: codeck, claudeck, deckini (slice:agent=codeck, claudeck, deckini)
 
 ### Understanding Steering Rules
 - **Global principles**: `agents/steering-global-principles.md`
@@ -241,10 +244,6 @@ When working with workshop recipes:
 6. Run `python workshop/src/sync.py` to deploy
 
 ## Important Constraints
-
-### Protected Paths
-**Do not edit unless explicitly requested:**
-- `docs/**` - May drift or be incomplete
 
 ### Git Semantics
 - **Commits only through `sync.py`** - Auto-commits with chronohex timestamp (`🔗 Context Sealed ⟳ {chronohex}`)

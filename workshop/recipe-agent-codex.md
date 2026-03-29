@@ -19,6 +19,6 @@ sources:
   - slice: agent=gpt-codex
     slice-file: agents/agent-roles.md
   - file: agents/steering-global-operator.md
-  - file: agents/steering-global-network.md
+  - file: agents/steering-global-mesh.md
   - file: agents/steering-global-principles.md
 ```
