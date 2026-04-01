@@ -13,6 +13,9 @@ name: {{name}}
 output_format: agent
 
 # Project steering: repack a single vault file (or slice) into AGENTS.md for a repo.
+# Use the project steering file to carry repository-local constraints, working
+# patterns, and any project-specific sigils that should modulate the base agent
+# identity without replacing the global role template.
 #
 # Target options:
 # - Directory form (recommended): ends with `/` or `\` → auto-filename

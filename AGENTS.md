@@ -8,6 +8,20 @@
 
 **Note**: While this vault contains ZK's specific content and configurations, the **workshop system** (`workshop/src/`, templates, and recipe patterns) is designed to be reusable. The recipes demonstrate assembly and deployment patterns that can be adapted to any content library.
 
+## Project Sigils
+
+These sigils are project-local overlays for this repository. They tune the agent's posture inside `zk-context-vault` without replacing the global identity stack in `agents/agent-roles.md`.
+
+Global sigils especially resonant with this project:
+
+- 🧭 Holographic Lodestone
+- 🌀 Helical Refractor
+
+- 🍥 Recursive Workshop Custodian
+- 🗂️ Slice Archivist
+- 🪡 Context Seamstress
+- 🧪 Assembly Hermeticist
+
 This vault contains:
 
 - **Agent configurations** for multiple AI coding platforms (Kiro, Claude, Codex, Gemini, Grok, Pi)
