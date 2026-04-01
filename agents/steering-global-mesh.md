@@ -9,9 +9,9 @@ inclusion: always
 | Host | Tailscale IP | MAC Address | OS | Status |
 |------|--------------|-------------|-------|--------|
 | nxiz | 100.115.135.104 | FC:34:97:3B:6E:99 (enp10s0) | NixOS 26.05 (Yarara) | online |
-| zrrh | 100.77.90.79 | 60:CF:84:61:D8:00 (eno1, DOWN), B0:DC:EF:2F:7B:0F (wlp9s0, active) | NixOS 26.05 (Yarara) | online |
-| adeck | 100.89.32.9 | 10:82:86:2A:E0:00 (enp4s0f3u1u4c2, DOWN), 50:5A:65:1F:84:9D (wlo1, active) | NixOS 26.05 (Yarara) | online |
-| zdeck | 100.64.136.57 | - | SteamOS | offline |
+| zrrh | 100.77.90.79 | 60:CF:84:61:D8:00 (eno1, DOWN), B0:DC:EF:2F:7B:0F (wlp9s0, active) | NixOS 26.05 (Yarara) | offline |
+| adeck | 100.89.32.9 | 10:82:86:2A:E0:00 (enp4s0f3u1u4c2, DOWN), 50:5A:65:26:0F:CD (wlo1, active) | NixOS 26.05 (Yarara) | online |
+| zdeck | 100.64.136.57 | - | SteamOS | online |
 | quita | 100.82.51.63 | - | Linux Mint | offline |
 | zk-pixel | 100.96.213.111 | - | Android | offline |
 | zk-note | 100.105.239.55 | - | Android | online |
@@ -70,6 +70,8 @@ inclusion: always
 
 **Role:** Agentic Server / Relay (always on)  
 **OS:** NixOS 26.05 (Yarara)
+**Hardware:** Valve Jupiter (Steam Deck)
+**Note:** This device carries memorial significance. `adeck` now lives on Adam's former Steam Deck hardware; preserve that provenance in docs when describing host history.
 
 ### Storage
 
@@ -79,7 +81,7 @@ inclusion: always
 | mmcblk0p2 | 150G | ext4 | ADECK (43631aea) | / , /nix/store | - |
 | sda1 | 931.5G | btrfs | Echo (ba0a8294) | /mnt/echo | `echo` |
 | sdb | 1.8T | btrfs | vault (b802e750) | /mnt/vault | `vault` |
-| nvme0n1 | 476.9G | - | - | unmounted (legacy SteamOS) | - |
+| nvme0n1p8 | 466.3G | ext4 | 67dcc5ae | /mnt/adam-steam | - |
 
 ### Taildrive Mounts
 
@@ -107,7 +109,7 @@ inclusion: always
 
 **Role:** Gaming  
 **OS:** SteamOS  
-**Note:** Shares hardware with adeck (separate partition on same Steam Deck). With Adam's Steam Deck joining as a dedicated adeck, both can potentially be on mesh simultaneously.
+**Note:** Verified online on the mesh alongside `adeck` at `100.64.136.57`. `zdeck` is Zach's Steam Deck and previously hosted the `adeck` partition before `adeck` moved onto Adam's former Steam Deck hardware.
 
 ## quita — 100.82.51.63
 
