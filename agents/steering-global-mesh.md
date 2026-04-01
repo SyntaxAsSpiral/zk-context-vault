@@ -127,3 +127,23 @@ inclusion: always
 
 **Consumers:**
 - `adeck` mounts: `nxiz/repository`, `zrrh/media`
+
+## Taildrop File Transfer
+
+**Inbox:** `/tmp/taildrop-inbox/` on nxiz
+
+Files sent from phones or other mesh nodes via Taildrop land here but require explicit retrieval:
+
+```bash
+# Retrieve pending files (requires sudo)
+sudo tailscale file get /tmp/taildrop-inbox/
+
+# Check inbox contents
+ls -lt /tmp/taildrop-inbox/
+```
+
+**Notes:**
+- Files are owned by root after retrieval
+- The inbox is in `/tmp` — contents do not survive reboot
+- Taildrop sends show as "delivered" on the sender before retrieval on the receiver — always run `sudo tailscale file get` to flush pending transfers
+- `tailscale file get` without sudo will fail with "Access denied" unless `sudo tailscale set --operator=$USER` has been run

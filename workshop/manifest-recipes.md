@@ -1,7 +1,7 @@
 ---
 created: 2026-01-11 09:52:44.314556
 id: recipe-manifest
-modified: '2026-03-29T03:11:56.749804'
+modified: '2026-03-31T17:18:50.403119'
 status: log
 type:
 - log
@@ -10,60 +10,60 @@ type:
 # Recipe Assembly Log
 
 ## Active Recipes
-- **agent/Claudeck/CLAUDE**: Last run 2026-03-29T03:11:16.666956
+- **agent/Claudeck/CLAUDE**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Claudeck/CLAUDE.md`
   - Target: `zk@adeck:~/.claude/CLAUDE.md`
   - Status: ✓ synced
 
-- **agent/Claudi/Claudi**: Last run 2026-03-29T03:11:16.666956
+- **agent/Claudi/Claudi**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Claudi/Claudi.md`
   - Target: `~/.claude/CLAUDE.md`
   - Target: `zk@zrrh:~/.claude/CLAUDE.md`
   - Status: ✓ synced
 
-- **agent/Codeck/AGENTS**: Last run 2026-03-29T03:11:16.666956
+- **agent/Codeck/AGENTS**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Codeck/AGENTS.md`
   - Target: `zk@adeck:~/.codex/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Codex/Codex**: Last run 2026-03-29T03:11:16.666956
+- **agent/Codex/Codex**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Codex/Codex.md`
   - Target: `~/.codex/AGENTS.md`
   - Target: `zk@zrrh:~/.codex/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Deckini/GEMINI**: Last run 2026-03-29T03:11:16.666956
+- **agent/Deckini/GEMINI**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Deckini/GEMINI.md`
   - Target: `zk@adeck:~/.gemini/GEMINI.md`
   - Status: ✓ synced
 
-- **agent/Gemini/Gemini**: Last run 2026-03-29T03:11:16.666956
+- **agent/Gemini/Gemini**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Gemini/Gemini.md`
   - Target: `~/.gemini/GEMINI.md`
   - Target: `zk@zrrh:~/.gemini/GEMINI.md`
   - Status: ✓ synced
 
-- **agent/Kiro/agent**: Last run 2026-03-29T03:11:16.666956
+- **agent/Kiro/agent**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Kiro/agent.md`
   - Target: `~/.kiro/steering/agent.md`
   - Status: ✓ synced
 
-- **agent/Kiro/operator**: Last run 2026-03-29T03:11:16.666956
+- **agent/Kiro/operator**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Kiro/operator.md`
   - Target: `~/.kiro/steering/operator.md`
   - Status: ✓ synced
 
-- **agent/Kiro/mesh**: Last run 2026-03-29T03:11:16.666956
+- **agent/Kiro/mesh**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Kiro/mesh.md`
   - Target: `~/.kiro/steering/mesh.md`
   - Status: ✓ synced
 
-- **agent/Kiro/principles**: Last run 2026-03-29T03:11:16.666956
+- **agent/Kiro/principles**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Kiro/principles.md`
   - Target: `~/.kiro/steering/principles.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-03-29T03:11:16.666956
+- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-03-31T17:17:42.381038
   - Output: `command/doc-consistency-check/doc-consistency-check.md`
   - Target: `~/.claude/commands/doc-consistency-check.md`
   - Target: `~/.codex/prompts/doc-consistency-check.md`
@@ -72,12 +72,12 @@ type:
   - Target: `~/.pi/agent/prompts/doc-consistency-check.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-03-29T03:11:16.666956
+- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-03-31T17:17:42.381038
   - Output: `command/doc-consistency-check/doc-consistency-check.kiro.hook`
   - Target: `~/.kiro/hooks/doc-consistency-check.kiro.hook`
   - Status: ✓ synced
 
-- **command/murder/murder**: Last run 2026-03-29T03:11:16.666956
+- **command/murder/murder**: Last run 2026-03-31T17:17:42.381038
   - Output: `command/murder/murder.md`
   - Target: `~/.claude/commands/murder.md`
   - Target: `~/.codex/prompts/murder.md`
@@ -86,42 +86,42 @@ type:
   - Target: `~/.pi/agent/prompts/murder.md`
   - Status: ✓ synced
 
-- **command/murder/murder.kiro**: Last run 2026-03-29T03:11:16.666956
+- **command/murder/murder.kiro**: Last run 2026-03-31T17:17:42.381038
   - Output: `command/murder/murder.kiro.hook`
   - Target: `~/.kiro/hooks/murder.kiro.hook`
   - Status: ✓ synced
 
-- **power/catppuccin-theming**: Last run 2026-03-29T03:11:16.666956
+- **power/catppuccin-theming**: Last run 2026-03-31T17:17:42.381038
   - Output: `power/catppuccin-theming/`
   - Target: `~/.kiro/powers/installed/catppuccin-theming/`
   - Status: ✓ synced
 
-- **power/mcp-builder**: Last run 2026-03-29T03:11:16.666956
+- **power/mcp-builder**: Last run 2026-03-31T17:17:42.381038
   - Output: `power/mcp-builder/`
   - Target: `~/.kiro/powers/installed/mcp-builder/`
   - Status: ✓ synced
 
-- **power/memory-systems**: Last run 2026-03-29T03:11:16.666956
+- **power/memory-systems**: Last run 2026-03-31T17:17:42.381038
   - Output: `power/memory-systems/`
   - Target: `~/.kiro/powers/installed/memory-systems/`
   - Status: ✓ synced
 
-- **power/nix-os**: Last run 2026-03-29T03:11:16.666956
+- **power/nix-os**: Last run 2026-03-31T17:17:42.381038
   - Output: `power/nix-os/`
   - Target: `~/.kiro/powers/installed/nix-os/`
   - Status: ✓ synced
 
-- **agent/deck (project steering)/AGENTS**: Last run 2026-03-29T03:11:16.666956
+- **agent/deck (project steering)/AGENTS**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/deck (project steering)/AGENTS.md`
   - Target: `zk@adeck:~/AGENTS.md`
   - Status: ✓ synced
 
-- **project/zk-context-vault/AGENTS**: Last run 2026-03-29T03:11:16.666956
+- **project/zk-context-vault/AGENTS**: Last run 2026-03-31T17:17:42.381038
   - Output: `project/zk-context-vault/AGENTS.md`
   - Target: `/mnt/repository/context-vault/AGENTS.md`
   - Status: ✓ synced
 
-- **skill/catppuccin-theming**: Last run 2026-03-29T03:11:16.666956
+- **skill/catppuccin-theming**: Last run 2026-03-31T17:17:42.381038
   - Output: `skill/catppuccin-theming/`
   - Target: `~/.claude/skills/catppuccin-theming/`
   - Target: `~/.codex/skills/catppuccin-theming/`
@@ -132,7 +132,7 @@ type:
   - Target: `~/.gemini/skills/catppuccin-theming/`
   - Status: ✓ synced
 
-- **skill/mcp-builder**: Last run 2026-03-29T03:11:16.666956
+- **skill/mcp-builder**: Last run 2026-03-31T17:17:42.381038
   - Output: `skill/mcp-builder/`
   - Target: `~/.claude/skills/mcp-builder/`
   - Target: `~/.codex/skills/mcp-builder/`
@@ -143,7 +143,7 @@ type:
   - Target: `~/.gemini/skills/mcp-builder/`
   - Status: ✓ synced
 
-- **skill/memory-systems**: Last run 2026-03-29T03:11:16.666956
+- **skill/memory-systems**: Last run 2026-03-31T17:17:42.381038
   - Output: `skill/memory-systems/`
   - Target: `~/.claude/skills/memory-systems/`
   - Target: `~/.codex/skills/memory-systems/`
@@ -154,7 +154,7 @@ type:
   - Target: `~/.gemini/skills/memory-systems/`
   - Status: ✓ synced
 
-- **skill/nix-os**: Last run 2026-03-29T03:11:16.666956
+- **skill/nix-os**: Last run 2026-03-31T17:17:42.381038
   - Output: `skill/nix-os/`
   - Target: `~/.claude/skills/nix-os/`
   - Target: `~/.codex/skills/nix-os/`
@@ -165,13 +165,13 @@ type:
   - Target: `~/.pi/agent/skills/nix-os/`
   - Status: ✓ synced
 
-- **agent/Pi/Pi**: Last run 2026-03-29T03:11:16.666956
+- **agent/Pi/Pi**: Last run 2026-03-31T17:17:42.381038
   - Output: `agent/Pi/Pi.md`
   - Target: `/mnt/repository/pi/.pi/agent/AGENTS.md`
   - Target: `zk@zrrh:~/.pi/agent/AGENTS.md`
   - Status: ✓ synced
 
-- **skill/openrgb**: Last run 2026-03-29T03:11:16.666956
+- **skill/openrgb**: Last run 2026-03-31T17:17:42.381038
   - Output: `skill/openrgb/`
   - Target: `~/.claude/skills/openrgb/`
   - Target: `~/.codex/skills/openrgb/`
@@ -187,6 +187,10 @@ type:
   - Status: ✓ assembled
 
 ## Deployment Log
+
+
+### 2026-03-31T17:18:50.403119
+- Synced 26 deployments
 
 
 ### 2026-03-29T03:11:56.749804
