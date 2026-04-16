@@ -88,6 +88,7 @@ inclusion: always
 - Local copy: `zk@adeck:~/lexemancy-site/` (synced via git)
 
 **Other services:**
+- **Inference Gateway (adeck:1234):** ALL inference requests must be directed to `adeck:1234`. `adeck` acts as the mesh-wide router/gateway; it uses `lmlink` to JIT-load and route models to the appropriate hardware (`zrrh` for large models, `nxiz`/ `adeck` local for small models/embeddings).
 - Docker (enabled for agent/service workloads)
 - qBittorrent
 - SSH
@@ -108,6 +109,45 @@ inclusion: always
 **Role:** Family laptop (remote support)  
 **OS:** Linux Mint  
 **Note:** Quita's old laptop, reimaged for family use. Tailscale mesh for remote access/support.
+
+## Mesh Orchestration (zcli)
+
+`zcli` is the primary wrapper for managing NixOS configurations across the mesh. It automates the distributed build process, ensuring that computationally expensive evaluations and builds are offloaded to `zrrh`.
+
+### Distributed Build Logic
+
+- **Control Host:** `zrrh` (Daemon Forge) acts as the central build server.
+- **Evaluation:** Happens locally on the host where `zcli` is executed (e.g., `nxiz` or `adeck`).
+- **Build:** Offloaded to `zrrh` via SSH/Tailscale when executed from remote hosts.
+- **Deploy:** Updates the target host's configuration.
+
+### Usage
+
+```bash
+# Dry-run eval to check for errors/changes
+zcli deploy nxiz --dry
+
+# Deploy (build + switch) configuration to a host
+zcli deploy nxiz
+
+# Deploy to all known mesh hosts
+zcli deploy all
+```
+
+### Automation Details
+
+- **Auto-Staging:** `zcli` automatically runs `git -C <flake> add -A` before execution to ensure all local changes (including new files) are included in the build.
+- **Local Source:** Uses the local flake directory directly (`/mnt/repository/nix-os`); no manual git pushing is required for deployment.
+- **Connectivity Check:** Verifies Tailscale connectivity to `zrrh` and target hosts before starting.
+
+## Development Mandates
+
+To maintain mesh integrity and reproducibility, the following principles apply:
+
+- **Nix-First Tooling:** Prefer Nix for all package management. Avoid using imperative package managers (`pip`, `npm`, `cargo`, etc.) for global or user-profile installations.
+- **Root Flakes for Projects:** If a project requires specific tooling or dependencies not provided by the global mesh configuration, use a root `flake.nix`. This ensures a declarative, reproducible environment via `nix develop` or `direnv`.
+- **Transient Agent Tooling:** Agents should feel free to use `nix shell` (or `nix run`) to temporarily acquire any specialized tools or utilities needed for a specific task without modifying the permanent system configuration.
+- **Declarative Preference:** Aim for reproducibility. Minimize operations that bypass the Nix store or introduce non-declarative state to the system.
 
 ## Taildrive Mesh Summary
 

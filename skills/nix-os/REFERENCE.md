@@ -2,6 +2,31 @@
 
 Advanced patterns, troubleshooting, and Determinate Systems best practices.
 
+## Advanced Quirks & Mesh Configurations
+
+This section documents specialized Nix configurations unique to the SyntaxAsSpiral mesh.
+
+### 1. Declarative Taildrive (`modules/storage.nix`)
+The mesh avoids NFS/Samba. Local disks are mounted via `fileSystems` (using BTRFS), but cross-host sharing is orchestrated declaratively via **Taildrive**.
+- A `systemd` oneshot service (`taildrive-shares`) is generated dynamically based on per-host `driveShares` definitions.
+- It waits for `tailscaled.service` to come online before executing the generated `tailscale drive share` commands.
+
+### 2. NVIDIA / Wayland Tuning (`modules/nvidia.nix`)
+To ensure stability with Niri and Wayland on `nxiz` and `zrrh`:
+- Proprietary drivers are enforced (`hardware.nvidia.open = false`).
+- Power management is enabled for suspend/resume support.
+- Kernel parameters (`nvidia-drm.fbdev=1`) and explicit modprobe options (`NVreg_PreserveVideoMemoryAllocations=1`) are injected to prevent visual corruption.
+
+### 3. CachyOS Kernel Overlay (`flake.nix`)
+The mesh uses `nix-cachyos-kernel` for `nxiz` and `zrrh` performance.
+- **Quirk**: The `nix-cachyos-kernel` input intentionally **does NOT follow** the global `nixpkgs`. CachyOS patches are heavily tied to specific kernel versions; following `nixpkgs` would trigger a massive, hours-long local kernel recompile.
+- It is applied as a pinned overlay in the `modules` list of the host configuration.
+
+### 4. Agenix Key Mapping (`secrets/secrets.nix`)
+Agenix relies on public SSH keys (Ed25519) mapped to specific secret files (`.age`).
+- **User Key (`zk`)**: Required to encrypt/edit the secret (`agenix -e`).
+- **Host Keys**: Required for the target host to decrypt the file at boot/switch time. If a host's key isn't mapped to a secret it needs, the deployment will fail.
+
 ## Flake Architecture Deep Dive
 
 ### Input Patterns
@@ -667,8 +692,6 @@ packages.aarch64-darwin.default  # Explore attributes
 - **agent-skills-nix**: Framework for Declarative Skill Management and Markdown Transformations.
 - **llm-agents.nix**: Nix package distribution for AI agents (claude-code, codex, amp).
 
-- **Nix Manager**: https://github.com/wcygan/dotfiles/tree/main/.claude/skills/nix-manager
-
 ```json
 {
   "mcpServers": {
@@ -678,6 +701,11 @@ packages.aarch64-darwin.default  # Explore attributes
     "nixos": {
       "command": "uvx",
       "args": [
+        "mcp-nixos"
+      ]
+    }
+  }
+}  "args": [
         "mcp-nixos"
       ]
     }

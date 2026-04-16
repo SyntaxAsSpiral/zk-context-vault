@@ -34,79 +34,68 @@ Comprehensive Nix management following Determinate Systems best practices and th
 
 ## Instructions
 
+### 0. Required Workflow
+
+Every config change follows this sequence — no shortcuts:
+
+1. **Discover** — use `mcp-nixos` to find correct package attr or option path. Never guess.
+2. **Inspect** — read the target file before editing (`inspect_state` or Read tool).
+3. **Patch** — edit the module. Minimal diff.
+4. **Validate** — targeted eval before deploying (see §3).
+5. **Apply** — `zcli deploy <host>` for system switches.
+6. **Report** — surface `rollback_generation` so user can recover: `sudo nixos-rebuild switch --rollback`.
+
+On validation failure: extract the first `error:` line, surface it, stop. Don't retry blind.
+
+**System config vs Home Manager:**
+- System modules (`/mnt/repository/nix-os/hosts/`, `modules/`) → `zcli deploy <host>`
+- Home Manager config → `home-manager build` then `home-manager switch` (no sudo)
+
 ### 1. Understand Repository Context
 
 Check current Nix setup:
-- **Flake location**: `/Users/wcygan/Development/dotfiles/flake.nix`
-- **Installation script**: `scripts/install-packages.sh`
-- **Package management**: `nix profile` (user-scoped, modern approach)
-- **Installer**: Determinate Systems installer (macOS/Linux)
-- **Update mechanism**: `make update` or `nix flake update && nix profile upgrade`
+- **Flake location**: `/mnt/repository/nix-os/`
+- **Package management**: Declarative NixOS configuration via flakes.
+- **Update mechanism**: `zcli deploy <host>`
 
 Read current `flake.nix` to understand:
 - Input sources (currently: `nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"`)
 - Package definitions (buildEnv with ~60+ packages)
 - Outputs: `packages`, `devShells`, `formatter`
-- Supported systems: x86_64-linux, aarch64-linux, x86_64-darwin, aarch64-darwin
+- Supported systems: x86_64-linux
 
 ### 2. Package Management Operations
 
 #### Install New Package
 
 **Process:**
-1. Add package to `flake.nix` in appropriate category
-2. Run `nix flake check` to validate
-3. Run `nix profile upgrade dotfiles` to apply changes
-4. Test package availability
-
-**Example:**
-```nix
-# flake.nix packages section
-paths = [
-  # ... existing packages ...
-
-  # New package
-  cowsay  # Fun terminal tool
-];
-```
-
-```bash
-# Validate and install
-nix flake check
-nix profile upgrade dotfiles
-which cowsay  # Verify installation
-```
+1. Query `mcp-nixos` for correct package attribute name
+2. Add package to appropriate module in `/mnt/repository/nix-os/`
+3. Validate (§3)
+4. Run `zcli deploy <host>` to apply
+5. Verify package availability
 
 #### Update All Packages
 
 **Process:**
 ```bash
-# Update flake inputs (updates nixpkgs revision)
-nix flake update
+# Update flake inputs
+nix flake update -C /mnt/repository/nix-os
 
-# Apply updates to installed profile
-nix profile upgrade dotfiles
-
-# Verify no breakage
-nix profile list
-```
-
-Or use Makefile shortcut:
-```bash
-make update  # Runs both commands above
+# Apply updates to mesh host
+zcli deploy <host>
 ```
 
 #### Remove Package
 
 **Process:**
-1. Remove from `flake.nix`
-2. Run `nix flake check`
-3. Run `nix profile upgrade dotfiles`
-4. Old package remains in store but not in PATH
+1. Remove from flake configuration
+2. Run `zcli deploy <host>` or `nh os switch`
+3. Old package remains in store but not in PATH
 
 **Note**: Garbage collection removes unreferenced packages:
 ```bash
-make clean  # or: nix-collect-garbage -d
+nh clean all
 ```
 
 ### 3. Flake Configuration
@@ -126,17 +115,14 @@ inputs = {
 };
 ```
 
-**Add platform-specific packages:**
+**Add host-specific packages:**
 ```nix
 paths = [
   # Universal packages
   git gh lazygit
-] ++ lib.optionals stdenv.isDarwin [
-  # macOS-only
-  darwin.apple_sdk.frameworks.Security
-] ++ lib.optionals stdenv.isLinux [
-  # Linux-only
-  libnotify
+] ++ lib.optionals (config.networking.hostName == "nxiz") [
+  # nxiz-only
+  nvidia-vaapi-driver
 ];
 ```
 
@@ -153,20 +139,37 @@ devShells = forAllSystems ({ pkgs }: {
     inputsFrom = [ self.packages.${pkgs.system}.default ];
     shellHook = ''
       echo "🐠 Dotfiles development environment"
-      echo "Run: make test-pre"
+      echo "Ready for development."
     '';
   };
 });
 ```
 
-#### Validate Flake
+#### Validate Before Applying
 
-**Always validate before applying:**
+Choose the right tool for the scope of change:
+
 ```bash
-nix flake check        # Full validation (slow, builds everything)
-nix flake metadata     # Quick metadata check
-nix flake show         # Show outputs without building
+# Dry-run full host eval (standard gate before deploy)
+zcli deploy <host> --dry
+
+# Evaluate a specific attribute without building
+nix eval /mnt/repository/nix-os#nixosConfigurations.<host>.config.<attr.path>
+
+# Check a specific package is resolvable
+nix eval /mnt/repository/nix-os#nixosConfigurations.<host>.config.environment.systemPackages --json
+
+# Build only the system closure, no switch
+nix build /mnt/repository/nix-os#nixosConfigurations.<host>.config.system.build.toplevel --dry-run
+
+# Fast syntax+eval check without building anything
+nix flake check /mnt/repository/nix-os --no-build
+
+# Quick metadata check (no eval)
+nix flake metadata /mnt/repository/nix-os
 ```
+
+On error: extract the first `error:` line and surface it. Stop. Don't retry blind.
 
 **Common issues:**
 - Package renamed in nixpkgs (e.g., `du-dust` → `dust`)
@@ -249,64 +252,15 @@ nix flake update
 nix flake check --impure  # NOT recommended for reproducibility
 ```
 
-#### Profile Issues
-
-**List installed profiles:**
-```bash
-nix profile list
-```
-
-**Output format:**
-```
-Index:              0
-Flake attribute:    legacyPackages.aarch64-darwin.dotfiles
-Original flake URL: git+file:///Users/wcygan/Development/dotfiles
-Locked flake URL:   git+file:///Users/wcygan/Development/dotfiles?rev=...
-Store paths:        /nix/store/...-system-packages
-```
+#### Generation Issues
 
 **Rollback to previous generation:**
+Use the boot menu on restart, or temporarily switch:
 ```bash
-nix profile rollback
+/nix/var/nix/profiles/system-*-link/bin/switch-to-configuration test
 ```
 
-**Remove specific profile:**
-```bash
-nix profile remove <index-number>
-```
 
-### 5. CI/CD Integration
-
-This repository uses **Determinate Systems GitHub Actions** for CI.
-
-**GitHub Actions setup** (`.github/workflows/ci.yml`):
-```yaml
-- name: Setup Nix cache
-  uses: DeterminateSystems/magic-nix-cache-action@v2
-
-- name: Install Nix
-  uses: DeterminateSystems/nix-installer-action@v14
-  with:
-    extra-conf: |
-      experimental-features = nix-command flakes
-
-- name: Run install script
-  run: ./install.sh
-```
-
-**Benefits:**
-- Magic Nix Cache: ~90% faster CI (uses GitHub Actions cache)
-- Automatic cache population
-- No configuration required
-
-**Local equivalent:**
-```bash
-# Test installation in Docker
-make test-docker
-
-# Test idempotency
-./install.sh && ./install.sh  # Should succeed twice
-```
 
 ### 6. Best Practices (Determinate Nix Patterns)
 
@@ -327,13 +281,12 @@ inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
 **Correct:**
 ```bash
-nix profile add .              # Pure evaluation
-nix profile upgrade dotfiles   # Pure evaluation
+nix flake check                # Pure evaluation
 ```
 
 **Incorrect:**
 ```bash
-nix profile add . --impure     # BAD: non-reproducible
+nix flake check --impure     # BAD: non-reproducible
 ```
 
 **Exception:** Only use `--impure` if flake explicitly uses `getEnv` or similar
@@ -365,7 +318,6 @@ packages.default = pkgs.buildEnv {
 **Benefits:**
 - Single derivation for all packages
 - Atomic updates (all packages succeed or fail together)
-- Easier to manage than individual `nix profile install` calls
 
 #### Enable Flakes in Config
 
@@ -374,7 +326,7 @@ packages.default = pkgs.buildEnv {
 experimental-features = nix-command flakes
 ```
 
-**This is automatically set by `scripts/install-packages.sh`**
+
 
 ### 7. Development Workflows
 
@@ -422,37 +374,70 @@ nix fmt  # Uses nixpkgs-fmt (defined in flake.nix)
 nixpkgs-fmt flake.nix
 ```
 
-### 8. Migration Guidance
 
-#### From Homebrew
 
-**Don't uninstall Homebrew**—it coexists peacefully. Fish PATH priority:
-1. Homebrew (`/opt/homebrew/bin`) - highest priority
-2. User bins (`~/.local/bin`, `~/bin`)
-3. Language toolchains (`~/.cargo/bin`, `~/go/bin`)
-4. **Nix** (`~/.nix-profile/bin`) - lowest priority
+### 8. Transient Agent Tooling (Daemon Profile)
 
-**Migration strategy:**
+This skill enables agents to maintain a local Nix profile in a user-provided directory, allowing dynamic installation of tools without requiring system-wide package management or sudo access.
+
+#### Quick Start: Setting Up a Local Profile
+The `DAEMON_PROFILE` env var is automatically set to `~/.local/state/daemon-profile` and its `bin` directory is added to the `$PATH` via Home Manager. The agent can use:
+
 ```bash
-# 1. Install package via Nix
-# (add to flake.nix and run nix profile upgrade)
+nix profile add --profile "$DAEMON_PROFILE" "nixpkgs#git"
+```
+The `--profile` flag stores the profile metadata in that location. 
+*(Note: on older Nix versions, the `add` sub-command was called `install`).*
 
-# 2. Test package works
-which package-name  # Should show Homebrew path (higher priority)
+#### Essential Commands for Agents
 
-# 3. Uninstall from Homebrew
-brew uninstall package-name
+**Search for Packages:**
+```bash
+# Search in nixpkgs flake
+nix search nixpkgs git
 
-# 4. Verify Nix version now active
-which package-name  # Should show /nix/store/... path
+# Search in specific (fully qualified) flake
+nix search "github:user/repo[/branch]" <package-name>
+
+# Get detailed JSON output
+nix search nixpkgs python3 --json | jq '.[].pname'
 ```
 
-#### From apt/dnf
+**Manage Daemon Profile:**
+```bash
+# Add package
+nix profile add --profile "$DAEMON_PROFILE" "<flake>#<package>"
 
-**Linux distros:**
-- Nix coexists with system package managers
-- System packages have priority over Nix (via PATH ordering)
-- Use Nix for tools not in distro repos or needing newer versions
+# List installed packages
+nix profile list --profile "$DAEMON_PROFILE"
+
+# Remove by index or element number
+nix profile remove --profile "$DAEMON_PROFILE" 0
+
+# Upgrade packages
+nix profile upgrade --profile "$DAEMON_PROFILE" <package_name>
+nix profile upgrade --profile "$DAEMON_PROFILE" --all
+```
+
+#### General Agent Workflow
+```bash
+# 1. Verify profile path
+echo $DAEMON_PROFILE
+
+# 2. Search for the package
+nix search nixpkgs git
+
+# 3. Add it
+nix profile add --profile "$DAEMON_PROFILE" "nixpkgs#git"
+
+# 4. Use it!
+git --version
+```
+
+**Important Details:**
+- **Path**: The directory containing the profile (`$DAEMON_PROFILE/bin`) is automatically in `$PATH`.
+- **Immutability**: `nixpkgs#git` resolves to the current nixpkgs version. Use `github:user/repo/ref#package` to pin.
+- **Locking**: Only one agent should modify a profile at a time; locking is not automatic.
 
 ### 9. Output Format
 
@@ -469,10 +454,9 @@ When modifying flake.nix:
 - Follow repository formatting style
 
 **After changes, always:**
-1. Validate: `nix flake check`
-2. Test build: `nix build --dry-run`
-3. Apply: `nix profile upgrade dotfiles`
-4. Verify: `nix profile list`
+1. Validate: targeted `nix eval` or `zcli deploy <host> --dry`
+2. Apply: `zcli deploy <host>`
+3. Report rollback generation to user
 
 **Include testing commands:**
 ```bash
@@ -481,21 +465,17 @@ nix flake check
 
 # Show what changed
 nix flake show
-
-# Apply updates
-nix profile upgrade dotfiles
 ```
 
 ## Repository Patterns
 
-This dotfiles repository follows these conventions:
+This NixOS mesh repository follows these conventions:
 
 **File Structure:**
 - `flake.nix` - Package definitions and outputs
 - `flake.lock` - Pinned dependency versions
-- `scripts/install-packages.sh` - Installation wrapper
-- `scripts/link-config.sh` - Dotfile symlinking
-- `config/` - Dotfile configurations (fish, starship, etc.)
+- `hosts/` - Host-specific configuration (`nxiz`, `zrrh`, `adeck`)
+- `modules/` - Shared configuration modules
 
 **Package Organization:**
 Packages grouped by purpose with comments:
@@ -514,16 +494,155 @@ paths = [
 ];
 ```
 
-**Testing:**
-- `make test-pre` - Pre-flight validation
-- `make test-local` - Ephemeral HOME test
-- `make test-docker` - Multi-distro Docker matrix
-
 **Common Commands:**
-- `make install` - Run full installation
-- `make update` - Update flake + upgrade packages
-- `make clean` - Garbage collect
-- `make verify` - Check Nix installation health
+- `zcli deploy <host> --dry` - Dry-run eval without applying
+- `zcli deploy <host>` - Build and apply to a host
+- `nh clean all` - Garbage collect
+
+## Mesh Flake Idioms
+
+Patterns this flake uses that agents must recognize and preserve.
+
+### Custom `my.*` Option Namespace
+
+Host identity and opt-in features flow through `my.*` options defined in `modules/system.nix` and `modules/performance.nix`:
+
+```nix
+# modules/system.nix
+options.my.host = lib.mkOption {
+  type = lib.types.enum [ "nxiz" "adeck" "zrrh" ];
+  description = "Host identifier — selects per-host blocks in shared modules";
+};
+
+# modules/performance.nix
+options.my.performance.enable = lib.mkEnableOption "system-wide performance optimizations";
+```
+
+Each host's `configuration.nix` sets `my.host = "<name>";` — every shared module keys off this.
+
+### `perHost` Lookup Tables
+
+Instead of cascading `lib.mkIf` checks, shared modules declare a `perHost` attrset and select with `h = perHost.${config.my.host}`. Found in `modules/{boot,networking,storage,nh}.nix`:
+
+```nix
+let
+  perHost = {
+    nxiz  = { flake = "/mnt/repository/nix-os"; resolvedDns = true; };
+    adeck = { flake = "/etc/nixos"; resolvedDns = false; };
+    zrrh  = { flake = "/etc/nixos"; resolvedDns = true; };
+  };
+  h = perHost.${config.my.host};
+in {
+  programs.nh.flake = h.flake;
+  services.resolved.enable = h.resolvedDns;
+}
+```
+
+When adding host-divergent config, extend `perHost` rather than sprinkling conditionals.
+
+### Home Manager Integrated into NixOS
+
+HM is bound into each `nixosConfiguration` via `home-manager.nixosModules.home-manager` in `flake.nix`. Key settings:
+
+```nix
+home-manager.useGlobalPkgs = true;        # share nixpkgs with system
+home-manager.useUserPackages = true;      # install to /etc/profiles/per-user/zk
+home-manager.backupFileExtension = "hm-bak";
+home-manager.overwriteBackup = true;      # resolves dotfile collisions on deploy
+home-manager.extraSpecialArgs = { inherit inputs; };  # threads flake inputs into HM
+```
+
+HM modules live under `modules/home/**` and per-host HM entry is `hosts/<host>/home.nix`.
+
+### Inline Derivations in `home.packages`
+
+Ad-hoc derivations live next to their install site — avoid creating separate files for one-off packages. Found in `hosts/{nxiz,adeck,zrrh}/home.nix`:
+
+```nix
+# Prebuilt binary with ELF patch
+pkgs.runCommand "nullclaw-2026.3.1" {
+  src = pkgs.fetchurl { url = "..."; hash = "..."; };
+  nativeBuildInputs = [ pkgs.autoPatchelfHook ];
+} ''install -Dm755 $src $out/bin/nullclaw''
+
+# Go module from GitHub
+pkgs.buildGoModule {
+  pname = "picoclaw";
+  src = pkgs.fetchFromGitHub { owner = "..."; repo = "..."; rev = "..."; hash = "..."; };
+  vendorHash = "...";
+}
+
+# Shell wrapper with runtime deps
+pkgs.writeShellApplication {
+  name = "fzf-emoji";
+  runtimeInputs = [ fzf jq wl-clipboard curl coreutils ];
+  text = ''...'';
+}
+```
+
+Rule of thumb: if it's one derivation used in one place, inline it. If it's used across hosts, make it a module with `options.programs.<name>` (see `modules/home/msgvault.nix` for the reference pattern: `mkEnableOption` + `mkOption` + `lib.mkIf cfg.enable`).
+
+### Overlays for Upstream Fixes
+
+`modules/overlays.nix` holds all `overrideAttrs` surgeries. Pattern is always `_final: prev: { pkg = prev.pkg.overrideAttrs (old: {...}); }`. Real examples:
+
+- `tumbler` rebuilt without `libgepub` to drop webkitgtk dep
+- `lmstudio` rebuilt with patchelf to fix Bun ELF layout corruption
+- `yaziPlugins` namespace created from `flake = false` input source tree
+
+Input-provided overlays are applied per-host in `flake.nix` via `nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];`.
+
+### agenix Secret Flow
+
+Secrets encrypted with recipient SSH keys, decrypted at boot into `/run/secrets/`:
+
+```nix
+# modules/user.nix
+age.identityPaths = [
+  "/etc/ssh/ssh_host_ed25519_key"
+  "/home/zk/.ssh/id_ed25519"
+];
+
+age.secrets.github-token = {
+  file = ../secrets/github-token.age;
+  owner = "zk"; group = "users"; mode = "0400";
+  path = "/run/secrets/github-token";
+};
+```
+
+Recipients declared in `secrets/secrets.nix` (per-file `publicKeys` list). To add a new secret: `agenix -e secrets/new.age` (after adding to `secrets.nix`), then reference via `config.age.secrets.new.path` in the module.
+
+### Home Activation + DAG Ordering
+
+HM activation scripts use `config.lib.dag.entryAfter [ "writeBoundary" ]` to run after file symlinks are in place:
+
+```nix
+home.activation.ensureLocalBin = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+  mkdir -p "$HOME/.local/bin"
+'';
+```
+
+System activation uses `system.activationScripts.<name> = { text = "..."; deps = [ "etc" ]; }` — the `deps` list controls ordering (e.g. SSH host key staging runs after `/etc` is populated).
+
+### `mkOutOfStoreSymlink` for Live Files
+
+For dotfiles that point at mutable paths outside `/nix/store` (edited live, not baked into the system closure):
+
+```nix
+home.file.".pi".source = config.lib.file.mkOutOfStoreSymlink
+  "/mnt/repository/daemonturgy/pi/.pi";
+```
+
+Use for editable config dirs, large data caches, or anything that shouldn't trigger a rebuild on change.
+
+### Flake Outputs (Current)
+
+- `nixosConfigurations.{nxiz,adeck,zrrh}` — host configs
+- `formatter.x86_64-linux` — `nixfmt-rfc-style` (run `nix fmt`)
+- `devShells.x86_64-linux.default` — includes `nixd`, `nil`, `nixfmt`, `statix`, `deadnix` (`nix develop`)
+- `checks.x86_64-linux.{statix,deadnix}` — lint gates (`nix flake check`)
+
+Run `nix fmt` before committing `.nix` changes. Run `nix flake check --no-build` to catch lint regressions cheaply.
 
 ## Reference Documentation
 
@@ -531,32 +650,36 @@ paths = [
 - Zero to Nix (Flakes): https://zero-to-nix.com/concepts/flakes/
 - Nix.dev (Flakes): https://nix.dev/concepts/flakes.html
 - NixOS Wiki: https://nixos.wiki/wiki/Flakes
-- Repository: /Users/wcygan/Development/dotfiles/
+
 
 ## Quick Reference
 
 **Essential Commands:**
 ```bash
-# Package management
-nix search nixpkgs <package>     # Search for package
-nix profile list                 # List installed packages
-nix profile upgrade dotfiles     # Apply flake changes
-nix-collect-garbage -d           # Clean old generations
+# Deploy
+zcli deploy <host>                   # Apply flake changes
+zcli deploy <host> --dry             # Dry-run eval, no switch
+zcli deploy all                      # Deploy all mesh hosts
+
+# Targeted evaluation (prefer over full deploy for validation)
+nix eval /mnt/repository/nix-os#nixosConfigurations.<host>.config.<attr>
+nix build /mnt/repository/nix-os#nixosConfigurations.<host>.config.system.build.toplevel --dry-run
+nix flake check /mnt/repository/nix-os --no-build
+
+# Package discovery (use mcp-nixos first)
+nix search nixpkgs <package>         # Fallback search
 
 # Flake management
-nix flake update                 # Update all inputs
-nix flake check                  # Validate flake
-nix flake show                   # Display outputs
-nix flake metadata               # Show metadata
+nix flake update /mnt/repository/nix-os   # Update all inputs
+nix flake show /mnt/repository/nix-os     # Display outputs
+nix flake metadata /mnt/repository/nix-os # Show metadata
+
+# Garbage collection
+nh clean all                         # Clean old generations
+nix store gc --dry-run               # Preview cleanup
 
 # Development
-nix develop                      # Enter dev shell
-nix build                        # Build package
-nix fmt                          # Format Nix code
-nix run .#package                # Run package
-
-# Troubleshooting
-nix store info                   # Store statistics
-nix store gc --dry-run           # Preview cleanup
-nix profile rollback             # Revert to previous
+nix develop                          # Enter dev shell
+nix fmt                              # Format Nix code
+nix shell nixpkgs#<tool>             # Transient tool (one-shot)
 ```
