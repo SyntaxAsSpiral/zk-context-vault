@@ -18,7 +18,7 @@ inclusion: always
 
 ## nxiz — FC:34:97:3B:6E:99 — 100.115.135.104
 
-**Role:** Primary Workstation  
+**Role:** Workstation  
 **OS:** NixOS 26.05 (Yarara)  
 **GPU:** NVIDIA RTX 3070
 
@@ -41,7 +41,7 @@ inclusion: always
 
 ## zrrh — 100.77.90.79
 
-**Role:** Couch PC / Local Inference  
+**Role:** Daemon Forge  
 **OS:** NixOS 26.05 (Yarara)  
 **GPU:** NVIDIA RTX 4090 (primary inference GPU)
 
@@ -55,23 +55,12 @@ inclusion: always
 | nvme1n1p2 | 2T | btrfs | Games (7b93a14d) | /mnt/games | `games` |
 | zram | 31G | swap | - | - | - |
 
-### Services
-
-**llmster (LM Studio daemon):**
-- Endpoint: `http://zrrh:1234` (accessible via Tailscale mesh)
-- API: OpenAI-compatible (`/v1/models`, `/v1/chat/completions`, `/v1/embeddings`)
-- LLM models: gpt-oss-20b, gpt-oss-20b-heretic, financial-gpt-oss-20b, seed-oss-36b, qwen3-30b-a3b-thinking distill, qwen3.5-35b-a3b, qwen2.5-coder-14b, olmo-3-32b-think, ernie-4.5-21b-a3b, dolphin-mistral-24b, mistral-small-24b-heretic, codestral-22b, phi4-trader, lfm2-1.2b, lfm2-24b-a2b, deepseek-coder-v2-lite, whisper-large-v3-turbo
-- Embedding models: nomic-embed-text-v1.5, qwen3-embedding-4b, mxbai-embed-large-v1
-- Offloaded to nxiz: granite-4-h-tiny, phi-4-mini-instruct, phi-4-mini-reasoning, lfm2-1.2b, qwen2.5-coder-14b, mxbai-embed-large-v1, nomic-embed-text-v1.5
-- Offloaded to adeck: lfm2-1.2b, lfm2-24b-a2b, phi-4-mini-instruct, phi-4-mini-reasoning, mxbai-embed-large-v1, nomic-embed-text-v1.5
-- Compositor: Niri
-- `lms ls` for current model list
 ## adeck — 100.89.32.9
 
 **Role:** Agentic Server / Relay (always on)  
 **OS:** NixOS 26.05 (Yarara)
 **Hardware:** Valve Jupiter (Steam Deck)
-**Note:** This device carries memorial significance. `adeck` now lives on Adam's former Steam Deck hardware; preserve that provenance in docs when describing host history.
+**Note:** This device carries memorial significance. 🕯️
 
 ### Storage
 
@@ -94,16 +83,19 @@ inclusion: always
 
 **pulse-generator (systemd timer):**
 - Schedule: Daily at 02:24 PST
-- Script: `src/github_status_rotator.py` from `/home/zk/pulse-log/` venv
+- Script: `src/github_status_rotator.py` from `/home/zk/lexemancy-site/` venv
 - Domain: lexemancy.com (GitHub Pages)
-- LLM backends: OpenRouter (kimi-k2 primary), fallback chain → deepseek-v3.2, local llmster (gpt-oss-20b-heretic via localhost:1234), gemini-3-flash
-- Local copy: `zk@adeck:~/pulse-log/` (synced via git)
+- Local copy: `zk@adeck:~/lexemancy-site/` (synced via git)
 
 **Other services:**
 - Docker (enabled for agent/service workloads)
 - qBittorrent
 - SSH
 - Tailscale
+- msgvault
+- Hermes agent
+- zk data lake
+- sideriod gnomon
 
 ## zdeck — 100.64.136.57
 
