@@ -15,8 +15,10 @@ target_locations:
   - path: ~/.kiro/hooks/doc-consistency-check.kiro.hook
   - path: ~/.claude/commands/doc-consistency-check.md
   - path: ~/.codex/prompts/doc-consistency-check.md
+  - path: ~/.gemini/prompts/doc-consistency-check.md
   - path: zk@adeck:~/.claude/commands/doc-consistency-check.md
   - path: zk@adeck:~/.codex/prompts/doc-consistency-check.md
+  - path: zk@adeck:~/.gemini/prompts/doc-consistency-check.md
   - path: ~/.pi/agent/prompts/doc-consistency-check.md
 
 sources:

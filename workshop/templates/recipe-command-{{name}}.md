@@ -28,6 +28,7 @@ target_locations:
   - path: ~/.claude/commands/{{name}}.md       # Claude uses commands
   - path: ~/.codex/prompts/{{name}}.md         # Codex uses prompts
   - path: ~/.cursor/commands/{{name}}.md       # Cursor uses commands
+  - path: ~/.gemini/prompts/{{name}}.md        # Gemini uses prompts
   
   # Project scope (only available in current project)
   # - path: .kiro/hooks/{{name}}.kiro.hook
