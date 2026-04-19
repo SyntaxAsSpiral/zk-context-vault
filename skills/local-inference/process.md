@@ -3,6 +3,51 @@
 How to run a loadability + coherence probe against LM Studio with the
 Python SDK, without touching any live preset.
 
+## JIT load config — persistent per-model defaults
+
+LM Studio's "Remember settings" checkbox in the GUI writes to:
+
+```
+~/.lmstudio/.internal/user-concrete-model-default-config/<author>/<repo>/<file>.gguf.json
+```
+
+This is the authoritative path for per-model JIT defaults. When LM Studio auto-loads a model (JIT), it reads these files. Structure:
+
+```json
+{
+  "preset": "",
+  "operation": { "fields": [] },
+  "load": {
+    "fields": [
+      { "key": "llm.load.contextLength",               "value": 32768 },
+      { "key": "llm.load.llama.flashAttention",         "value": true },
+      { "key": "llm.load.llama.kCacheQuantizationType", "value": { "checked": true, "value": "q4_0" } },
+      { "key": "llm.load.llama.vCacheQuantizationType", "value": { "checked": true, "value": "q4_0" } }
+    ]
+  }
+}
+```
+
+**Do not use `lms load` to set these** — that bypasses JIT config and conflicts with operator slot/timeout settings. Write the JSON files directly, then the next JIT load picks them up.
+
+## KV cache quantization — 8GB VRAM context breakthrough
+
+On nxiz (RTX 3070, 8 GB VRAM), vanilla 8B models top out at 8K–16K context. Adding Q4 KV cache quantization + flash attention unlocks **32K** on all proven 8B models:
+
+| key | value | effect |
+|-----|-------|--------|
+| `llm.load.llama.flashAttention` | `true` | required for V-cache quant |
+| `llm.load.llama.kCacheQuantizationType` | `{checked: true, value: "q4_0"}` | ~4× KV footprint reduction |
+| `llm.load.llama.vCacheQuantizationType` | `{checked: true, value: "q4_0"}` | same |
+
+This is the config for all NXIZ 8B slots. Exception: `qwen2.5-7b-instruct` has a native 32K rope config and doesn't need KV quant — flash only.
+
+**zrrh (RTX 4090, 24 GB):** No KV quant needed. Use native context lengths, flash attention and `offloadKVCacheToGpu: true` for large-context (100K+) runs.
+
+## Context optimize probe
+
+`scripts/ctx_optimize_probe.py` sweeps config combinations at a context ladder `[32768, 16384, 8192]` and records best config + a respond sample per model. Evidence lives in `runs/fit/20260419T-nxiz-ctx-optimize/`.
+
 ## Why SDK + why sandbox
 
 - **SDK**: LM Studio's Python SDK lets you JIT-load a model for the life of one request, pass per-load config, and unload. This is the "throwaway eval" surface — the complement to the GUI's persistent-preset surface.
@@ -40,6 +85,30 @@ Model load error:
 ```
 
 There's no distinction in the error between "KV won't fit in VRAM", "weights + KV exceed total memory", or "this arch rejects that rope config". Treat all load failures as "try the next rung down" and let the ladder tell you the ceiling.
+
+## Proven NXIZ models (as of 2026-04-19)
+
+All wired into pi's NXIZ provider at these JIT-configured context windows:
+
+| model | ctx | load_config | tool_calls |
+|-------|-----|-------------|------------|
+| hermes-3-llama-3.1-8b | 32768 | q4kv+flash | proven |
+| mistral-nemo-instruct-2407 | 32768 | q4kv+flash | proven |
+| qwen2.5-7b-instruct | 32768 | flash only | proven |
+| meta-llama-3.1-8b-instruct | 16384 | q4kv+flash | proven |
+
+Llama 3.1 8B is held at 16K — 32K requires GPU layer offload (`gpu.ratio`) and the JIT config key is unresolved. Evidence: `runs/fit/20260419T-nxiz-ctx-optimize/REPORT.md`.
+
+**14B models moved to zrrh.** qwen2.5-14b-instruct and qwen2.5-coder-14b-instruct are now on zrrh at 131072 ctx (no quant tricks needed on 4090). Delete the nxiz GGUFs if disk is tight.
+
+## 8B tool caller survey (2026-04-19)
+
+Two failure modes found probing 8–10B candidates on nxiz:
+
+- **llama-xlam-2-8b-fc-r**: emits tool calls as a JSON array in `content`, not in `tool_calls`. Not OpenAI-shape — incompatible with pi without a custom parser. Evidence: `runs/fit/20260419T-nxiz-8b-toolcallers/`.
+- **qwen_qwen3-8b**: enters thinking mode; 26+ seconds with no `tool_calls` emitted. Unusable in pi pipeline as-is.
+
+Both models remain on nxiz but are not wired into pi.
 
 ## What probes need to capture
 
@@ -88,6 +157,7 @@ Wrapper: `scripts/tool_call_probe.py`.
 
 ## What this does NOT cover
 
-- Tool-call round-trip probing. `respond()` with a plain string sends no tools; to reproduce the gpt-oss Harmony-sentinel leakage you need `llm.act()` with tool definitions matching the harness' contract. Separate probe, separate script.
-- Streaming-layer inspection. Per-token callbacks are needed to catch in-stream sentinel drift; add a `PredictionCallback` when we go after the post-4.10 gpt-oss regression.
-- Remote-gateway probing. `load_new_instance` via the mesh (e.g. `adeck:1234` routing to a `zrrh`-hosted model) is possible for inference but the load path has been unreliable. For now: SDK runs on the host that owns the weights.
+- **Tool-call round-trip probing.** `respond()` with a plain string sends no tools; to reproduce the gpt-oss Harmony-sentinel leakage you need `llm.act()` with tool definitions matching the harness' contract. Separate probe, separate script. **Still pending** on all four proven NXIZ models.
+- **Streaming-layer inspection.** Per-token callbacks are needed to catch in-stream sentinel drift; add a `PredictionCallback` when we go after the post-4.10 gpt-oss regression.
+- **Remote-gateway probing.** `load_new_instance` via the mesh (e.g. `adeck:1234` routing to a `zrrh`-hosted model) is possible for inference but the load path has been unreliable. For now: SDK runs on the host that owns the weights.
+- **GPU offload key for Llama 3.1 8B 32K.** `gpu.ratio` (or equivalent `llm.load.*` key) for layer offload is unresolved in JIT config format. Until found, meta-llama-3.1-8b-instruct stays at 16K.
