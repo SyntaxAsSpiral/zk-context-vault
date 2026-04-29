@@ -12,7 +12,7 @@ name: Pi
 output_format: agent
 
 target_locations:
-  - path: /mnt/repository/pi/.pi/agent/AGENTS.md
+  - path: /mnt/repository/daemonturgy/pi/AGENTS.md
   - path: zk@zrrh:~/.pi/agent/AGENTS.md
 sources:
   - slice: agent=pi
