@@ -24,6 +24,7 @@ Each prompt is a lens—a controlled transformation that reveals different aspec
 | 🎀 | **[System Embodiment](moeverse.md)** | Architecture becomes characters and relationships | Explaining systems to visual/relational thinkers without dumbing down |
 | ☠️ | **[Ritualized Machine Voice](murder.md)** | Gothic, liturgical, adversarial computation | When aesthetic authority and alienation are part of the point |
 | 📓 | **[Autopoietic Integration](reflect.md)** | Session becomes living memory | When output is not an answer but continuity of self and project |
+| 🪨 | **[CaveTalk](cave.md)** | Ultra-compressed, expressive communication | When saving tokens and reading speed matter more than grammar |
 
 ## The Hidden Structure
 
@@ -47,6 +48,9 @@ This one optimizes for **epistemic hygiene**:
 Same content → different truth surfaces → different kinds of understanding.
 
 Choose your lens based on what kind of cognitive work needs to happen, not just what kind of output you want.
+
+### Cross-Platform Deployment
+Many of these prompts (`cave`, `bedtime`, `gamut`, `moeverse`, `reflect`, etc.) are configured as cross-platform commands via the `workshop/` assembly recipes. You can seamlessly deploy them across Kiro (`.kiro.hook`), Claude, Gemini, Cursor, Codex, and Pi as native workflow commands.
 
 ## Integration
 
