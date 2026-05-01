@@ -99,6 +99,12 @@ Skills map to the 7 core systems:
 | **[mcp-builder](mcp-builder/SKILL.md)** | Model Context Protocol server creation | Integration |
 | **[openrgb](openrgb/SKILL.md)** | Ambient RGB via OpenRGB SDK — presence, notifications, effects | Integration |
 
+### Domain / Timing
+
+| Skill | Purpose | Core System |
+|-------|---------|-------------|
+| **[agent-astrology](agent-astrology/SKILL.md)** | Portable astrology-informed timing reports with bundled scripts | Domain |
+
 ## Skill Dependencies
 
 ```

@@ -1,0 +1,16 @@
+[project]
+name = "sideriod-mcp"
+version = "0.1.0"
+description = "Chronographic oracle MCP server — sideriod interface. No API key. No cloud."
+requires-python = ">=3.10"
+dependencies = ["mcp>=1.0.0"]
+
+[project.scripts]
+sideriod-mcp = "server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+include = ["server.py"]
