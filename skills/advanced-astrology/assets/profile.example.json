@@ -1,0 +1,16 @@
+{
+  "name": "Example Person",
+  "birth": {
+    "date": "1983-02-24",
+    "time": "02:57",
+    "timezone": "America/Denver",
+    "lat": 34.4048,
+    "lon": -103.2052
+  },
+  "current_location": {
+    "label": "Clovis, NM",
+    "lat": 34.4048,
+    "lon": -103.2052,
+    "timezone": "America/Denver"
+  }
+}
