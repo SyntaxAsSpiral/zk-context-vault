@@ -25,6 +25,7 @@ target_locations:
   - path: ~/.pi/agent/skills/memory-systems/
   - path: zk@adeck:~/.claude/skills/memory-systems/
   - path: zk@adeck:~/.codex/skills/memory-systems/
+  - path: zk@adeck:~/.hermes/skills/user/memory-systems/
   - path: ~/.gemini/antigravity/skills/memory-systems/
   - path: ~/.gemini/skills/memory-systems/
 

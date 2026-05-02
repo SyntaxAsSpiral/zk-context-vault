@@ -327,6 +327,19 @@ def _agentskills_validate(name: str, description: str) -> Optional[str]:
     return None
 
 
+def _strip_frontmatter(text: str) -> str:
+    """Remove leading YAML frontmatter block from markdown text."""
+    if not text.startswith("---"):
+        return text
+    try:
+        import io
+        post = frontmatter.load(io.StringIO(text))
+        # Return everything after the frontmatter block (i.e., body only)
+        return post.content.strip()
+    except Exception:
+        return text
+
+
 def _format_yaml_frontmatter(data: Dict[str, Any]) -> str:
     dumped = yaml.safe_dump(data, sort_keys=False, allow_unicode=True).strip()
     return f"---\n{dumped}\n---"
@@ -502,6 +515,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, staging_dir:
         if not isinstance(body_sources, list):
             body_sources = []
         body = assemble_content(body_sources, base_path, template=None) or ""
+        body = _strip_frontmatter(body)
         skill_md_text = _format_yaml_frontmatter(fm) + "\n\n" + body.strip() + "\n"
         _write_text(out_root / "SKILL.md", skill_md_text, dry_run)
 
@@ -526,111 +540,7 @@ def build_output_artifacts(section: RecipeSection, base_path: Path, staging_dir:
             OutputArtifact(relpath=(Path("skill") / skill_name).as_posix(), abspath=out_root, targets=targets, is_dir=True)
         ]
 
-        # Optional: also emit as Kiro power.
-        if cfg.get("also_output_as_power"):
-            power_root = staging_dir / "power" / skill_name
-            steering_dir = power_root / "steering"
-            # Minimal mapping: POWER.md carries frontmatter + body; steering mirrors markdown body.
-            power_fm = dict(fm)
-            power_fm.setdefault("generated_from_skill", True)
-            power_md = _format_yaml_frontmatter(power_fm) + "\n\n" + body.strip() + "\n"
-            _write_text(power_root / "POWER.md", power_md, dry_run)
-            _write_text(steering_dir / "skill.md", body.strip() + "\n", dry_run)
-
-            # Copy reference markdowns into steering/ (only .md files).
-            refs = sources_cfg.get("references") or []
-            if isinstance(refs, list):
-                for item in refs:
-                    if not isinstance(item, dict):
-                        continue
-                    out_name = str(item.get("output_name") or "")
-                    if out_name.lower().endswith(".md"):
-                        data = _read_source_bytes(item, base_path)
-                        if data is not None:
-                            _write_bytes(steering_dir / out_name, data, dry_run)
-
-            artifacts.append(
-                OutputArtifact(
-                    relpath=(Path("power") / skill_name).as_posix(), abspath=power_root, targets=targets, is_dir=True
-                )
-            )
-
         return artifacts
-
-    if output_format == "power":
-        sources_cfg = cfg.get("sources") or {}
-        if not isinstance(sources_cfg, dict):
-            print(f"☠☠☠ >>> SOURCE·CONFIGURATION·HERESY ☠☠☠")
-            print(f"Power sources must be a mapping of roles: {section.recipe_file}")
-            print(f"|001101|—|000000|—|111000|— void communion")
-            return []
-
-        power_name = recipe_name
-        power_root = staging_dir / "power" / power_name
-        steering_dir = power_root / "steering"
-
-        metadata = cfg.get("metadata") or {}
-        if not isinstance(metadata, dict):
-            metadata = {}
-
-        power_md_sources = sources_cfg.get("power_md") or []
-        if isinstance(power_md_sources, dict):
-            power_md_sources = [power_md_sources]
-        if not isinstance(power_md_sources, list):
-            power_md_sources = []
-
-        template = cfg.get("template")
-        body = assemble_content(power_md_sources, base_path, template=template) or ""
-        if metadata:
-            power_md = _format_yaml_frontmatter(metadata) + "\n\n" + body.strip() + "\n"
-        else:
-            power_md = body.strip() + "\n"
-        _write_text(power_root / "POWER.md", power_md, dry_run)
-
-        # mcp_config -> root (default mcp.json)
-        mcp_items = sources_cfg.get("mcp_config") or []
-        if isinstance(mcp_items, dict):
-            mcp_items = [mcp_items]
-        if isinstance(mcp_items, list):
-            for item in mcp_items:
-                if not isinstance(item, dict):
-                    continue
-                out_name = str(item.get("output_name") or "mcp.json")
-                data = _read_source_bytes(item, base_path)
-                if data is None:
-                    continue
-                _write_bytes(power_root / out_name, data, dry_run)
-
-        # steering_files -> steering/
-        steering_items = sources_cfg.get("steering_files") or []
-        if isinstance(steering_items, dict):
-            steering_items = [steering_items]
-        if isinstance(steering_items, list):
-            for item in steering_items:
-                if not isinstance(item, dict):
-                    continue
-                out_name = str(item.get("output_name") or "")
-                if not out_name:
-                    file_path = item.get("file") or item.get("slice-file")
-                    out_name = Path(str(file_path or "steering.md")).name
-                if not out_name.lower().endswith(".md"):
-                    print(f"☠☠☠ >>> POWER·STEERING·HERESY ☠☠☠")
-                    print(f"Steering files must be .md: {out_name} ({section.recipe_file})")
-                    print(f"|001101|—|000000|—|111000|— skipping corrupted entry")
-                    continue
-                data = _read_source_bytes(item, base_path)
-                if data is None:
-                    continue
-                _write_bytes(steering_dir / out_name, data, dry_run)
-
-        return [
-            OutputArtifact(
-                relpath=(Path("power") / power_name).as_posix(),
-                abspath=power_root,
-                targets=_targets_from_section(section),
-                is_dir=True,
-            )
-        ]
 
     if output_format in ("command", "prompt", "hook"):
         sources_cfg = cfg.get("sources") or {}

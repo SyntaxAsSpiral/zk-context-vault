@@ -20,6 +20,7 @@ target_locations:
   - path: ~/.codex/skills/openrgb/
   - path: zk@adeck:~/.claude/skills/openrgb/
   - path: zk@adeck:~/.codex/skills/openrgb/
+  - path: zk@adeck:~/.hermes/skills/user/openrgb/
   - path: zk@zrrh:~/.claude/skills/openrgb/
   - path: zk@zrrh:~/.codex/skills/openrgb/
   - path: zk@zrrh:~/.gemini/skills/openrgb/

@@ -25,6 +25,7 @@ target_locations:
   - path: ~/.pi/agent/skills/local-inference/
   - path: zk@adeck:~/.claude/skills/local-inference/
   - path: zk@adeck:~/.codex/skills/local-inference/
+  - path: zk@adeck:~/.hermes/skills/user/local-inference/
   - path: ~/.gemini/antigravity/skills/local-inference/
   - path: ~/.gemini/skills/local-inference/
 

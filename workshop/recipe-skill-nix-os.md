@@ -15,6 +15,7 @@ target_locations:
   - path: ~/.codex/skills/nix-os/
   - path: zk@adeck:~/.claude/skills/nix-os/
   - path: zk@adeck:~/.codex/skills/nix-os/
+  - path: zk@adeck:~/.hermes/skills/user/nix-os/
   - path: ~/.gemini/antigravity/skills/nix-os/
   - path: ~/.gemini/skills/nix-os/
   - path: ~/.pi/agent/skills/nix-os/

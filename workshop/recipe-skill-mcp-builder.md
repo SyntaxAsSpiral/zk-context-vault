@@ -34,6 +34,7 @@ target_locations:
   - path: ~/.pi/agent/skills/mcp-builder/
   - path: zk@adeck:~/.claude/skills/mcp-builder/
   - path: zk@adeck:~/.codex/skills/mcp-builder/
+  - path: zk@adeck:~/.hermes/skills/user/mcp-builder/
   - path: ~/.gemini/antigravity/skills/mcp-builder/
   - path: ~/.gemini/skills/mcp-builder/
 

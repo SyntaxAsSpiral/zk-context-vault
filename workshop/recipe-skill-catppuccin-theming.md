@@ -25,6 +25,7 @@ target_locations:
   - path: ~/.pi/agent/skills/catppuccin-theming/
   - path: zk@adeck:~/.claude/skills/catppuccin-theming/
   - path: zk@adeck:~/.codex/skills/catppuccin-theming/
+  - path: zk@adeck:~/.hermes/skills/user/catppuccin-theming/
   - path: ~/.gemini/antigravity/skills/catppuccin-theming/
   - path: ~/.gemini/skills/catppuccin-theming/
 
