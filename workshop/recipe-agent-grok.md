@@ -11,10 +11,13 @@ name: Grok
 output_format: agent
 
 target_locations:
-  - path: ~/.grok/agents/grok-vault.md
-  - path: zk@adeck:~/.grok/agents/grok-vault.md   # Grok on adeck (Steam Deck agentic server)
-  # Project-local agent profile (add when .grok/ harness is active in this vault):
-  # - path: /mnt/repository/context-vault/.grok/agents/grok-vault.md
+  - path: ~/.grok/AGENTS.md
+  - path: zk@adeck:~/.grok/AGENTS.md   # Global rules on adeck (applies to all sessions)
+  # Optional named agent profile (for explicit --agent-profile use of the full exocortex context):
+  # - path: ~/.grok/agents/grok-vault.md
+  # - path: zk@adeck:~/.grok/agents/grok-vault.md
+  # Project-local (inside this vault):
+  # - path: /mnt/repository/context-vault/.grok/AGENTS.md
 
 sources:
   - slice: agent=grok
