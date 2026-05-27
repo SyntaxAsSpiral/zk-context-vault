@@ -28,6 +28,9 @@ target_locations:
   - path: zk@adeck:~/.hermes/skills/user/memory-systems/
   - path: ~/.gemini/antigravity/skills/memory-systems/
   - path: ~/.gemini/skills/memory-systems/
+  - path: ~/.grok/skills/memory-systems/           # Grok user-scoped
+  - path: zk@adeck:~/.grok/skills/memory-systems/  # Mesh (adeck)
+  - path: /mnt/repository/context-vault/.grok/skills/memory-systems/  # Project-scoped in this vault
 
 # Source mapping to skill structure
 sources:

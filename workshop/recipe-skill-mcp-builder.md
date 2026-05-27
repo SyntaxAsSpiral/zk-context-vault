@@ -37,6 +37,9 @@ target_locations:
   - path: zk@adeck:~/.hermes/skills/user/mcp-builder/
   - path: ~/.gemini/antigravity/skills/mcp-builder/
   - path: ~/.gemini/skills/mcp-builder/
+  - path: ~/.grok/skills/mcp-builder/           # Grok user-scoped
+  - path: zk@adeck:~/.grok/skills/mcp-builder/  # Mesh (adeck)
+  - path: /mnt/repository/context-vault/.grok/skills/mcp-builder/  # Project-scoped in this vault
 
 # Source mapping to skill structure
 sources:

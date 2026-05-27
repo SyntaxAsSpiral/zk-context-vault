@@ -26,6 +26,9 @@ output_format: skill  # Creates Agent Skills standard structure
 target_locations:
   - path: ~/.claude/skills/{{name}}/
   - path: ~/.codex/skills/{{name}}/   # Optional: if Codex supports skills folder
+  - path: ~/.grok/skills/{{name}}/     # Grok user-scoped
+  - path: /mnt/repository/context-vault/.grok/skills/{{name}}/  # Project-scoped in this vault
+  - path: zk@adeck:~/.grok/skills/{{name}}/  # Mesh (adeck)
 
 # Source mapping to skill structure
 sources:

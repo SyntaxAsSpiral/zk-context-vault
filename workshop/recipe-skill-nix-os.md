@@ -19,6 +19,9 @@ target_locations:
   - path: ~/.gemini/antigravity/skills/nix-os/
   - path: ~/.gemini/skills/nix-os/
   - path: ~/.pi/agent/skills/nix-os/
+  - path: ~/.grok/skills/nix-os/           # Grok user-scoped
+  - path: zk@adeck:~/.grok/skills/nix-os/  # Mesh (adeck)
+  - path: /mnt/repository/context-vault/.grok/skills/nix-os/  # Project-scoped in this vault
 
 sources:
   skill_md:

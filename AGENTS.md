@@ -230,7 +230,7 @@ When working with workshop recipes:
 - **Claude**: `agents/agent-roles.md` (slice:agent=claudi-claude-code)
 - **Codex**: `agents/agent-roles.md` (slice:agent=gpt-codex)
 - **Gemini**: `agents/agent-roles.md` (slice:agent=gemini-cli)
-- **Grok**: `agents/agent-roles.md` (slice:agent=grok-code)
+- **Grok**: `agents/agent-roles.md` (slice:agent=grok)
 - **Pi**: `agents/agent-roles.md` (slice:agent=pi)
 - **Deck agents**: codeck, claudeck, deckini (slice:agent=codeck, claudeck, deckini)
 
@@ -256,6 +256,14 @@ When working with workshop recipes:
 4. Run `python workshop/src/assemble.py` to generate staging
 5. Inspect `workshop/staging/`
 6. Run `python workshop/src/sync.py` to deploy
+
+### Grok Harness Integration
+- **Project rules**: Root `AGENTS.md` (this file after assembly) + any subdir `AGENTS.md` are auto-loaded by Grok for every session in the vault. Deeper = higher precedence.
+- **Agent profiles**: See `.grok/agents/grok-vault.md` (after recipe deployment) and `workshop/recipe-agent-grok.md`. Invoke with `grok --agent-profile .grok/agents/grok-vault.md` or set `GROK_AGENT`.
+- **Skills & hooks**: `.grok/skills/` and `.grok/hooks/` provide highest-priority local extensions. Many vault `skills/*/` are immediately usable (description-driven auto-invocation + `/<name>` shorthand).
+- **MCP**: `.grok/config.toml` for project overrides (sideriod and future vault services). Live mesh MCPs (e.g. sideriod) appear via system announcements.
+- **Inspection**: `grok inspect` shows exactly which rules, skills, and agents are active in the current session.
+- **Full file locations table + architecture**: [agents/README.md](agents/README.md) and [.grok/README.md](.grok/README.md).
 
 ## Important Constraints
 

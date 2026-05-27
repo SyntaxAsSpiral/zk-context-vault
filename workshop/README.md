@@ -178,7 +178,7 @@ Different AI platforms have different file naming conventions:
 | **Kiro** | `modular` | Markdown | Standard agent configuration |
 | **Claude** | `CLAUDE.md` | Markdown | Claude-specific naming |
 | **Codex** | `AGENTS.md` | Markdown | Standard agent configuration |
-| **Grok** | `AGENTS.md` | Markdown | Standard agent configuration |
+| **Grok** | `AGENTS.md` (project rules); `.grok/agents/*.md` (profiles) | Markdown + YAML frontmatter | Full agent profiles (tools/model + prompt body); auto-discovered project rules; .grok/ harness for skills/hooks/MCP |
 
 ### Skills/Capabilities Files
 
@@ -187,7 +187,7 @@ Different AI platforms have different file naming conventions:
 | **Kiro** | `POWER.md` | Kiro Power format | POWER.md + steering/ structure |
 | **Claude** | `SKILL.md` | Agent Skills standard | SKILL.md + scripts/ + references/ + assets/ |
 | **Codex** | `SKILL.md` | Agent Skills standard | SKILL.md + scripts/ + references/ + assets/ |
-| **Grok** | `SKILL.md` | Agent Skills standard | SKILL.md + scripts/ + references/ + assets/ |
+| **Grok** | `SKILL.md` | Agent Skills standard | `SKILL.md` in `.grok/skills/<name>/` or `~/.grok/skills/`; frontmatter `name` + `description` drives auto-invocation via /skill-name or natural language |
 
 ### Commands/Prompts Files
 
@@ -196,9 +196,9 @@ Different AI platforms have different file naming conventions:
 | **All** | `*.md` | Markdown | Flexible frontmatter, no strict naming |
 
 **Key insight**: 
-- **Steering**: Everyone uses `AGENTS.md` except Claude uses `CLAUDE.md` (auto-selected if `target_locations.path` is a directory)
-- **Skills**: Everyone uses `SKILL.md` (Agent Skills standard) except Kiro uses `POWER.md` (Kiro Power format)
-- **Prompts**: All platforms flexible with `.md` files and frontmatter
+- **Steering**: Everyone uses `AGENTS.md` except Claude uses `CLAUDE.md` (auto-selected if `target_locations.path` is a directory). Grok additionally supports rich agent profiles in `.grok/agents/*.md` with tool control frontmatter.
+- **Skills**: Everyone uses `SKILL.md` (Agent Skills standard) except Kiro uses `POWER.md` (Kiro Power format). Grok discovers them under `.grok/skills/` (project) and `~/.grok/skills/` (user) with priority.
+- **Prompts**: All platforms flexible with `.md` files and frontmatter. Grok also supports `.grok/hooks/` for lifecycle automation.
 
 This is why the workshop system uses `output_format` and `target_locations` - it can generate the right format for each platform from the same source content.
 

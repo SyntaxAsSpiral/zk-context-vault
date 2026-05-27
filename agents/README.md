@@ -24,9 +24,9 @@ lens: "system-architecture"
 
 ## What This Is
 
-This is not multi-agent coordination. It's **single-agent steering**—universal patterns for configuring individual AI coding agents (Kiro, Claude Code, Codex, Charm) through explicit context management and modular documentation.
+This is not multi-agent coordination. It's **single-agent steering**—universal patterns for configuring individual AI coding agents (Kiro, Claude Code, Codex, Grok, Gemini, Pi, deck agents) through explicit context management and modular documentation.
 
-The directory documents platform-agnostic patterns that work across different AI coding environments. While each platform has unique features, the core steering principles remain consistent.
+The directory documents platform-agnostic patterns that work across different AI coding environments (Kiro, Claude Code, Codex, Grok, Gemini, Pi, deck agents). While each platform has unique features, the core steering principles remain consistent.
 
 Think of it as "universal agent configuration" - explicit, modular, assumption-hostile.
 
@@ -167,13 +167,47 @@ See [.kiro/README.md](../.kiro/README.md) for complete documentation.
 - **AGENTS.md**: Project-level steering
 - **Documentation**: Inline and separate markdown files
 
+### Grok
+- **Project rules**: `AGENTS.md` (or `Agents.md`, `Claude.md`, `AGENT.md`) — auto-discovered from repo root down to CWD; deeper files take precedence. Loaded into system prompt.
+- **Agent profiles**: `.grok/agents/*.md` (project) and `~/.grok/agents/*.md` (user) — full session definitions with YAML frontmatter (tools allow/deny, model) + body instructions. Invoked via `--agent-profile`, `GROK_AGENT`, or `[agent]` in config.toml.
+- **Skills**: `.grok/skills/<name>/SKILL.md` (and `~/.grok/skills/`) — reusable prompt packages with frontmatter `name` + `description` (for auto-triggering). Compatible with the vault's `skills/*/SKILL.md` format.
+- **Hooks**: `.grok/hooks/` for lifecycle event scripts (pre/post tool, session start/end).
+- **MCP / LSP**: `.grok/config.toml` (project-scoped MCP only) and `.grok/lsp.json`.
+- **Compat**: Also loads `~/.claude/`, `.mcp.json`, `CLAUDE.md` for Claude Code workflows.
+
+**Vault integration**:
+- The slice `agent=grok` in `agent-roles.md` + globals (operator, mesh, principles) assemble into dedicated Grok agent profiles via `workshop/recipe-agent-grok.md`.
+- Target outputs: `~/.grok/agents/grok-vault.md` and project-local `.grok/agents/grok-vault.md`.
+- The vault root `AGENTS.md` (assembled from `agents/steering-project-zk-context-vault.md`) is automatically active for any Grok session whose CWD is inside this repository.
+- File locations (from Grok harness):
+
+| Path                  | Description                                         |
+| --------------------- | --------------------------------------------------- |
+| `~/.grok/config.toml` | Configuration file                                  |
+| `~/.grok/sessions/`   | Persisted sessions (organized by working directory) |
+| `~/.grok/auth.json`   | Authentication credentials (auto-managed)           |
+| `~/.grok/memory/`     | Cross-session memory files and index                |
+| `~/.grok/skills/`     | User-scoped skill definitions                       |
+| `~/.grok/plugins/`    | User-scoped plugins                                 |
+| `~/.grok/agents/`     | User-scoped agent definitions                       |
+| `.grok/config.toml`   | Project-scoped config (MCP servers)                 |
+| `.grok/skills/`       | Project-scoped skill definitions                    |
+| `.grok/plugins/`      | Project-scoped plugins                              |
+| `.grok/agents/`       | Project-scoped agent definitions                    |
+| `.grok/hooks/`        | Project-scoped hooks                                |
+| `.grok/lsp.json`      | LSP server configuration                            |
+| `~/.claude/skills/`   | User-scoped skills (Claude Code compat)             |
+| `~/.claude/plugins/`  | User-scoped plugins (Claude Code compat)            |
+| `~/.claude.json`      | MCP servers (Claude Code compat)                    |
+| `.mcp.json`           | Project-scoped MCP servers (Claude Code compat)     |
+
 ## Key Files in This Directory
 
 ### [agent-roles.md](agent-roles.md)
 **Purpose**: Identity templates and role sigils for different agents
 
 **Contains**:
-- Slice-based agent personas (Kiro, Claude, Codex, Grok)
+- Slice-based agent personas (Kiro, Claude, Codex, Grok, deck agents)
 - System prompt templates
 - Role-specific guidance
 

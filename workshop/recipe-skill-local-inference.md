@@ -28,6 +28,9 @@ target_locations:
   - path: zk@adeck:~/.hermes/skills/user/local-inference/
   - path: ~/.gemini/antigravity/skills/local-inference/
   - path: ~/.gemini/skills/local-inference/
+  - path: ~/.grok/skills/local-inference/           # Grok user-scoped
+  - path: zk@adeck:~/.grok/skills/local-inference/  # Mesh (adeck)
+  - path: /mnt/repository/context-vault/.grok/skills/local-inference/  # Project-scoped in this vault
 
 # Source mapping to skill structure
 sources:
