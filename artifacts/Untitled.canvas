@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "3b7cf9d7ad05ed5b",
+      "type": "group",
+      "x": -440,
+      "y": -360,
+      "width": 780,
+      "height": 600,
+      "label": "drk-spore.js"
+    },
+    {
+      "id": "b703e7155b2a1d1c",
+      "type": "text",
+      "text": "drk-harvest.js",
+      "x": 80,
+      "y": 80,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "716bcf77ca372922",
+      "type": "text",
+      "text": "drk-lifecycle.js",
+      "x": -140,
+      "y": -120,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "18f742faf2b0a7aa",
+      "type": "text",
+      "text": "drk-phish.js",
+      "x": -170,
+      "y": 80,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "85cc3037a390548c",
+      "type": "text",
+      "text": "drk-push.js",
+      "x": -420,
+      "y": 80,
+      "width": 250,
+      "height": 60
+    }
+  ],
+  "edges": []
+}

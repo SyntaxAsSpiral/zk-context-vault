@@ -94,7 +94,7 @@ Skills map to the 7 core systems:
 
 | Skill | Purpose | Core System |
 |-------|---------|-------------|
-| **[semantic-json-workflows](semantic-json-workflows/SKILL.md)** | Canvas-to-structured-data anticompiler | Artifacts |
+| **[semantic-json-workflows](skills/semantic-json/SKILL.md)** | Canvas-to-structured-data anticompiler | Artifacts |
 | **[catppuccin-theming](catppuccin-theming/SKILL.md)** | Consistent color palette application | Aesthetic |
 | **[mcp-builder](mcp-builder/SKILL.md)** | Model Context Protocol server creation | Integration |
 | **[openrgb](openrgb/SKILL.md)** | Ambient RGB via OpenRGB SDK — presence, notifications, effects | Integration |
