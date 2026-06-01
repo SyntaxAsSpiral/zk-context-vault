@@ -9,7 +9,7 @@ elements: ["designs", "relationships", "plot-hooks", "dynamics"]
 genre: "flexible"
 glyph: "🎀"
 lens: "system-embodiment"
-created: "2024"
+created: 2024-01-01
 ---
 
 # 🎀 Moe-verse Explanation

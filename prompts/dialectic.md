@@ -9,7 +9,7 @@ format: "real-time-debate"
 outcome: "crystallization-through-collision"
 glyph: "🜔"
 lens: "philosophical-interference"
-created: "2024"
+created: 2024-01-01
 ---
 
 # 🜔 Pentasophic Dialectic

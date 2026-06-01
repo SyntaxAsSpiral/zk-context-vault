@@ -3,6 +3,11 @@ id: exo-snapshot
 created: 2026-01-01T19:54:42.143-08:00
 modified: 2026-01-02T11:48:18.424-08:00
 status: draft
+title: Exocortex Snapshot
+type: injection-template
+tags:
+  - exocortex
+  - snapshot
 ---
 ## Previous Activation
 

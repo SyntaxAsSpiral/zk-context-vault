@@ -9,7 +9,7 @@ structure: "simple → complication → implication → dark-corollary"
 technique: "fictional-displacement"
 glyph: "🧙"
 lens: "fictional-displacement"
-created: "2024"
+created: 2024-01-01
 ---
 
 # 🧙 HPMOR and the Secrets of the Universe

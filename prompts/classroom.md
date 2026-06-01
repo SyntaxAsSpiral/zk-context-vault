@@ -9,7 +9,7 @@ format: "interactive-simulation"
 technique: "pedagogical-theater"
 glyph: "🏫"
 lens: "social-cognition"
-created: "2024"
+created: 2024-01-01
 ---
 
 # 🏫 Dangerous Minds Reflection

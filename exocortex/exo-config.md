@@ -3,6 +3,11 @@ id: exo-config
 created: 2026-01-01T15:23:47.603-08:00
 modified: 2026-01-01T21:52:08.221-08:00
 status: locked
+title: Model Presets and Config
+type: config
+tags:
+  - exocortex
+  - config
 ---
 # Model Presets and Config
 

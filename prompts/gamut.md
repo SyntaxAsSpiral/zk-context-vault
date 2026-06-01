@@ -9,7 +9,7 @@ range: "conservative to hyperstitious"
 confidence: "expressed-as-ranges"
 glyph: "📊"
 lens: "uncertainty-surfacing"
-created: "2024"
+created: 2024-01-01
 ---
 
 # 📊 Probability Distribution Response

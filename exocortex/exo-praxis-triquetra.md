@@ -3,6 +3,12 @@ id: exo-praxis-triquetra
 created: 2026-01-01T16:47:58.658-08:00
 modified: 2026-01-02T11:48:18.426-08:00
 status: draft
+title: Praxis: Triquetra
+type: injection-template
+tags:
+  - exocortex
+  - praxis
+  - injection
 ---
 ## Injection Target
 This file is injected into the **user task message** for evaluation runs.

@@ -3,6 +3,12 @@ id: exo-roles
 created: 2025-12-31T09:54:36.172-08:00
 modified: 2026-01-01T21:52:08.214-08:00
 status: locked
+title: Agent System Roles
+type: config
+tags:
+  - exocortex
+  - agents
+  - roles
 ---
 
 # Agent System Roles
