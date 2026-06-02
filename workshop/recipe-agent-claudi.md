@@ -10,6 +10,7 @@ type:
 ```yaml
 name: Claudi
 output_format: agent  # Simple concatenation, no template
+output_name: CLAUDE.md
 
 target_locations:
   - path: ~/.claude/CLAUDE.md

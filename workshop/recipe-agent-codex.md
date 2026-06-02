@@ -10,6 +10,7 @@ type:
 ```yaml
 name: Codex
 output_format: agent  # Simple concatenation, no template
+output_name: AGENTS.md
 
 target_locations:
   - path: ~/.codex/AGENTS.md

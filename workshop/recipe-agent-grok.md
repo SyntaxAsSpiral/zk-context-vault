@@ -9,6 +9,7 @@ type:
 ```yaml
 name: Grok
 output_format: agent
+output_name: AGENTS.md
 
 target_locations:
   - path: ~/.grok/AGENTS.md

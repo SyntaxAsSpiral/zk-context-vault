@@ -10,6 +10,7 @@ type:
 ```yaml
 name: Gemini
 output_format: agent
+output_name: GEMINI.md
 
 target_locations:
   - path: ~/.gemini/GEMINI.md

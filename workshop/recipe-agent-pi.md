@@ -10,6 +10,7 @@ type:
 ```yaml
 name: Pi
 output_format: agent
+output_name: AGENTS.md
 
 target_locations:
   - path: /mnt/repository/daemonturgy/pi/AGENTS.md
