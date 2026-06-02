@@ -1,5 +1,22 @@
 ---
-inclusion: always
+id: steering-global-mesh
+title: "Tailscale Mesh Infrastructure"
+type:
+  - steering
+  - infrastructure
+category: agents
+tags:
+  - mesh
+  - tailscale
+  - nixos
+  - infrastructure
+  - hardware
+  - global
+created: 2026-03-02
+modified: 2026-06-02
+status: active
+glyph: "🕸️"
+lens: infrastructure
 ---
 
 # Mesh Infrastructure

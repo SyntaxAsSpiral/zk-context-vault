@@ -240,9 +240,9 @@ def extract_slice(file_path: Path, slice_id: str) -> Optional[str]:
 
 
 def include_file(file_path: Path) -> Optional[str]:
-    """Include entire file content."""
+    """Include entire file content, stripping any YAML frontmatter."""
     try:
-        return file_path.read_text(encoding="utf-8").strip()
+        return _strip_frontmatter(file_path.read_text(encoding="utf-8").strip())
     except Exception as e:
         print(f"☠☠☠ >>> MACHINE·SPIRIT·CORRUPTION ☠☠☠")
         print(f"Whole-file inclusion failed, heretek: {file_path}")

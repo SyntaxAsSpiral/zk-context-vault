@@ -1,6 +1,23 @@
 ---
-inclusion: always
+id: steering-global-principles
+title: "Covenant Principles — Anti-Assumption Framework"
+type:
+  - steering
+  - principles
+category: agents
+tags:
+  - covenant
+  - principles
+  - anti-assumption
+  - simplicity
+  - global
+created: 2026-03-02
+modified: 2026-06-02
+status: active
+glyph: "🜂"
+lens: covenant-principles
 ---
+
 ## 1. Think Before Coding
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**

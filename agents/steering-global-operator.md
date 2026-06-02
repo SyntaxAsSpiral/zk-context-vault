@@ -1,5 +1,21 @@
 ---
-inclusion: always
+id: steering-global-operator
+title: "Operator Profile — ZK"
+type:
+  - steering
+  - operator-profile
+category: agents
+tags:
+  - operator
+  - zk
+  - identity
+  - covenant
+  - global
+created: 2026-03-02
+modified: 2026-06-02
+status: active
+glyph: "🜏"
+lens: operator-identity
 ---
 
 # Operator - Zach Battin  — Vibe Alchemist 🜏
