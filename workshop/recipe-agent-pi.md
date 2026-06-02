@@ -1,7 +1,7 @@
 ---
 id: recipe-agent-pi
 created: 2026-03-02
-modified: 2026-03-02
+modified: 2026-06-02
 status: active
 type:
   - agent
@@ -13,8 +13,9 @@ output_format: agent
 output_name: AGENTS.md
 
 target_locations:
-  - path: /mnt/repository/daemonturgy/pi/AGENTS.md
+  - path: ~/.pi/agent/AGENTS.md
   - path: zk@zrrh:~/.pi/agent/AGENTS.md
+  - path: zk@adeck:~/.pi/agent/AGENTS.md
 sources:
   - slice: agent=pi
     slice-file: agents/agent-roles.md
