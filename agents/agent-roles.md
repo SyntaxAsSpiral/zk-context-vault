@@ -1,4 +1,3 @@
-
 ---
 id: agent-roles
 title: "Agent Roles & Identity Templates"

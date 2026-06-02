@@ -50,18 +50,6 @@ lens: infrastructure
 
 **Other services on adeck:** Docker, qBittorrent, SSH, Tailscale, msgvault, Hermes agent, sideriod gnomon, pulse-generator (daily site rotation at 02:24 PST), Bitburner (MCP + sync server).
 
-## Mesh Orchestration (zcli)
-
-`zcli` manages NixOS config across the mesh, offloading builds to `zrrh`.
-
-```bash
-zcli deploy nxiz --dry    # Dry-run eval
-zcli deploy nxiz          # Deploy to host
-zcli deploy all           # Deploy to all hosts
-```
-
-Auto-stages local changes (`git add -A`) before build. Uses local flake (`/mnt/repository/nix-os`) directly — no manual git push needed.
-
 ## Development Mandates
 
 - **Nix-First:** Prefer Nix for all package management. No `pip`, `npm`, `cargo` for global installs.
