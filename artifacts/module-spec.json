@@ -1,0 +1,137 @@
+{
+  "nodes": [
+    {
+      "id": "14fe1534239fb2c4",
+      "type": "file",
+      "file": "Darknet API.md"
+    },
+    {
+      "id": "3b7cf9d7ad05ed5b",
+      "type": "group",
+      "label": "drk-spore.js"
+    },
+    {
+      "id": "6d3f5e49a8b7c201",
+      "type": "group",
+      "label": "Controller Logic"
+    },
+    {
+      "id": "8a1d4f0c9b2e6a73",
+      "type": "text",
+      "text": "# drk-spore.js\n\nGenerated body from `src/drk-core.js`.\n\nCarries all worker scripts as inline text constants. On each host, its first job is to write those payload files to disk. After that it stays resident as the local controller.\n\nRAM boundary: only API calls in this body count against spore RAM. Embedded worker source is inert text until written and executed."
+    },
+    {
+      "id": "c4e20b8a71f93d65",
+      "type": "text",
+      "text": "# Bootstrap\n\nLanding phase.\n\n1. Write payload scripts.\n2. Build the host-local `log-topology.json`.\n3. Put current host details first.\n4. Include every available raw server field plus local written fields.\n\nThis is not recovery logic. It is the first local memory growth event."
+    },
+    {
+      "id": "a93c6d02f84b517e",
+      "type": "text",
+      "text": "# Host-local topology log\n\nEach server owns its own `log-topology.json` for as long as that server exists.\n\nThis is not a global truth table. It is that host's living local memory.\n\nShape starts as:\n\n```json\n{\n  \"self\": {},\n  \"direct_new\": [],\n  \"direct_existing\": [],\n  \"potentials\": [],\n  \"former_direct\": []\n}\n```\n\nEach row contains all available server details plus added fields such as password, timestamps, cache notes, and orchestration status. Array placement is priority."
+    },
+    {
+      "id": "b7f61e940c3a28d5",
+      "type": "text",
+      "text": "# Mutation monitor loop\n\nThe sensor loop.\n\nWaits on `nextMutation()`, then refreshes the host-local topology log from current direct observations.\n\nIt moves rows between `direct_new`, `direct_existing`, and `former_direct`. It preserves potentials unless appressorium resolves them.\n\nThis loop grows and reshapes local memory."
+    },
+    {
+      "id": "d2f9a83b6e4c1075",
+      "type": "text",
+      "text": "# Appressorium loop\n\nThe auth membrane.\n\nReads the host-local topology log, then works the highest-priority reachable rows:\n\n- test `direct_new`\n- test usable `potentials`\n- authenticate or connect sessions\n- write verified passwords onto the relevant server row\n- overwrite password when a changed password is verified\n- timestamp first verification, last verification, and password changes\n\nHeartbleed clues become potentials; appressorium promotes them only after verification."
+    },
+    {
+      "id": "e5b0c6912a7d4f38",
+      "type": "text",
+      "text": "# Farm controller loop\n\nThe resource mouth.\n\nReads the same host-local topology log and current RAM budget. Launches farm workers only from accepted local state:\n\n- harvest cache files\n- unblock RAM\n- phishing worker\n- stock promotion worker\n- migration push worker\n\nIt does not discover topology. It consumes the local memory grown by bootstrap, monitor, and appressorium."
+    },
+    {
+      "id": "f81c2a9d30b7465e",
+      "type": "text",
+      "text": "# Fungal control model\n\nThe big picture:\n\n`drk-spore.js` is a resident spore/controller on each host.\n\nEach host grows its own topology log. Mutation monitoring changes the local map. Appressorium turns reachable unknowns and heartbleed potentials into verified access. The farm controller converts verified/local opportunity into worker execution.\n\nNo single global map. No worker invents decisions. Local memory grows, loops cooperate, and row priority drives action."
+    },
+    {
+      "id": "2881107e2c1210a7",
+      "type": "text",
+      "text": "# RAM Budget\n\nall `*.js` scripts are carried as inline constants and written to host instead of `scp`ing\n\nconst CORE_CAP = 2;\n\nconst excess = Math.max(0, availableRam - CORE_CAP);\n\n// Dynamic split of the excess\nconst authWeight = calculateAuthPriority();   // higher when we need to breach\nconst farmWeight = calculateFarmPriority();   // higher when we want to press/harvest\n\nconst totalWeight = authWeight + farmWeight;\n\nconst authBudget = excess * (authWeight / totalWeight);\nconst farmBudget = excess * (farmWeight / totalWeight);\n\ndrk-rhizome.js\n- setStasisLink(shouldLink?) // ** 12  gb**  one-shot. may temp kill auth and farm lanes when needed.\n\nbudget = {  \ncoreReserve: 2,  \nauthBudget,  \nfarmBudget,  \nstasisOverride  \n}"
+    },
+    {
+      "id": "f8dc08f2789905a9",
+      "type": "text",
+      "text": "LOG FILES: \n\nlog-topology.json\nlog-heartbleed.json (using logTrafficInterval)",
+      "from": [
+        {
+          "node": "ed72ea48f920398c",
+          "label": "read/write"
+        }
+      ]
+    },
+    {
+      "id": "ed72ea48f920398c",
+      "type": "group",
+      "label": "Core",
+      "to": [
+        {
+          "node": "f8dc08f2789905a9",
+          "label": "read/write"
+        }
+      ]
+    },
+    {
+      "id": "31df56543533a159",
+      "type": "text",
+      "text": "Core\n- labradar() // 0\n- labreport() // 0\n- getDarknetInstability() // 0\n- nextMutation() // 0\n- getDepth(host?) // .1 gb\n- getServerDetails(host?) // .1 gb\n- getServerRequiredCharismaLevel(host?) // .1 gb\n-  isDarknetServer(host) // .1 gb (for offline checks)\n- probe(returnByIP?) // .2 gb\n- unleashStormSeed() // .1 gb\n- getBlockedRam(host?) //0\n- getStasisLinkedServers(returnByIP?) //0 \n-  getStasisLinkLimit() // 0"
+    },
+    {
+      "id": "dfe602fe36bfe545",
+      "type": "text",
+      "text": "drk-appressorium.js\n\n- connectToSession(host, password) // .05 gb\n- getAuthenticateTime(serverDetails, threads, player, correctCharactersInPassword) // ?\n- getHeartbleedTime(serverDetails, threads, player) // ?\n- getExpectedRamBlockRemoved(serverDetails, threads, player) // ? \n- getBlockedRam(host?) //0 \n- exec?\n- read/write ?"
+    },
+    {
+      "id": "c6cd161b2ee2e4b3",
+      "type": "group",
+      "label": "Farm"
+    },
+    {
+      "id": "b703e7155b2a1d1c",
+      "type": "text",
+      "text": "drk-harvest.js\n- openCache(filename, suppressToast?) // 2 gb per thread"
+    },
+    {
+      "id": "18f742faf2b0a7aa",
+      "type": "text",
+      "text": "drk-phish.js\n- phishingAttack() // 2 gb per thread"
+    },
+    {
+      "id": "85cc3037a390548c",
+      "type": "text",
+      "text": "drk-push.js\n- induceServerMigration(host) // 4 gb per thread"
+    },
+    {
+      "id": "24d0f0c44f4ecf7a",
+      "type": "text",
+      "text": "drk-stock.js \n- promoteStock(sym) // 2 gb per thread"
+    },
+    {
+      "id": "0201bd87cf8b14a9",
+      "type": "group",
+      "label": "Auth"
+    },
+    {
+      "id": "74743dccde2923d9",
+      "type": "text",
+      "text": "drk-auth.js \n- authenticate(host, password, additionalMsec?) // .4 gb per thread"
+    },
+    {
+      "id": "1674f1f7f6801f12",
+      "type": "text",
+      "text": "drk-heartbleed.js\n- heartbleed(host, options?) // .6 gb per thread\n- authenticate(host, password, additionalMsec?) // .4 gb per thread"
+    },
+    {
+      "id": "03a7806d9dff1caf",
+      "type": "text",
+      "text": "drk-unblock.js\n- memoryReallocation(host?) // 1 gb per thread"
+    }
+  ],
+  "edges": []
+}

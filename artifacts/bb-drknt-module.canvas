@@ -1,0 +1,502 @@
+{
+  "nodes": [
+    {
+      "id": "14fe1534239fb2c4",
+      "type": "file",
+      "file": "Darknet API.md",
+      "x": 1680,
+      "y": -520,
+      "width": 1280,
+      "height": 2892
+    },
+    {
+      "id": "e57d6b7dda374b3c",
+      "type": "group",
+      "x": -320,
+      "y": -520,
+      "width": 1940,
+      "height": 2440,
+      "color": "6",
+      "label": "Controller Logic Flow"
+    },
+    {
+      "id": "4fe5c42c33dfd836",
+      "type": "group",
+      "x": -270,
+      "y": -427,
+      "width": 1850,
+      "height": 1091,
+      "label": "Core - 2 gb cap"
+    },
+    {
+      "id": "0aab49bff61f7be3",
+      "type": "text",
+      "text": "**Germination** (on exec, no args) `drk-spore.js` \n- check host filesystem contents.\n- write all `*.js` payload scripts.\n- existing `log-topology.json`? if none create + populate new, else update self + gens arrays and rescan. \n",
+      "x": -220,
+      "y": 121,
+      "width": 340,
+      "height": 281
+    },
+    {
+      "id": "a7844c9e1c2559a3",
+      "type": "text",
+      "text": "**Initial RAM  Budgeting** (for workers) \n - by host state (assuming minimum 16gb host size)\n- Priorities are always unblock  > auth > loot > farm\n- maximize ram usage in whole numbers (for auth especially) with threading. no buffers\n\n- case: blocked + loot\n- case: blocked + no loot\n- case: not blocked + loot\n- case: not blocked + no loot\n\n- launch drk-appressorium.js only once initial budget is determined\n- then begin farm loop\n- start here if run with `--resume`\n\n",
+      "x": 300,
+      "y": 10,
+      "width": 260,
+      "height": 503
+    },
+    {
+      "id": "514a18eff1bce0f1",
+      "type": "text",
+      "text": "**Monitor Loop**\n- On each mutation, rescan and refresh log, noting changes.\n- If labradar() or labreport() report success, immediately override ram for stasislink, then resume\n- If STORM_SEED.exe = true and depth >= 4, unleash storm\n- update ram budget for next farming and auth cycles, but do not kill existing processes\n- if a lane is overbudget it may not launch new workers until there is room",
+      "x": 841,
+      "y": -345,
+      "width": 269,
+      "height": 428
+    },
+    {
+      "id": "2e38a87f231b7359",
+      "type": "text",
+      "text": "**Auth Loop**\n- continuous looping through prioritized `connections`topology flagged needing auth\n- resets to top priority on mutation tick \n- auth wrkrs pass  valid credentials back to controller for logging",
+      "x": 841,
+      "y": 100,
+      "width": 269,
+      "height": 323
+    },
+    {
+      "id": "42794f686ff77bd4",
+      "type": "text",
+      "text": "**Farm Loop** \n- event-driven stepped cadence\n- single wrker type at a time\n- threaded to max ram budget allowed ",
+      "x": 841,
+      "y": 444,
+      "width": 269,
+      "height": 163
+    },
+    {
+      "id": "691607324b5abd45",
+      "type": "text",
+      "text": "**Dispersal Loop** \n- continuous looping through `connections`topology \n- attempts connectToSession(), flags host as needing auth if unsuccessful and moves to next host\n- on connection, check running pids, if spore instance running do nothing\n- if no spore instance running, check file system for inactive spore and exec with --resume (merge logs?)\n- if no active instance, and no `drk-*.js` files on host then scp spore and log to new host and exec",
+      "x": 1260,
+      "y": -226,
+      "width": 250,
+      "height": 619
+    },
+    {
+      "id": "096bf0ad910ea146",
+      "type": "group",
+      "x": -230,
+      "y": 813,
+      "width": 1615,
+      "height": 448,
+      "label": "Auth"
+    },
+    {
+      "id": "31e65757cc9f4a7c",
+      "type": "text",
+      "text": "All hosts require `needs auth` flag:\n\nlocal - hasSession: false > remote- hasSession: true > potential",
+      "x": -190,
+      "y": 844,
+      "width": 640,
+      "height": 100
+    },
+    {
+      "id": "637f7966040051dc",
+      "type": "text",
+      "text": "\n\ncase: any in model \"ZeroLogon\",  \"FreshInstall_1.0\",  \"DeskMemo_3.1\",  \"CloudBlare(tm)\",  \"OctantVoxel\", \"Pr0verFl0\"\n>> single pid, single thread, multi targets - `drk-auth.js`\n\n",
+      "x": -190,
+      "y": 984,
+      "width": 320,
+      "height": 228
+    },
+    {
+      "id": "7440f7d7033cfb77",
+      "type": "text",
+      "text": "case: any in model \"OpenWebAccessPoint\", \"NIL\",  \"DeepGreen\", \"Factori-Os\"\n>>single pid, max threads, multi targets -   `drk-auth-hard.js`",
+      "x": 170,
+      "y": 1004,
+      "width": 320,
+      "height": 188
+    },
+    {
+      "id": "5a65d2a759c77ae2",
+      "type": "text",
+      "text": "case: any in model \"AccountsManager_4.2\",  \"Laika4\", \"PHP 5.4\"\n>> parallel pids, single threads, single targets - `drk-auth.js`",
+      "x": 530,
+      "y": 1020,
+      "width": 318,
+      "height": 157
+    },
+    {
+      "id": "97a1e93adb714396",
+      "type": "text",
+      "text": "Standalone heartbleed monitors for and harvests potential host:passowrd combos based on DarknetServerDetails.logTrafficInterval",
+      "x": 894,
+      "y": 1004,
+      "width": 250,
+      "height": 208
+    },
+    {
+      "id": "bb2f4134c6cdd696",
+      "type": "group",
+      "x": -230,
+      "y": 1400,
+      "width": 1300,
+      "height": 442,
+      "label": "Farm"
+    },
+    {
+      "id": "69249243824b0132",
+      "type": "text",
+      "text": "case: loot is present (.cache, .lit, .txt, .exe)\n\n- `drk-harvest.js`",
+      "x": -190,
+      "y": 1544,
+      "width": 240,
+      "height": 181
+    },
+    {
+      "id": "7a5f3ea423e4f9c8",
+      "type": "text",
+      "text": "case: local connection is seed bearer\n\n- `drk-push.js`",
+      "x": 130,
+      "y": 1426,
+      "width": 250,
+      "height": 181
+    },
+    {
+      "id": "7812082e7c9741dd",
+      "type": "text",
+      "text": "case: stock target is broadcast\n- `drk-stock.js`",
+      "x": 130,
+      "y": 1635,
+      "width": 250,
+      "height": 181
+    },
+    {
+      "id": "82b6c40148e4b595",
+      "type": "text",
+      "text": "case: local connection is depth >= 4\n\n- `drk-push.js`",
+      "x": 490,
+      "y": 1427,
+      "width": 250,
+      "height": 181
+    },
+    {
+      "id": "1b7ca5bb8f48a816",
+      "type": "text",
+      "text": "case: no stock target\n- `drk-phish.js`",
+      "x": 490,
+      "y": 1636,
+      "width": 250,
+      "height": 181
+    },
+    {
+      "id": "9b0ad45530fd426b",
+      "type": "text",
+      "text": "case: loot is present (.cache, .lit, .txt, .exe)\n\n- `drk-harvest.js`",
+      "x": 779,
+      "y": 1635,
+      "width": 240,
+      "height": 181
+    },
+    {
+      "id": "3b7cf9d7ad05ed5b",
+      "type": "group",
+      "x": -2160,
+      "y": 261,
+      "width": 1720,
+      "height": 1000,
+      "color": "1",
+      "label": "drk-spore.js structure"
+    },
+    {
+      "id": "ed72ea48f920398c",
+      "type": "group",
+      "x": -2120,
+      "y": 354,
+      "width": 440,
+      "height": 689,
+      "color": "3",
+      "label": "Core - 4 gb HARD CAP"
+    },
+    {
+      "id": "31df56543533a159",
+      "type": "text",
+      "text": "Core \n- labradar() // 0\n- labreport() // 0\n- getDarknetInstability() // 0\n- nextMutation() // 0\n- getDepth(host?) // .1 gb\n- getServerDetails(host?) // .1 gb\n- getServerRequiredCharismaLevel(host?) // .1 gb\n-  isDarknetServer(host) // .1 gb (for offline checks)\n- probe(returnByIP?) // .2 gb\n- unleashStormSeed() // .1 gb\n- getBlockedRam(host?) //0\n- getStasisLinkedServers(returnByIP?) //0 \n-  getStasisLinkLimit() // 0\n- connectToSession(host, password) // .05 gb\n- getAuthenticateTime(serverDetails, threads, player, correctCharactersInPassword) // ?\n- getHeartbleedTime(serverDetails, threads, player) // ?\n- getExpectedRamBlockRemoved(serverDetails, threads, player) // ? \n- getBlockedRam(host?) //0 \n- exec?\n- read/write ?",
+      "x": -2100,
+      "y": 391,
+      "width": 400,
+      "height": 620,
+      "color": "3"
+    },
+    {
+      "id": "18be6c220a672b60",
+      "type": "group",
+      "x": -1620,
+      "y": 354,
+      "width": 340,
+      "height": 437,
+      "color": "1",
+      "label": "Interupt"
+    },
+    {
+      "id": "85cc3037a390548c",
+      "type": "text",
+      "text": "drk-push.js\n- induceServerMigration(host) // 4 gb per thread",
+      "x": -1602,
+      "y": 651,
+      "width": 305,
+      "height": 120,
+      "color": "1"
+    },
+    {
+      "id": "0b52beb5658be79c",
+      "type": "text",
+      "text": "drk-rhizome.js\n- setStasisLink(shouldLink?) // 12 gb per thread",
+      "x": -1600,
+      "y": 512,
+      "width": 300,
+      "height": 120,
+      "color": "1"
+    },
+    {
+      "id": "03a7806d9dff1caf",
+      "type": "text",
+      "text": "drk-unblock.js\n- memoryReallocation(host?) // 1 gb per thread",
+      "x": -1600,
+      "y": 374,
+      "width": 300,
+      "height": 120,
+      "color": "1"
+    },
+    {
+      "id": "0201bd87cf8b14a9",
+      "type": "group",
+      "x": -1240,
+      "y": 354,
+      "width": 340,
+      "height": 417,
+      "color": "5",
+      "label": "Auth"
+    },
+    {
+      "id": "1674f1f7f6801f12",
+      "type": "text",
+      "text": "drk-auth-hard.js\n- heartbleed(host, options?) // .6 gb per thread\n- authenticate(host, password, additionalMsec?) // .4 gb per thread",
+      "x": -1215,
+      "y": 552,
+      "width": 300,
+      "height": 183,
+      "color": "5"
+    },
+    {
+      "id": "74743dccde2923d9",
+      "type": "text",
+      "text": "drk-auth.js \n- authenticate(host, password, additionalMsec?) // .4 gb per thread",
+      "x": -1220,
+      "y": 381,
+      "width": 300,
+      "height": 140,
+      "color": "5"
+    },
+    {
+      "id": "c6cd161b2ee2e4b3",
+      "type": "group",
+      "x": -840,
+      "y": 357,
+      "width": 345,
+      "height": 627,
+      "color": "4",
+      "label": "Farm"
+    },
+    {
+      "id": "b703e7155b2a1d1c",
+      "type": "text",
+      "text": "drk-harvest.js\n- openCache(filename, suppressToast?) // 2 gb per thread",
+      "x": -820,
+      "y": 632,
+      "width": 300,
+      "height": 120,
+      "color": "4"
+    },
+    {
+      "id": "18f742faf2b0a7aa",
+      "type": "text",
+      "text": "drk-phish.js\n- phishingAttack() // 2 gb per thread",
+      "x": -820,
+      "y": 377,
+      "width": 300,
+      "height": 90,
+      "color": "4"
+    },
+    {
+      "id": "56bbfe82badf476f",
+      "type": "text",
+      "text": "drk-scout.js\n - heartbleed(host, options?) // .6 gb per thread\n - scans home logs and all documents for potential hosts",
+      "x": -820,
+      "y": 771,
+      "width": 300,
+      "height": 173,
+      "color": "4"
+    },
+    {
+      "id": "24d0f0c44f4ecf7a",
+      "type": "text",
+      "text": "drk-stock.js \n- promoteStock(sym) // 2 gb per thread",
+      "x": -820,
+      "y": 492,
+      "width": 300,
+      "height": 120,
+      "color": "4"
+    },
+    {
+      "id": "6a588009a53d721d",
+      "type": "group",
+      "x": -1515,
+      "y": 907,
+      "width": 550,
+      "height": 272,
+      "color": "6",
+      "label": "IPC Protocol"
+    },
+    {
+      "id": "9d7ce90d61e23b1a",
+      "type": "text",
+      "text": "/log-exec.json\n- centralized execution queue",
+      "x": -1246,
+      "y": 920,
+      "width": 198,
+      "height": 110,
+      "color": "6"
+    },
+    {
+      "id": "f8dc08f2789905a9",
+      "type": "text",
+      "text": "/log-topology.json \n- main state \n",
+      "x": -1469,
+      "y": 928,
+      "width": 198,
+      "height": 95,
+      "color": "6"
+    },
+    {
+      "id": "7239aaf4535bd0b1",
+      "type": "text",
+      "text": "Broadcast Port\n- current seed bearer\n- current stock sym ",
+      "x": -1495,
+      "y": 1047,
+      "width": 249,
+      "height": 104,
+      "color": "6"
+    },
+    {
+      "id": "b58fde09d8cc2a64",
+      "type": "text",
+      "text": "tmp/ \n- local comm layer\n- tmp helpers + results",
+      "x": -1226,
+      "y": 1047,
+      "width": 231,
+      "height": 110,
+      "color": "6"
+    }
+  ],
+  "edges": [
+    {
+      "id": "29baf68d7d74b662",
+      "fromNode": "0aab49bff61f7be3",
+      "fromSide": "right",
+      "toNode": "a7844c9e1c2559a3",
+      "toSide": "left",
+      "label": "continue"
+    },
+    {
+      "id": "dbf1e5f0e700467b",
+      "fromNode": "637f7966040051dc",
+      "fromSide": "right",
+      "toNode": "7440f7d7033cfb77",
+      "toSide": "left"
+    },
+    {
+      "id": "9db4a5f1dcc19a34",
+      "fromNode": "69249243824b0132",
+      "fromSide": "right",
+      "toNode": "7a5f3ea423e4f9c8",
+      "toSide": "left"
+    },
+    {
+      "id": "4c2a29f40e879582",
+      "fromNode": "69249243824b0132",
+      "fromSide": "right",
+      "toNode": "7812082e7c9741dd",
+      "toSide": "left"
+    },
+    {
+      "id": "a899e2f0e45d8403",
+      "fromNode": "a7844c9e1c2559a3",
+      "fromSide": "right",
+      "toNode": "514a18eff1bce0f1",
+      "toSide": "left",
+      "label": "continue"
+    },
+    {
+      "id": "e6ce945e37d2c332",
+      "fromNode": "a7844c9e1c2559a3",
+      "fromSide": "right",
+      "toNode": "2e38a87f231b7359",
+      "toSide": "left",
+      "label": "exec"
+    },
+    {
+      "id": "fad881af45a2e22d",
+      "fromNode": "a7844c9e1c2559a3",
+      "fromSide": "right",
+      "toNode": "42794f686ff77bd4",
+      "toSide": "left",
+      "label": "begin"
+    },
+    {
+      "id": "e1f038d2828e07e7",
+      "fromNode": "7440f7d7033cfb77",
+      "fromSide": "right",
+      "toNode": "5a65d2a759c77ae2",
+      "toSide": "left"
+    },
+    {
+      "id": "1bc3a72fb354cbea",
+      "fromNode": "7a5f3ea423e4f9c8",
+      "fromSide": "right",
+      "toNode": "82b6c40148e4b595",
+      "toSide": "left",
+      "label": "or"
+    },
+    {
+      "id": "f04b51c38ed81466",
+      "fromNode": "7812082e7c9741dd",
+      "fromSide": "right",
+      "toNode": "1b7ca5bb8f48a816",
+      "toSide": "left",
+      "label": "else"
+    },
+    {
+      "id": "91081af9db308dce",
+      "fromNode": "514a18eff1bce0f1",
+      "fromSide": "right",
+      "toNode": "691607324b5abd45",
+      "toSide": "left"
+    },
+    {
+      "id": "cfd947b4c115b1b4",
+      "fromNode": "2e38a87f231b7359",
+      "fromSide": "right",
+      "toNode": "691607324b5abd45",
+      "toSide": "left"
+    },
+    {
+      "id": "0c351bf362ea0ae1",
+      "fromNode": "1b7ca5bb8f48a816",
+      "fromSide": "right",
+      "toNode": "9b0ad45530fd426b",
+      "toSide": "left"
+    }
+  ]
+}

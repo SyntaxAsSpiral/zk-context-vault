@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "14fe1534239fb2c4",
+      "type": "file",
+      "file": "Darknet API.md"
+    },
+    {
+      "id": "3b7cf9d7ad05ed5b",
+      "type": "group",
+      "label": "drk-spore.js"
+    },
+    {
+      "id": "2881107e2c1210a7",
+      "type": "text",
+      "text": "# RAM Budget\n\nall `*.js` scripts are carried as inline constants and written to host instead of `scp`ing\n\nconst CORE_CAP = 2;\n\nconst excess = Math.max(0, availableRam - CORE_CAP);\n\n// Dynamic split of the excess\nconst authWeight = calculateAuthPriority();   // higher when we need to breach\nconst farmWeight = calculateFarmPriority();   // higher when we want to press/harvest\n\nconst totalWeight = authWeight + farmWeight;\n\nconst authBudget = excess * (authWeight / totalWeight);\nconst farmBudget = excess * (farmWeight / totalWeight);\n\ndrk-rhizome.js\n- setStasisLink(shouldLink?) // ** 12  gb**  one-shot. may temp kill auth and farm lanes when needed.\n\nbudget = {  \ncoreReserve: 2,  \nauthBudget,  \nfarmBudget,  \nstasisOverride  \n}"
+    },
+    {
+      "id": "f8dc08f2789905a9",
+      "type": "text",
+      "text": "LOG FILES: \n\nlog-topology.json\nlog-heartbleed.json (using logTrafficInterval)",
+      "from": [
+        {
+          "node": "ed72ea48f920398c",
+          "label": "read/write"
+        }
+      ]
+    },
+    {
+      "id": "ed72ea48f920398c",
+      "type": "group",
+      "label": "Core",
+      "to": [
+        {
+          "node": "f8dc08f2789905a9",
+          "label": "read/write"
+        }
+      ]
+    },
+    {
+      "id": "31df56543533a159",
+      "type": "text",
+      "text": "Core\n- labradar() // 0\n- labreport() // 0\n- getDarknetInstability() // 0\n- nextMutation() // 0\n- getDepth(host?) // .1 gb\n- getServerDetails(host?) // .1 gb\n- getServerRequiredCharismaLevel(host?) // .1 gb\n-  isDarknetServer(host) // .1 gb (for offline checks)\n- probe(returnByIP?) // .2 gb\n- unleashStormSeed() // .1 gb\n- getBlockedRam(host?) //0\n- getStasisLinkedServers(returnByIP?) //0 \n-  getStasisLinkLimit() // 0"
+    },
+    {
+      "id": "dfe602fe36bfe545",
+      "type": "text",
+      "text": "drk-appressorium.js\n\n- connectToSession(host, password) // .05 gb\n- getAuthenticateTime(serverDetails, threads, player, correctCharactersInPassword) // ?\n- getHeartbleedTime(serverDetails, threads, player) // ?\n- getExpectedRamBlockRemoved(serverDetails, threads, player) // ? \n- getBlockedRam(host?) //0 \n- exec?\n- read/write ?"
+    },
+    {
+      "id": "c6cd161b2ee2e4b3",
+      "type": "group",
+      "label": "Farm"
+    },
+    {
+      "id": "b703e7155b2a1d1c",
+      "type": "text",
+      "text": "drk-harvest.js\n- openCache(filename, suppressToast?) // 2 gb per thread"
+    },
+    {
+      "id": "18f742faf2b0a7aa",
+      "type": "text",
+      "text": "drk-phish.js\n- phishingAttack() // 2 gb per thread"
+    },
+    {
+      "id": "85cc3037a390548c",
+      "type": "text",
+      "text": "drk-push.js\n- induceServerMigration(host) // 4 gb per thread"
+    },
+    {
+      "id": "24d0f0c44f4ecf7a",
+      "type": "text",
+      "text": "drk-stock.js \n- promoteStock(sym) // 2 gb per thread"
+    },
+    {
+      "id": "0201bd87cf8b14a9",
+      "type": "group",
+      "label": "Auth"
+    },
+    {
+      "id": "74743dccde2923d9",
+      "type": "text",
+      "text": "drk-auth.js \n- authenticate(host, password, additionalMsec?) // .4 gb per thread"
+    },
+    {
+      "id": "1674f1f7f6801f12",
+      "type": "text",
+      "text": "drk-heartbleed.js\n- heartbleed(host, options?) // .6 gb per thread\n- authenticate(host, password, additionalMsec?) // .4 gb per thread"
+    },
+    {
+      "id": "03a7806d9dff1caf",
+      "type": "text",
+      "text": "drk-unblock.js\n- memoryReallocation(host?) // 1 gb per thread"
+    }
+  ],
+  "edges": []
+}
