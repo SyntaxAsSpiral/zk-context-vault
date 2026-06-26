@@ -4,9 +4,9 @@
       "id": "14fe1534239fb2c4",
       "type": "file",
       "file": "Darknet API.md",
-      "x": 1680,
+      "x": 1720,
       "y": -520,
-      "width": 1280,
+      "width": 1240,
       "height": 2892
     },
     {
@@ -305,7 +305,7 @@
       "x": -840,
       "y": 357,
       "width": 345,
-      "height": 627,
+      "height": 434,
       "color": "4",
       "label": "Farm"
     },
@@ -327,16 +327,6 @@
       "y": 377,
       "width": 300,
       "height": 90,
-      "color": "4"
-    },
-    {
-      "id": "56bbfe82badf476f",
-      "type": "text",
-      "text": "drk-scout.js\n - heartbleed(host, options?) // .6 gb per thread\n - scans home logs and all documents for potential hosts",
-      "x": -820,
-      "y": 771,
-      "width": 300,
-      "height": 173,
       "color": "4"
     },
     {
