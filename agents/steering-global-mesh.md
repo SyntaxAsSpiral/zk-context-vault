@@ -33,6 +33,8 @@ lens: infrastructure
 | zk-pixel | 100.96.213.111 | Android phone | Android | — |
 | zk-note | 100.105.239.55 | Android phone | Android | — |
 
+**Host faces** ([esotericons](https://github.com/SyntaxAsSpiral/esotericons)): `lotus` → nxiz · `meso` → zrrh · `sufi` → adeck. Fetch that stem when a slip is for a host.
+
 ## Key Mounts
 
 | Host | Path | Purpose |

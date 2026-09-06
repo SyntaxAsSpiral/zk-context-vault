@@ -14,6 +14,8 @@ Do not vendor 2 MB color PNGs into this skill. Fetch from the source repo, reduc
 | Estate lockup | `holliday-estate/brand/render_logo.py` — house, shou roundel, leiwen | project |
 | Object | Leiwen, yoke, hoof, roundel photographed on the piece | the thing itself |
 
+**Host faces** (mesh steering is the map): nxiz `lotus` · zrrh `meso` · adeck `sufi`. Fetch that stem for a host-labeled slip.
+
 Bjorn’s tape ([thread](https://x.com/bjornpagen/status/2091212203839926334)) is a **layout** study, not an image dump: title + centered emblem + field note + 2-col kv + `DO NOT REPLY` closer. Engraving/hatch survives dither. Do not copy his figures into the library.
 
 ## Esotericons on tape
