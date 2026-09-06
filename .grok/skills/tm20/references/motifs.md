@@ -18,7 +18,7 @@ Bjorn’s tape ([thread](https://x.com/bjornpagen/status/2091212203839926334)) i
 
 ## Esotericons on tape
 
-The masters are neon-glow on a dark field. That is fine on tape if you **invert + boost contrast**, then let `tm20-set` Floyd–Steinberg. Glow becomes grain, not a defect. Do not hard-threshold unless a mark must read as a seal.
+Masters are **RGBA**. Transparent pixels are paper. `Image.convert("L")` drops alpha and paints the hidden RGB (usually black) — that was the boxed background on the first test strip. Always flatten onto white first. Soft glow in the alpha becomes dither grain; that is fine.
 
 Geometry still helps (`triquetra`, `yantra`, `l-pentagram`, `hermetic`, `numogram`, `celtic*`). Painterly ones (`cottagecore`, `lotus`, `alch*`) just dither heavier — preview, don’t ban.
 
@@ -29,18 +29,18 @@ curl -fsSL -o triquetra.png \
   https://raw.githubusercontent.com/SyntaxAsSpiral/esotericons/main/triquetra.png
 ```
 
-Prep (white paper, dark ink, ~480 px). Leave gray for the typesetter:
+Prep (~480 px). Keep gray for Floyd–Steinberg:
 
 ```python
-from PIL import Image, ImageOps, ImageEnhance
-im = Image.open("triquetra.png").convert("L")
-if im.resize((1, 1)).getpixel((0, 0)) < 128:
-    im = ImageOps.invert(im)
-im = ImageEnhance.Contrast(im).enhance(1.6)
+from PIL import Image, ImageEnhance
+im = Image.open("triquetra.png").convert("RGBA")
+bg = Image.new("RGBA", im.size, (255, 255, 255, 255))
+im = Image.alpha_composite(bg, im).convert("L")
+im = ImageEnhance.Contrast(im).enhance(1.4)
 im.resize((480, 480)).save("triquetra-tape.png")
 ```
 
-Put `triquetra-tape.png` in the markdown figure. `tm20-set` dithers it. If the eye vanishes, more contrast — not a binary stamp.
+Put `triquetra-tape.png` in the markdown figure. `tm20-set` dithers it.
 
 Attribution on public slips: “Esotericon by Zach Battin, CC BY 4.0.”
 
