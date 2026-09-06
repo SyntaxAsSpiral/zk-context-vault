@@ -38,7 +38,7 @@ sources:
       compatibility: Print host is quita (USB). Other hosts SSH in. No CUPS. Paper must be loaded.
       metadata:
         author: zk
-        version: "0.2.0"
+        version: "0.3.0"
         category: print
 
     body:
