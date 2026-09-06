@@ -12,6 +12,7 @@ Do not vendor 2 MB color PNGs into this skill. Fetch from the source repo, reduc
 |---|---|---|
 | [SyntaxAsSpiral/esotericons](https://github.com/SyntaxAsSpiral/esotericons) | Operator’s icon set — geometric seals with an eye. PNG + ICO + fake-SVG (raster wrapped). | CC BY 4.0 · Zach Battin |
 | Estate lockup | `holliday-estate/brand/render_logo.py` — house, shou roundel, leiwen | project |
+| Feast cartouche | `family-cookbook/slips/sample/compose_feast.py` — one menu frame, serif in the raster, vegetable plates + Celtic head/foot | project |
 | Object | Leiwen, yoke, hoof, roundel photographed on the piece | the thing itself |
 
 **Host faces** (mesh steering is the map): nxiz `lotus` · zrrh `meso` · adeck `sufi`. Fetch that stem for a host-labeled slip.
@@ -49,7 +50,7 @@ Attribution on public slips: “Esotericon by Zach Battin, CC BY 4.0.”
 ## Adding a fav
 
 1. Prefer a mark you already own (esotericon, estate renderer, object motif).
-2. Check it at 1-bit ~200–480 px. If it dies, it is not a tape motif yet.
+2. Check it at the size that hits the tape (`--dry --png`). Hatch and gilding are judged in gray, not after a hard threshold. If it dies, it is not a tape motif yet.
 3. Note the stem name and one-line “when to use” here. Do not commit the color master into `skills/tm20/`.
 4. Slip markdown: `![triquetra](triquetra-1bit.png)` as its own paragraph.
 
@@ -67,4 +68,12 @@ Two or three short lines.
 | a | b |
 
 DO NOT REPLY. One closer.
+```
+
+## Slip skeleton (feast / week menu)
+
+Locked compositor: `family-cookbook/slips/sample/compose_feast.py`. One cartouche around the whole week. Type is PIL Liberation Serif in the raster. Head/foot vine ~168 dots or it becomes a line. Do not lace every day.
+
+```markdown
+![le festin](this-week-card.png)
 ```
