@@ -8,7 +8,7 @@ description: >-
 compatibility: Print host is quita (USB). Other hosts SSH in. No CUPS. Paper must be loaded.
 metadata:
   author: zk
-  version: "0.1.0"
+  version: "0.2.0"
   category: print
 ---
 
@@ -86,6 +86,8 @@ Thermal is a **stamp**, not a screen. Design at native 1-bit (mode `1` / thresho
 - Photos as thumbnails only if they survive dither (one object, hard contrast). Busy garage shots become static.
 
 Rebuild a 1-bit lockup with the project’s renderer if one exists (estate: `brand/render_logo.py`). Change geometry in the renderer, don’t Photoshop the PNG.
+
+Motif library (esotericons + how to 1-bit them): `references/motifs.md`.
 
 ## Checklist
 

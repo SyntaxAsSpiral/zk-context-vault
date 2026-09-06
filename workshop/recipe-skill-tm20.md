@@ -38,11 +38,15 @@ sources:
       compatibility: Print host is quita (USB). Other hosts SSH in. No CUPS. Paper must be loaded.
       metadata:
         author: zk
-        version: "0.1.0"
+        version: "0.2.0"
         category: print
 
     body:
       - file: skills/tm20/SKILL.md
+
+  references:
+    - file: skills/tm20/references/motifs.md
+      output_name: motifs.md
 
 validate_agentskills_spec: true
 ```
