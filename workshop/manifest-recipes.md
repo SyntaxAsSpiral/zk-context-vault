@@ -1,7 +1,7 @@
 ---
 created: 2026-01-11 09:52:44.314556
 id: recipe-manifest
-modified: '2026-09-08T20:16:38.513366'
+modified: '2026-09-08T20:24:08.574165'
 status: log
 type:
 - log
@@ -10,42 +10,42 @@ type:
 # Recipe Assembly Log
 
 ## Active Recipes
-- **agent/Claudeck/CLAUDE**: Last run 2026-09-08T20:15:37.053535
+- **agent/Claudeck/CLAUDE**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Claudeck/CLAUDE.md`
   - Target: `zk@adeck:~/.claude/CLAUDE.md`
   - Status: ✓ synced
 
-- **agent/Codeck/AGENTS**: Last run 2026-09-08T20:15:37.053535
+- **agent/Codeck/AGENTS**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Codeck/AGENTS.md`
   - Target: `zk@adeck:~/.codex/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Deckini/GEMINI**: Last run 2026-09-08T20:15:37.053535
+- **agent/Deckini/GEMINI**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Deckini/GEMINI.md`
   - Target: `zk@adeck:~/.gemini/GEMINI.md`
   - Status: ✓ synced
 
-- **agent/Kiro/agent**: Last run 2026-09-08T20:15:37.053535
+- **agent/Kiro/agent**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Kiro/agent.md`
   - Target: `~/.kiro/steering/agent.md`
   - Status: ✓ synced
 
-- **agent/Kiro/operator**: Last run 2026-09-08T20:15:37.053535
+- **agent/Kiro/operator**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Kiro/operator.md`
   - Target: `~/.kiro/steering/operator.md`
   - Status: ✓ synced
 
-- **agent/Kiro/mesh**: Last run 2026-09-08T20:15:37.053535
+- **agent/Kiro/mesh**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Kiro/mesh.md`
   - Target: `~/.kiro/steering/mesh.md`
   - Status: ✓ synced
 
-- **agent/Kiro/principles**: Last run 2026-09-08T20:15:37.053535
+- **agent/Kiro/principles**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Kiro/principles.md`
   - Target: `~/.kiro/steering/principles.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-09-08T20:15:37.053535
+- **command/doc-consistency-check/doc-consistency-check**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/doc-consistency-check/doc-consistency-check.md`
   - Target: `~/.claude/commands/doc-consistency-check.md`
   - Target: `~/.codex/prompts/doc-consistency-check.md`
@@ -56,12 +56,12 @@ type:
   - Target: `~/.pi/agent/prompts/doc-consistency-check.md`
   - Status: ✓ synced
 
-- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-09-08T20:15:37.053535
+- **command/doc-consistency-check/doc-consistency-check.kiro**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/doc-consistency-check/doc-consistency-check.kiro.hook`
   - Target: `~/.kiro/hooks/doc-consistency-check.kiro.hook`
   - Status: ✓ synced
 
-- **command/murder/murder**: Last run 2026-09-08T20:15:37.053535
+- **command/murder/murder**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/murder/murder.md`
   - Target: `~/.claude/commands/murder.md`
   - Target: `~/.codex/prompts/murder.md`
@@ -72,22 +72,22 @@ type:
   - Target: `~/.pi/agent/prompts/murder.md`
   - Status: ✓ synced
 
-- **command/murder/murder.kiro**: Last run 2026-09-08T20:15:37.053535
+- **command/murder/murder.kiro**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/murder/murder.kiro.hook`
   - Target: `~/.kiro/hooks/murder.kiro.hook`
   - Status: ✓ synced
 
-- **agent/deck (project steering)/AGENTS**: Last run 2026-09-08T20:15:37.053535
+- **agent/deck (project steering)/AGENTS**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/deck (project steering)/AGENTS.md`
   - Target: `zk@adeck:~/AGENTS.md`
   - Status: ✓ synced
 
-- **project/zk-context-vault/AGENTS**: Last run 2026-09-08T20:15:37.053535
+- **project/zk-context-vault/AGENTS**: Last run 2026-09-08T20:23:30.897504
   - Output: `project/zk-context-vault/AGENTS.md`
   - Target: `/mnt/repository/context-vault/AGENTS.md`
   - Status: ✓ synced
 
-- **command/cave/cave**: Last run 2026-09-08T20:15:37.053535
+- **command/cave/cave**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/cave/cave.md`
   - Target: `~/.claude/commands/cave.md`
   - Target: `~/.codex/prompts/cave.md`
@@ -95,12 +95,12 @@ type:
   - Target: `~/.gemini/prompts/cave.md`
   - Status: ✓ synced
 
-- **command/cave/cave.kiro**: Last run 2026-09-08T20:15:37.053535
+- **command/cave/cave.kiro**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/cave/cave.kiro.hook`
   - Target: `~/.kiro/hooks/cave.kiro.hook`
   - Status: ✓ synced
 
-- **command/bedtime/bedtime**: Last run 2026-09-08T20:15:37.053535
+- **command/bedtime/bedtime**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/bedtime/bedtime.md`
   - Target: `~/.claude/commands/bedtime.md`
   - Target: `~/.codex/prompts/bedtime.md`
@@ -108,12 +108,12 @@ type:
   - Target: `~/.gemini/prompts/bedtime.md`
   - Status: ✓ synced
 
-- **command/bedtime/bedtime.kiro**: Last run 2026-09-08T20:15:37.053535
+- **command/bedtime/bedtime.kiro**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/bedtime/bedtime.kiro.hook`
   - Target: `~/.kiro/hooks/bedtime.kiro.hook`
   - Status: ✓ synced
 
-- **command/gamut/gamut**: Last run 2026-09-08T20:15:37.053535
+- **command/gamut/gamut**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/gamut/gamut.md`
   - Target: `~/.claude/commands/gamut.md`
   - Target: `~/.codex/prompts/gamut.md`
@@ -121,12 +121,12 @@ type:
   - Target: `~/.gemini/prompts/gamut.md`
   - Status: ✓ synced
 
-- **command/gamut/gamut.kiro**: Last run 2026-09-08T20:15:37.053535
+- **command/gamut/gamut.kiro**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/gamut/gamut.kiro.hook`
   - Target: `~/.kiro/hooks/gamut.kiro.hook`
   - Status: ✓ synced
 
-- **command/moeverse/moeverse**: Last run 2026-09-08T20:15:37.053535
+- **command/moeverse/moeverse**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/moeverse/moeverse.md`
   - Target: `~/.claude/commands/moeverse.md`
   - Target: `~/.codex/prompts/moeverse.md`
@@ -134,12 +134,12 @@ type:
   - Target: `~/.gemini/prompts/moeverse.md`
   - Status: ✓ synced
 
-- **command/moeverse/moeverse.kiro**: Last run 2026-09-08T20:15:37.053535
+- **command/moeverse/moeverse.kiro**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/moeverse/moeverse.kiro.hook`
   - Target: `~/.kiro/hooks/moeverse.kiro.hook`
   - Status: ✓ synced
 
-- **command/reflect/reflect**: Last run 2026-09-08T20:15:37.053535
+- **command/reflect/reflect**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/reflect/reflect.md`
   - Target: `~/.claude/commands/reflect.md`
   - Target: `~/.codex/prompts/reflect.md`
@@ -147,15 +147,16 @@ type:
   - Target: `~/.gemini/prompts/reflect.md`
   - Status: ✓ synced
 
-- **command/reflect/reflect.kiro**: Last run 2026-09-08T20:15:37.053535
+- **command/reflect/reflect.kiro**: Last run 2026-09-08T20:23:30.897504
   - Output: `command/reflect/reflect.kiro.hook`
   - Target: `~/.kiro/hooks/reflect.kiro.hook`
   - Status: ✓ synced
 
-- **skill/local-inference**: Last run 2026-09-08T20:15:37.053535
+- **skill/local-inference**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/local-inference/`
   - Target: `~/.claude/skills/local-inference/`
   - Target: `~/.codex/skills/local-inference/`
+  - Target: `zk@quita:~/.codex/skills/local-inference/`
   - Target: `~/.pi/agent/skills/local-inference/`
   - Target: `zk@adeck:~/.claude/skills/local-inference/`
   - Target: `zk@adeck:~/.codex/skills/local-inference/`
@@ -167,10 +168,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/local-inference/`
   - Status: ✓ assembled
 
-- **skill/mcp-builder**: Last run 2026-09-08T20:15:37.053535
+- **skill/mcp-builder**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/mcp-builder/`
   - Target: `~/.claude/skills/mcp-builder/`
   - Target: `~/.codex/skills/mcp-builder/`
+  - Target: `zk@quita:~/.codex/skills/mcp-builder/`
   - Target: `~/.pi/agent/skills/mcp-builder/`
   - Target: `zk@adeck:~/.claude/skills/mcp-builder/`
   - Target: `zk@adeck:~/.codex/skills/mcp-builder/`
@@ -182,10 +184,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/mcp-builder/`
   - Status: ✓ assembled
 
-- **skill/sideriod**: Last run 2026-09-08T20:15:37.053535
+- **skill/sideriod**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/sideriod/`
   - Target: `~/.claude/skills/sideriod/`
   - Target: `~/.codex/skills/sideriod/`
+  - Target: `zk@quita:~/.codex/skills/sideriod/`
   - Target: `~/.pi/agent/skills/sideriod/`
   - Target: `zk@adeck:~/.claude/skills/sideriod/`
   - Target: `zk@adeck:~/.codex/skills/sideriod/`
@@ -197,10 +200,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/sideriod/`
   - Status: ✓ assembled
 
-- **skill/catppuccin-theming**: Last run 2026-09-08T20:15:37.053535
+- **skill/catppuccin-theming**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/catppuccin-theming/`
   - Target: `~/.claude/skills/catppuccin-theming/`
   - Target: `~/.codex/skills/catppuccin-theming/`
+  - Target: `zk@quita:~/.codex/skills/catppuccin-theming/`
   - Target: `~/.pi/agent/skills/catppuccin-theming/`
   - Target: `zk@adeck:~/.claude/skills/catppuccin-theming/`
   - Target: `zk@adeck:~/.codex/skills/catppuccin-theming/`
@@ -212,10 +216,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/catppuccin-theming/`
   - Status: ✓ assembled
 
-- **skill/memory-systems**: Last run 2026-09-08T20:15:37.053535
+- **skill/memory-systems**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/memory-systems/`
   - Target: `~/.claude/skills/memory-systems/`
   - Target: `~/.codex/skills/memory-systems/`
+  - Target: `zk@quita:~/.codex/skills/memory-systems/`
   - Target: `~/.pi/agent/skills/memory-systems/`
   - Target: `zk@adeck:~/.claude/skills/memory-systems/`
   - Target: `zk@adeck:~/.codex/skills/memory-systems/`
@@ -227,10 +232,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/memory-systems/`
   - Status: ✓ assembled
 
-- **skill/nix-os**: Last run 2026-09-08T20:15:37.053535
+- **skill/nix-os**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/nix-os/`
   - Target: `~/.claude/skills/nix-os/`
   - Target: `~/.codex/skills/nix-os/`
+  - Target: `zk@quita:~/.codex/skills/nix-os/`
   - Target: `zk@adeck:~/.claude/skills/nix-os/`
   - Target: `zk@adeck:~/.codex/skills/nix-os/`
   - Target: `zk@adeck:~/.hermes/skills/user/nix-os/`
@@ -242,10 +248,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/nix-os/`
   - Status: ✓ assembled
 
-- **skill/openrgb**: Last run 2026-09-08T20:15:37.053535
+- **skill/openrgb**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/openrgb/`
   - Target: `~/.claude/skills/openrgb/`
   - Target: `~/.codex/skills/openrgb/`
+  - Target: `zk@quita:~/.codex/skills/openrgb/`
   - Target: `zk@adeck:~/.claude/skills/openrgb/`
   - Target: `zk@adeck:~/.codex/skills/openrgb/`
   - Target: `zk@adeck:~/.hermes/skills/user/openrgb/`
@@ -262,10 +269,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/openrgb/`
   - Status: ✓ assembled
 
-- **skill/obsidian**: Last run 2026-09-08T20:15:37.053535
+- **skill/obsidian**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/obsidian/`
   - Target: `~/.claude/skills/obsidian/`
   - Target: `~/.codex/skills/obsidian/`
+  - Target: `zk@quita:~/.codex/skills/obsidian/`
   - Target: `~/.pi/agent/skills/obsidian/`
   - Target: `zk@adeck:~/.claude/skills/obsidian/`
   - Target: `zk@adeck:~/.codex/skills/obsidian/`
@@ -277,10 +285,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/obsidian/`
   - Status: ✓ assembled
 
-- **skill/semantic-json**: Last run 2026-09-08T20:15:37.053535
+- **skill/semantic-json**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/semantic-json/`
   - Target: `~/.claude/skills/semantic-json/`
   - Target: `~/.codex/skills/semantic-json/`
+  - Target: `zk@quita:~/.codex/skills/semantic-json/`
   - Target: `~/.pi/agent/skills/semantic-json/`
   - Target: `zk@adeck:~/.claude/skills/semantic-json/`
   - Target: `zk@adeck:~/.codex/skills/semantic-json/`
@@ -292,41 +301,43 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/semantic-json/`
   - Status: ✓ assembled
 
-- **agent/Claudi/CLAUDE**: Last run 2026-09-08T20:15:37.053535
+- **agent/Claudi/CLAUDE**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Claudi/CLAUDE.md`
   - Target: `~/.claude/CLAUDE.md`
   - Target: `zk@zrrh:~/.claude/CLAUDE.md`
   - Status: ✓ synced
 
-- **agent/Codex/AGENTS**: Last run 2026-09-08T20:15:37.053535
+- **agent/Codex/AGENTS**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Codex/AGENTS.md`
   - Target: `~/.codex/AGENTS.md`
   - Target: `zk@zrrh:~/.codex/AGENTS.md`
+  - Target: `zk@quita:~/.codex/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Gemini/GEMINI**: Last run 2026-09-08T20:15:37.053535
+- **agent/Gemini/GEMINI**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Gemini/GEMINI.md`
   - Target: `~/.gemini/GEMINI.md`
   - Target: `zk@zrrh:~/.gemini/GEMINI.md`
   - Status: ✓ synced
 
-- **agent/Grok/AGENTS**: Last run 2026-09-08T20:15:37.053535
+- **agent/Grok/AGENTS**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Grok/AGENTS.md`
   - Target: `~/.grok/AGENTS.md`
   - Target: `zk@adeck:~/.grok/AGENTS.md`
   - Status: ✓ synced
 
-- **agent/Pi/AGENTS**: Last run 2026-09-08T20:15:37.053535
+- **agent/Pi/AGENTS**: Last run 2026-09-08T20:23:30.897504
   - Output: `agent/Pi/AGENTS.md`
   - Target: `~/.pi/agent/AGENTS.md`
   - Target: `zk@zrrh:~/.pi/agent/AGENTS.md`
   - Target: `zk@adeck:~/.pi/agent/AGENTS.md`
   - Status: ✓ synced
 
-- **skill/factorio-modding**: Last run 2026-09-08T20:15:37.053535
+- **skill/factorio-modding**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/factorio-modding/`
   - Target: `~/.claude/skills/factorio-modding/`
   - Target: `~/.codex/skills/factorio-modding/`
+  - Target: `zk@quita:~/.codex/skills/factorio-modding/`
   - Target: `~/.pi/agent/skills/factorio-modding/`
   - Target: `~/.gemini/skills/factorio-modding/`
   - Target: `~/.gemini/antigravity/skills/factorio-modding/`
@@ -334,10 +345,11 @@ type:
   - Target: `/mnt/repository/context-vault/.grok/skills/factorio-modding/`
   - Status: ✓ synced
 
-- **skill/tm20**: Last run 2026-09-08T20:15:37.053535
+- **skill/tm20**: Last run 2026-09-08T20:23:30.897504
   - Output: `skill/tm20/`
   - Target: `~/.claude/skills/tm20/`
   - Target: `~/.codex/skills/tm20/`
+  - Target: `zk@quita:~/.codex/skills/tm20/`
   - Target: `~/.pi/agent/skills/tm20/`
   - Target: `zk@adeck:~/.claude/skills/tm20/`
   - Target: `zk@adeck:~/.codex/skills/tm20/`
@@ -352,6 +364,10 @@ type:
   - Status: ✓ assembled
 
 ## Deployment Log
+
+
+### 2026-09-08T20:24:08.574165
+- Synced 39 deployments
 
 
 ### 2026-09-08T20:16:38.513366

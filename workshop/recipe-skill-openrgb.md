@@ -18,6 +18,7 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/openrgb/
   - path: ~/.codex/skills/openrgb/
+  - path: zk@quita:~/.codex/skills/openrgb/
   - path: zk@adeck:~/.claude/skills/openrgb/
   - path: zk@adeck:~/.codex/skills/openrgb/
   - path: zk@adeck:~/.hermes/skills/user/openrgb/

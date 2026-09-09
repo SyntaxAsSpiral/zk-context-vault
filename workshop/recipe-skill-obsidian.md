@@ -21,6 +21,7 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/obsidian/
   - path: ~/.codex/skills/obsidian/
+  - path: zk@quita:~/.codex/skills/obsidian/
   - path: ~/.pi/agent/skills/obsidian/
   - path: zk@adeck:~/.claude/skills/obsidian/
   - path: zk@adeck:~/.codex/skills/obsidian/

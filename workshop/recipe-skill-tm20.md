@@ -14,6 +14,7 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/tm20/
   - path: ~/.codex/skills/tm20/
+  - path: zk@quita:~/.codex/skills/tm20/
   - path: ~/.pi/agent/skills/tm20/
   - path: zk@adeck:~/.claude/skills/tm20/
   - path: zk@adeck:~/.codex/skills/tm20/

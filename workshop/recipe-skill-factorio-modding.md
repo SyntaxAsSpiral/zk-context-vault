@@ -14,6 +14,7 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/factorio-modding/
   - path: ~/.codex/skills/factorio-modding/
+  - path: zk@quita:~/.codex/skills/factorio-modding/
   - path: ~/.pi/agent/skills/factorio-modding/
   - path: ~/.gemini/skills/factorio-modding/
   - path: ~/.gemini/antigravity/skills/factorio-modding/

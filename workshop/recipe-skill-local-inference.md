@@ -22,6 +22,7 @@ output_format: skill  # Creates Agent Skills standard structure
 target_locations:
   - path: ~/.claude/skills/local-inference/
   - path: ~/.codex/skills/local-inference/
+  - path: zk@quita:~/.codex/skills/local-inference/
   - path: ~/.pi/agent/skills/local-inference/
   - path: zk@adeck:~/.claude/skills/local-inference/
   - path: zk@adeck:~/.codex/skills/local-inference/

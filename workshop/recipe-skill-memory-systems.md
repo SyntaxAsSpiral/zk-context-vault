@@ -22,6 +22,7 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/memory-systems/
   - path: ~/.codex/skills/memory-systems/
+  - path: zk@quita:~/.codex/skills/memory-systems/
   - path: ~/.pi/agent/skills/memory-systems/
   - path: zk@adeck:~/.claude/skills/memory-systems/
   - path: zk@adeck:~/.codex/skills/memory-systems/

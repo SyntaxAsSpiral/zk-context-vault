@@ -20,6 +20,7 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/semantic-json/
   - path: ~/.codex/skills/semantic-json/
+  - path: zk@quita:~/.codex/skills/semantic-json/
   - path: ~/.pi/agent/skills/semantic-json/
   - path: zk@adeck:~/.claude/skills/semantic-json/
   - path: zk@adeck:~/.codex/skills/semantic-json/

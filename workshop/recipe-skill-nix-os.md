@@ -13,6 +13,7 @@ output_format: skill
 target_locations:
   - path: ~/.claude/skills/nix-os/
   - path: ~/.codex/skills/nix-os/
+  - path: zk@quita:~/.codex/skills/nix-os/
   - path: zk@adeck:~/.claude/skills/nix-os/
   - path: zk@adeck:~/.codex/skills/nix-os/
   - path: zk@adeck:~/.hermes/skills/user/nix-os/

@@ -22,6 +22,7 @@ output_format: skill  # Creates Agent Skills standard structure
 target_locations:
   - path: ~/.claude/skills/sideriod/
   - path: ~/.codex/skills/sideriod/
+  - path: zk@quita:~/.codex/skills/sideriod/
   - path: ~/.pi/agent/skills/sideriod/
   - path: zk@adeck:~/.claude/skills/sideriod/
   - path: zk@adeck:~/.codex/skills/sideriod/
