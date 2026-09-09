@@ -13,7 +13,7 @@ tags:
   - hardware
   - global
 created: 2026-03-02
-modified: 2026-09-05
+modified: 2026-09-08
 status: active
 glyph: "🕸️"
 lens: infrastructure
@@ -29,7 +29,7 @@ lens: infrastructure
 | zrrh | 100.77.90.79 | Inference Node | NixOS 26.05 | RTX 4090 |
 | adeck | 100.89.32.9 | Agentic Server / Relay (always on) | NixOS 26.05 | AMD Vangogh (Vulkan, 5.5 GiB) |
 | zdeck | 100.64.136.57 | Gaming | SteamOS | AMD Vangogh (Vulkan) |
-| quita | 100.82.51.63 | Family laptop / portable print host | Linux Mint | — |
+| quita | 100.82.51.63 | Family laptop / mesh print host | Linux Mint | — |
 | zk-pixel | 100.96.213.111 | Android phone | Android | — |
 | zk-note | 100.105.239.55 | Android phone | Android | — |
 
@@ -50,7 +50,11 @@ lens: infrastructure
 
 **Inference Gateway (`adeck:1234`):** All inference requests target `adeck:1234`. Adeck routes via `lmlink` — large models to `zrrh`, small models/embeddings local or to `nxiz`. OpenAI-compatible API (`/v1/chat/completions`, `/v1/embeddings`).
 
-**tm20 thermal (`quita`):** Epson TM-T20III USB (`04b8:0e28`, 24V brick, USB-B). Print host is **quita only** — `tm20` / `tm20-set` in `/usr/local/bin`, source `~/src/tm20`. udev `/etc/udev/rules.d/99-tm20-epson.rules` (`plugdev`, unbinds `usblp`). No CUPS. CLIs open USB only (library TCP :9100 is unused). Other hosts print via SSH to quita: `tm20-set print md path.md`, `tm20 hello`. Paper: generic 80 mm / 3-1/8" thermal. Do not share via router USB. Linux faces: Liberation Sans/Mono (local `kit.rs`); macOS Helvetica/Menlo otherwise.
+**Holliday Table (`adeck`):** Kitchen app at `https://adeck.tail293e98.ts.net`. Authoritative tree `/mnt/echo/family-cookbook`. Quita is not the app host.
+
+**tm20 thermal (`quita`):** Epson TM-T20III USB (`04b8:0e28`, 24V brick, USB-B). USB execution is **quita only** — `tm20` / `tm20-set` in `/usr/local/bin`, source `~/src/tm20`. udev `/etc/udev/rules.d/99-tm20-epson.rules` (`plugdev`, unbinds `usblp`). No CUPS. CLIs open USB only (library TCP :9100 is unused). Paper: generic 80 mm / 3-1/8" thermal. Do not share via router USB. Linux faces: Liberation Sans/Mono (local `kit.rs`); macOS Helvetica/Menlo otherwise. How to compose and when to use USB vs the receiver: skill **tm20**.
+
+**Mesh print receiver (`quita:8766`):** Shared USB gate for Holliday Table, holliday-estate, and sideriod. Live tree `~/src/print-receiver` (not inside any project checkout). systemd user unit `print-receiver.service`. Token `PRINT_TOKEN` (alias `HOLIDAY_PRINT_TOKEN`). POST `http://quita:8766/print` a unique `job_id` plus a 576px PNG (`image`) or markdown (`markdown`). Duplicate ids are not reprinted. One USB lock. Prefer this from other hosts and from long-running services. Direct `tm20` / `tm20-set` is for sitting at quita: design, preview, hello, status, recovering a jammed job.
 
 **Other services on adeck:** Docker, qBittorrent, SSH, Tailscale, msgvault, Hermes agent, sideriod gnomon, pulse-generator (daily site rotation at 02:24 PST), Bitburner (MCP + sync server).
 

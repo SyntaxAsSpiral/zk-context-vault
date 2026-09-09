@@ -1,7 +1,7 @@
 ---
 id: recipe-tm20
 created: 2026-09-05
-modified: 2026-09-05
+modified: 2026-09-08
 status: active
 type:
   - "skill"
@@ -31,14 +31,14 @@ sources:
     frontmatter:
       name: tm20
       description: >-
-        Print 80 mm thermal slips and receipts on the mesh Epson TM-T20III via tm20/tm20-set.
-        Use when designing or printing tape, item listings, logos, QR, ESC/POS, 1-bit art,
-        or when the user mentions tm20, TM-T20III, thermal printer, or 80 mm receipts.
-        Slash: /tm20
-      compatibility: Print host is quita (USB). Other hosts SSH in. No CUPS. Paper must be loaded.
+        Print 80 mm thermal slips and receipts on the mesh Epson TM-T20III via tm20/tm20-set
+        or the quita print receiver. Use when designing or printing tape, item listings,
+        logos, QR, ESC/POS, 1-bit art, or when the user mentions tm20, TM-T20III, thermal
+        printer, 80 mm receipts, or the mesh print receiver. Slash: /tm20
+      compatibility: USB and tm20 binaries are quita only. Scripted jobs from other hosts POST the print receiver. No CUPS. Paper must be loaded.
       metadata:
         author: zk
-        version: "0.3.0"
+        version: "0.4.0"
         category: print
 
     body:
