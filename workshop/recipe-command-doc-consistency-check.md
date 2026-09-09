@@ -1,7 +1,7 @@
 ---
 id: recipe-command-doc-consistency-check
 created: 2026-01-16
-modified: 2026-01-16
+modified: 2026-09-08
 status: active
 type:
   - "command"
@@ -15,6 +15,7 @@ target_locations:
   - path: ~/.kiro/hooks/doc-consistency-check.kiro.hook
   - path: ~/.claude/commands/doc-consistency-check.md
   - path: ~/.codex/prompts/doc-consistency-check.md
+  - path: zk@quita:~/.codex/prompts/doc-consistency-check.md
   - path: ~/.gemini/prompts/doc-consistency-check.md
   - path: zk@adeck:~/.claude/commands/doc-consistency-check.md
   - path: zk@adeck:~/.codex/prompts/doc-consistency-check.md

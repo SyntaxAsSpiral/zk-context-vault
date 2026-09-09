@@ -1,7 +1,7 @@
 ---
 id: recipe-command-murder
 created: 2026-01-15
-modified: 2026-01-15
+modified: 2026-09-08
 status: active
 type:
   - "command"
@@ -18,6 +18,7 @@ target_locations:
   - path: ~/.kiro/hooks/murder.kiro.hook      # Kiro uses hooks (JSON)
   - path: ~/.claude/commands/murder.md        # Claude uses commands (MD)
   - path: ~/.codex/prompts/murder.md         # Codex uses prompts (MD)
+  - path: zk@quita:~/.codex/prompts/murder.md
   - path: ~/.gemini/prompts/murder.md        # Gemini uses prompts (MD)
   - path: zk@adeck:~/.claude/commands/murder.md
   - path: zk@adeck:~/.codex/prompts/murder.md

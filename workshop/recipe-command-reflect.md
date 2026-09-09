@@ -1,7 +1,7 @@
 ---
 id: recipe-command-reflect
 created: 2026-04-17
-modified: 2026-04-17
+modified: 2026-09-08
 status: active
 type:
   - "command"
@@ -15,6 +15,7 @@ target_locations:
   - path: ~/.kiro/hooks/reflect.kiro.hook
   - path: ~/.claude/commands/reflect.md
   - path: ~/.codex/prompts/reflect.md
+  - path: zk@quita:~/.codex/prompts/reflect.md
   - path: ~/.cursor/commands/reflect.md
   - path: ~/.gemini/prompts/reflect.md
 

@@ -1,7 +1,7 @@
 ---
 id: recipe-command-bedtime
 created: 2026-04-17
-modified: 2026-04-17
+modified: 2026-09-08
 status: active
 type:
   - "command"
@@ -15,6 +15,7 @@ target_locations:
   - path: ~/.kiro/hooks/bedtime.kiro.hook
   - path: ~/.claude/commands/bedtime.md
   - path: ~/.codex/prompts/bedtime.md
+  - path: zk@quita:~/.codex/prompts/bedtime.md
   - path: ~/.cursor/commands/bedtime.md
   - path: ~/.gemini/prompts/bedtime.md
 

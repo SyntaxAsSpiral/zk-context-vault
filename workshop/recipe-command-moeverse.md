@@ -1,7 +1,7 @@
 ---
 id: recipe-command-moeverse
 created: 2026-04-17
-modified: 2026-04-17
+modified: 2026-09-08
 status: active
 type:
   - "command"
@@ -15,6 +15,7 @@ target_locations:
   - path: ~/.kiro/hooks/moeverse.kiro.hook
   - path: ~/.claude/commands/moeverse.md
   - path: ~/.codex/prompts/moeverse.md
+  - path: zk@quita:~/.codex/prompts/moeverse.md
   - path: ~/.cursor/commands/moeverse.md
   - path: ~/.gemini/prompts/moeverse.md
 

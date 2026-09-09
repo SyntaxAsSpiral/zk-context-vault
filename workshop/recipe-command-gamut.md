@@ -1,7 +1,7 @@
 ---
 id: recipe-command-gamut
 created: 2026-04-17
-modified: 2026-04-17
+modified: 2026-09-08
 status: active
 type:
   - "command"
@@ -15,6 +15,7 @@ target_locations:
   - path: ~/.kiro/hooks/gamut.kiro.hook
   - path: ~/.claude/commands/gamut.md
   - path: ~/.codex/prompts/gamut.md
+  - path: zk@quita:~/.codex/prompts/gamut.md
   - path: ~/.cursor/commands/gamut.md
   - path: ~/.gemini/prompts/gamut.md
 

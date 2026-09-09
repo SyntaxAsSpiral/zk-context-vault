@@ -1,7 +1,7 @@
 ---
 id: recipe-command-cave
 created: 2026-04-17
-modified: 2026-04-17
+modified: 2026-09-08
 status: default
 type:
   - "command"
@@ -15,6 +15,7 @@ target_locations:
   - path: ~/.kiro/hooks/cave.kiro.hook
   - path: ~/.claude/commands/cave.md
   - path: ~/.codex/prompts/cave.md
+  - path: zk@quita:~/.codex/prompts/cave.md
   - path: ~/.cursor/commands/cave.md
   - path: ~/.gemini/prompts/cave.md
 
