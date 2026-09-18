@@ -1,7 +1,7 @@
 ---
 id: recipe-local-inference
 created: 2026-04-20
-modified: 2026-04-20
+modified: 2026-09-18
 status: active
 type:
   - "skill"
@@ -39,11 +39,11 @@ sources:
     # SKILL.md with required frontmatter
     frontmatter:
       name: local-inference
-      description: Use when running inference probes on the mesh, routing tasks to pi or hermes harnesses, or configuring model loading across LM Studio (adeck:1234), vLLM (zrrh:8000), or llama-server (zrrh direct). Covers gateway config, ctx ceiling procedure, tool-call probing, KV quant config, dense vs MoE tradeoffs, and harness architecture.
-      compatibility: Designed for the daemonturgy mesh (nxiz/zrrh/adeck). Requires nix develop flake shell and Tailscale mesh access.
+      description: Use when working with local inference on the mesh — the adeck:1234 gateway (wake proxy + LM Link), model loading/JIT config on zrrh/adeck/nxiz, structured output, reasoning budgets/toggles (reasoning_effort), MTP draft decoding, embeddings, pi's `local` provider, or the family-cookbook OCR/repair and esocortex consumers.
+      compatibility: Designed for the daemonturgy mesh (nxiz/zrrh/adeck). Requires Tailscale mesh access; zrrh GUI session for CUDA.
       metadata:
         author: zk
-        version: "1.0"
+        version: "2.0"
         category: inference
     
     body:  # Markdown instructions for agents

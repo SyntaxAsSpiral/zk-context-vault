@@ -1,245 +1,213 @@
-# local-inference: sandbox probe process
+# local-inference: runbook
 
-How to run loadability, context-ceiling, and tool-call probes against the mesh
-via the LM Studio Python SDK.
+The gateway, the API surface, and the operational discipline. Everything
+below verified against the live mesh on 2026-09-18.
 
-## Gateway
+## Gateway: `adeck:1234`
 
-ALL inference requests go through `adeck:1234`. adeck's lmlink routes to the
-correct host (zrrh for large models, nxiz/adeck local for small). Do not talk
-to zrrh or nxiz directly — their LM Studio instances are not bound to external
-interfaces.
+**Not** an LM Studio native server — an aiohttp relay:
 
-```python
-client = lms.Client(api_host="adeck:1234")   # always
-```
+- `inference-wake.service` binds `0.0.0.0:1234`, proxies to
+  `llmster.service` upstream at `http://127.0.0.1:1235` (adeck's daemon,
+  `lms daemon up`).
+- Source: `nix-os/modules/home/daemonturgy/lmstudio/adeck/inference-wake.py`
+  (declared by `default.nix` next to it; both under version control).
 
-For the OpenAI-compatible endpoint (tool_call_probe.py):
-```
-http://adeck:1234/v1/chat/completions
-```
+### Wake gating
 
-The flake shellHook exports `LMSTUDIO_GATEWAY=http://adeck:1234`.
+Only **inference** traffic wakes zrrh. Gated paths (POST):
+`/v1/chat/completions`, `/v1/completions`, `/v1/embeddings`, `/v1/responses`,
+`/api/v0/chat/completions`, `/api/v0/completions`, `/api/v0/embeddings`,
+`/api/v1/chat`, `/api/v1/models/load` — plus any WebSocket (SDK connections),
+with a wake check before each downstream→upstream frame.
 
-## Running probes
+Readiness = zrrh TCP-reachable at `192.168.0.110:22` (router-LAN IP) **and**
+`lms link status --json` shows peer `zrrh` with `status: "connected"`.
+If not ready: WoL broadcast (MAC `60cf8461d800` → `192.168.0.255:9`) every
+3 s, 120 s deadline, then HTTP 503
+`zrrh did not reconnect to LM Link within 120 seconds.`
+A 2 s dedup cache avoids re-checking per request burst.
 
-All scripts require the flake devshell:
+**Gotcha:** embeddings are wake-gated too — even a model that lives on
+adeck (`mxbai-embed-large-v1` is `Local`) will pay the wake cost if zrrh is
+asleep. If zrrh is up, the check is a ~free 2 s-cached no-op.
 
-```bash
-nix develop --command python3 scripts/<probe>.py <models> --gateway adeck:1234 [--out-dir runs/fit/<run-id>]
-```
+### Proxy behavior
 
-**Always run probes sequentially.** Parallel loads on 24 GB VRAM will OOM each
-other. Check `ssh zk@adeck lms ps` before starting a run; unload any lingering
-models first:
+- Timeouts: `sock_connect` 10 s, `sock_read` 600 s, no total — long
+  generations are fine; a stalled upstream 502s after 10 min.
+- `auto_decompress: false` (SSE streams pass through), `client_max_size`
+  64 MB, upstream failure → 502 `LM Studio upstream unavailable.`
+- Non-inference traffic (e.g. `GET /v1/models`, `GET /api/v0/models`,
+  control-plane) passes through without waking anything.
 
-```bash
-ssh zk@adeck lms ps
-ssh zk@adeck "lms unload <model-id>"
-```
+## API surface (what the services actually use)
 
-## Context ceiling probe
+### Chat
 
-`scripts/ctx_optimize_probe.py` — climbs an **ascending** ladder until OOM, so
-the highest successful load is the proven ceiling. Default ladder:
+`POST /v1/chat/completions` — non-stream and SSE streaming both work.
+Streaming: `data:` lines, `choices[].delta.content` **and** a separate
+`choices[].delta.reasoning_content`, terminated by `data: [DONE]`.
 
-```
-8192 → 16384 → 32768 → 65536 → 131072 → 196608 → 262144 → 393216 → 524288
-```
+### Structured output (strict JSON schema)
 
-Override with `--ctx-ladder` for high-VRAM targets:
-
-```bash
-# find ceiling above 512K
-python3 scripts/ctx_optimize_probe.py <model> --gateway adeck:1234 \
-  --ctx-ladder 524288 655360 786432 1048576
-```
-
-Two KV configs are tried per context step (q8kv+flash first, then q4kv+flash).
-The script records the highest successful load for each and crowns whichever
-config reaches the higher ceiling.
-
-**Vulkan / Phi arch exception:** flash attention is not supported on AMD Vangogh
-(adeck). Phi-3/phi-4 models OOM at ctx=8192 on both flash configs. Use a manual
-baseline probe (contextLength only, no flashAttention/KV quant overrides) for
-these models — proven ceiling is 32K baseline.
-
-**Note on load time:** Large context allocations can take 10–100 seconds before
-returning a load error. This is normal — it means the model is partially
-initialising before OOM. Don't kill the probe early.
-
-## Tool-call probe
-
-`scripts/tool_call_probe.py` — JIT-loads via SDK, then hits
-`/v1/chat/completions` with a `tools` array (same surface pi uses). No
-`max_tokens` — never set it, never suggest it.
-
-```bash
-python3 scripts/tool_call_probe.py <model> \
-  --gateway http://adeck:1234/v1 \
-  --ctx 65536 \
-  --out-dir runs/fit/<run-id>
-```
-
-Check in results:
-1. `emitted_tool_calls: true` and `tool_call_count >= 1`
-2. `tool_args_parsed_ok: true` — arguments are valid JSON
-3. `status: "ok"`
-4. `content_sample` — if non-empty with tool_calls also present, check for
-   wrong-language or gibberish (quant-damage signature)
-5. `finish_reason: "tool_calls"` in raw_response — `length` means the model hit
-   token budget before committing; `stop` means it responded as text
-
-For reasoning models: `reasoning_content` will be populated separately
-(`separateReasoningContentInAPI: true` is set on zrrh). A model that reasons
-for many tokens before tool-calling will appear slow but is not broken.
-
-## JIT load config
-
-LM Studio's per-model JIT defaults live at:
-
-```
-~/.lmstudio/.internal/user-concrete-model-default-config/<author>/<repo>/<file>.gguf.json
-```
-
-Structure:
 ```json
-{
-  "preset": "",
-  "operation": { "fields": [] },
-  "load": {
-    "fields": [
-      { "key": "llm.load.contextLength",               "value": 655360 },
-      { "key": "llm.load.llama.flashAttention",         "value": true },
-      { "key": "llm.load.llama.kCacheQuantizationType", "value": { "checked": true, "value": "q4_0" } },
-      { "key": "llm.load.llama.vCacheQuantizationType", "value": { "checked": true, "value": "q4_0" } }
-    ]
-  }
-}
+{"response_format": {"type": "json_schema", "json_schema": {
+  "name": "page_ocr", "strict": true,
+  "schema": {"type": "object", "properties": {"...": "..."},
+             "required": ["..."], "additionalProperties": false}}}}
 ```
 
-Write these directly — do not use `lms load` to set them. Next JIT load picks
-them up.
+Strict mode: `additionalProperties: false` + `required` on every object.
+In production on the local gateway: cookbook OCR (`page_ocr`), cookbook
+repair (`ocr_character_repairs`), esocortex augment (`esocortex_augment`).
+Docs: <https://lmstudio.ai/docs/developer/openai-compat/structured-output>
 
-## zrrh runtime notes
+### Reasoning: budget & toggle
 
-**GUI required for CUDA.** zrrh has LM Studio installed with GUI. When GUI is
-installed, the CLI is redirected to a different exe that ties CUDA detection to
-the GUI process. `llmster` daemon alone will NOT detect the RTX 4090. The GUI
-must be open. adeck (headless install) has no such requirement.
+Verified against `qwen/qwen3.8-27b` through the gateway, 2026-09-18:
 
-**Diagnostic signal.** Loss of SSH to zrrh OR loss of the LM Studio CUDA
-runtime mid-probe means something borked — OOM, crash, reboot. Stop, check
-`journalctl -b -1 | grep -iE "oom|kill|reboot"`, do not retry the same config
-blind.
+| Request | Result |
+|---|---|
+| (no param) | Thinks by default. With `max_tokens: 15` all 15 completion tokens were reasoning (`usage.completion_tokens_details.reasoning_tokens: 15`), content empty. |
+| `"reasoning_effort": "none"` | **Toggle verified off**: `reasoning_tokens: 0`, answer in 3 tokens. |
+| `"thinking_budget": 0` | Present in the llmster 0.0.11 runtime, but had no effect on qwen3.8 (identical to default). Don't rely on it. |
 
-**Sequential probes only.** 24 GB VRAM; parallel loads OOM each other. Confirm
-`lms ps` is empty before every run.
+- `reasoning_content` comes back as its own message field (non-stream) and
+  SSE delta (stream) — parse it separately, don't splice into `content`.
+- The cookbook repair workflow (local gemma) runs `reasoning_effort: "none"`
+  + `temperature: 0` — the pattern for deterministic local work.
+- The OpenRouter-style `reasoning: {"effort": "low"}` object is for the
+  **openrouter** path (cookbook sidecar fallback), not the LMS gateway.
+- gemma-4 thinking is also prompt-triggered: the `gemma4` preset injects a
+  `<|think|>` system-prompt marker.
 
-## Proven zrrh ceilings (2026-04-20)
+### Embeddings
 
-All probed via adeck:1234. Evidence in `runs/fit/20260420T-zrrh-ctx/`.
+`POST /v1/embeddings` — models: `text-embedding-qwen3-embedding-8b` (zrrh),
+`text-embedding-nomic-embed-text-v1.5` (adeck/nxiz/zrrh),
+`text-embedding-mxbai-embed-large-v1` (adeck/nxiz),
+`text-embedding-qwen3-embedding-4b` (nxiz).
 
-### Batch 1–4: Core fleet
+**OOM gotcha (from esocortex):** a bare `/v1/embeddings` call JIT-loads with
+the GGUF's own `n_ctx` (40k for qwen3-embedding-8b) and OOMs on the 24 GB
+card. Load it explicitly first:
 
-| model | arch | size | q8kv max | q4kv max | tok/s | tool calls |
-|-------|------|------|----------|----------|-------|------------|
-| supergemma4-26b-uncensored-v2 | gemma4 dense | 16.8 GB | 393K | **655K** | 138 | ✓ |
-| gemma-4-26b-a4b-it | gemma4 MoE (4B active) | 18.0 GB | **1M** | 1M | 88 | ✓ |
-| openai/gpt-oss-20b | gpt-oss dense | 12.1 GB | **1M** | 1M | 151 | ✓ |
-| gpt-oss-20b-heretic | gpt-oss dense | 14.7 GB | **1M** | 1M | 141 | ✓ |
-| qwen3.5-27b | qwen35 dense | 18.6 GB | 768K | **1M** | ~30* | ✓ |
-| qwen3.5-27b-claude-distilled | qwen35 dense | 17.5 GB | 768K | **1M** | ~20* | ✓ |
-| qwen3.5-27b-uncensored-heretic | qwen35 dense | 21.2 GB | 640K | **1M** | ~15* | ✓ |
-| qwen/qwen3.5-35b-a3b | qwen35moe MoE (3B active) | 22.1 GB | **1M** | 1M | 27 | ✓ |
-| qwen/qwen3.6-35b-a3b | qwen35moe MoE (3B active) | 22.1 GB | **1M** | 1M | 30 | ✓ |
-| qwen2.5-14b-instruct | Qwen2 dense | 9.0 GB | 131K | **256K** | 84 | ✓ |
-| qwen2.5-coder-14b-instruct | Qwen2 dense | 7.3 GB | 131K | **256K** | 94 | ✓ |
-| deepseek-coder-v2-lite-instruct | DeepSeek2 MoE | 14.1 GB | ✗ | ✗ | — | — |
+```
+POST /api/v1/models/load  {"model": "text-embedding-qwen3-embedding-8b", "context_length": 8192}
+```
 
-### Batch 5: pi-provider models
+(esocortex's `ensure_loaded` tolerates 400/409/500 "already loaded".)
 
-| model | arch | size | q8kv max | q4kv max | tool calls |
-|-------|------|------|----------|----------|------------|
-| mistralai/codestral-22b-v0.1 | Llama dense | 15.7 GB | **655K** | 655K | ✓ |
-| mistral-small-24b-instruct-2501-heretic-i1 | Llama dense | 16.8 GB | **1M** | 1M | ✓ |
-| qwen3-30b-a3b-thinking-2507-deepseek-v3.1-distill | qwen3moe MoE | 21.7 GB | **786K**† | — | ✓ |
+### Vision / capability check
 
-†786K is network-limited (Tailscale WebSocket drop during 1M attempt), not confirmed OOM.
-Real ceiling may be higher. Codestral at 655K q8kv: 340s load — borderline practical.
+`qwen/qwen3.8-27b` loads with its `mmproj` — it **is** a VLM on the gateway
+(even though pi's `models.json` declares it text-only).
+The cookbook sidecar's preflight pattern:
 
-### Batch 6: Architecture wildcards
+```
+GET /api/v0/models  →  model.type == "vlm"  or
+    "image" in model.architecture.input_modalities
+```
 
-| model | arch | size | q8kv max | q4kv max | tool calls |
-|-------|------|------|----------|----------|------------|
-| allenai/olmo-3-32b-think | olmo2 dense | 19.5 GB | 786K | **1M** | ✗ |
-| baidu/ernie-4.5-21b-a3b | ernie4.5-moe MoE | 18.1 GB | **1M** | 1M | ✓ |
-| bytedance/seed-oss-36b | seed_oss dense | 21.8 GB | **512K**‡ | 512K | ✓ |
-| dolphin-mistral-24b-venice-i1 | Llama dense | 16.8 GB | **1M** | 1M | ✓§ |
+### Models list
 
-‡seed-oss: 655K q8kv triggered system OOM + reboot (61 GB RAM exhausted). Hard cap at 512K.
-§dolphin: `[TOOL_CALLS]` sentinel leaks into content (Mistral ChatML artifact); `tool_calls[]` array is correctly populated.
+`GET /v1/models` returns 35 IDs (chat + `text-embedding-*`).
+`lms ls` shows the full union with arch/size/device (below).
 
-*reasoning models — tok/s at 1M ctx reflects KV bandwidth; at 32-64K expect 30-50 tok/s
+## MTP (multi-token prediction draft decoding)
 
-**deepseek-coder-v2-lite:** fails to load at any context (slow 35-49s failure =
-partial init, not instant OOM). Likely arch incompatibility with
-llama.cpp-cuda12@2.13.0. Not in pi rotation.
+**Live-verified on the running qwen3.8-27b instance:** the runtime
+auto-initializes an MTP draft context for GGUFs that ship an MTP module —
+zrrh server log: `common_speculative_init_result: creating MTP draft
+context against the target model .../Qwen3.8-27B-Q4_K_M.gguf`. Acceptance
+lines (llama.cpp `print_timing`): `draft acceptance = 0.80–0.98 (N accepted /
+M generated), mean len ≈ 2.5–2.8` — that's the speed boost.
 
-**gpt-oss Harmony sentinel:** previously failed in LM Studio 4.10 (tool_result
-injection corrupted `<|channel|>` routing). Fixed in current version — Harmony
-channels visible in response body but functioning correctly.
+**Explicit config** (JIT per-model default,
+`~/.lmstudio/.internal/user-concrete-model-default-config/.../....json`):
+`qwopus3.6-27b-v2-mtp` sets
+`llm.load.llama.speculativeDecoding.draftMtpMaxTokens: 4`,
+`draftMtpMinTokens: 1`.
 
-**olmo-3-32b tool call failure pattern:** constructs tool call syntax in
-`content` text (model is aware of the format) but never routes to `tool_calls[]`.
-Template is not wired for OpenAI function calling. Not usable in pi.
+**Prediction-side tuning** (preset `zrrh hermes test`):
+`llm.prediction.speculativeDecoding.maxTokensToDraft: 22`,
+`minContinueDraftingProbability: 0.74`, `minDraftLengthToConsider: 1`.
 
-**Context vs quality note:** proven_max reflects VRAM fit, not training range.
-Models like dolphin (trained to 32K) will load at 1M via RoPE scaling but
-produce unreliable output beyond their training ceiling. JIT context_length in
-manifests reflects the practical quality-safe value, not the hardware limit.
+**Verify on the host where it runs:**
 
-## Proven adeck models (2026-04-28 sweep — `runs/fit/20260428T-adeck-ctx/`)
+```bash
+grep -i "draft acceptance" ~/.lmstudio/server-logs/$(date +%Y-%m)/$(date +%Y-%m-%d).*
+```
 
-AMD Vangogh APU, 5.49 GB VRAM (shared), Vulkan. SSM/hybrid models decouple
-KV cache from context — fixed recurrent state means flash configs are not needed
-and ceilings far exceed VRAM budget.
+MTP is a **load-time** property (JIT config / preset), not a per-request
+parameter in current use.
 
-| model | arch | q8kv max | q4kv max | baseline max | tok/s | tool calls |
-|-------|------|----------|----------|-------------|-------|------------|
-| ibm/granite-4-h-tiny | granitehybrid | 393K | **524K** | — | 24 | untested |
-| lfm2-2.6b | lfm2 | 393K | **524K** | — | 29 | untested |
-| nemotron-h-4b-instruct-128k | nemotron_h | 262K | **393K** | — | 17 | untested |
-| qwen2.5-7b-instruct | Qwen2 | 131K | **196K** | — | 8.7 | proven |
-| meta-llama-3.1-8b-instruct | Llama | 65K | **131K** | — | 7.6 | proven |
-| microsoft/phi-4-mini-reasoning | phi-4 | ✗ flash | ✗ flash | **32K** | — | failed |
+## JIT loading & fleet
 
-## Proven nxiz models (2026-04-19)
+Defaults (adeck `http-server-config.json`): `defaultContextLength: 100000`
+(runtime shows 100096), `jitModelTTL` 1 h, `unloadPreviousJITModelOnLoad` —
+loading a new large model evicts the previous one. `lms ps` (2026-09-18):
+`qwen/qwen3.8-27b  IDLE  17.74 GB  100096  parallel 4  TTL 60m/1h`.
 
-RTX 3070, 8 GB VRAM. Needs q4kv+flash to reach 32K on 8B models.
+Per-model JIT configs (zrrh, flat `load.fields` shape) — the "how we actually
+load" layer:
 
-| model | ctx | load_config | tool_calls |
-|-------|-----|-------------|------------|
-| mistral-nemo-instruct-2407 | 32768 | q4kv+flash | proven |
-| qwen2.5-7b-instruct | 32768 | flash only | proven |
-| qwen2.5-14b-instruct | 262144 | q4kv+flash | proven (on zrrh) |
+| Model | KV cache | offloadKV | threads / batch |
+|---|---|---|---|
+| qwen/qwen3.8-27b | q8_0 | true | 16 / 4096 |
+| meta/muse-glimmer | f16 | true (parallel 2) | 16 / 4096 |
+| google/gemma-4-31b | flash + q4_0 | **false** (parallel 2) | — |
+| qwopus3.6-27b-v2-mtp | q5_0 | true (MTP 1–4) | 16 / 4096 |
 
-**qwen_qwen3-8b:** reasoning model — exhausts token budget in thinking chain
-before emitting tool call when `max_tokens` is set. Probe was invalid. Re-probe
-needed without budget cap.
+Presets live in `~/.lmstudio/config-presets/` (adeck's are flake-managed via
+nix-os `home.file`; zrrh's are GUI-managed).
 
-## Sandbox discipline
+### Union fleet (39 models, 410 GB — `lms ls` from adeck, 2026-09-18)
 
-Never write to `~/.lmstudio/config-presets/` during probing. Every probe mounts
-config in-process only, runs the prompt, unloads. Promotion to a real preset is
-a separate explicit step.
+**zrrh (RTX 4090, 24 GB):**
+`qwen/qwen3.8-27b` 27B qwen35 17.74 GB (LOADED) · `qwen/qwen3.6-27b` 17.48 GB ·
+`unsloth/qwen3.6-27b` 21.35 GB · `qwen3.5-27b-uncensored-heretic` 21.24 GB ·
+`qwen/qwen3.6-35b-a3b` 35B-A3B MoE 22.07 GB ·
+`qwen3.5-35b-a3b-uncensored-hauhaucs-aggressive` 25.66 GB ·
+`qwopus3.6-27b-v2-mtp` 17.74 GB · `meta/muse-glimmer` 28B 18.16 GB ·
+`google/gemma-4-31b` 31B 19.89 GB · `unsloth/gemma-4-31b-it` 24.19 GB ·
+`gemma-4-26b-a4b-it` MoE 17.99 GB · `gemma-4-12b-coder-fable5-composer2.5-v1`
+12.67 GB · `google/gemma-3-12b` 8.15 GB · `hermes-4.3-36b-heretic-i1` 20.70 GB ·
+`glm-4.7-flash` 30B 18.13 GB · `gpt-oss-20b` 11.72 GB ·
+`gpt-oss-20b-heretic` 16.89 GB · `dolphin-mistral-24b-venice-i1` 16.76 GB ·
+`mistral-small-24b-instruct-2501-heretic-i1` 16.76 GB · `llama-3.2-1b-instruct`
+1.32 GB · `qwen2.5-0.5b-instruct` 531 MB
 
-## What probes do NOT yet cover
+**adeck (Local, Vulkan):** `liquid/lfm2-24b-a2b` 64×1.3B MoE 14.42 GB ·
+`meta-llama-3.1-8b-instruct` 4.92 GB · `qwen2.5-7b-instruct` 4.68 GB ·
+`ibm/granite-4-h-tiny` 4.23 GB · `nemotron-h-4b-instruct-128k` 3.70 GB ·
+`microsoft/phi-4-mini-reasoning` 2.49 GB · `lfm2-2.6b` 2.11 GB
 
-- **Round-trip tool loop** — single-turn pass ≠ multi-turn stable. Need a probe
-  that injects a `tool_result` and checks the next assistant turn for sentinel
-  corruption or repetition collapse.
-- **Streaming-layer inspection** — per-token callbacks needed to catch in-stream
-  drift. Add `PredictionCallback` when probing post-4.10 regressions.
-- **Per-harness scoring** — pi vs hermes reward different strengths. Need
-  harness-specific task sets for ranked comparison.
+**nxiz (RTX 3070, 8 GB):** `prism-ml/bonsai-27b` 27B 4.73 GB ·
+`qwen_qwen3-8b` 5.03 GB · `mistral-nemo-instruct-2407` 7.48 GB ·
+`qwen2.5-0.5b-instruct` 531 MB
+
+**Embeddings:** qwen3-embedding-8b (zrrh) · qwen3-embedding-4b (nxiz) ·
+nomic-embed-text-v1.5 (adeck/nxiz/zrrh) · mxbai-embed-large-v1 (adeck/nxiz)
+
+## Operational discipline
+
+- **zrrh is one 24 GB GPU.** ~17–20 GB models + 100K ctx fit one at a time;
+  the 22–26 GB MoEs are tight. Check `lms ps` before loading; `lms unload`
+  to evict. `unloadPreviousJITModelOnLoad` will evict on your behalf.
+- **TTL is 1 h idle** — a "model not found" after lunch is normal; the
+  gateway JIT-loads (and wakes zrrh) on the next request.
+- **Retry on transient gateway errors:** 408 / 429 / 502 / 503 / 504, and
+  bodies containing `LM Link connection closed` (the cookbook sidecar's
+  exact rule).
+- **`finish_reason: "length"` = truncated.** esocortex retries once with
+  doubled `max_tokens`; the sidecar fails loud. With reasoning models, a
+  small `max_tokens` gets consumed entirely by thinking — raise it or set
+  `reasoning_effort: "none"`.
+- **Empty `content` is a real state** (budget went to reasoning), not a
+  protocol error — validate for it explicitly.
+- **zrrh needs its GUI session** (CUDA). The wake proxy can bring the box
+  up, but a dead zrrh session surfaces as 502/503, not a wake failure.
+- Diagnostics: `journalctl --user -u inference-wake -u llmster` on adeck;
+  `~/.lmstudio/server-logs/YYYY-MM/*.log` on the host where the model runs.

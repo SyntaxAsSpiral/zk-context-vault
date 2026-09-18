@@ -1,35 +1,43 @@
-# local-inference: useful links
+# local-inference: links & source locations
 
 ## LM Studio
 
-- <https://lmstudio.ai/docs/developer/> — developer docs root (GUI help points here)
-- <https://lmstudio.ai/docs/python/llm-prediction/parameters> — Python SDK prediction/load params (stub page; defers to TS types)
-- <https://github.com/lmstudio-ai/lmstudio-python> — SDK source
-- <https://llmster.lmstudio.ai/download/> — llmster binary manifest
+- <https://lmstudio.ai/docs/developer/> — developer docs root
+- <https://lmstudio.ai/docs/developer/openai-compat/structured-output> — the strict `json_schema` surface the services rely on
+- <https://llmster.lmstudio.ai/download/> — llmster (headless daemon) binary manifest
+- `lms` CLI — `lms link status` / `lms ls` / `lms ps` / `lms unload`;
+  `lms --version` → commit-based (adeck `0b2a176`, zrrh `71bd99c` as of 2026-09)
 
 ## llama.cpp
 
-- <https://github.com/ggerganov/llama.cpp> — upstream (LM Studio is llama.cpp + ergonomics)
+- <https://github.com/ggerganov/llama.cpp> — runtime under LM Studio
+  (MTP/speculative decoding, KV quant, `print_timing` draft-acceptance lines)
 
-## Agents / harnesses
+## Flake / config sources (nix-os repo)
 
-### pi (badlogic/pi-mono)
-- <https://github.com/badlogic/pi-mono> — monorepo root (pinned v0.67.68 in mirkolenz snapshot)
-- <https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent> — the `pi` coding-agent package (minimal terminal harness: read/write/edit/bash)
-- Config lives at `~/.pi/agent/settings.json` (global) + `.pi/settings.json` (project)
-- Project instructions auto-load from `AGENTS.md` / `CLAUDE.md` in cwd and parents
-- Custom providers via `~/.pi/agent/models.json` — OpenAI- or Anthropic-compatible endpoints → this is the LM Studio hook
+- `modules/home/daemonturgy/lmstudio/adeck/default.nix` — llmster + inference-wake services
+- `modules/home/daemonturgy/lmstudio/adeck/inference-wake.py` — the wake proxy
+- `modules/home/daemonturgy/lmstudio/adeck/settings.json` / `http-server-config.json` — JIT defaults (ctx 100k, TTL, unload-on-load)
+- `modules/home/daemonturgy/lmstudio/adeck/user-concrete-model-default-config/` — per-GGUF load configs
+- `modules/home/daemonturgy/lmstudio/config-presets/` — shared presets
 
-### hermes (Nous Research)
-- <https://github.com/NousResearch> — Nous Research org (Hermes Agent released Feb 2026)
-- <https://github.com/alchaincyf/hermes-agent-orange-book> — HuaShu's community guide (CC BY-NC-SA, Chinese-language "橙皮书"/Orange Book series), covers Hermes' self-improving loop, three-layer memory, auto-skill creation
-- <https://github.com/ksimback/hermes-ecosystem> — "Hermes Atlas": community-curated index of 84 Hermes-compatible tools/skills/integrations across 12 categories; single-page app + RAG chatbot over the corpus. Unofficial. Cloud-oriented (OpenRouter + Gemma 4), no local-endpoint docs — treat as discovery index, not a local-inference reference.
+## Per-host state
 
-#### Cloud fallbacks (not local, kept for completeness)
-- **Google AI Studio → Vercel AI Gateway → Hermes**: Google AI Studio grants 1,500 free daily requests to Gemma 4 31B. Route via BYOK (Google) in Vercel AI Gateway, then select "Vercel AI Gateway" + Google model in Hermes. Useful when the mesh is down or for A/B comparison against local runs; not private.
+- zrrh: `~/.lmstudio/.internal/user-concrete-model-default-config/` (per-model JIT), `~/.lmstudio/config-presets/` (e.g. `zrrh hermes test`, `gemma4`), `~/.lmstudio/server-logs/YYYY-MM/*.log` (MTP acceptance, load logs)
+- pi (nxiz): `~/.pi/agent/models.json` (provider `local`), `~/.pi/agent/AGENTS.md`
 
-## Reference: mirkolenz nixos snapshot patterns
+## Consumer services (adeck, `/mnt/echo/`)
 
-- `tmp/nixos/pkgs/derivations/llmster-bin/package.nix` — Bun-binary patching via `LD_LIBRARY_PATH` + `addDriverRunpath` (skip rpath)
-- `tmp/nixos/pkgs/derivations/pi-agent-bin/` — GitHub binary fetch pattern
-- `tmp/nixos/home/options/pi-agent.nix` — home-manager module shape (enable + settings JSON → `~/.pi/agent/settings.json`)
+- `/mnt/echo/family-cookbook/ocr/sidecar.py` — batch OCR (tiles, strict schema, vision preflight, retry rule)
+- `/mnt/echo/family-cookbook/ocr/repair.py` — local repair (gemma, `reasoning_effort: "none"`)
+- `/mnt/echo/family-cookbook/ocr/result.schema.json` — result shape
+- `/mnt/echo/family-cookbook/babette/server.py` — app backend (`settings.base_url` → adeck:1234)
+- `~/.config/systemd/user/cookbook-ocr.service` — the unit
+- `/mnt/echo/esocortex/src/llm.py` — GPU lock, `ensure_loaded`, complete/embed
+- `/mnt/echo/esocortex/src/augment.py` — strict-schema LLM augment
+
+## Model sources (hub IDs)
+
+- `lmstudio-community/Qwen3.8-27B-GGUF` — `Qwen3.8-27B-Q4_K_M.gguf` + `mmproj-Qwen3.8-27B-BF16.gguf` (MTP module, auto draft decoding)
+- `Jackrong/Qwopus3.6-27B-v2-MTP-GGUF` — explicit MTP config model
+- embedding: `Qwen3-Embedding-8B`, `nomic-embed-text-v1.5`, `mxbai-embed-large-v1`

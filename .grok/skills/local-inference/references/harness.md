@@ -1,104 +1,96 @@
-# local-inference: harness architecture
+# local-inference: wiring & consumers
 
-Which agent harness to use for which task, and why.
+Who talks to the gateway, how, and with what patterns.
 
-## Two harnesses, two roles
+## pi
 
-**pi** (`badlogic/pi-mono`) — structured coding agent. Lightweight, stateless per session,
-minimal system surface. Uses a `tools` array over the OpenAI-compatible endpoint.
-Config: `~/.pi/agent/models.json` (providers + models) + `~/.pi/agent/settings.json`.
+`~/.pi/agent/models.json` — provider `local`:
 
-**hermes** (Nous Research) — full agentic system. Persistent shell, browser, file ops, cron,
-memory, skills, delegation. Runs on adeck as the always-on orchestrator.
-Config: `~/.hermes/config.yaml`.
-
-## Division of labor
-
-```
-hermes (adeck, orchestrator)
-  └── delegates short tool tasks → pi (nxiz/zrrh models via NXIZ/ZRRH provider)
-```
-
-Nxiz models (RTX 3070, 8 GB) are good for short focused tool-call tasks.
-Zrrh models (RTX 4090, 24 GB) handle long-context or high-precision tasks.
-Hermes is the long-running coordinator: session memory, scheduling, real tool
-execution, subagent delegation.
-
-## pi invocation (non-interactive)
-
-```bash
-pi --provider NXIZ --model mistral-nemo-instruct-2407 --no-session -p "<task>"
-pi --provider ZRRH --model qwen2.5-14b-instruct --no-session -p "<task>"
+```json
+{
+  "baseUrl": "http://adeck:1234/v1",
+  "api": "openai-completions",
+  "apiKey": "lms",
+  "models": [
+    {"id": "qwen/qwen3.8-27b",  "name": "Qwen 3.8 27B Q4", "reasoning": true, "input": ["text"], "contextWindow": 100000},
+    {"id": "meta/muse-glimmer", "name": "Muse Glimmer 26b","reasoning": true, "input": ["text"], "contextWindow": 100000},
+    {"id": "google/gemma-4-31b","name": "Gemma 4 31B Q4",  "reasoning": true, "input": ["text"], "contextWindow": 100000}
+  ]
+}
 ```
 
-`--no-session` prevents session state accumulation for one-off calls.
-`--provider` must match the key in `models.json` (case-sensitive: `NXIZ`, `ZRRH`).
+- Default provider/model is `openrouter` / `stealth/ox-alpha` (1M ctx,
+  `thinkingFormat: openrouter`). Local is opt-in per session:
+  `pi --provider local --model qwen/qwen3.8-27b`
+  (same for `meta/muse-glimmer`, `google/gemma-4-31b`).
+- Costs are zero; `reasoning: true` so pi shows thinking controls.
+- Note: pi declares qwen3.8 `input: ["text"]` even though the gateway
+  loads it with its vision mmproj — vision is available via raw API, not
+  through pi's declaration.
 
-## hermes invocation (non-interactive)
+## hermes
 
-```bash
-hermes chat -m <lms_id> -q "<task>" -Q --max-turns <n>
-```
+Runs on adeck as `hermes-gateway.service` + `hermes-dashboard.service`.
+Provider/model state lives in hermes's own config/caches
+(`~/.hermes/` — copilot, anthropic, ollama-cloud model caches observed);
+local models reach it through the same gateway (`localhost:1234` from
+adeck). This skill is deployed to
+`~/.hermes/skills/user/local-inference/` on adeck.
 
-`-Q` suppresses banner/spinner/previews — clean output for programmatic use.
-`-m` overrides the default model while keeping the configured `base_url`
-(`http://localhost:1234/v1` on adeck = the LM Studio inference gateway).
+## Consumer services (the real "how it's used")
 
-## hermes provider config
+### family-cookbook — `/mnt/echo/family-cookbook` (adeck)
 
-hermes on adeck uses `provider: custom` with `base_url: http://localhost:1234/v1`.
-The `--provider` CLI flag's hardcoded enum (openrouter, anthropic, etc.) does NOT
-include custom — it only applies to cloud providers. The custom config is set via
-`hermes config edit` or `hermes config set model <id>`.
+- **`ocr/sidecar.py`** — batch OCR: 4 page workers, sqlite queue,
+  tile-based pipeline (per-tile transcribe → whole-page assembly).
+  - Default `--base-url http://adeck:1234/v1` (unit currently overrides to
+    openrouter + `google/gemini-3-flash-preview` for throughput).
+  - **Structured output:** strict `json_schema` (`page_ocr`), validated
+    client-side with `Draft202012Validator`.
+  - **Vision preflight:** `GET /api/v0/models`, requires `type: "vlm"` or
+    image in `input_modalities`.
+  - **Retry rule:** transient = HTTP 408/429/502/503/504 or body
+    containing `LM Link connection closed`; 600 s request timeout;
+    `finish_reason: "length"` → hard fail (no partial drafts).
+  - OpenRouter fallback adds `reasoning: {"effort": "low"}`,
+    `provider: {"sort": "throughput"}`, `OPENROUTER_API_KEY`,
+    `HTTP-Referer` / `X-Title: Holliday Table OCR`.
+- **`ocr/repair.py`** — the **local repair workflow**: text-only repair of
+  corrupted OCR characters.
+  - Default model `google/gemma-4-31b` (local, zrrh),
+    `temperature: 0`, `stream: true`, **`reasoning_effort: "none"`**.
+  - Strict schema `ocr_character_repairs`; every proposed `before` span must
+    match the original draft; never auto-imports (proposes, operator applies).
+  - Streams SSE, tracks `delta.reasoning_content` separately, requires
+    `finish_reason: "stop"`.
+- **`babette/server.py`** — the Holliday Table app backend:
+  `settings.base_url` defaults to `http://adeck:1234/v1`
+  (`OPENAI_BASE_URL` override), model via `COOKBOOK_MODEL`.
+- Service: `cookbook-ocr.service` (systemd user unit on adeck,
+  `Restart=on-failure`, `KillMode=mixed`, `TimeoutStopSec=120`).
 
-## Probe surface differences
+### esocortex — `/mnt/echo/esocortex` (adeck)
 
-| | pi | hermes |
-|---|---|---|
-| tools | synthetic stubs (`get_weather`, etc.) | real tools (bash, file, browser) |
-| probe signal | `tool_calls` array in JSON response | task actually completes (bash output matches) |
-| state | stateless | persistent shell session |
-| good probe task | "call get_weather for London" | "run `echo tool-call-test` and report output" |
+Knowledge-cortex pipeline (chunking → LLM augment → embeddings → RAG).
 
-Don't use synthetic tool probes against hermes — it will try to execute them and fail.
-Use real shell/file tasks that produce verifiable output.
+- `src/llm.py`: `ESOCORTEX_LLM_BASE` default `http://adeck:1234/v1`.
+  - `complete()` — `response_format` support, retries `length` once with
+    doubled `max_tokens` (4096 → 8192), rejects empty content.
+  - `ensure_loaded(model, context_length)` — `POST /api/v1/models/load`
+    before embeddings (the OOM guard; see process.md).
+  - `embed()` — `/v1/embeddings`, sorted by `index`.
+- `src/augment.py` — strict schema `esocortex_augment` (translation /
+  system / mode / keys), defensive JSON parsing (`_loads_json` repair path).
+- **GPU locking pattern** (`_gpu_lock`, `/tmp/esocortex-zrrh-gpu.lock`):
+  chat takes `LOCK_EX` (exclusive), embed calls take `LOCK_SH` (multiple
+  concurrent against one GGUF). Copy this pattern for anything sharing the
+  zrrh GPU.
 
-## ZRRH models in pi
+## Rules of thumb
 
-Proven ZRRH models (14B+, 4090) are wired into pi's ZRRH provider via adeck's
-inference gateway. adeck:1234 routes to zrrh via lmlink. Same pi invocation,
-different `--provider ZRRH`.
-
-## vLLM on zrrh (NVFP4 / modelopt-only models)
-
-For models with no GGUF release (NVFP4/modelopt format only):
-
-```
-Endpoint: http://zrrh:8000
-Currently serving: AEON Qwen3.6-27B NVFP4
-Launch: scripts/launch_vllm_zrrh.sh
-```
-
-Runs in emulation on RTX 4090 (sm_89; NVFP4 native requires sm_100+ Blackwell) —
-dequants FP4→BF16 per layer, ~0.8 tok/s. Venv at `~/.venv/vllm/` on zrrh.
-
-**Not routed through adeck:1234.** Hit `http://zrrh:8000` directly for vLLM.
-
-## llama-server on zrrh (direct / benchmarking)
-
-For testing without LMS or vLLM overhead:
-
-```bash
-# binary: `llama` on zrrh
-# launch: scripts/launch_llamacpp_zrrh.sh
-```
-
-Installed 2026-04-28. Use for direct benchmarking or when LMS GUI is unavailable
-(CUDA detection on zrrh is tied to the LMS GUI process — without it, RTX 4090
-is invisible to `llmster`).
-
-## Model registry
-
-`scripts/gen_model_registry.py` (repo root) is the single source of truth for all
-models across the mesh. Run it to regenerate `models/*.yaml` after any inventory change.
-It embeds INVENTORY, EVAL, PI_WIRING, and JIT_CTX dicts — update those dicts, rerun.
+1. One gateway URL for everything: `http://adeck:1234/v1`.
+2. Structured output = strict `json_schema` + client-side validation.
+3. Deterministic local work = `reasoning_effort: "none"` + `temperature: 0`.
+4. Embeddings = explicit `models/load` with `context_length` first.
+5. Sharing the zrrh GPU = file lock, chat exclusive / embed shared.
+6. Treat 408/429/502/503/504 + `LM Link connection closed` as retryable.
