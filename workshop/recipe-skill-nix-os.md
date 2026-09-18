@@ -22,6 +22,7 @@ target_locations:
   - path: ~/.pi/agent/skills/nix-os/
   - path: ~/.grok/skills/nix-os/           # Grok user-scoped
   - path: zk@adeck:~/.grok/skills/nix-os/  # Mesh (adeck)
+  - path: zk@quita:~/.grok/skills/nix-os/  # Mesh (quita)
   - path: /mnt/repository/context-vault/.grok/skills/nix-os/  # Project-scoped in this vault
 
 sources:

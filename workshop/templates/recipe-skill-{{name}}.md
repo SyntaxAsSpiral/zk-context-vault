@@ -29,6 +29,7 @@ target_locations:
   - path: ~/.grok/skills/{{name}}/     # Grok user-scoped
   - path: /mnt/repository/context-vault/.grok/skills/{{name}}/  # Project-scoped in this vault
   - path: zk@adeck:~/.grok/skills/{{name}}/  # Mesh (adeck)
+  - path: zk@quita:~/.grok/skills/{{name}}/  # Mesh (quita)
 
 # Source mapping to skill structure
 sources:

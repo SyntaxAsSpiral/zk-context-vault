@@ -29,6 +29,7 @@ target_locations:
   - path: ~/.gemini/skills/semantic-json/
   - path: ~/.grok/skills/semantic-json/
   - path: zk@adeck:~/.grok/skills/semantic-json/
+  - path: zk@quita:~/.grok/skills/semantic-json/
   - path: /mnt/repository/context-vault/.grok/skills/semantic-json/
 
 sources:

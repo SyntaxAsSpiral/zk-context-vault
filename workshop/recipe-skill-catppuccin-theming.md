@@ -31,6 +31,7 @@ target_locations:
   - path: ~/.gemini/skills/catppuccin-theming/
   - path: ~/.grok/skills/catppuccin-theming/           # Grok user-scoped
   - path: zk@adeck:~/.grok/skills/catppuccin-theming/  # Mesh (adeck)
+  - path: zk@quita:~/.grok/skills/catppuccin-theming/  # Mesh (quita)
   - path: /mnt/repository/context-vault/.grok/skills/catppuccin-theming/  # Project-scoped in this vault
 
 # Source mapping to skill structure

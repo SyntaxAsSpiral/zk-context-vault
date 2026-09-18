@@ -31,6 +31,7 @@ target_locations:
   - path: ~/.gemini/skills/memory-systems/
   - path: ~/.grok/skills/memory-systems/           # Grok user-scoped
   - path: zk@adeck:~/.grok/skills/memory-systems/  # Mesh (adeck)
+  - path: zk@quita:~/.grok/skills/memory-systems/  # Mesh (quita)
   - path: /mnt/repository/context-vault/.grok/skills/memory-systems/  # Project-scoped in this vault
 
 # Source mapping to skill structure

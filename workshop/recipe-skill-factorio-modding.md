@@ -19,6 +19,7 @@ target_locations:
   - path: ~/.gemini/skills/factorio-modding/
   - path: ~/.gemini/antigravity/skills/factorio-modding/
   - path: ~/.grok/skills/factorio-modding/
+  - path: zk@quita:~/.grok/skills/factorio-modding/
   - path: /mnt/repository/context-vault/.grok/skills/factorio-modding/
 
 sources:

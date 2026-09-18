@@ -16,8 +16,8 @@ adeck is the always-on host. Its `inference-wake` service (aiohttp proxy,
 `inference-wake.py` in the nix-os flake) listens on `0.0.0.0:1234`, forwards
 to the local llmster daemon at `127.0.0.1:1235`, and — before any inference
 POST or WebSocket — confirms zrrh is awake and connected to LM Link (WoL via
-router LAN, 120 s deadline). Everything talks to this endpoint: pi, hermes,
-curl, the family-cookbook OCR sidecar, esocortex.
+router LAN, 120 s deadline). Everything talks to this endpoint: pi, curl,
+the family-cookbook OCR sidecar, esocortex.
 
 ```bash
 # plain chat (reasoning off = fast, cheap)
@@ -45,10 +45,12 @@ ssh zk@adeck lms ls            # union fleet with per-model device
 
 ## Active pi fleet
 
-pi's `local` provider (`references/harness.md`): `qwen/qwen3.8-27b`
-(loaded with vision mmproj, MTP draft decoding auto-enabled),
-`meta/muse-glimmer`, `google/gemma-4-31b` — all resident on zrrh, ~100K ctx,
-reasoning on by default.
+pi's `local` provider (`references/harness.md`): `qwen/qwen3.8-27b`,
+`meta/muse-glimmer`, `google/gemma-4-31b`. All three are VLMs on zrrh,
+loaded at **100K ctx** — the operating point that fits the 4090 with
+the current KV/parallel settings. Thinking is on by default; for cheap
+local work send `reasoning_effort: "none"` on `/v1/chat/completions`.
+Model cards: `references/process.md`.
 
 ## What's gone
 
@@ -58,6 +60,6 @@ Don't look for them; the 2026-04 ctx-ceiling tables no longer apply.
 
 ## Contents
 
-- [references/process.md](references/process.md) — runbook: wake proxy, API surface (structured output, reasoning controls, embeddings, vision), MTP, JIT configs, fleet, gotchas
-- [references/harness.md](references/harness.md) — pi wiring, hermes, consumer services (cookbook OCR/repair, babette, esocortex), GPU locking
+- [references/process.md](references/process.md) — runbook: wake proxy, API surface, Qwen/Gemma/Muse cards, MTP, JIT, fleet, gotchas
+- [references/harness.md](references/harness.md) — pi wiring, cookbook OCR/repair, babette, esocortex, GPU locking
 - [references/links.md](references/links.md) — docs, flake sources, service paths, model sources

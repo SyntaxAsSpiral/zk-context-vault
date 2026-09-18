@@ -63,24 +63,85 @@ In production on the local gateway: cookbook OCR (`page_ocr`), cookbook
 repair (`ocr_character_repairs`), esocortex augment (`esocortex_augment`).
 Docs: <https://lmstudio.ai/docs/developer/openai-compat/structured-output>
 
-### Reasoning: budget & toggle
+### Reasoning: two different APIs
 
-Verified against `qwen/qwen3.8-27b` through the gateway, 2026-09-18:
+**Use this on `/v1/chat/completions` (pi, curl, cookbook, esocortex):**
+`reasoning_effort`. Live gateway 400 lists:
+`none | minimal | low | medium | high | xhigh`.
+
+Re-verified on `qwen/qwen3.8-27b` through the gateway, 2026-09-18:
 
 | Request | Result |
 |---|---|
-| (no param) | Thinks by default. With `max_tokens: 15` all 15 completion tokens were reasoning (`usage.completion_tokens_details.reasoning_tokens: 15`), content empty. |
-| `"reasoning_effort": "none"` | **Toggle verified off**: `reasoning_tokens: 0`, answer in 3 tokens. |
-| `"thinking_budget": 0` | Present in the llmster 0.0.11 runtime, but had no effect on qwen3.8 (identical to default). Don't rely on it. |
+| (no param) / `"xhigh"` | Thinks. Small `max_tokens` is eaten by reasoning; `content` empty; `reasoning_tokens` == `completion_tokens`. |
+| `"reasoning_effort": "none"` | Thinking off: `reasoning_tokens: 0`, answer in `content`. |
+| `"reasoning_effort": "off"` | **400** — not a valid value on this endpoint. |
+| `"thinking_budget": 0` | Present in llmster 0.0.11; no effect on qwen3.8. Don't rely on it. |
 
-- `reasoning_content` comes back as its own message field (non-stream) and
-  SSE delta (stream) — parse it separately, don't splice into `content`.
-- The cookbook repair workflow (local gemma) runs `reasoning_effort: "none"`
-  + `temperature: 0` — the pattern for deterministic local work.
-- The OpenRouter-style `reasoning: {"effort": "low"}` object is for the
-  **openrouter** path (cookbook sidecar fallback), not the LMS gateway.
-- gemma-4 thinking is also prompt-triggered: the `gemma4` preset injects a
-  `<|think|>` system-prompt marker.
+- Stream/non-stream: `choices[].message.reasoning_content` and
+  `choices[].delta.reasoning_content`. Parse separately from `content`.
+- Cookbook repair (local gemma): `reasoning_effort: "none"` + `temperature: 0`.
+- LMS **native** `/api/v1/chat` uses a different field: `reasoning` =
+  `off|low|medium|high|on` (see `GET /api/v1/models` → `capabilities.reasoning`).
+  Do not send `reasoning: {"effort": ...}` to `/v1/chat/completions`.
+- LMS **`/v1/responses`** *does* document `reasoning: { "effort": "low"|"medium"|"high" }`
+  (gpt-oss examples). Cookbook OpenRouter fallback uses that object shape
+  against OpenRouter, not against the local chat-completions path.
+
+Official model knobs differ from the gateway aliases — see Active models
+below. When they conflict, the gateway `/v1/chat/completions` table above
+is what the mesh actually honors.
+
+### Active models (loaded at 100K)
+
+100K is the operator-chosen load ctx (`defaultContextLength: 100000` →
+runtime 100096). Native card maxima are larger; they do not fit on the
+4090 with these KV/parallel settings. Do not raise ctx without an
+explicit ask. All three are VLMs (`GET /api/v0/models/{id}` →
+`type: "vlm"`; `GET /api/v1/models` → `capabilities.vision: true`).
+
+**`qwen/qwen3.8-27b`** — Qwen3.8-27B, arch `qwen35`, Q4_K_M (~17.7 GB loaded).
+Card ctx 262,144 (YaRN to 1M); **served at 100K**. Thinking on by default. Official
+`reasoning_effort`: `xhigh` (default) / `medium` / `low`. Official off-switch
+is `chat_template_kwargs.enable_thinking: false`; on this gateway use
+`reasoning_effort: "none"`. `preserve_thinking` defaults on (keep prior
+thoughts in history). VLM: image + video; mmproj
+`mmproj-Qwen3.8-27B-BF16.gguf`. MTP head is in the GGUF (see MTP). Thinking
+sampling: temp 1.0, top_p 0.95, top_k 20. Instruct/off: temp 0.7, top_p 0.8,
+presence_penalty 1.5. LMS v1 reasoning options: `off, low, medium, on`
+(default `on`). Hub: `lmstudio-community/Qwen3.8-27B-GGUF`.
+
+**`google/gemma-4-31b`** — Gemma 4 31B IT, arch `gemma4`, Q4_K_M (~19.9 GB).
+Card ctx 256K / 262,144; **served at 100K**. Thinking on by default via `<|think|>` in the
+system turn (LMS `Enable Thinking`, default true). LMS v1 options: `off|on`
+only. Thoughts are `<|channel>thought` … `<channel|>`. On 31B, thinking-off
+still emits an **empty** thought channel — parsers must tolerate it. Strip
+prior thoughts from multi-turn history (opposite of Qwen's
+`preserve_thinking`). VLM: text + image. Sampling: temp 1.0, top_p 0.95,
+top_k 64. Hub: `lmstudio-community/gemma-4-31B-it-GGUF`.
+
+**`meta/muse-glimmer`** — Muse Glimmer, 30B card (LMS `params_string: 28B`
+= text decoder; ~1.8–2B vision encoder on top). Card ctx 131,072; **served at 100K**.
+Thinking is built-in (`assistant to=self` then `to=user`). Official
+`reasoning_strength`: `xhigh|high|medium|low`, default **high**. LMS v1
+exposes only `on` — no public off. VLM: text + image (`<|image|>`).
+Sampling: temp 1.0, top_p 0.95, top_k 64. Speculative decoding is a
+**separate** draft model (Meta DFlash), not a baked MTP head. Hub:
+`lmstudio-community/Muse-Glimmer-30B-GGUF`. pi's display name "26b" is stale.
+
+### Vision / capability check
+
+Do not look for `architecture.input_modalities` — it is not on the live
+`/api/v0` payload. Cookbook-style preflight:
+
+```
+GET /api/v0/models/{id}  →  type == "vlm"
+GET /api/v1/models       →  capabilities.vision == true
+```
+
+`qwen/qwen3.8-27b` is loaded with its mmproj. pi's `models.json` still
+declares all three `input: ["text"]` — vision is on the raw API, not through
+pi's declaration.
 
 ### Embeddings
 
@@ -99,17 +160,6 @@ POST /api/v1/models/load  {"model": "text-embedding-qwen3-embedding-8b", "contex
 
 (esocortex's `ensure_loaded` tolerates 400/409/500 "already loaded".)
 
-### Vision / capability check
-
-`qwen/qwen3.8-27b` loads with its `mmproj` — it **is** a VLM on the gateway
-(even though pi's `models.json` declares it text-only).
-The cookbook sidecar's preflight pattern:
-
-```
-GET /api/v0/models  →  model.type == "vlm"  or
-    "image" in model.architecture.input_modalities
-```
-
 ### Models list
 
 `GET /v1/models` returns 35 IDs (chat + `text-embedding-*`).
@@ -117,12 +167,16 @@ GET /api/v0/models  →  model.type == "vlm"  or
 
 ## MTP (multi-token prediction draft decoding)
 
-**Live-verified on the running qwen3.8-27b instance:** the runtime
-auto-initializes an MTP draft context for GGUFs that ship an MTP module —
-zrrh server log: `common_speculative_init_result: creating MTP draft
-context against the target model .../Qwen3.8-27B-Q4_K_M.gguf`. Acceptance
-lines (llama.cpp `print_timing`): `draft acceptance = 0.80–0.98 (N accepted /
-M generated), mean len ≈ 2.5–2.8` — that's the speed boost.
+LMS's published [speculative decoding](https://lmstudio.ai/docs/app/advanced/speculative-decoding)
+doc is the **two-model** path (small draft + large target, same vocab).
+Qwen3.8 is different: the MTP head is **inside the GGUF**. llama.cpp CLI
+docs use `--spec-type draft-mtp`; on this mesh the LMS/llama.cpp runtime
+auto-inits it.
+
+**Live-verified on the running qwen3.8-27b instance:** zrrh server log
+`common_speculative_init_result: creating MTP draft context against the
+target model .../Qwen3.8-27B-Q4_K_M.gguf`. Acceptance lines (`print_timing`):
+`draft acceptance = 0.80–0.98 (N accepted / M generated), mean len ≈ 2.5–2.8`.
 
 **Explicit config** (JIT per-model default,
 `~/.lmstudio/.internal/user-concrete-model-default-config/.../....json`):
@@ -130,7 +184,8 @@ M generated), mean len ≈ 2.5–2.8` — that's the speed boost.
 `llm.load.llama.speculativeDecoding.draftMtpMaxTokens: 4`,
 `draftMtpMinTokens: 1`.
 
-**Prediction-side tuning** (preset `zrrh hermes test`):
+**Prediction-side tuning** (zrrh GUI preset file `zrrh hermes test` —
+filename only, unused consumer):
 `llm.prediction.speculativeDecoding.maxTokensToDraft: 22`,
 `minContinueDraftingProbability: 0.74`, `minDraftLengthToConsider: 1`.
 
@@ -146,7 +201,8 @@ parameter in current use.
 ## JIT loading & fleet
 
 Defaults (adeck `http-server-config.json`): `defaultContextLength: 100000`
-(runtime shows 100096), `jitModelTTL` 1 h, `unloadPreviousJITModelOnLoad` —
+(runtime shows 100096) — chosen so ~17–20 GB Q4s + KV + parallel still
+fit the 24 GB card. `jitModelTTL` 1 h, `unloadPreviousJITModelOnLoad` —
 loading a new large model evicts the previous one. `lms ps` (2026-09-18):
 `qwen/qwen3.8-27b  IDLE  17.74 GB  100096  parallel 4  TTL 60m/1h`.
 
@@ -170,7 +226,7 @@ nix-os `home.file`; zrrh's are GUI-managed).
 `unsloth/qwen3.6-27b` 21.35 GB · `qwen3.5-27b-uncensored-heretic` 21.24 GB ·
 `qwen/qwen3.6-35b-a3b` 35B-A3B MoE 22.07 GB ·
 `qwen3.5-35b-a3b-uncensored-hauhaucs-aggressive` 25.66 GB ·
-`qwopus3.6-27b-v2-mtp` 17.74 GB · `meta/muse-glimmer` 28B 18.16 GB ·
+`qwopus3.6-27b-v2-mtp` 17.74 GB · `meta/muse-glimmer` 30B/28B-decoder 18.16 GB ·
 `google/gemma-4-31b` 31B 19.89 GB · `unsloth/gemma-4-31b-it` 24.19 GB ·
 `gemma-4-26b-a4b-it` MoE 17.99 GB · `gemma-4-12b-coder-fable5-composer2.5-v1`
 12.67 GB · `google/gemma-3-12b` 8.15 GB · `hermes-4.3-36b-heretic-i1` 20.70 GB ·
@@ -193,9 +249,10 @@ nomic-embed-text-v1.5 (adeck/nxiz/zrrh) · mxbai-embed-large-v1 (adeck/nxiz)
 
 ## Operational discipline
 
-- **zrrh is one 24 GB GPU.** ~17–20 GB models + 100K ctx fit one at a time;
-  the 22–26 GB MoEs are tight. Check `lms ps` before loading; `lms unload`
-  to evict. `unloadPreviousJITModelOnLoad` will evict on your behalf.
+- **zrrh is one 24 GB GPU.** 100K ctx is the fit with current KV/parallel;
+  ~17–20 GB models go one at a time; the 22–26 GB MoEs are tight. Check
+  `lms ps` before loading; `lms unload` to evict.
+  `unloadPreviousJITModelOnLoad` will evict on your behalf.
 - **TTL is 1 h idle** — a "model not found" after lunch is normal; the
   gateway JIT-loads (and wakes zrrh) on the next request.
 - **Retry on transient gateway errors:** 408 / 429 / 502 / 503 / 504, and

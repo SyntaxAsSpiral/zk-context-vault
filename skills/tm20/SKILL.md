@@ -2,10 +2,10 @@
 name: tm20
 description: >-
   Print 80 mm thermal slips and receipts on the mesh Epson TM-T20III via tm20/tm20-set
-  or the quita print receiver. Use when designing or printing tape, item listings,
+  or the tm20 print receiver. Use when designing or printing tape, item listings,
   logos, QR, ESC/POS, 1-bit art, or when the user mentions tm20, TM-T20III, thermal
   printer, 80 mm receipts, or the mesh print receiver. Slash: /tm20
-compatibility: USB and tm20 binaries are quita only. Scripted jobs from other hosts POST the print receiver. No CUPS. Paper must be loaded.
+compatibility: USB and tm20 binaries are the tm20 Pi (print host) only. Scripted jobs from other hosts POST the print receiver. No CUPS. Paper must be loaded.
 metadata:
   author: zk
   version: "0.4.0"
@@ -18,17 +18,17 @@ Host, USB id, udev, binaries, paper size, receiver URL: mesh **Services → tm20
 
 ## The cottage and the sealed pattern
 
-There is only one loom, in a cottage at the edge of the wood (quita). The loom will burn if two weavers grab the shuttle at once, and it will reprint the same numbered cloth if a forgetful messenger knocks twice.
+There is only one loom, in a cottage at the edge of the wood (`tm20`, the Pi). The loom will burn if two weavers grab the shuttle at once, and it will reprint the same numbered cloth if a forgetful messenger knocks twice.
 
-**Sitting at the loom** is `tm20` / `tm20-set` on quita. You see the cloth as it forms. You can stop, trim a stitch, ask if the loom is awake (`hello`, `status`, `list`), or throw away a spoiled preview (`--dry --png`) before any wool is spent. Use this when you are *in the cottage*, designing, debugging, or laying a hand on the machine.
+**Sitting at the loom** is `tm20` / `tm20-set` on the `tm20` host. You see the cloth as it forms. You can stop, trim a stitch, ask if the loom is awake (`hello`, `status`, `list`), or throw away a spoiled preview (`--dry --png`) before any wool is spent. Use this when you are *in the cottage*, designing, debugging, or laying a hand on the machine.
 
-**Sending a sealed pattern** is POST `http://quita:8766/print`. You do not touch the shuttle. A keeper (the receiver) takes one pattern at a time, will not weave the same job id twice, and cuts the cloth only after the pattern is already finished. Use this when you are *in another house* (adeck, a phone, a long-running service) or when two projects might arrive at once — Holliday Table, holliday-estate, sideriod.
+**Sending a sealed pattern** is POST `http://tm20:8766/print`. You do not touch the shuttle. A keeper (the receiver) takes one pattern at a time, will not weave the same job id twice, and cuts the cloth only after the pattern is already finished. Use this when you are *in another house* (adeck, a phone, a long-running service) or when two projects might arrive at once — Holliday Table, holliday-estate, sideriod.
 
 If you are standing in the cottage and only trying a stitch, sit at the loom. If you are sending work from afar, or a script must print without you watching, seal the pattern.
 
 Do not do both for the same job.
 
-## Direct USB (on quita)
+## Direct USB (on `tm20`)
 
 Live group `plugdev` is required (new login after `usermod`). This session may still need `-g plugdev`.
 
@@ -45,7 +45,7 @@ sudo -u zk -g plugdev tm20 hello    # SYSTEM ONLINE + cut
 sudo -u zk -g plugdev tm20 status   # cover closed, paper present
 ```
 
-From another host, SSH those same commands only for design/debug/smoke — not for app-driven copies. Binaries: `/usr/local/bin/tm20`, `tm20-set`. Clone: `~/src/tm20`. If `id` already shows `plugdev`, `tm20-set print md` is enough.
+From another host, SSH those same commands only for design/debug/smoke — not for app-driven copies. USB execution is the `tm20` Pi only. `tm20` / `tm20-set` and the receiver are a later layer on that appliance (udev is already in the sdImage). If `id` already shows `plugdev`, `tm20-set print md` is enough.
 
 `tm20` = protocol (hello, list, text, qr, status). `tm20-set` = typeset markdown/sheets → `GS ( L)` raster. Jobs that need type, figures, or QR-as-image go through `tm20-set print md`.
 
@@ -57,12 +57,12 @@ Token: `PRINT_TOKEN` (alias `HOLIDAY_PRINT_TOKEN`). Unique `job_id` (alias `slip
 
 ```bash
 # health
-curl -fsS -H "Authorization: Bearer $PRINT_TOKEN" http://quita:8766/health
+curl -fsS -H "Authorization: Bearer $PRINT_TOKEN" http://tm20:8766/health
 
 # PNG job (already-inspected raster, e.g. Le Festin)
 # POST /print  {"job_id","source","sha256","image": "<base64 png>"}
 
-# markdown job (tm20-set print md on quita)
+# markdown job (tm20-set print md on tm20)
 # POST /print  {"job_id","source","sha256","markdown": "# HLD-0028\n\n..."}
 ```
 
@@ -134,5 +134,5 @@ Motif library: `references/motifs.md`.
 1. Paper in, cover closed, `tm20 list` sees the Epson (direct) or `/health` is ok (receiver).
 2. Markdown + local assets next to it, or an inspected 576px PNG. Gray plates stay gray; type stays black.
 3. `--dry --png` — heading hierarchy, no giant white gap, QR large enough to scan, gilding still reads as curves.
-4. On quita, designing: `tm20-set print md`. From a service or another host: POST the receiver with a new `job_id`.
+4. On `tm20`, designing: `tm20-set print md`. From a service or another host: POST the receiver with a new `job_id`.
 5. If blank tape: heat side of the roll faces the head (paper over the top).

@@ -1,7 +1,7 @@
 ---
 id: recipe-agent-grok
 created: 2026-05-26
-modified: 2026-05-26
+modified: 2026-09-18
 status: active
 type:
   - agent
@@ -13,7 +13,8 @@ output_name: AGENTS.md
 
 target_locations:
   - path: ~/.grok/AGENTS.md
-  - path: zk@adeck:~/.grok/AGENTS.md   # Global rules on adeck (applies to all sessions)
+  - path: zk@adeck:~/.grok/AGENTS.md   # Mesh (adeck)
+  - path: zk@quita:~/.grok/AGENTS.md   # Mesh (quita)
   # Optional named agent profile (for explicit --agent-profile use of the full exocortex context):
   # - path: ~/.grok/agents/grok-vault.md
   # - path: zk@adeck:~/.grok/agents/grok-vault.md

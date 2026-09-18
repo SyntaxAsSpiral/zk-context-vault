@@ -23,6 +23,7 @@ target_locations:
   - path: ~/.grok/skills/tm20/
   - path: zk@adeck:~/.grok/skills/tm20/
   - path: zk@zrrh:~/.grok/skills/tm20/
+  - path: zk@quita:~/.grok/skills/tm20/
   - path: zk@zrrh:~/.claude/skills/tm20/
   - path: zk@zrrh:~/.codex/skills/tm20/
   - path: /mnt/repository/context-vault/.grok/skills/tm20/
@@ -33,10 +34,10 @@ sources:
       name: tm20
       description: >-
         Print 80 mm thermal slips and receipts on the mesh Epson TM-T20III via tm20/tm20-set
-        or the quita print receiver. Use when designing or printing tape, item listings,
+        or the tm20 print receiver. Use when designing or printing tape, item listings,
         logos, QR, ESC/POS, 1-bit art, or when the user mentions tm20, TM-T20III, thermal
         printer, 80 mm receipts, or the mesh print receiver. Slash: /tm20
-      compatibility: USB and tm20 binaries are quita only. Scripted jobs from other hosts POST the print receiver. No CUPS. Paper must be loaded.
+      compatibility: USB and tm20 binaries are the tm20 Pi (print host) only. Scripted jobs from other hosts POST the print receiver. No CUPS. Paper must be loaded.
       metadata:
         author: zk
         version: "0.4.0"

@@ -24,18 +24,10 @@ Who talks to the gateway, how, and with what patterns.
   `pi --provider local --model qwen/qwen3.8-27b`
   (same for `meta/muse-glimmer`, `google/gemma-4-31b`).
 - Costs are zero; `reasoning: true` so pi shows thinking controls.
-- Note: pi declares qwen3.8 `input: ["text"]` even though the gateway
-  loads it with its vision mmproj — vision is available via raw API, not
-  through pi's declaration.
-
-## hermes
-
-Runs on adeck as `hermes-gateway.service` + `hermes-dashboard.service`.
-Provider/model state lives in hermes's own config/caches
-(`~/.hermes/` — copilot, anthropic, ollama-cloud model caches observed);
-local models reach it through the same gateway (`localhost:1234` from
-adeck). This skill is deployed to
-`~/.hermes/skills/user/local-inference/` on adeck.
+- All three gateway models are VLMs. pi still declares `input: ["text"]`
+  and names Muse "26b" (stale — it is a 30B card). Vision is raw-API only.
+  `contextWindow: 100000` matches the 100K load setting, not the card max.
+- Local thinking off: send `reasoning_effort: "none"` (not `"off"`).
 
 ## Consumer services (the real "how it's used")
 
@@ -47,8 +39,9 @@ adeck). This skill is deployed to
     openrouter + `google/gemini-3-flash-preview` for throughput).
   - **Structured output:** strict `json_schema` (`page_ocr`), validated
     client-side with `Draft202012Validator`.
-  - **Vision preflight:** `GET /api/v0/models`, requires `type: "vlm"` or
-    image in `input_modalities`.
+  - **Vision preflight:** `GET /api/v0/models`, requires `type: "vlm"`
+    (live payload; an `input_modalities` fallback in the sidecar is not
+    present on current `/api/v0`).
   - **Retry rule:** transient = HTTP 408/429/502/503/504 or body
     containing `LM Link connection closed`; 600 s request timeout;
     `finish_reason: "length"` → hard fail (no partial drafts).

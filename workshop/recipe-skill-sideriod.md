@@ -31,6 +31,7 @@ target_locations:
   - path: ~/.gemini/skills/sideriod/
   - path: ~/.grok/skills/sideriod/           # Grok user-scoped
   - path: zk@adeck:~/.grok/skills/sideriod/  # Mesh (adeck)
+  - path: zk@quita:~/.grok/skills/sideriod/  # Mesh (quita)
   - path: /mnt/repository/context-vault/.grok/skills/sideriod/  # Project-scoped in this vault
 
 # Source mapping to skill structure

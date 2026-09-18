@@ -32,6 +32,7 @@ target_locations:
   - path: ~/.grok/skills/openrgb/           # Grok user-scoped
   - path: zk@adeck:~/.grok/skills/openrgb/  # Mesh (adeck)
   - path: zk@zrrh:~/.grok/skills/openrgb/   # Mesh (zrrh)
+  - path: zk@quita:~/.grok/skills/openrgb/  # Mesh (quita)
   - path: /mnt/repository/context-vault/.grok/skills/openrgb/  # Project-scoped in this vault
 
 sources:

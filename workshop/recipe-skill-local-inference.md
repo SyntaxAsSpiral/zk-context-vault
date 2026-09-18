@@ -31,6 +31,7 @@ target_locations:
   - path: ~/.gemini/skills/local-inference/
   - path: ~/.grok/skills/local-inference/           # Grok user-scoped
   - path: zk@adeck:~/.grok/skills/local-inference/  # Mesh (adeck)
+  - path: zk@quita:~/.grok/skills/local-inference/  # Mesh (quita)
   - path: /mnt/repository/context-vault/.grok/skills/local-inference/  # Project-scoped in this vault
 
 # Source mapping to skill structure

@@ -30,6 +30,7 @@ target_locations:
   - path: ~/.gemini/skills/obsidian/
   - path: ~/.grok/skills/obsidian/
   - path: zk@adeck:~/.grok/skills/obsidian/
+  - path: zk@quita:~/.grok/skills/obsidian/
   - path: /mnt/repository/context-vault/.grok/skills/obsidian/
 
 sources:
