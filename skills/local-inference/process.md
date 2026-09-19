@@ -63,6 +63,15 @@ In production on the local gateway: cookbook OCR (`page_ocr`), cookbook
 repair (`ocr_character_repairs`), esocortex augment (`esocortex_augment`).
 Docs: <https://lmstudio.ai/docs/developer/openai-compat/structured-output>
 
+Harvest **both** `choices[].message.content` and
+`choices[].message.reasoning_content` (stream: the matching `delta.*`).
+Prefer `content` when it contains a JSON object; otherwise take
+`reasoning_content`. Grammar on thinking models can land on the think
+channel; the answer channel may be empty, truncated, or unconstrained
+prose. Treat empty `content` as a real state, not a protocol error.
+On HTTP 4xx/5xx, log **`response.text`** — `raise_for_status()` alone
+hides the gateway's actual reason.
+
 ### Reasoning: two different APIs
 
 **Use this on `/v1/chat/completions` (pi, curl, cookbook, esocortex):**
@@ -89,8 +98,29 @@ Re-verified on `qwen/qwen3.8-27b` through the gateway, 2026-09-18:
   against OpenRouter, not against the local chat-completions path.
 
 Official model knobs differ from the gateway aliases — see Active models
-below. When they conflict, the gateway `/v1/chat/completions` table above
-is what the mesh actually honors.
+below. When they conflict, **the model's chat template is the authority
+for what actually thinks.** The gateway 400-list is only the enum this
+endpoint will accept. If the jinja never reads `reasoning_effort`, sending
+it is a no-op (byte-identical prompt). Check the hub `model.yaml`
+`customFields` → `setJinjaVariable` and the official prompting guide
+before the first request.
+
+**Labels vs a token budget.** `reasoning_effort` / native `reasoning` /
+jinja `reasoning_strength` are **template labels**, not a cap in tokens.
+A numeric reasoning budget exists in the LMS **UI** and in the TS SDK as
+experimental `LLMPredictionConfigInput.reasoningBudget` (max tokens
+*inside* a reasoning section, separate from `maxTokens`; not supported on
+`model.complete()`). Published `/v1/chat/completions` docs do not list it.
+llama.cpp has `--reasoning-budget` / `thinking_budget_tokens`;
+`thinking_budget: 0` on this gateway was a no-op on qwen3.8. Do not plan
+production on a numeric budget until a live probe on the loaded model
+shows `reasoning_tokens` actually cap.
+
+**Sparse KV.** LMS only serializes a field after it is changed. JIT
+`user-concrete-model-default-config/*/....json` and presets omit defaults.
+Empty `operation.fields: []` does **not** mean the UI lacks Reasoning
+Budget / Enable Thinking / parallel. Absence on disk is not absence in
+the app.
 
 ### Active models (loaded at 100K)
 
@@ -122,11 +152,22 @@ top_k 64. Hub: `lmstudio-community/gemma-4-31B-it-GGUF`.
 
 **`meta/muse-glimmer`** — Muse Glimmer, 30B card (LMS `params_string: 28B`
 = text decoder; ~1.8–2B vision encoder on top). Card ctx 131,072; **served at 100K**.
-Thinking is built-in (`assistant to=self` then `to=user`). Official
-`reasoning_strength`: `xhigh|high|medium|low`, default **high**. LMS v1
-exposes only `on` — no public off. VLM: text + image (`<|image|>`).
-Sampling: temp 1.0, top_p 0.95, top_k 64. Speculative decoding is a
-**separate** draft model (Meta DFlash), not a baked MTP head. Hub:
+Thinking is built-in (`assistant to=self` then `to=user`) — there is no
+off. Official dial is jinja **`reasoning_strength`**: `xhigh|high|medium|low`,
+default **high**. Send
+`chat_template_kwargs: {"reasoning_strength": "low"}` on
+`/v1/chat/completions`. Hub custom field `reasoningStrength` →
+`setJinjaVariable: reasoning_strength`. `reasoning_effort` and
+`enable_thinking` **do not appear in the template** — they are dead knobs
+(prompt renders byte-identical to omitting them). LMS v1 exposes only
+`on`. Card sampling: **temp 1.0, top_p 0.95, top_k 64**. Official pitfall:
+CoT is routinely multi-thousand tokens; a small `max_tokens` clips
+mid-`to=self` and never reaches the answer. Omit `max_tokens` or give
+thousands of headroom. JSON, when constrained, belongs in `to=user` →
+`message.content`. Docs:
+<https://ai.developer.meta.com/docs/muse-glimmer/prompting.md>.
+VLM: text + image (`<|image|>`). Speculative decoding is a **separate**
+draft model (Meta DFlash), not a baked MTP head. Hub:
 `lmstudio-community/Muse-Glimmer-30B-GGUF`. pi's display name "26b" is stale.
 
 ### Vision / capability check
@@ -159,6 +200,19 @@ POST /api/v1/models/load  {"model": "text-embedding-qwen3-embedding-8b", "contex
 ```
 
 (esocortex's `ensure_loaded` tolerates 400/409/500 "already loaded".)
+
+**Chat loads are not this path.** `POST /api/v1/models/load` with a
+`context_length` (or any load-config override) **bypasses** the per-model
+JIT preset: KV quant, parallel slots, GPU offload, ctx. Those live in
+`~/.lmstudio/.internal/user-concrete-model-default-config/` and are
+applied when the **first `/v1/chat/completions`** JIT-loads. For chat:
+do not call `/models/load`. Fire **one** inference request, wait until
+`lms ps` shows a single instance with the expected PARALLEL/CONTEXT, then
+fan out workers. N concurrent first-hits race `unloadPreviousJITModelOnLoad`
+and you get N loads + 400s.
+
+Embeddings remain the exception — they *must* pin `context_length` or the
+GGUF `n_ctx` OOMs the 4090.
 
 ### Models list
 
@@ -263,8 +317,30 @@ nomic-embed-text-v1.5 (adeck/nxiz/zrrh) · mxbai-embed-large-v1 (adeck/nxiz)
   small `max_tokens` gets consumed entirely by thinking — raise it or set
   `reasoning_effort: "none"`.
 - **Empty `content` is a real state** (budget went to reasoning), not a
-  protocol error — validate for it explicitly.
+  protocol error — validate for it explicitly. Harvest `reasoning_content`
+  before declaring the call dead.
+- **Do not clip thinking models.** Official cards (Muse especially) warn
+  that a tight `max_tokens` ends the turn inside CoT. A 512-token probe
+  on a reasoning model only reproduces that pitfall. Omit the cap or
+  set it in the thousands; `reasoning_effort: "none"` is the cheap
+  alternative **when the template actually honors it**.
+- **GGUF type vs LMS llama.cpp.** Stock llama.cpp (what LMS ships) only
+  knows ggml types in `[0, GGML_TYPE_COUNT)`. Publisher-specific packs
+  with high IDs fail at parse, before VRAM:
+  `tensor '…' has invalid ggml type 143. should be in [0, 43)`.
+  Ternary Bonsai 2 `PTQ1_0` (143) / `PQ2_0` (142) need the Prism fork;
+  LMS cannot load them. The 1-bit `Q1_0` Bonsai **does** load (type is
+  upstream). A `Q2_0` from a `-gguf-dev` repo may load **and emit
+  garbage** (Hadamard not applied). Read the publisher's format doc
+  *before* downloading. Substring matchers: `bonsai-2` matches
+  `bonsai-27b` — require `bonsai-2-` or `ternary-bonsai-2`.
+- **Parallel workers** share one JIT instance. Warm with a single
+  completion, then N in-flight requests ≤ the load preset's `parallel`.
+  The client flock (`LOCK_EX` per call) will serialize them unless the
+  lane holds exclusive once and inner calls skip the lock.
 - **zrrh needs its GUI session** (CUDA). The wake proxy can bring the box
   up, but a dead zrrh session surfaces as 502/503, not a wake failure.
 - Diagnostics: `journalctl --user -u inference-wake -u llmster` on adeck;
   `~/.lmstudio/server-logs/YYYY-MM/*.log` on the host where the model runs.
+  Load failures print `LMSTUDIO_STARTUP_ERROR` + `gguf_init_from_reader`
+  there — that **is** the reason the UI looks silent.

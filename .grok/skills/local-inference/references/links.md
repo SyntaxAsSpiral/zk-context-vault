@@ -5,6 +5,8 @@
 - <https://lmstudio.ai/docs/developer/> — developer docs root
 - <https://lmstudio.ai/docs/developer/openai-compat/structured-output> — strict `json_schema` on `/v1/chat/completions`
 - <https://lmstudio.ai/docs/developer/openai-compat/chat-completions> — OpenAI-compat chat (documented payload is a subset; gateway also accepts `reasoning_effort`)
+- <https://lmstudio.ai/docs/typescript/api-reference/llm-prediction-config-input> — SDK fields (HTML list lags source: experimental `reasoningBudget` is in lmstudio-js, not this page)
+- <https://github.com/lmstudio-ai/lmstudio.js/blob/main/packages/lms-shared-types/src/llm/LLMPredictionConfig.ts> — `reasoningBudget: number | false`
 - <https://lmstudio.ai/docs/developer/openai-compat/responses> — `/v1/responses` (`reasoning: { "effort": ... }`, gpt-oss examples)
 - <https://lmstudio.ai/docs/developer/rest/load> — `POST /api/v1/models/load`
 - <https://lmstudio.ai/docs/developer/rest/endpoints> — REST v0 (`GET /api/v0/models`, `type: "vlm"`)
@@ -46,6 +48,8 @@
 
 - Qwen3.8-27B: [HF card](https://huggingface.co/Qwen/Qwen3.8-27B) · [LMS](https://lmstudio.ai/models/qwen/qwen3.8-27b) · GGUF `lmstudio-community/Qwen3.8-27B-GGUF` (`Qwen3.8-27B-Q4_K_M.gguf` + `mmproj-Qwen3.8-27B-BF16.gguf`)
 - Gemma 4 31B: [thinking docs](https://ai.google.dev/gemma/docs/capabilities/thinking) · [LMS](https://lmstudio.ai/models/google/gemma-4-31b) · GGUF `lmstudio-community/gemma-4-31B-it-GGUF`
-- Muse Glimmer 30B: [Meta card](https://ai.developer.meta.com/docs/muse-glimmer.md) · [prompting](https://ai.developer.meta.com/docs/muse-glimmer/prompting) · [LMS](https://lmstudio.ai/models/meta/muse-glimmer) · GGUF `lmstudio-community/Muse-Glimmer-30B-GGUF`
+- Muse Glimmer 30B: [Meta card](https://ai.developer.meta.com/docs/muse-glimmer.md) · [prompting](https://ai.developer.meta.com/docs/muse-glimmer/prompting.md) (`reasoning_strength`, `to=self`/`to=user`, sampling, max_tokens pitfall) · [LMS](https://lmstudio.ai/models/meta/muse-glimmer) · GGUF `lmstudio-community/Muse-Glimmer-30B-GGUF`
+- Bonsai 1-bit (loads in LMS): [LMS](https://lmstudio.ai/models/prism-ml/bonsai-27b) · GGUF `lmstudio-community/Bonsai-27B-GGUF` (`Q1_0`)
+- Ternary Bonsai 2 (does **not** load in LMS): [formats](https://docs.prismml.com/download/formats) · [troubleshooting](https://docs.prismml.com/resources/troubleshooting) · ggml types 142/143 · [llama.cpp#29058](https://github.com/ggml-org/llama.cpp/issues/29058)
 - `Jackrong/Qwopus3.6-27B-v2-MTP-GGUF` — explicit MTP config model
 - embeddings: `Qwen3-Embedding-8B`, `nomic-embed-text-v1.5`, `mxbai-embed-large-v1`

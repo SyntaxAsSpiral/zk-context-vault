@@ -16,6 +16,8 @@ metadata:
 
 How local inference actually runs on the mesh (revamped 2026-09-18).
 
+**Read the docs, then the card, then call.** LMS HTTP docs, the TypeScript SDK source, and the model's hub `model.yaml` / official prompting guide disagree in places and go stale independently. A failed structured-output or empty-`content` probe is a **call-shape bug** until those three have been checked. Do not call it a wash — that is almost always the caller.
+
 ## The one URL
 
 `http://adeck:1234/v1` — OpenAI-compatible, always-on, wake-gated.
@@ -68,6 +70,6 @@ Don't look for them; the 2026-04 ctx-ceiling tables no longer apply.
 
 ## Contents
 
-- [references/process.md](references/process.md) — runbook: wake proxy, API surface, Qwen/Gemma/Muse cards, MTP, JIT, fleet, gotchas
+- [references/process.md](references/process.md) — runbook: wake proxy, API surface, per-model dials, structured harvest, JIT vs `/models/load`, GGUF types, fleet, gotchas
 - [references/harness.md](references/harness.md) — pi wiring, cookbook OCR/repair, babette, esocortex, GPU locking
 - [references/links.md](references/links.md) — docs, flake sources, service paths, model sources

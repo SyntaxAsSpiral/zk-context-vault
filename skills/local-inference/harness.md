@@ -68,9 +68,14 @@ Knowledge-cortex pipeline (chunking → LLM augment → embeddings → RAG).
 
 - `src/llm.py`: `ESOCORTEX_LLM_BASE` default `http://adeck:1234/v1`.
   - `complete()` — `response_format` support, retries `length` once with
-    doubled `max_tokens` (4096 → 8192), rejects empty content.
-  - `ensure_loaded(model, context_length)` — `POST /api/v1/models/load`
-    before embeddings (the OOM guard; see process.md).
+    doubled `max_tokens` (4096 → 8192) unless `max_tokens` is omitted.
+    Harvests JSON from `content` or `reasoning_content`. Include HTTP
+    error bodies. `exclusive=False` for in-flight workers after the
+    lane already holds `LOCK_EX`.
+  - `ensure_loaded(model, context_length)` — **embeddings only**
+    (`POST /api/v1/models/load` to pin n_ctx). Do **not** use this for
+    chat: it clobbers JIT VRAM/parallel/KV presets. Chat JIT is one
+    `/v1/chat/completions`, then fan-out ≤ load `parallel`.
   - `embed()` — `/v1/embeddings`, sorted by `index`.
 - `src/augment.py` — strict schema `esocortex_augment` (translation /
   system / mode / keys), defensive JSON parsing (`_loads_json` repair path).
@@ -83,7 +88,13 @@ Knowledge-cortex pipeline (chunking → LLM augment → embeddings → RAG).
 
 1. One gateway URL for everything: `http://adeck:1234/v1`.
 2. Structured output = strict `json_schema` + client-side validation.
-3. Deterministic local work = `reasoning_effort: "none"` + `temperature: 0`.
+3. Deterministic local work = `reasoning_effort: "none"` + `temperature: 0`
+   **when the template honors that field**. Muse uses
+   `chat_template_kwargs.reasoning_strength` and card sampling (1.0 / 0.95 / 64).
 4. Embeddings = explicit `models/load` with `context_length` first.
+   Chat = first completion JIT (presets), never `/models/load`.
 5. Sharing the zrrh GPU = file lock, chat exclusive / embed shared.
+   Concurrent chat workers: one lock around the lane, inner calls unlocked.
 6. Treat 408/429/502/503/504 + `LM Link connection closed` as retryable.
+7. A schema-ignoring or empty-content result is a call-shape bug until
+   the hub card and LMS docs say otherwise. Not a wash.
