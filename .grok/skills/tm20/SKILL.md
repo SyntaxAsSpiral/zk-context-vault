@@ -4,12 +4,12 @@ description: 'Print 80 mm thermal slips and receipts on the mesh Epson TM-T20III
   tm20/tm20-set or the tm20 print receiver. Use when designing or printing tape, item
   listings, logos, QR, ESC/POS, 1-bit art, or when the user mentions tm20, TM-T20III,
   thermal printer, 80 mm receipts, or the mesh print receiver. Slash: /tm20'
-compatibility: USB and tm20 binaries are the tm20 Pi (print host) only. Scripted jobs
-  from other hosts POST the print receiver. No CUPS. Paper must be loaded.
 metadata:
   author: zk
-  version: 0.4.0
+  version: 0.5.0
   category: print
+  compatibility: USB and tm20 binaries are the tm20 Pi only; other hosts POST the
+    receiver. No CUPS. Paper must be loaded.
 ---
 
 # tm20 — 80 mm tape
@@ -68,42 +68,78 @@ curl -fsS -H "Authorization: Bearer $PRINT_TOKEN" http://tm20:8766/health
 
 Inspect a preview before the POST. Duplicate job ids return the prior status and do not print again. Uncertain means check the tape before minting a new id.
 
-## Markdown contract
+## Design Markdown for thermal tape
 
-Tape is **576 dots** wide (~203 dpi). `tm20-set` Floyd–Steinbergs images to 1-bit, **never scales up**.
+Craft a `.md` document for a 576-dot-wide (~203 dpi), monochrome thermal tape. Length can grow; width cannot. tm20 is a strict printable subset of CommonMark/GFM, not a browser: unsupported constructs, missing glyphs, and clipped content fail.
 
-| Markdown | Tape |
-|---|---|
-| `#` | Display mark, 18 pt |
-| `##`+ | Body head, 11 pt |
-| paragraph | 11 pt Helvetica-family |
-| `![alt](file.png)` | Figure, **own paragraph** (no mixed text+image) |
-| pipe table | 2–3 columns only; **first row is the header** |
-| `[text](url)` | Italic + footnote, not a QR |
-| `$` | Currency, not math |
+### Design language
 
-Image dests are local paths or `file:` relative to the `.md`. HTTP dests fail. A markdown POST to the receiver cannot see files on the caller — embed what the typesetter needs, or send a PNG.
+- Prefer one short `#` masthead, then a clear reading order: context, substance, conclusion. Use `##` for sections; H3–H6 do not create smaller visual levels.
+- Be economical, not cryptic. Use short paragraphs and concrete labels. Keep necessary detail; move supporting sources into notes rather than deleting it.
+- Let typography do the work: bold for key facts, italic for secondary emphasis, monospace for literal identifiers. Avoid walls of bold, all-caps paragraphs, decorative emoji, ASCII boxes, and space-padded pseudo-columns.
+- Use two-column tables for label/value pairs and prices. Reserve three columns for genuinely compact data. Prefer stacked labeled paragraphs for wide records.
+- Use a rule before a total or major transition, not between every paragraph. One blank line separates blocks; extra blank lines are not layout controls.
+- Receipts: masthead → context → items → total. Reading tapes: short sections and prose. Checklists: one concrete action per task. Adapt the structure to the content; do not force every document into a receipt.
 
-Preview with `--dry --png DIR` and **read the PNG** before USB. Empty table headers (`| \| |`) waste a band of white. Empty *body* cells in a tick column collapse — put `[ ]` in the cell. A figure wider than 576 shrinks; a 111 px QR stays 111 px — render QR ~200 px, 1-bit, quiet zone included.
+### Supported Markdown
+
+| Construct | Rendering | Authoring constraints |
+| --- | --- | --- |
+| Paragraphs | 11 pt sans; word wrapping, no hyphenation | Avoid long unbroken strings. Source soft breaks become spaces; use a trailing backslash or two spaces for a hard break. |
+| Headings | H1: 18 pt; H2–H6: 11 pt bold | Nonempty plain text only: no emphasis, code, links, images, or math. Prefer ATX `#` syntax. |
+| Inline styles | `*italic*`, `**bold**`, combinations, `~~strike~~` | Styles can nest; strikethrough spans wrapped lines. Keep them out of headings. |
+| Code spans | Monospace; whitespace normalized | For short literals, not manual alignment. Fitting spans stay unbroken. |
+| Code blocks | Fenced or indented monospace | No highlighting or wrapping. Split long lines explicitly; indentation consumes width. |
+| Lists | Dash bullets; ordered starts and `.` / `)` delimiters preserved | At most three list levels. Blank lines distinguish loose from tight lists. |
+| Tasks | `- [ ]` and `- [x]` boxes | Use list-item syntax, not free-standing bracket decorations. |
+| Quotes | Indented blocks | At most three quote levels, counted separately from list levels. Nesting reduces usable width. |
+| Rules | Full-tape two-dot line | Put blank lines around `---`; immediately beneath text it can become a Setext heading. |
+| Tables | Two or three columns; bold header; left/right alignment | Use `---` or `---:`; never centered `:---:`. Every row needs exactly the header's cell count. Cells contain inline content, not nested blocks. |
+| Links | Italic labels; numbered destination endnotes when needed | Inline, reference, angle, and recognized bare links work. Define references; use consistent titles for repeated destinations. Long URLs can overflow even in notes. A link is not a QR. |
+| Footnotes | First-use numbering shared with link notes; multiblock definitions | Define every `[^name]`. Unused definitions disappear. Indent continuation blocks. |
+| Images | Standalone PNG/JPEG, shrunk to fit and dithered; never upscaled | Image alone in its paragraph, not inside a link or table. Alt text is not printed: put meaningful captions in a separate paragraph. |
+| Math | LaTeX via RaTeX: `\(inline\)` and `\[display\]` | Dollars are currency, not delimiters. No heading math; display math belongs in a separate paragraph, outside styles, links, and tables. Unsupported formulas/glyphs fail. |
+| Text conventions | Escapes/entities decoded; smart quotes, dashes, ellipses in prose | Use code for literal punctuation. Glyph coverage is finite; do not assume emoji or arbitrary scripts are available. |
 
 Linux `tm20-set` faces are Liberation Sans/Mono. Serif, tracked display, or a feast title belongs **in the raster** (PIL), not in markdown `#`.
 
+`tm20-set` Floyd–Steinbergs images to 1-bit. A figure wider than 576 dots shrinks; it never scales up. A 111 px QR stays 111 px, so render QR around 200 px, 1-bit, with its quiet zone included.
+
+Use local image paths or `file:` paths relative to the `.md`. Remote image URLs require external access and are unsuitable for deterministic jobs. A markdown POST to the receiver cannot see files on the caller; send self-contained markdown whose assets exist on `tm20`, or render and send a PNG.
+
+### Footguns to avoid
+
+- No raw HTML, including comments or `<br>`. No CSS, YAML front matter, definition-list extension, image-size attributes, or browser layout tricks.
+- Escape literal table pipes as `\|`, even inside code spans. Backticks alone do not protect a pipe from splitting a cell.
+- Escape literal square brackets (`\[` and `\]`) when they are not links, footnotes, or tasks; apparent references without definitions reject.
+- Keep amount columns right-aligned with consistent decimal precision. Their digits are tabular, but there is no spreadsheet-style number formatting.
+- Narrow a table by shortening labels or moving detail into prose, not by dropping data. Missing glyphs or overflow are not invitations to invent substitutes or silently omit content.
+- Empty table headers waste a band of white. Empty body cells in a tick column collapse; use a task list, or put `[ ]` in the cell when a table is required.
+
+### Receipt idiom
+
+A header-only table after a rule gives the total the same alignment as the items, with automatic header emphasis. Keep the separator row even without body rows:
+
 ```markdown
-![mark](logo-thermal.png)
+# Corner shop
 
-# HLD-0028
+Order 42\
+5 September 2026
 
-## Rosewood coffee table
+| Item | Amount |
+| --- | ---: |
+| Coffee | 6.00 |
+| Bread | 4.50 |
 
-One or two sentences. Facts, not atmosphere.
+---
 
-| qty | 1 |
-| :--- | ---: |
-| condition | good |
-| stored | garage |
+| Total | 10.50 |
+| --- | ---: |
 
-![catalog](qr-catalog.png)
+Thank you.
 ```
+
+Preview with `--dry --png DIR` and **read the PNG** before USB or receiver submission.
 
 ## Tape design
 

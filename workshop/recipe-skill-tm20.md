@@ -1,7 +1,7 @@
 ---
 id: recipe-tm20
 created: 2026-09-05
-modified: 2026-09-08
+modified: 2026-09-23
 status: active
 type:
   - "skill"
@@ -37,11 +37,11 @@ sources:
         or the tm20 print receiver. Use when designing or printing tape, item listings,
         logos, QR, ESC/POS, 1-bit art, or when the user mentions tm20, TM-T20III, thermal
         printer, 80 mm receipts, or the mesh print receiver. Slash: /tm20
-      compatibility: USB and tm20 binaries are the tm20 Pi (print host) only. Scripted jobs from other hosts POST the print receiver. No CUPS. Paper must be loaded.
       metadata:
         author: zk
-        version: "0.4.0"
+        version: "0.5.0"
         category: print
+        compatibility: USB and tm20 binaries are the tm20 Pi only; other hosts POST the receiver. No CUPS. Paper must be loaded.
 
     body:
       - file: skills/tm20/SKILL.md
